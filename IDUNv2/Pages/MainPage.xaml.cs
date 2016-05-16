@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -52,11 +53,21 @@ namespace IDUNv2.Pages
             var item = lb.SelectedItem as SubMenuItem;
             if (item != null)
                 ContentFrame.Navigate(item.PageType);
+            if (lb.SelectedItem == null)
+            {
+                lb.SelectedIndex = 0;
+            }
         }
 
         private void MainMenuExpand_Click(object sender, RoutedEventArgs e)
         {
             mainMenuSplitView.IsPaneOpen = !mainMenuSplitView.IsPaneOpen;
         }
+
+        private void subLoaded(object sender, RoutedEventArgs e)
+        {
+            (sender as ListBox).SelectedIndex = 0;
+        }
+
     }
 }

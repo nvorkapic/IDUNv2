@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,18 +18,18 @@ namespace IDUNv2.ViewModels
     {
         public string Label { get; set; }
         public string Icon { get; set; }
-        public List<SubMenuItem> SubMenu { get; set; }
+        public ObservableCollection<SubMenuItem> SubMenu { get; set; }
     }
 
     public class MainViewModel : BaseViewModel
     {
-        private List<MainMenuItem> _mainMenu = new List<MainMenuItem>
+        private ObservableCollection<MainMenuItem> _mainMenu = new ObservableCollection<MainMenuItem>
         {
             new MainMenuItem
             {
                 Label = "Home",
                 Icon = "/Assets/Home.png",
-                SubMenu = new List<SubMenuItem>
+                SubMenu = new ObservableCollection<SubMenuItem>
                 {
                     new SubMenuItem { Title = "Home", PageType = typeof(Pages.Home.IndexPage), Icon = "/Assets/Home.png" }
                 }
@@ -37,7 +38,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Measurements",
                 Icon = "/Assets/Ruler.png",
-                SubMenu = new List<SubMenuItem>()
+                SubMenu = new ObservableCollection<SubMenuItem>()
                 {
                     new SubMenuItem { Title = "Index", PageType = typeof(Pages.Measurements.Index),Icon = "/Assets/Home.png" },
                     new SubMenuItem { Title = "Usage", PageType = typeof(Pages.Measurements.UsagePage),Icon = "/Assets/Usage.png" },
@@ -53,7 +54,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Apps",
                 Icon = "/Assets/Plus.png",
-                SubMenu = new List<SubMenuItem>()
+                SubMenu = new ObservableCollection<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/Home.png" },
                     new SubMenuItem {Title="LED Control", PageType=typeof(Pages.AdditionalApps.LEDControlPage), Icon = "/Assets/LED.png" },
@@ -64,7 +65,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Reports",
                 Icon = "/Assets/Report.png",
-                SubMenu =  new List<SubMenuItem>()
+                SubMenu =  new ObservableCollection<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Overview", PageType=typeof(Pages.Reports.Index),Icon = "/Assets/Overview.png" },
                     new SubMenuItem {Title="Report Templates", PageType=typeof(Pages.Reports.TemplatesPage), Icon = "/Assets/settings.png" }
@@ -74,7 +75,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Settings",
                 Icon = "/Assets/Tools.png",
-                SubMenu =  new List<SubMenuItem>()
+                SubMenu =  new ObservableCollection<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Measurement Settings", PageType=typeof(Pages.Settings.MeasurementsPage),Icon = "/Assets/Ruler.png" },
                     new SubMenuItem {Title="Server Settings", PageType=typeof(Pages.Settings.ServerSettingsPage), Icon = "/Assets/Server.png" }
@@ -84,16 +85,16 @@ namespace IDUNv2.ViewModels
             {
                 Label = "About",
                 Icon = "/Assets/Information.png",
-                SubMenu = new List<SubMenuItem>()
+                SubMenu = new ObservableCollection<SubMenuItem>()
                 {
                     new SubMenuItem { Title = "About", PageType=typeof(Pages.About.Index), Icon = "/Assets/Information.png", }
                 }
             }
         };
 
-        public List<MainMenuItem> MainMenu { get { return _mainMenu; } }
+        public ObservableCollection<MainMenuItem> MainMenu { get { return _mainMenu; } }
 
-        private List<SubMenuItem> _subMenu;
-        public List<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }
+        private ObservableCollection<SubMenuItem> _subMenu;
+        public ObservableCollection<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }
     }
 }
