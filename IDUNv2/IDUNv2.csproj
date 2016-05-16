@@ -149,6 +149,16 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Accelerometer.png" />
+    <Content Include="Assets\Gyroscope.png" />
+    <Content Include="Assets\Home.png" />
+    <Content Include="Assets\Humidity.png" />
+    <Content Include="Assets\Magnet.png" />
+    <Content Include="Assets\Pressure.png" />
+    <Content Include="Assets\Thermometer.png" />
+    <Content Include="Assets\Tools.png" />
+    <Content Include="Assets\Usage.png" />
+    <Content Include="Assets\Users.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
