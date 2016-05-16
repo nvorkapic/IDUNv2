@@ -153,12 +153,17 @@
     <Content Include="Assets\Gyroscope.png" />
     <Content Include="Assets\Home.png" />
     <Content Include="Assets\Humidity.png" />
+    <Content Include="Assets\Information.png" />
     <Content Include="Assets\LED.png" />
     <Content Include="Assets\Magnet.png" />
     <Content Include="Assets\microphone.png" />
     <Content Include="Assets\Overview.png" />
+    <Content Include="Assets\Plus.png" />
     <Content Include="Assets\Pressure.png" />
+    <Content Include="Assets\Report.png" />
+    <Content Include="Assets\Ruler.png" />
     <Content Include="Assets\Server.png" />
+    <Content Include="Assets\settings.png" />
     <Content Include="Assets\Thermometer.png" />
     <Content Include="Assets\Tools.png" />
     <Content Include="Assets\Usage.png" />
