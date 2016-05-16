@@ -70,7 +70,7 @@ namespace IDUNv2.Pages
 
         private void subLoaded(object sender, RoutedEventArgs e)
         {
-            (sender as ListBox).SelectedIndex = 0;
+            (sender as ListView).SelectedIndex = 0;
         }
 
     }
