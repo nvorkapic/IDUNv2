@@ -24,6 +24,8 @@ namespace IDUNv2.Pages
     {
         private MainViewModel viewModel = new MainViewModel();
 
+        public object MainMenuList { get; private set; }
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -51,6 +53,10 @@ namespace IDUNv2.Pages
             var item = lv.SelectedItem as MainMenuItem;
             viewModel.SubMenuList = viewModel.subMenus[lv.SelectedIndex];
             ContentFrame.Navigate(item.PageType);
+
+            Header.Text = item.Label;
         }
+
+
     }
 }

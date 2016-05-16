@@ -97,8 +97,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Home\Home2Page.xaml.cs">
-      <DependentUpon>Home2Page.xaml</DependentUpon>
+    <Compile Include="Pages\About\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdditionalApps\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdditionalApps\LEDControlPage.xaml.cs">
+      <DependentUpon>LEDControlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdditionalApps\SpeechSynthesisPage.xaml.cs">
+      <DependentUpon>SpeechSynthesisPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Home\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
@@ -106,8 +115,29 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Settings\IndexPage.xaml.cs">
-      <DependentUpon>IndexPage.xaml</DependentUpon>
+    <Compile Include="Pages\Measurements\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Measurements\UsagePage.xaml.cs">
+      <DependentUpon>UsagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Measurements\xMeasurementsPage.xaml.cs">
+      <DependentUpon>xMeasurementsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Measurements\xyzMeasurementsPage.xaml.cs">
+      <DependentUpon>xyzMeasurementsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\TemplatesPage.xaml.cs">
+      <DependentUpon>TemplatesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\MeasurementsPage.xaml.cs">
+      <DependentUpon>MeasurementsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\ServerSettingsPage.xaml.cs">
+      <DependentUpon>ServerSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -133,7 +163,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Pages\Home\Home2Page.xaml">
+    <Page Include="Pages\About\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AdditionalApps\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AdditionalApps\LEDControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AdditionalApps\SpeechSynthesisPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,7 +187,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Settings\IndexPage.xaml">
+    <Page Include="Pages\Measurements\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Measurements\UsagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Measurements\xMeasurementsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Measurements\xyzMeasurementsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Reports\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Reports\TemplatesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\MeasurementsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\ServerSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

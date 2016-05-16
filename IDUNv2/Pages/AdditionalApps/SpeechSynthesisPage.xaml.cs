@@ -15,14 +15,14 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace IDUNv2.Pages.Settings
+namespace IDUNv2.Pages.AdditionalApps
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class IndexPage : Page
+    public sealed partial class SpeechSynthesisPage : Page
     {
-        public IndexPage()
+        public SpeechSynthesisPage()
         {
             this.InitializeComponent();
         }

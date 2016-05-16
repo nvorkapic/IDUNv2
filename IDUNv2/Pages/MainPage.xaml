@@ -27,7 +27,7 @@
         <RelativePanel Grid.Column="1">
             <StackPanel Orientation="Horizontal">
                 <AppBarButton Label="Back" Icon="Back" />
-                <TextBlock Text="Some title"/>
+                <TextBlock x:Name="Header" VerticalAlignment="Center" FontSize="25"/>
             </StackPanel>
             <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
                 <TextBox Width="100" />
