@@ -53,5 +53,10 @@ namespace IDUNv2.Pages
             if (item != null)
                 ContentFrame.Navigate(item.PageType);
         }
+
+        private void MainMenuExpand_Click(object sender, RoutedEventArgs e)
+        {
+            mainMenuSplitView.IsPaneOpen = !mainMenuSplitView.IsPaneOpen;
+        }
     }
 }
