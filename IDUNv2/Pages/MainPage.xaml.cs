@@ -38,7 +38,7 @@ namespace IDUNv2.Pages
 
         private void MainMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lv = sender as ListView;
+            var lv = sender as ListBox;
             var item = lv.SelectedItem as MainMenuItem;
             viewModel.SelectMainMenu(ContentFrame, item);
         }
