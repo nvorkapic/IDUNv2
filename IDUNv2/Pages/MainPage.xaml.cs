@@ -49,7 +49,7 @@ namespace IDUNv2.Pages
 
         private void SubMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lb = sender as ListBox;
+            var lb = sender as ListView;
             var item = lb.SelectedItem as SubMenuItem;
             if (item != null)
                 ContentFrame.Navigate(item.PageType);

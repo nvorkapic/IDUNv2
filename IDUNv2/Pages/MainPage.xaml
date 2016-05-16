@@ -11,27 +11,19 @@
             <StackPanel Orientation="Horizontal"></StackPanel>
         </ItemsPanelTemplate>
     </Page.Resources>
-    <SplitView x:Name="mainMenuSplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150">
+    <SplitView x:Name="mainMenuSplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="165">
         <SplitView.Pane>
             <StackPanel>
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="Transparent" Click="MainMenuExpand_Click"/>
-                <ListView>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" FontFamily="Segoe MDL2 Assets" Text="&#xE80F;" VerticalAlignment="Center"/>
-                        <TextBlock Margin="15" Text="Home" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" FontFamily="Segoe MDL2 Assets" Text="&#xE90F;" VerticalAlignment="Center"/>
-                        <TextBlock Margin="15" Text="Sensors" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" FontFamily="Segoe MDL2 Assets" Text="&#xE713;" VerticalAlignment="Center"/>
-                        <TextBlock Margin="15" Text="Settings" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" FontFamily="Segoe MDL2 Assets" Text="&#xE897;" VerticalAlignment="Center"/>
-                        <TextBlock Margin="15" Text="About" VerticalAlignment="Center"/>
-                    </StackPanel>
+                <ListView ItemsSource="{Binding MainMenu}" SelectionChanged="MainMenu_SelectionChanged">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="5" FontFamily="Segoe MDL2 Assets" Text="{Binding Icon}" VerticalAlignment="Center"/>
+                                <TextBlock Margin="15" Text="{Binding Label}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
         </SplitView.Pane>
@@ -42,30 +34,23 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <ListView Grid.RowSpan="3" ItemsSource="{Binding MainMenu}" SelectionChanged="MainMenu_SelectionChanged">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Label}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
                 <RelativePanel>
                     <StackPanel Orientation="Horizontal">
-                        <AppBarButton Label="Back" Icon="Back" />
+                        <AppBarButton Icon="Back" />
                         <TextBlock x:Name="Header" VerticalAlignment="Center" FontSize="25"/>
                     </StackPanel>
                     <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
                         <TextBox Width="100" />
-                        <AppBarButton Icon="Find" Label="Search" />
+                        <AppBarButton Icon="Find" />
                     </StackPanel>
                 </RelativePanel>
-                <ListBox Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" ItemsPanel="{StaticResource StackPanelHoriz}">
-                    <ListBox.ItemTemplate>
+                <ListView Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" ItemsPanel="{StaticResource StackPanelHoriz}">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Title}" Padding="5"/>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <Frame x:Name="ContentFrame" Grid.Row="2" />
             </Grid>
         </SplitView.Content>
