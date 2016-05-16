@@ -43,8 +43,11 @@ namespace IDUNv2.Pages
         {
             var lv = sender as ListView;
             var item = lv.SelectedItem as MainMenuItem;
-            viewModel.SubMenu = viewModel.MainMenu[lv.SelectedIndex].SubMenu;
+            viewModel.SubMenu = item.SubMenu;
             ContentFrame.Navigate(item.SubMenu.First().PageType);
+
+            viewModel.MainTitle = item.Label;
+            viewModel.MainIcon = item.Icon;
         }
 
         private void SubMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -55,6 +58,7 @@ namespace IDUNv2.Pages
             {
                 ContentFrame.Navigate(item.PageType);
                 HeaderSubImage.Source = new BitmapImage (new Uri("ms-appx://IDUNv2" + item.Icon));
+                viewModel.SubTitle = item.Title;
             }
                 
             if (lb.SelectedItem == null)
@@ -72,6 +76,5 @@ namespace IDUNv2.Pages
         {
             (sender as ListView).SelectedIndex = 0;
         }
-
     }
 }

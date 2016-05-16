@@ -29,6 +29,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Home",
                 Icon = "\xE80F",
+                //Icon = "/Assets/Home.png",
                 SubMenu = new List<SubMenuItem>
                 {
                     new SubMenuItem { Title = "Index", PageType = typeof(Pages.Home.IndexPage), Icon = "/Assets/index.png" }
@@ -38,9 +39,9 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Measurements",
                 Icon = "\xE90F",
+                //Icon = "/Assets/Ruler.png",
                 SubMenu = new List<SubMenuItem>()
                 {
-                    new SubMenuItem { Title = "Index", PageType = typeof(Pages.Measurements.Index),Icon = "/Assets/index.png" },
                     new SubMenuItem { Title = "Usage", PageType = typeof(Pages.Measurements.UsagePage),Icon = "/Assets/Usage.png" },
                     new SubMenuItem { Title = "Temperature", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Thermometer.png" },
                     new SubMenuItem { Title = "Pressure", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Pressure.png" },
@@ -54,6 +55,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Reports",
                 Icon = "\xE8A5",
+                //Icon = "/Assets/Report.png",
                 SubMenu =  new List<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/index.png" },
@@ -65,6 +67,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Apps",
                 Icon = "\xE71D",
+                //Icon = "/Assets/Plus.png",
                 SubMenu = new List<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/Home.png" },
@@ -76,6 +79,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Settings",
                 Icon = "\xE713",
+                //Icon = "/Assets/Tools.png",
                 SubMenu =  new List<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Measurement Settings", PageType=typeof(Pages.Settings.MeasurementsPage),Icon = "/Assets/Ruler.png" },
@@ -86,6 +90,7 @@ namespace IDUNv2.ViewModels
             {
                 Label = "About",
                 Icon = "\xE77B",
+                //Icon = "/Assets/Information.png",
                 SubMenu = new List<SubMenuItem>()
                 {
                     new SubMenuItem { Title = "About", PageType=typeof(Pages.About.Index), Icon = "/Assets/index.png", }
@@ -94,6 +99,15 @@ namespace IDUNv2.ViewModels
         };
 
         public List<MainMenuItem> MainMenu { get { return _mainMenu; } }
+
+        private string _mainTitle;
+        public string MainTitle { get { return _mainTitle; } set { _mainTitle = value; Notify(); } }
+
+        private string _mainIcon;
+        public string MainIcon { get { return _mainIcon; } set { _mainIcon = value; Notify(); } }
+
+        private string _subTitle;
+        public string SubTitle { get { return _subTitle; } set { _subTitle = value; Notify(); } }
 
         private List<SubMenuItem> _subMenu;
         public List<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }
