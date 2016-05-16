@@ -24,7 +24,7 @@ namespace IDUNv2.ViewModels
 
     public class MainViewModel : BaseViewModel
     {
-        private List<MainMenuItem> _mainMenu = new List<MainMenuItem>
+        private ObservableCollection<MainMenuItem> _mainMenu = new ObservableCollection<MainMenuItem>
         {
             new MainMenuItem
             {
