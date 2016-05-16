@@ -31,7 +31,7 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE80F",
                 SubMenu = new List<SubMenuItem>
                 {
-                    new SubMenuItem { Title = "Home", PageType = typeof(Pages.Home.IndexPage), Icon = "/Assets/Home.png" }
+                    new SubMenuItem { Title = "Index", PageType = typeof(Pages.Home.IndexPage), Icon = "/Assets/index.png" }
                 }
             },
             new MainMenuItem
@@ -40,7 +40,7 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE90F",
                 SubMenu = new List<SubMenuItem>()
                 {
-                    new SubMenuItem { Title = "Index", PageType = typeof(Pages.Measurements.Index),Icon = "/Assets/Home.png" },
+                    new SubMenuItem { Title = "Index", PageType = typeof(Pages.Measurements.Index),Icon = "/Assets/index.png" },
                     new SubMenuItem { Title = "Usage", PageType = typeof(Pages.Measurements.UsagePage),Icon = "/Assets/Usage.png" },
                     new SubMenuItem { Title = "Temperature", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Thermometer.png" },
                     new SubMenuItem { Title = "Pressure", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Pressure.png" },
@@ -56,8 +56,9 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE8A5",
                 SubMenu =  new List<SubMenuItem>()
                 {
-                    new SubMenuItem {Title="Overview", PageType=typeof(Pages.Reports.Index) },
-                    new SubMenuItem {Title="Report Templates", PageType=typeof(Pages.Reports.TemplatesPage) }
+                    new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/index.png" },
+                    new SubMenuItem {Title="LED Control", PageType=typeof(Pages.AdditionalApps.LEDControlPage), Icon = "/Assets/LED.png" },
+                    new SubMenuItem {Title="Speech Synthesis", PageType=typeof(Pages.AdditionalApps.SpeechSynthesisPage), Icon = "/Assets/microphone.png" }
                 }
             },
             new MainMenuItem
@@ -87,7 +88,7 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE77B",
                 SubMenu = new List<SubMenuItem>()
                 {
-                    new SubMenuItem { Title = "About", PageType=typeof(Pages.About.Index), Icon = "/Assets/Information.png", }
+                    new SubMenuItem { Title = "About", PageType=typeof(Pages.About.Index), Icon = "/Assets/index.png", }
                 }
             }
         };

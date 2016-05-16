@@ -153,6 +153,7 @@
     <Content Include="Assets\Gyroscope.png" />
     <Content Include="Assets\Home.png" />
     <Content Include="Assets\Humidity.png" />
+    <Content Include="Assets\index.png" />
     <Content Include="Assets\Information.png" />
     <Content Include="Assets\LED.png" />
     <Content Include="Assets\Magnet.png" />

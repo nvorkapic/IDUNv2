@@ -52,7 +52,11 @@ namespace IDUNv2.Pages
             var lb = sender as ListView;
             var item = lb.SelectedItem as SubMenuItem;
             if (item != null)
+            {
                 ContentFrame.Navigate(item.PageType);
+                HeaderSubImage.Source = new BitmapImage (new Uri("ms-appx://IDUNv2" + item.Icon));
+            }
+                
             if (lb.SelectedItem == null)
             {
                 lb.SelectedIndex = 0;
