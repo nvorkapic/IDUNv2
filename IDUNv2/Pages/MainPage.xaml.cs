@@ -24,19 +24,26 @@ namespace IDUNv2.Pages
     {
         private MainViewModel viewModel = new MainViewModel();
 
-        public object MainMenuList { get; private set; }
-
         public MainPage()
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
+            this.Loaded += MainPage_Loaded;
         }
 
-        private void MainMenu_Click(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var btn = sender as AppBarButton;
-            viewModel.SubMenuList = viewModel.subMenus[0];
-            ContentFrame.Navigate(viewModel.SubMenuList.FirstOrDefault().PageType);
+            var first = viewModel.MainMenu.First();
+            viewModel.SubMenu = first.SubMenu;
+            ContentFrame.Navigate(first.SubMenu.First().PageType);
+        }
+
+        private void MainMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var lv = sender as ListView;
+            var item = lv.SelectedItem as MainMenuItem;
+            viewModel.SubMenu = viewModel.MainMenu[lv.SelectedIndex].SubMenu;
+            ContentFrame.Navigate(item.SubMenu.First().PageType);
         }
 
         private void SubMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -46,17 +53,5 @@ namespace IDUNv2.Pages
             if (item != null)
                 ContentFrame.Navigate(item.PageType);
         }
-
-        private void MainMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var lv = sender as ListView;
-            var item = lv.SelectedItem as MainMenuItem;
-            viewModel.SubMenuList = viewModel.subMenus[lv.SelectedIndex];
-            ContentFrame.Navigate(item.PageType);
-
-            Header.Text = item.Label;
-        }
-
-
     }
 }
