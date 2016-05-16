@@ -34,9 +34,9 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <RelativePanel>
+                <RelativePanel Height="50">
                     <StackPanel Orientation="Horizontal">
-                        <AppBarButton Icon="Back" />
+                        <AppBarButton Icon="Back" Width="50" Height="50" />
                         <TextBlock x:Name="Header" VerticalAlignment="Center" FontSize="25"/>
                     </StackPanel>
                     <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
@@ -44,10 +44,10 @@
                         <AppBarButton Icon="Find" />
                     </StackPanel>
                 </RelativePanel>
-                <ListView Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" ItemsPanel="{StaticResource StackPanelHoriz}">
+                <ListView Background="Gray" Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" ItemsPanel="{StaticResource StackPanelHoriz}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Title}" Padding="5"/>
+                            <TextBlock Text="{Binding Title}" Margin="15"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
