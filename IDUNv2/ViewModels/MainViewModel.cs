@@ -56,8 +56,8 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE8A5",
                 SubMenu =  new List<SubMenuItem>()
                 {
-                    new SubMenuItem { Label="List", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/index.png" },
-                    new SubMenuItem { Label="Templates", PageType=typeof(Pages.AdditionalApps.SpeechSynthesisPage), Icon = "/Assets/microphone.png" }
+                    new SubMenuItem { Label="List", PageType=typeof(Pages.Reports.Index),Icon = "/Assets/index.png" },
+                    new SubMenuItem { Label="Templates", PageType=typeof(Pages.Reports.Templates), Icon = "/Assets/microphone.png" }
                 }
             },
             new MainMenuItem

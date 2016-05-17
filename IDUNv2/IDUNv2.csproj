@@ -127,11 +127,11 @@
     <Compile Include="Pages\Measurements\xyzMeasurementsPage.xaml.cs">
       <DependentUpon>xyzMeasurementsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Reports\Templates.xaml.cs">
+      <DependentUpon>Templates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Reports\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Reports\TemplatesPage.xaml.cs">
-      <DependentUpon>TemplatesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings\MeasurementsPage.xaml.cs">
       <DependentUpon>MeasurementsPage.xaml</DependentUpon>
@@ -225,11 +225,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reports\Index.xaml">
+    <Page Include="Pages\Reports\Templates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reports\TemplatesPage.xaml">
+    <Page Include="Pages\Reports\Index.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

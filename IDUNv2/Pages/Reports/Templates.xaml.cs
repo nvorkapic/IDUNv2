@@ -20,11 +20,36 @@ namespace IDUNv2.Pages.Reports
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TemplatesPage : Page
+    public sealed partial class Templates : Page
     {
-        public TemplatesPage()
+        public Templates()
         {
             this.InitializeComponent();
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Discovery_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Symptom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Priority_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
