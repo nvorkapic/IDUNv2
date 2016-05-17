@@ -17,7 +17,7 @@ namespace IDUNv2.ViewModels
 
     public class SubMenuItem
     {
-        public string Title { get; set; }
+        public string Label { get; set; }
         public Type PageType { get; set; }
         public string Icon { get; set; }
     }
@@ -32,7 +32,7 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE80F",
                 SubMenu = new List<SubMenuItem>
                 {
-                    new SubMenuItem { Title = "Index", PageType = typeof(Pages.Home.IndexPage), Icon = "/Assets/index.png" }
+                    new SubMenuItem { Label = "Index", PageType = typeof(Pages.Home.IndexPage), Icon = "/Assets/index.png" }
                 }
             },
             new MainMenuItem
@@ -41,13 +41,13 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE90F",
                 SubMenu = new List<SubMenuItem>()
                 {
-                    new SubMenuItem { Title = "Usage", PageType = typeof(Pages.Measurements.UsagePage),Icon = "/Assets/Usage.png" },
-                    new SubMenuItem { Title = "Temperature", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Thermometer.png" },
-                    new SubMenuItem { Title = "Pressure", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Pressure.png" },
-                    new SubMenuItem {Title = "Humidity", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Humidity.png" },
-                    new SubMenuItem {Title = "Accelerometer", PageType = typeof(Pages.Measurements.xyzMeasurementsPage), Icon = "/Assets/Accelerometer.png" },
-                    new SubMenuItem {Title = "Magnetometer", PageType = typeof(Pages.Measurements.xyzMeasurementsPage),Icon = "/Assets/Magnet.png" },
-                    new SubMenuItem {Title = "Gyroscope", PageType = typeof(Pages.Measurements.xyzMeasurementsPage), Icon = "/Assets/Gyroscope.png" }
+                    new SubMenuItem { Label = "Usage", PageType = typeof(Pages.Measurements.UsagePage),Icon = "/Assets/Usage.png" },
+                    new SubMenuItem { Label = "Temperature", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Thermometer.png" },
+                    new SubMenuItem { Label = "Pressure", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Pressure.png" },
+                    new SubMenuItem { Label = "Humidity", PageType = typeof(Pages.Measurements.xMeasurementsPage), Icon = "/Assets/Humidity.png" },
+                    new SubMenuItem { Label = "Accelerometer", PageType = typeof(Pages.Measurements.xyzMeasurementsPage), Icon = "/Assets/Accelerometer.png" },
+                    new SubMenuItem { Label = "Magnetometer", PageType = typeof(Pages.Measurements.xyzMeasurementsPage),Icon = "/Assets/Magnet.png" },
+                    new SubMenuItem { Label = "Gyroscope", PageType = typeof(Pages.Measurements.xyzMeasurementsPage), Icon = "/Assets/Gyroscope.png" }
                 }
             },
             new MainMenuItem
@@ -56,9 +56,8 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE8A5",
                 SubMenu =  new List<SubMenuItem>()
                 {
-                    new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/index.png" },
-                    new SubMenuItem {Title="LED Control", PageType=typeof(Pages.AdditionalApps.LEDControlPage), Icon = "/Assets/LED.png" },
-                    new SubMenuItem {Title="Speech Synthesis", PageType=typeof(Pages.AdditionalApps.SpeechSynthesisPage), Icon = "/Assets/microphone.png" }
+                    new SubMenuItem { Label="List", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/index.png" },
+                    new SubMenuItem { Label="Templates", PageType=typeof(Pages.AdditionalApps.SpeechSynthesisPage), Icon = "/Assets/microphone.png" }
                 }
             },
             new MainMenuItem
@@ -67,9 +66,9 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE71D",
                 SubMenu = new List<SubMenuItem>()
                 {
-                    new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/Home.png" },
-                    new SubMenuItem {Title="LED Control", PageType=typeof(Pages.AdditionalApps.LEDControlPage), Icon = "/Assets/LED.png" },
-                    new SubMenuItem {Title="Speech Synthesis", PageType=typeof(Pages.AdditionalApps.SpeechSynthesisPage), Icon = "/Assets/microphone.png" }
+                    new SubMenuItem { Label="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/Home.png" },
+                    new SubMenuItem { Label="LED Control", PageType=typeof(Pages.AdditionalApps.LEDControlPage), Icon = "/Assets/LED.png" },
+                    new SubMenuItem { Label="Speech Synthesis", PageType=typeof(Pages.AdditionalApps.SpeechSynthesisPage), Icon = "/Assets/microphone.png" }
                 }
             },
             new MainMenuItem
@@ -78,8 +77,8 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE713",
                 SubMenu =  new List<SubMenuItem>()
                 {
-                    new SubMenuItem {Title="Measurement Settings", PageType=typeof(Pages.Settings.MeasurementsPage),Icon = "/Assets/Ruler.png" },
-                    new SubMenuItem {Title="Server Settings", PageType=typeof(Pages.Settings.ServerSettingsPage), Icon = "/Assets/Server.png" }
+                    new SubMenuItem { Label="Measurement Settings", PageType=typeof(Pages.Settings.MeasurementsPage),Icon = "/Assets/Ruler.png" },
+                    new SubMenuItem { Label="Server Settings", PageType=typeof(Pages.Settings.ServerSettingsPage), Icon = "/Assets/Server.png" }
                 }
             },
             new MainMenuItem
@@ -88,7 +87,7 @@ namespace IDUNv2.ViewModels
                 Icon = "\xE77B",
                 SubMenu = new List<SubMenuItem>()
                 {
-                    new SubMenuItem { Title = "About", PageType=typeof(Pages.About.Index), Icon = "/Assets/index.png", }
+                    new SubMenuItem { Label = "About", PageType=typeof(Pages.About.Index), Icon = "/Assets/index.png", }
                 }
             }
         };

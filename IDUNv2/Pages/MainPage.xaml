@@ -7,15 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
-        <ItemsPanelTemplate x:Key="StackPanelHoriz">
-            <StackPanel Orientation="Horizontal"></StackPanel>
-        </ItemsPanelTemplate>
-
         <DataTemplate x:Key="MainMenuData">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Icon}" Margin="5" FontFamily="Segoe MDL2 Assets"  VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding Label}" Margin="15" VerticalAlignment="Center"/>
             </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="SubMenuData">
+            <TextBlock Text="{Binding Label}" Margin="0,15,0,15" TextAlignment="Center"/>
         </DataTemplate>
     </Page.Resources>
 
@@ -36,11 +35,10 @@
                 <RelativePanel Height="50">
                     <StackPanel Orientation="Horizontal">
                         <AppBarButton Icon="Back" Width="50" Height="50" />
-
                         <TextBlock Text="{Binding CurMainMenu.Icon}" Margin="5" VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
                         <TextBlock Text="{Binding CurMainMenu.Label}" VerticalAlignment="Center" FontSize="25"/>
                         <TextBlock Text="&#xE8DB;"  VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
-                        <TextBlock Text="{Binding CurSubMenu.Title}" VerticalAlignment="Center" FontSize="25"/>
+                        <TextBlock Text="{Binding CurSubMenu.Label}" VerticalAlignment="Center" FontSize="25"/>
                         <Image x:Name="HeaderSubImage" VerticalAlignment="Center" Margin="10,0,0,0" Height="25" Width="25"></Image>
                     </StackPanel>
                     <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
@@ -50,17 +48,20 @@
                         </StackPanel>
                     </StackPanel>
                 </RelativePanel>
-                <ListView Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" ItemsPanel="{StaticResource StackPanelHoriz}" Loaded="subLoaded">
+                <ListView Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" Loaded="subLoaded" ItemTemplate="{StaticResource SubMenuData}">
                     <ListView.Background>
                         <SolidColorBrush Color="#FF171717"/>
                     </ListView.Background>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Title}" Margin="0,15,0,15"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
                 </ListView>
                 <Frame x:Name="ContentFrame" Grid.Row="2" />
             </Grid>
