@@ -17,8 +17,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace IDUNv2.Pages
 {
     public sealed partial class MainPage : Page
@@ -35,19 +33,14 @@ namespace IDUNv2.Pages
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             var first = viewModel.MainMenu.First();
-            viewModel.SubMenu = first.SubMenu;
-            ContentFrame.Navigate(first.SubMenu.First().PageType);
+            viewModel.SelectMainMenu(ContentFrame, first);
         }
 
         private void MainMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lv = sender as ListView;
             var item = lv.SelectedItem as MainMenuItem;
-            viewModel.SubMenu = item.SubMenu;
-            ContentFrame.Navigate(item.SubMenu.First().PageType);
-
-            viewModel.MainTitle = item.Label;
-            viewModel.MainIcon = item.Icon;
+            viewModel.SelectMainMenu(ContentFrame, item);
         }
 
         private void SubMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -56,9 +49,8 @@ namespace IDUNv2.Pages
             var item = lb.SelectedItem as SubMenuItem;
             if (item != null)
             {
-                ContentFrame.Navigate(item.PageType);
+                viewModel.SelectSubMenu(ContentFrame, item);
                 HeaderSubImage.Source = new BitmapImage (new Uri("ms-appx://IDUNv2" + item.Icon));
-                viewModel.SubTitle = item.Title;
             }
                 
             if (lb.SelectedItem == null)

@@ -4,21 +4,22 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace IDUNv2.ViewModels
 {
-    public class SubMenuItem
-    {
-        public string Title { get; set; }
-        public Type PageType { get; set; }
-        public string Icon { get; set; }
-    }
-
     public class MainMenuItem : BaseViewModel
     {
         public string Label { get; set; }
         public string Icon { get; set; }
         public List<SubMenuItem> SubMenu { get; set; }
+    }
+
+    public class SubMenuItem
+    {
+        public string Title { get; set; }
+        public Type PageType { get; set; }
+        public string Icon { get; set; }
     }
 
     public class MainViewModel : BaseViewModel
@@ -29,7 +30,6 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Home",
                 Icon = "\xE80F",
-                //Icon = "/Assets/Home.png",
                 SubMenu = new List<SubMenuItem>
                 {
                     new SubMenuItem { Title = "Index", PageType = typeof(Pages.Home.IndexPage), Icon = "/Assets/index.png" }
@@ -39,7 +39,6 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Measurements",
                 Icon = "\xE90F",
-                //Icon = "/Assets/Ruler.png",
                 SubMenu = new List<SubMenuItem>()
                 {
                     new SubMenuItem { Title = "Usage", PageType = typeof(Pages.Measurements.UsagePage),Icon = "/Assets/Usage.png" },
@@ -55,7 +54,6 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Reports",
                 Icon = "\xE8A5",
-                //Icon = "/Assets/Report.png",
                 SubMenu =  new List<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/index.png" },
@@ -67,7 +65,6 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Apps",
                 Icon = "\xE71D",
-                //Icon = "/Assets/Plus.png",
                 SubMenu = new List<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Index", PageType=typeof(Pages.AdditionalApps.Index),Icon = "/Assets/Home.png" },
@@ -79,7 +76,6 @@ namespace IDUNv2.ViewModels
             {
                 Label = "Settings",
                 Icon = "\xE713",
-                //Icon = "/Assets/Tools.png",
                 SubMenu =  new List<SubMenuItem>()
                 {
                     new SubMenuItem {Title="Measurement Settings", PageType=typeof(Pages.Settings.MeasurementsPage),Icon = "/Assets/Ruler.png" },
@@ -90,7 +86,6 @@ namespace IDUNv2.ViewModels
             {
                 Label = "About",
                 Icon = "\xE77B",
-                //Icon = "/Assets/Information.png",
                 SubMenu = new List<SubMenuItem>()
                 {
                     new SubMenuItem { Title = "About", PageType=typeof(Pages.About.Index), Icon = "/Assets/index.png", }
@@ -99,15 +94,20 @@ namespace IDUNv2.ViewModels
         };
 
         public List<MainMenuItem> MainMenu { get { return _mainMenu; } }
+        private List<SubMenuItem> _subMenu;
+        public List<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }
 
-        private string _mainTitle;
-        public string MainTitle { get { return _mainTitle; } set { _mainTitle = value; Notify(); } }
+        private MainMenuItem _curMainMenu;
+        public MainMenuItem CurMainMenu { get { return _curMainMenu; } set { _curMainMenu = value;  Notify(); } }
+        private SubMenuItem _curSubMenu;
+        public SubMenuItem CurSubMenu { get { return _curSubMenu; } set { _curSubMenu = value; Notify(); } }
 
-        private string _mainIcon;
-        public string MainIcon { get { return _mainIcon; } set { _mainIcon = value; Notify(); } }
-
-        private string _subTitle;
-        public string SubTitle { get { return _subTitle; } set { _subTitle = value; Notify(); } }
+        public void SelectMainMenu(Frame target, MainMenuItem item)
+        {
+            CurMainMenu = item;
+            SubMenu = item.SubMenu;
+            SelectSubMenu(target, SubMenu.First());
+        }
 
         private List<SubMenuItem> _subMenu;
         public List<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }

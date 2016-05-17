@@ -10,21 +10,20 @@
         <ItemsPanelTemplate x:Key="StackPanelHoriz">
             <StackPanel Orientation="Horizontal"></StackPanel>
         </ItemsPanelTemplate>
+
+        <DataTemplate x:Key="MainMenuData">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Icon}" Margin="5" FontFamily="Segoe MDL2 Assets"  VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Label}" Margin="15" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
+
     <SplitView x:Name="mainMenuSplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="165">
         <SplitView.Pane>
             <StackPanel>
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="Transparent" Click="MainMenuExpand_Click"/>
-                <ListView ItemsSource="{Binding MainMenu}" SelectionChanged="MainMenu_SelectionChanged" Loaded="subLoaded">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="5" FontFamily="Segoe MDL2 Assets" Text="{Binding Icon}" VerticalAlignment="Center"/>
-                                <TextBlock Margin="15" Text="{Binding Label}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <ListView ItemsSource="{Binding MainMenu}" SelectionChanged="MainMenu_SelectionChanged" Loaded="subLoaded" ItemTemplate="{StaticResource MainMenuData}" />
             </StackPanel>
         </SplitView.Pane>
         <SplitView.Content>
@@ -37,10 +36,11 @@
                 <RelativePanel Height="50">
                     <StackPanel Orientation="Horizontal">
                         <AppBarButton Icon="Back" Width="50" Height="50" />
-                        <TextBlock Margin="5" FontFamily="Segoe MDL2 Assets" Text="{Binding MainIcon}" VerticalAlignment="Center" FontSize="25"/>
-                        <TextBlock Text="{Binding MainTitle}" VerticalAlignment="Center" FontSize="25"/>
-                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8DB;" FontSize="25" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding SubTitle}" VerticalAlignment="Center" FontSize="25"/>
+
+                        <TextBlock Text="{Binding CurMainMenu.Icon}" Margin="5" VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
+                        <TextBlock Text="{Binding CurMainMenu.Label}" VerticalAlignment="Center" FontSize="25"/>
+                        <TextBlock Text="&#xE8DB;"  VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
+                        <TextBlock Text="{Binding CurSubMenu.Title}" VerticalAlignment="Center" FontSize="25"/>
                         <Image x:Name="HeaderSubImage" VerticalAlignment="Center" Margin="10,0,0,0" Height="25" Width="25"></Image>
                     </StackPanel>
                     <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
