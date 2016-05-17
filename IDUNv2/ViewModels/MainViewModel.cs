@@ -111,5 +111,6 @@ namespace IDUNv2.ViewModels
 
         private List<SubMenuItem> _subMenu;
         public List<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }
+
     }
 }
