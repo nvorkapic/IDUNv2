@@ -88,7 +88,7 @@ namespace IDUNv2.Pages.Settings
             var op = (Operator)operatorCB.SelectedItem;
             var tp = (Template)TemplateCB.SelectedItem;
 
-            OriginalItem.Setting.Threshold.Add(new Thresholds { Operator = op , Template = tp, Value = double.Parse(ValueTB.Text) });
+            OriginalItem.Setting.Threshold.Insert(0, new Thresholds { Operator = op , Template = tp, Value = double.Parse(ValueTB.Text) });
 
         }
         private void RemoveButton(object sender, RoutedEventArgs e)
@@ -107,6 +107,18 @@ namespace IDUNv2.Pages.Settings
             {
                 RBtn.Visibility = Visibility.Visible;
             }
+        }
+
+        private void TBGotFoc(object sender, RoutedEventArgs e)
+        {
+            osk.SetTarget(sender as TextBox);
+            osk.Visibility = Visibility.Visible;
+        }
+
+        private void TBLostFoc(object sender, RoutedEventArgs e)
+        {
+            osk.SetTarget(null);
+            osk.Visibility = Visibility.Collapsed;
         }
     }
 }
