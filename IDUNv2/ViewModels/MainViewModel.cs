@@ -24,7 +24,7 @@ namespace IDUNv2.ViewModels
 
     public class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<MainMenuItem> _mainMenu = new ObservableCollection<MainMenuItem>
+        private List<MainMenuItem> _mainMenu = new List<MainMenuItem>
         {
             new MainMenuItem
             {
@@ -94,6 +94,7 @@ namespace IDUNv2.ViewModels
         };
 
         public List<MainMenuItem> MainMenu { get { return _mainMenu; } }
+
         private List<SubMenuItem> _subMenu;
         public List<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }
 
