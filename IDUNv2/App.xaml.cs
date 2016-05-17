@@ -31,6 +31,8 @@ namespace IDUNv2
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            AppData.InitCloud();
         }
 
         /// <summary>

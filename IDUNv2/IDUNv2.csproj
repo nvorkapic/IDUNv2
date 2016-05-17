@@ -97,6 +97,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppData.cs" />
+    <Compile Include="Models\Reports\TemplateModel.cs" />
+    <Compile Include="OnScreenKeyboard\KeyAssignmentSet.cs" />
+    <Compile Include="OnScreenKeyboard\KeyboardViewModel.cs" />
+    <Compile Include="OnScreenKeyboard\KeyModel.cs" />
+    <Compile Include="OnScreenKeyboard\OnScreenKeyboard.xaml.cs">
+      <DependentUpon>OnScreenKeyboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OnScreenKeyboard\RelayCommand.cs" />
+    <Compile Include="OnScreenKeyboard\ViewModel.cs" />
     <Compile Include="Pages\About\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
@@ -127,11 +137,11 @@
     <Compile Include="Pages\Measurements\xyzMeasurementsPage.xaml.cs">
       <DependentUpon>xyzMeasurementsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Reports\Templates.xaml.cs">
+      <DependentUpon>Templates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Reports\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Reports\TemplatesPage.xaml.cs">
-      <DependentUpon>TemplatesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings\MeasurementConfig.xaml.cs">
       <DependentUpon>MeasurementConfig.xaml</DependentUpon>
@@ -146,6 +156,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MeasurementListSettingsVM.cs" />
+    <Compile Include="ViewModels\Reports\TemplatesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -188,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="OnScreenKeyboard\OnScreenKeyboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\About\Index.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,11 +243,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reports\Index.xaml">
+    <Page Include="Pages\Reports\Templates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reports\TemplatesPage.xaml">
+    <Page Include="Pages\Reports\Index.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,8 +265,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Reference Include="Addovation.Cloud.Apps.AddoResources.Client.Portable">
+      <HintPath>..\Dependencies\Addovation.Cloud.Apps.AddoResources.Client.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Addovation.Common">
+      <HintPath>..\Dependencies\Addovation.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\Dependencies\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
