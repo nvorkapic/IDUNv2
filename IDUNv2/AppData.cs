@@ -3,6 +3,7 @@ using Addovation.Common.Models;
 using IDUNv2.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,8 @@ namespace IDUNv2
 
         protected override void OnError(string error, Exception ex)
         {
-            throw ex;
+            //throw ex;
+            Debug.WriteLine(ex.Message);
         }
     }
 
