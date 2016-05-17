@@ -46,6 +46,7 @@ namespace IDUNv2.ViewModels
 
         public Template? Template { get; set; }
 
+
     }
 
     public enum Operator

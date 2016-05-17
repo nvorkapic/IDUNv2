@@ -12,12 +12,12 @@
                 <StackPanel Height="auto">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox x:Name="EnableCheck" Content="Enable Measurement:" Margin="0,0,5,0" VerticalAlignment="Center" IsChecked="{Binding Setting.Enabled, Mode=TwoWay}"></CheckBox>
+                        <Image Source="{Binding Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
                         <TextBlock Text="{Binding Title}" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                     <StackPanel x:Name="ConfigContent">
-                        <StackPanel>
-                            <TextBlock Text="Threshold" Padding="10" ></TextBlock>
-                            <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="When current value is" Padding="5"></TextBlock>
                                 <StackPanel Orientation="Vertical" Margin="0,0,5,0">
                                     <ComboBox x:Name="operatorCB" ItemsSource="{Binding ListAvailableOperators}" Loaded="ComboBox1onLoad"></ComboBox>
@@ -45,11 +45,11 @@
                             <TextBlock Text="Applied Report Templates:" Padding="10"></TextBlock>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="600"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <ScrollViewer Grid.Column="0">
-                                    <ListView ItemsSource="{Binding Setting.Threshold, Mode=TwoWay}" x:Name="ReportList" ContainerContentChanging="ReportList_ContainerContentChanging" MaxHeight="400">
+                                    <ListView ItemsSource="{Binding Setting.Threshold, Mode=TwoWay}" x:Name="ReportList" ContainerContentChanging="ReportList_ContainerContentChanging" MaxHeight="165">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
@@ -57,7 +57,7 @@
                                                     <TextBlock Text="{Binding Operator}" Margin=" 0,0,5,0" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
                                                     <TextBlock Text="to/then" Margin=" 0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                                     <TextBlock Text="{Binding Value}" Margin=" 0,0,5,0" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
-                                                    <TextBlock Text="{Binding Unit}" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
+                                                    <TextBlock Text="{Binding DataContext.Unit}" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
                                                     <TextBlock Text="," Margin=" 0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                                     <TextBlock Text="Report Template named" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                                     <TextBlock Text="{Binding Template}" Margin=" 0,0,5,0" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
@@ -67,7 +67,7 @@
                                         </ListView.ItemTemplate>
                                     </ListView>
                                 </ScrollViewer>
-                                <Button x:Name="RBtn" Grid.Column="1" Content="Remove Selected" Click="RemoveButton" VerticalAlignment="Top"></Button>
+                                <Button x:Name="RBtn" Grid.Column="1" Content="Remove" Click="RemoveButton" VerticalAlignment="Top"></Button>
                             </Grid>
                         </StackPanel>
                     </StackPanel>
