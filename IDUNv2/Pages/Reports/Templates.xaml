@@ -59,9 +59,9 @@
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurTemplate.Name, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurTemplate.Directive, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurTemplate.FaultDescr, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" Height="96" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Discovery_SelectionChanged" />
-            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Symptom_SelectionChanged" />
-            <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Priority_SelectionChanged" />
+            <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" SelectedItem="{Binding CurDiscovery, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Discovery_SelectionChanged" />
+            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" SelectedItem="{Binding CurSymptom, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Symptom_SelectionChanged" />
+            <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding CurPriority, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Priority_SelectionChanged" />
             <Button Grid.Row="7" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" Click="Button_Click" />
         </Grid>
         <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>

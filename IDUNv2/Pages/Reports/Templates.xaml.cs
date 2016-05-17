@@ -35,6 +35,7 @@ namespace IDUNv2.Pages.Reports
         {
             await viewModel.InitAsync();
             this.DataContext = viewModel;
+            viewModel.CurDiscovery = viewModel.DiscoveryList.FirstOrDefault();
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
