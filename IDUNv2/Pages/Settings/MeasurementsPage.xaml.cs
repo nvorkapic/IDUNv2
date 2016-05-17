@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDUNv2.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,12 @@ namespace IDUNv2.Pages.Settings
     /// </summary>
     public sealed partial class MeasurementsPage : Page
     {
+        private MeasurementListSettingsVM viewModel = new MeasurementListSettingsVM(); 
+
         public MeasurementsPage()
         {
             this.InitializeComponent();
+            this.DataContext = viewModel;
         }
     }
 }

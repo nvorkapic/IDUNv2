@@ -13,7 +13,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Icon}"></Image>
+                            <Image Source="{Binding Icon}" Width="25" Height="25"></Image>
                             <TextBlock Text="{Binding Title}"></TextBlock>
                         </StackPanel>
                     </DataTemplate>

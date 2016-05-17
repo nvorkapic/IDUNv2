@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Accelerometer.png" />
+    <Content Include="Assets\Finger.png" />
     <Content Include="Assets\Gyroscope.png" />
     <Content Include="Assets\Home.png" />
     <Content Include="Assets\Humidity.png" />

@@ -109,8 +109,13 @@ namespace IDUNv2.ViewModels
             SelectSubMenu(target, SubMenu.First());
         }
 
-        private List<SubMenuItem> _subMenu;
-        public List<SubMenuItem> SubMenu { get { return _subMenu; } set { _subMenu = value; Notify(); } }
+        public void SelectSubMenu(Frame target, SubMenuItem item)
+        {
+            CurSubMenu = item;
+            target.Navigate(item.PageType);
+        }
+
+
 
     }
 }
