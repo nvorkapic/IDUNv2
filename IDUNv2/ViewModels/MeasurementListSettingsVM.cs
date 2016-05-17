@@ -11,9 +11,6 @@ namespace IDUNv2.ViewModels
     public class MeasurementSetting : BaseViewModel
     {
         public bool Enabled { get; set; }
-
-        public int Interval { get; set; }
-
         public ObservableCollection<Thresholds> Threshold { get; set; }
     }
 
@@ -24,19 +21,30 @@ namespace IDUNv2.ViewModels
         public string Icon { get; set; }
         public string Unit { get; set; }
         public MeasurementSetting Setting { get; set; }
-        public List<Operator> ListAvailableOperators { get; set; }
 
+
+        public ObservableCollection<Operator> ListAvailableOperators { get; set; }
+        public ObservableCollection<Template> ListAvailableTemplates { get; set; }
+
+        public MeasurementListSettingsItems(string Title, string Icon, string Unit)
+        {
+            this.Title = Title;
+            this.Icon = Icon;
+            this.Unit = Unit;
+            Setting = new MeasurementSetting { Enabled = true, Threshold = new ObservableCollection<Thresholds>() };
+            ListAvailableTemplates = new ObservableCollection<Template> { Template.None, Template.Quick, Template.Fault };
+            ListAvailableOperators = new ObservableCollection<Operator> { Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual };
+        }
     }
 
     public class Thresholds
     {
-        public bool Threshold { get; set; }
-        // <, <=, =, >=, >
-        public Operator Operator { get; set; }
+
+        public Operator? Operator { get; set; }
 
         public double Value { get; set; }
 
-        public string ReportTemplate { get; set; }
+        public Template? Template { get; set; }
 
     }
 
@@ -47,33 +55,35 @@ namespace IDUNv2.ViewModels
         Greater,
         GreaterOrEqual,
         Equal
- 
     }
+
+    public enum Template
+    {
+        Quick,
+        Fault,
+        None
+    }
+
     public class MeasurementListSettingsVM : BaseViewModel
     {
-        public List<MeasurementSetting> _measurementSettingList = new List<MeasurementSetting>();
+        public ObservableCollection<MeasurementSetting> _measurementSettingList = new ObservableCollection<MeasurementSetting>();
+
 
         public static ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>()
         {
-            new MeasurementListSettingsItems { Title="Usage", Icon="/Assets/Finger.png",
-                ListAvailableOperators = new List<Operator> {Operator.Equal} },
-            new MeasurementListSettingsItems { Title="Temperature", Icon="/Assets/Thermometer.png", Unit="°C",
-                ListAvailableOperators = new List<Operator> {Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual} },
-            new MeasurementListSettingsItems { Title="Pressure", Icon="/Assets/Pressure.png", Unit="kPa",
-                ListAvailableOperators = new List<Operator> {Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual}  },
-            new MeasurementListSettingsItems { Title="Humidity", Icon="/Assets/Humidity.png",Unit="%",
-                ListAvailableOperators = new List<Operator> {Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual}  },
-            new MeasurementListSettingsItems { Title="Accelerometer", Icon="/Assets/Accelerometer.png",Unit="m/s²",
-                ListAvailableOperators = new List<Operator> {Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual} },
-            new MeasurementListSettingsItems { Title="Magnetometer", Icon="/Assets/Magnet.png",Unit="μT",
-                ListAvailableOperators = new List<Operator> {Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual} },
-            new MeasurementListSettingsItems { Title="Gyroscope", Icon="/Assets/Gyroscope.png",Unit="rad/s",
-                ListAvailableOperators = new List<Operator> {Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual}  }
+
+            new MeasurementListSettingsItems ("Usage", "/Assets/Finger.png",""),
+            new MeasurementListSettingsItems ("Temperature", "/Assets/Thermometer.png","°C"),
+            new MeasurementListSettingsItems ("Pressure", "/Assets/Pressure.png", "kPa"),
+            new MeasurementListSettingsItems ("Humidity", "/Assets/Humidity.png","%"),
+            new MeasurementListSettingsItems ("Accelerometer","/Assets/Accelerometer.png","m/s²"),
+            new MeasurementListSettingsItems ("Magnetometer", "/Assets/Magnet.png","μT"),
+            new MeasurementListSettingsItems ("Gyroscope", "/Assets/Gyroscope.png","rad/s")
         };
 
         public ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList { get { return _measurementConfigurationList;}}
 
-        public List<MeasurementSetting> MeasurementSettingList { get { return _measurementSettingList; } }
+        public ObservableCollection<MeasurementSetting> MeasurementSettingList { get { return _measurementSettingList; } }
 
         private MeasurementListSettingsItems _currentMeasurements;
         public MeasurementListSettingsItems CurrentMeasurements { get { return _currentMeasurements; } set { _currentMeasurements = value; Notify(); } }

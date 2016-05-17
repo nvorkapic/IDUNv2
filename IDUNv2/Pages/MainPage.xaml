@@ -18,7 +18,7 @@
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
-
+    <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Auto">
     <SplitView x:Name="mainMenuSplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="165">
         <SplitView.Pane>
             <StackPanel>
@@ -66,4 +66,5 @@
             </Grid>
         </SplitView.Content>
     </SplitView>
+    </ScrollViewer>
 </Page>
