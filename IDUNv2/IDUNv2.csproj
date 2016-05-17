@@ -97,6 +97,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OnScreenKeyboard\KeyAssignmentSet.cs" />
+    <Compile Include="OnScreenKeyboard\KeyboardViewModel.cs" />
+    <Compile Include="OnScreenKeyboard\KeyModel.cs" />
+    <Compile Include="OnScreenKeyboard\OnScreenKeyboard.xaml.cs" />
+    <Compile Include="OnScreenKeyboard\RelayCommand.cs" />
+    <Compile Include="OnScreenKeyboard\ViewModel.cs" />
     <Compile Include="Pages\About\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
@@ -185,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="OnScreenKeyboard\OnScreenKeyboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\About\Index.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

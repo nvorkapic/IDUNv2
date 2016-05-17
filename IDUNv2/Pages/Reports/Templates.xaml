@@ -5,6 +5,7 @@
     xmlns:local="using:IDUNv2.Pages.Reports"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="FaultCodeData">
@@ -55,5 +56,6 @@
             <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Priority_SelectionChanged" />
             <Button Grid.Row="7" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" />
         </Grid>
+        <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Visible" Width="Auto"/>
     </Grid>
 </Page>
