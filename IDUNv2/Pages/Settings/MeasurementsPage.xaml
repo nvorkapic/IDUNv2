@@ -9,16 +9,25 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <ListView ItemsSource="{Binding MeasurementConfigurationList}">
+            <ListView ItemsSource="{Binding MeasurementConfigurationList}" Loaded="listOnLoad" SelectionChanged="ListSelectionChanged">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.Background>
+                    <SolidColorBrush Color="#FF171717"/>
+                </ListView.Background>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Icon}" Width="25" Height="25"></Image>
+                            <Image Source="{Binding Icon}" Width="25" Height="25" Margin="0,0,5,0"></Image>
                             <TextBlock Text="{Binding Title}"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Frame x:Name="ConfigurationFrame"></Frame>
         </StackPanel>
     </Grid>
 </Page>

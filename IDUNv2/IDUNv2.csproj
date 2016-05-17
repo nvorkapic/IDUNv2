@@ -133,6 +133,15 @@
     <Compile Include="Pages\Reports\TemplatesPage.xaml.cs">
       <DependentUpon>TemplatesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Settings\MeasurementConfig\ScalarConfig.xaml.cs">
+      <DependentUpon>ScalarConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\MeasurementConfig\UsageConfig.xaml.cs">
+      <DependentUpon>UsageConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\MeasurementConfig\VectorConfig.xaml.cs">
+      <DependentUpon>VectorConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Settings\MeasurementsPage.xaml.cs">
       <DependentUpon>MeasurementsPage.xaml</DependentUpon>
     </Compile>
@@ -230,6 +239,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Reports\TemplatesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\MeasurementConfig\ScalarConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\MeasurementConfig\UsageConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\MeasurementConfig\VectorConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

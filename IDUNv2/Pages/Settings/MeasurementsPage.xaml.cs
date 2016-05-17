@@ -1,5 +1,10 @@
-﻿using IDUNv2.ViewModels;
-using System;
+
+﻿using System;
+
+﻿using IDUNv2.Pages.Settings.MeasurementConfig;
+using IDUNv2.ViewModels;
+
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,6 +34,24 @@ namespace IDUNv2.Pages.Settings
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
+        }
+
+        private void listOnLoad(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (ListView)sender;
+            selectedItem.SelectedIndex = 0;
+        }
+
+        private void ListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var _listView = (ListView)sender;
+            var _measurementItem = ((_listView.SelectedItem) as MeasurementListSettingsItems);
+
+            viewModel.CurrentMeasurements = _measurementItem;
+
+            ConfigurationFrame.Navigate(typeof(UsageConfig), _measurementItem);
+   
+            
         }
     }
 }
