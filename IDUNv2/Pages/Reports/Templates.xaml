@@ -11,6 +11,19 @@
         <DataTemplate x:Key="FaultCodeData">
             <TextBlock Text="{Binding Description}"/>
         </DataTemplate>
+        <DataTemplate x:Key="TemplateListData">
+            <TextBlock Text="{Binding Name}" />
+        </DataTemplate>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,8,0,0" />
+        </Style>
+        <Style x:Key="TextBoxSingleStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="10,5,0,0" />
+            <Setter Property="Width" Value="350" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
@@ -18,12 +31,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Margin="10,0,10,0">
-            <ListBox Margin="0,10,0,10" MinWidth="200">
-                <TextBlock Text="Template 1" />
-                <TextBlock Text="Template 2" />
-                <TextBlock Text="Template 3" />
-                <TextBlock Text="Template 4" />
-            </ListBox>
+            <ListBox Margin="0,10,0,10" MinWidth="200" ItemTemplate="{StaticResource TemplateListData}" ItemsSource="{Binding Templates}" SelectedItem="{Binding CurTemplate, Mode=TwoWay}" />
         </Grid>
         <Grid Grid.Column="1" Margin="0,5,0,0">
             <Grid.RowDefinitions>
@@ -41,21 +49,21 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="0,8,0,0" Text="Name: " VerticalAlignment="Top"/>
-            <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,0" Text="Directive: " VerticalAlignment="Top"/>
-            <TextBlock Grid.Row="3" HorizontalAlignment="Left" Margin="0,8,0,0" Text="Fault Desc: " VerticalAlignment="Top"/>
-            <TextBlock Grid.Row="4" HorizontalAlignment="Left" Margin="0,8,0,0" Text="Discovery: " VerticalAlignment="Top"/>
-            <TextBlock Grid.Row="5" HorizontalAlignment="Left" Margin="0,8,0,0" Text="Symptom: " VerticalAlignment="Top"/>
-            <TextBlock Grid.Row="6" HorizontalAlignment="Left" Margin="0,8,0,0" Text="Priority: " VerticalAlignment="Top"/>
+            <TextBlock Grid.Row="0" Grid.RowSpan="2" Text="Name:" Style="{StaticResource LabelStyle}" />
+            <TextBlock Grid.Row="2" Text="Directive:" Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="3" Text="Fault Desc:" Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="4" Text="Discovery:" Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="5" Text="Symptom:" Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="6" Text="Priority:" Style="{StaticResource LabelStyle}"/>
 
-            <TextBox Grid.Row="0" Grid.Column="1" Margin="10,5,0,0" Width="350" HorizontalAlignment="Left"  Text="{Binding ErrDescr, Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Margin="10,5,0,0" Width="350" HorizontalAlignment="Left"  Text="{Binding ErrDescr, Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Margin="10,5,0,0" Width="350" MinHeight="96" HorizontalAlignment="Left" Text="{Binding ErrDescrLo, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Discovery_SelectionChanged" />
-            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Symptom_SelectionChanged" />
-            <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Priority_SelectionChanged" />
-            <Button Grid.Row="7" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurTemplate.Name, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurTemplate.Directive, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurTemplate.FaultDescr, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" Height="96" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Discovery_SelectionChanged" />
+            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Symptom_SelectionChanged" />
+            <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" ItemTemplate="{StaticResource FaultCodeData}" SelectionChanged="Priority_SelectionChanged" />
+            <Button Grid.Row="7" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" Click="Button_Click" />
         </Grid>
-        <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Visible" Width="Auto"/>
+        <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDUNv2.ViewModels.Reports;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,19 +23,30 @@ namespace IDUNv2.Pages.Reports
     /// </summary>
     public sealed partial class Templates : Page
     {
+        private TemplatesViewModel viewModel = new TemplatesViewModel();
+
         public Templates()
         {
             this.InitializeComponent();
+            this.Loaded += Templates_Loaded;
+        }
+
+        private async void Templates_Loaded(object sender, RoutedEventArgs e)
+        {
+            await viewModel.InitAsync();
+            this.DataContext = viewModel;
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-
+            osk.SetTarget(sender as TextBox);
+            osk.Visibility = Visibility.Visible;
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            osk.SetTarget(null);
+            osk.Visibility = Visibility.Collapsed;
         }
 
         private void Discovery_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -50,6 +62,13 @@ namespace IDUNv2.Pages.Reports
         private void Priority_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var x = viewModel.CurTemplate;
+            var d = x.Directive;
+            var f = x.FaultDescr;
         }
     }
 }

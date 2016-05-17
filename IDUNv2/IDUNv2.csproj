@@ -97,10 +97,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppData.cs" />
+    <Compile Include="Models\Reports\TemplateModel.cs" />
     <Compile Include="OnScreenKeyboard\KeyAssignmentSet.cs" />
     <Compile Include="OnScreenKeyboard\KeyboardViewModel.cs" />
     <Compile Include="OnScreenKeyboard\KeyModel.cs" />
-    <Compile Include="OnScreenKeyboard\OnScreenKeyboard.xaml.cs" />
+    <Compile Include="OnScreenKeyboard\OnScreenKeyboard.xaml.cs">
+      <DependentUpon>OnScreenKeyboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OnScreenKeyboard\RelayCommand.cs" />
     <Compile Include="OnScreenKeyboard\ViewModel.cs" />
     <Compile Include="Pages\About\Index.xaml.cs">
@@ -149,6 +153,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MeasurementListSettingsVM.cs" />
+    <Compile Include="ViewModels\Reports\TemplatesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -253,8 +258,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Reference Include="Addovation.Cloud.Apps.AddoResources.Client.Portable">
+      <HintPath>..\Dependencies\Addovation.Cloud.Apps.AddoResources.Client.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Addovation.Common">
+      <HintPath>..\Dependencies\Addovation.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\Dependencies\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
