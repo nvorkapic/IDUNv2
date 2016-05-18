@@ -58,6 +58,7 @@ namespace OnScreenKeyboard
             this.container = container;
             KeyModel.theKeyboardViewModel = this;
         }
+
         #endregion constructor
 
         #region Commanding

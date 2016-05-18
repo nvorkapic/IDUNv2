@@ -1,4 +1,5 @@
 ﻿using IDUNv2.ViewModels;
+using IDUNv2.ViewModels.Reports;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,8 +23,54 @@ namespace IDUNv2.Pages.Settings
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
     public sealed partial class MeasurementConfig : Page
     {
+        //private TemplatesViewModel TemplviewModel = new TemplatesViewModel();
+        private object _host;
+
+        public Control TargetBox { get; private set; }
+
+        public void SetTarget(TextBox control)
+        {
+            TargetBox = control;
+        }
+
+        public void RegisterTarget(TextBox control)
+        {
+            control.GotFocus += delegate { TargetBox = control; };
+            control.LostFocus += delegate { TargetBox = null; };
+        }
+        public void RegisterTarget(PasswordBox control)
+        {
+            control.GotFocus += delegate { TargetBox = control; };
+            control.LostFocus += delegate { TargetBox = null; };
+        }
+
+        public void RegisterHost(object host)
+        {
+            if (host != null)
+            {
+                _host = host;
+            }
+        }
+
+        public object GetHost()
+        {
+            return _host;
+        }
+
+
+        private void Target_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var t = sender as TextBox;
+            if (t.FocusState == FocusState.Pointer)
+            {
+                //this.IsEnabled = true;
+                //turn on the lights
+            }
+        }
+
 
         public MeasurementListSettingsItems OriginalItem;
 
@@ -35,6 +82,8 @@ namespace IDUNv2.Pages.Settings
 
             EnableCheck.Checked += EnableCheck_Checked;
             EnableCheck.Unchecked += EnableCheck_Checked;
+
+            SetTarget(ValueTB);
         }
 
         private void EnableCheck_Checked(object sender, RoutedEventArgs e)
@@ -135,20 +184,33 @@ namespace IDUNv2.Pages.Settings
         {
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
             {
-                osk.SetTarget(sender as TextBox);
-                osk.Visibility = Visibility.Visible;
-                InstructionText.Visibility = Visibility.Visible;
-                WarningAdd.Visibility = Visibility.Collapsed;
-            }
+
+                Keyboard.Visibility = Visibility.Visible;
+                ReportSectionPanel.Visibility = Visibility.Collapsed;
         }
+    }
 
         private void TBLostFoc(object sender, RoutedEventArgs e)
         {
+  
+            var textB = (TextBox)sender;
+
+          if (textB.Text != "")
+                if (textB.Text.ToCharArray().Last() == '.')
+                {
+                    char[] textarray = textB.Text.ToArray();
+                    textarray = textarray.Take(textarray.Count() - 1).ToArray();
+                    string s = new string(textarray);
+                    textB.Text = s;
+                }
+
+
+                
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
             {
-                osk.SetTarget(null);
-                osk.Visibility = Visibility.Collapsed;
-                InstructionText.Visibility = Visibility.Collapsed;
+
+                Keyboard.Visibility = Visibility.Collapsed;
+                ReportSectionPanel.Visibility = Visibility.Visible;
             }
         }
 
@@ -156,6 +218,39 @@ namespace IDUNv2.Pages.Settings
         {
             var Box = (ComboBox)sender;
             Box.SelectedIndex = 0;
+        }
+
+        private void KeyboardBtnClick(object sender, RoutedEventArgs e)
+        {
+        
+            var target = (TextBox)TargetBox;
+            var btn = (Button)sender;
+            
+            if ((btn.Content as string) != "Back")
+            {
+                if (!target.Text.Contains("."))
+                {
+                    target.Text = target.Text + btn.Content;
+                }
+                else
+                {
+                    if (btn.Content.ToString() != ".")
+                    {
+                        target.Text = target.Text + btn.Content;
+                    }
+                }
+            }
+            else
+            {
+                if (target.Text != null || target.Text != string.Empty)
+                {
+                    char[] textarray = target.Text.ToArray();
+                    textarray = textarray.Take(textarray.Count() - 1).ToArray();
+                    string s = new string(textarray);
+                    target.Text = s;
+                    
+                }
+            }
         }
     }
 }
