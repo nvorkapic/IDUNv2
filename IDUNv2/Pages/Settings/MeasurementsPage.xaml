@@ -9,7 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <ListView ItemsSource="{Binding MeasurementConfigurationList}" Loaded="listOnLoad" SelectionChanged="ListSelectionChanged">
+            <ListView ItemsSource="{Binding MeasurementConfigurationList}" Loaded="listOnLoad" SelectionChanged="ListSelectionChanged" Style="{StaticResource ListViewStyle}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
