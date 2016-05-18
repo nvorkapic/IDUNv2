@@ -85,10 +85,32 @@ namespace IDUNv2.Pages.Settings
 
         private void AddButton(object sender, RoutedEventArgs e)
         {
+            
+
             var op = (Operator)operatorCB.SelectedItem;
             var tp = (Template)TemplateCB.SelectedItem;
+            double vl;
 
-            OriginalItem.Setting.Threshold.Insert(0, new Thresholds { Operator = op , Template = tp, Value = double.Parse(ValueTB.Text) });
+
+                if (double.TryParse(ValueTB.Text, out vl) == true)
+                {
+                    var find = OriginalItem.Setting.Threshold.ToList().FindAll(x => x.Value == vl);
+
+                    if (find.Count == 0)
+                    {
+                        OriginalItem.Setting.Threshold.Insert(0, new Thresholds { Operator = op, Template = tp, Value = vl });
+                        WarningAdd.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                        WarningAdd.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    ValueTB.Focus(FocusState.Keyboard);
+                }
+   
+
+
 
         }
         private void RemoveButton(object sender, RoutedEventArgs e)
@@ -111,14 +133,29 @@ namespace IDUNv2.Pages.Settings
 
         private void TBGotFoc(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(sender as TextBox);
-            osk.Visibility = Visibility.Visible;
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
+            {
+                osk.SetTarget(sender as TextBox);
+                osk.Visibility = Visibility.Visible;
+                InstructionText.Visibility = Visibility.Visible;
+                WarningAdd.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void TBLostFoc(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(null);
-            osk.Visibility = Visibility.Collapsed;
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
+            {
+                osk.SetTarget(null);
+                osk.Visibility = Visibility.Collapsed;
+                InstructionText.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void TemplateCB_Loaded(object sender, RoutedEventArgs e)
+        {
+            var Box = (ComboBox)sender;
+            Box.SelectedIndex = 0;
         }
     }
 }
