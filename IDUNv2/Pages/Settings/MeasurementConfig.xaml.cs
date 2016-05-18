@@ -88,6 +88,7 @@ namespace IDUNv2.Pages.Settings
 
         private void EnableCheck_Checked(object sender, RoutedEventArgs e)
         {
+            if (OriginalItem == null) return;
             if (OriginalItem.Setting.Enabled)
             {
                 ConfigContent.Visibility = Visibility.Visible;
