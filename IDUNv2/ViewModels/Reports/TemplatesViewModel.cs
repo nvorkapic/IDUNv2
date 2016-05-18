@@ -52,15 +52,18 @@ namespace IDUNv2.ViewModels.Reports
 
         public TemplatesViewModel()
         {
-            Templates = AppData.GetFaultReportTemplates();
+            Templates = AppData.FaultReports.GetFaultReportTemplates();
             CurTemplate = Templates.FirstOrDefault();
         }
 
         public async Task InitAsync()
         {
-            DiscoveryList = await AppData.CloudClient.GetWorkOrderDiscCodes();
-            SymptomList = await AppData.CloudClient.GetWorkOrderSymptCodes();
-            PriorityList = await AppData.CloudClient.GetMaintenancePriorities();
+            //DiscoveryList = await AppData.CloudClient.GetWorkOrderDiscCodes();
+            //SymptomList = await AppData.CloudClient.GetWorkOrderSymptCodes();
+            //PriorityList = await AppData.CloudClient.GetMaintenancePriorities();
+            DiscoveryList = await AppData.FaultReports.GetDiscCodes();
+            SymptomList = await AppData.FaultReports.GetSymptCodes();
+            PriorityList = await AppData.FaultReports.GetPrioCodes();
 
             Templates[0].Discovery = DiscoveryList[0];
             Templates[1].Discovery = DiscoveryList[1];

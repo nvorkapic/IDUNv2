@@ -1,6 +1,7 @@
 ﻿using Addovation.Common.Extensions;
 using Addovation.Common.Models;
 using IDUNv2.Models;
+using IDUNv2.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -64,19 +65,8 @@ namespace IDUNv2
 
     public static class AppData
     {
-        private static List<Models.Reports.TemplateModel> _reportTemplates = new List<Models.Reports.TemplateModel>
-        {
-            new Models.Reports.TemplateModel { Name = "Template 1" },
-            new Models.Reports.TemplateModel { Name = "Template 2" },
-            new Models.Reports.TemplateModel { Name = "Template 3" },
-        };
-
-        public static List<Models.Reports.TemplateModel> GetFaultReportTemplates()
-        {
-            return _reportTemplates;
-        }
-
         public static CloudClient CloudClient { get; set; }
+        public static FaultReportService FaultReports { get; set; }
 
         private static void InitInsights()
         {
@@ -121,6 +111,12 @@ namespace IDUNv2
             {
                 throw ex;
             }
+        }
+
+        public static async Task InitServices()
+        {
+            FaultReports = new FaultReportService(CloudClient);
+            await FaultReports.InitCaches();
         }
     }
 }
