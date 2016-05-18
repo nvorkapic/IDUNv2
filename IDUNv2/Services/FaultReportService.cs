@@ -34,7 +34,7 @@ namespace IDUNv2.Services
 
         public async Task<List<FaultReport>> GetFaultReports()
         {
-            return await cloudClient.GetFaultReports();
+            return await cloudClient.GetFaultReports().ConfigureAwait(false);
         }
 
         private static async Task<List<T>> GetCachedList<T>(Func<Task<List<T>>> getFunc, List<T> cachedList, bool useCached)
@@ -49,27 +49,27 @@ namespace IDUNv2.Services
 
         public async Task<List<WorkOrderDiscCode>> GetDiscCodes(bool useCached = true)
         {
-            DiscCodes = await GetCachedList(cloudClient.GetWorkOrderDiscCodes, DiscCodes, useCached);
+            DiscCodes = await GetCachedList(cloudClient.GetWorkOrderDiscCodes, DiscCodes, useCached).ConfigureAwait(false);
             return DiscCodes;
         }
 
         public async Task<List<WorkOrderSymptCode>> GetSymptCodes(bool useCached = true)
         {
-            SymptCodes = await GetCachedList(cloudClient.GetWorkOrderSymptCodes, SymptCodes, useCached);
+            SymptCodes = await GetCachedList(cloudClient.GetWorkOrderSymptCodes, SymptCodes, useCached).ConfigureAwait(false);
             return SymptCodes;
         }
 
         public async Task<List<MaintenancePriority>> GetPrioCodes(bool useCached = true)
         {
-            PrioCodes = await GetCachedList(cloudClient.GetMaintenancePriorities, PrioCodes, useCached);
+            PrioCodes = await GetCachedList(cloudClient.GetMaintenancePriorities, PrioCodes, useCached).ConfigureAwait(false);
             return PrioCodes;
         }
 
         public async Task InitCaches()
         {
-            DiscCodes = await GetDiscCodes(false);
-            SymptCodes = await GetSymptCodes(false);
-            PrioCodes = await GetPrioCodes(false);
+            DiscCodes = await GetDiscCodes(false).ConfigureAwait(false);
+            SymptCodes = await GetSymptCodes(false).ConfigureAwait(false);
+            PrioCodes = await GetPrioCodes(false).ConfigureAwait(false);
         }
     }
 }
