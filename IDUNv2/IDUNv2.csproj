@@ -98,6 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppData.cs" />
+    <Compile Include="Common\TaskBinding.cs" />
     <Compile Include="Models\Reports\TemplateModel.cs" />
     <Compile Include="OnScreenKeyboard\KeyAssignmentSet.cs" />
     <Compile Include="OnScreenKeyboard\KeyboardViewModel.cs" />

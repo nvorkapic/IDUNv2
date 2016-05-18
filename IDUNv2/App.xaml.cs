@@ -81,7 +81,7 @@ namespace IDUNv2
                 Window.Current.Activate();
             }
 
-            await AppData.InitServices();
+            await AppData.InitServices().ConfigureAwait(false);
         }
 
         /// <summary>

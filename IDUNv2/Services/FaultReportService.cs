@@ -42,7 +42,7 @@ namespace IDUNv2.Services
             List<T> results = cachedList;
             if (results == null || !useCached)
             {
-                results = await getFunc();
+                results = await getFunc().ConfigureAwait(false);
             }
             return results;
         }
