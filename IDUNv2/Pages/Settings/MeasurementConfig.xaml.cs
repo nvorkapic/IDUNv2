@@ -194,9 +194,10 @@ namespace IDUNv2.Pages.Settings
         private void TBLostFoc(object sender, RoutedEventArgs e)
         {
   
-            var textB = (TextBox)sender;
+          var textB = (TextBox)sender;
 
           if (textB.Text != "")
+            {
                 if (textB.Text.ToCharArray().Last() == '.')
                 {
                     char[] textarray = textB.Text.ToArray();
@@ -204,12 +205,21 @@ namespace IDUNv2.Pages.Settings
                     string s = new string(textarray);
                     textB.Text = s;
                 }
-
-
-                
+                if (textB.Text.ToCharArray().Last() == '-')
+                {
+                    textB.Text = "";
+                }
+            }
+            int chrnr = 0;
+          foreach (char chr in textB.Text)
+            {
+                if (chr == '-') { ++chrnr; }
+            }
+            if (chrnr > 1)
+                textB.Text = "";
+             
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
             {
-
                 Keyboard.Visibility = Visibility.Collapsed;
                 ReportSectionPanel.Visibility = Visibility.Visible;
             }
@@ -227,7 +237,7 @@ namespace IDUNv2.Pages.Settings
             var target = (TextBox)TargetBox;
             var btn = (Button)sender;
             
-            if ((btn.Content as string) != "Back")
+            if ((btn.Content as string) != "←")
             {
                 if (!target.Text.Contains("."))
                 {
@@ -249,7 +259,6 @@ namespace IDUNv2.Pages.Settings
                     textarray = textarray.Take(textarray.Count() - 1).ToArray();
                     string s = new string(textarray);
                     target.Text = s;
-                    
                 }
             }
         }
