@@ -22,12 +22,15 @@ namespace IDUNv2.Pages
     public sealed partial class MainPage : Page
     {
         private MainViewModel viewModel = new MainViewModel();
-
+        public MeasurementListSettingsVM MEasurementListTest = new MeasurementListSettingsVM();
         public MainPage()
         {
+            
             this.InitializeComponent();
             this.DataContext = viewModel;
             this.Loaded += MainPage_Loaded;
+
+            
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)

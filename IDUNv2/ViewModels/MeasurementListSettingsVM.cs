@@ -1,10 +1,12 @@
 ﻿using IDUNv2.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace IDUNv2.ViewModels
 {
@@ -31,7 +33,7 @@ namespace IDUNv2.ViewModels
             this.Title = Title;
             this.Icon = Icon;
             this.Unit = Unit;
-            Setting = new MeasurementSetting { Enabled = true, Threshold = new ObservableCollection<Thresholds>() };
+            Setting = new MeasurementSetting { Enabled = false, Threshold = new ObservableCollection<Thresholds>() };
             ListAvailableTemplates = new ObservableCollection<Template> { Template.None, Template.Quick, Template.Fault };
             ListAvailableOperators = new ObservableCollection<Operator> { Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual };
         }
@@ -67,10 +69,13 @@ namespace IDUNv2.ViewModels
 
     public class MeasurementListSettingsVM : BaseViewModel
     {
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
         public ObservableCollection<MeasurementSetting> _measurementSettingList = new ObservableCollection<MeasurementSetting>();
 
 
-        public static ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>()
+        public ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>()
         {
 
             new MeasurementListSettingsItems ("Usage", "/Assets/Finger.png",""),
@@ -84,9 +89,38 @@ namespace IDUNv2.ViewModels
 
         public ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList { get { return _measurementConfigurationList;}}
 
-        public ObservableCollection<MeasurementSetting> MeasurementSettingList { get { return _measurementSettingList; } }
+        //public ObservableCollection<MeasurementSetting> MeasurementSettingList { get { return _measurementSettingList; } }
 
         private MeasurementListSettingsItems _currentMeasurements;
         public MeasurementListSettingsItems CurrentMeasurements { get { return _currentMeasurements; } set { _currentMeasurements = value; Notify(); } }
+        public MeasurementListSettingsVM()
+        {
+            CurrentMeasurements = MeasurementConfigurationList.FirstOrDefault();
+        }
+
+        public async void SaveMCListToLocal()
+        {
+            string json = JsonConvert.SerializeObject(_measurementConfigurationList.ToArray(), Formatting.Indented);
+            StorageFile ConfigFile = await localFolder.CreateFileAsync("MeasurementConfiguration.txt", CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(ConfigFile, json);
+        }
+
+        public async Task LoadMCListFromLocal()
+        {
+            try
+            {
+                StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
+                string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
+                _measurementConfigurationList = JsonConvert.DeserializeObject<ObservableCollection<MeasurementListSettingsItems>>(ConfigText);
+                CurrentMeasurements = MeasurementConfigurationList.FirstOrDefault();
+            }
+            catch
+            {
+
+            }
+        }
     }
+
+
+   
 }
