@@ -9,21 +9,45 @@
     <Page.Resources>
         <DataTemplate x:Key="MainMenuData">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Icon}" Margin="5" FontFamily="Segoe MDL2 Assets"  VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding Label}" Margin="15" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Icon}" Margin="5" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Label}" Margin="15,0,0,0" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SubMenuData">
-            <TextBlock Text="{Binding Label}" Margin="0,15,0,15" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Label}" TextAlignment="Center"/>
         </DataTemplate>
     </Page.Resources>
-    <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
-        <SplitView x:Name="mainMenuSplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="165">
-            <SplitView.Pane>
-                <StackPanel>
-                    <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="Transparent" Click="MainMenuExpand_Click"/>
-                    <ListView ItemsSource="{Binding MainMenu}" SelectionChanged="MainMenu_SelectionChanged" Loaded="subLoaded" ItemTemplate="{StaticResource MainMenuData}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <RelativePanel Height="50" Background="#FF1F1F1F">
+            <StackPanel Orientation="Horizontal">
+                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="{ThemeResource ToggleSwitchCurtainBackgroundThemeBrush}" Click="MainMenuExpand_Click"/>
+                <CommandBar Width="500" VerticalContentAlignment="Center" HorizontalAlignment="Left">
+                    <CommandBar.Content>
+                        <TextBlock Text="{Binding CurMainMenu.Label}" FontWeight="Bold" Margin="10,0,0,0" />
+                    </CommandBar.Content>
+                    <CommandBar.PrimaryCommands>
+                        <AppBarButton Icon="Add" Label="Create new" />
+                    </CommandBar.PrimaryCommands>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Icon="Add" Label="Add" />
+                    </CommandBar.SecondaryCommands>
+                </CommandBar>
+            </StackPanel>
+
+            <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Height="50">
+                    <TextBox Width="195" VerticalAlignment="Center"/>
+                    <AppBarButton Icon="Find" />
                 </StackPanel>
+            </StackPanel>
+        </RelativePanel>
+        <SplitView Grid.Row="1" x:Name="mainMenuSplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="165">
+            <SplitView.Pane>
+                <ListView ItemsSource="{Binding MainMenu}" SelectionChanged="MainMenu_SelectionChanged" Loaded="subLoaded" ItemTemplate="{StaticResource MainMenuData}" />
             </SplitView.Pane>
             <SplitView.Content>
                 <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -32,9 +56,8 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <RelativePanel Height="50">
+                    <!--<RelativePanel Height="50">
                         <StackPanel Orientation="Horizontal">
-                            <AppBarButton Icon="Back" Width="50" Height="50" />
                             <TextBlock Text="{Binding CurMainMenu.Icon}" Margin="5" VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
                             <TextBlock Text="{Binding CurMainMenu.Label}" VerticalAlignment="Center" FontSize="25"/>
                             <TextBlock Text="&#xE8DB;"  VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
@@ -47,7 +70,7 @@
                                 <AppBarButton Icon="Find" />
                             </StackPanel>
                         </StackPanel>
-                    </RelativePanel>
+                    </RelativePanel>-->
                     <ListView Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" Loaded="subLoaded" ItemTemplate="{StaticResource SubMenuData}" Style="{StaticResource ListViewStyle}">
                         <ListView.Background>
                             <SolidColorBrush Color="#FF171717"/>
@@ -67,5 +90,5 @@
                 </Grid>
             </SplitView.Content>
         </SplitView>
-    </ScrollViewer>
+    </Grid>
 </Page>

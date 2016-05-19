@@ -53,7 +53,7 @@ namespace IDUNv2.Pages
             if (item != null)
             {
                 viewModel.SelectSubMenu(ContentFrame, item);
-                HeaderSubImage.Source = new BitmapImage (new Uri("ms-appx://IDUNv2" + item.Icon));
+                //HeaderSubImage.Source = new BitmapImage (new Uri("ms-appx://IDUNv2" + item.Icon));
             }
                 
             if (lb.SelectedItem == null)
