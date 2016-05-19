@@ -22,7 +22,6 @@ namespace IDUNv2.Pages
     public sealed partial class MainPage : Page
     {
         private MainViewModel viewModel = new MainViewModel();
-        public MeasurementListSettingsVM MEasurementListTest = new MeasurementListSettingsVM();
         public MainPage()
         {
             

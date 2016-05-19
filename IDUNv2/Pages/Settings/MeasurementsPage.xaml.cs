@@ -214,7 +214,7 @@ namespace IDUNv2.Pages.Settings
             try
             {
                 var op = (Operator)operatorCB.SelectedItem;
-                var tp = (Template)TemplateCB.SelectedItem;
+                var tp = (Models.Reports.TemplateModel)TemplateCB.SelectedItem;
                 double vl;
 
                 if (double.TryParse(ValueTB.Text, out vl) == true)
@@ -270,6 +270,13 @@ namespace IDUNv2.Pages.Settings
             {
 
             }
+        }
+
+        private async void JSONClick(object sender, RoutedEventArgs e)
+        {
+            StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
+            string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
+            JSONShow.Text = ConfigText;
         }
     }
 }

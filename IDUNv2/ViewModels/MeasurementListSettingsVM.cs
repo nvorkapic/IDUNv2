@@ -26,7 +26,7 @@ namespace IDUNv2.ViewModels
 
 
         public ObservableCollection<Operator> ListAvailableOperators { get; set; }
-        public ObservableCollection<Template> ListAvailableTemplates { get; set; }
+
 
         public MeasurementListSettingsItems(string Title, string Icon, string Unit)
         {
@@ -34,7 +34,6 @@ namespace IDUNv2.ViewModels
             this.Icon = Icon;
             this.Unit = Unit;
             Setting = new MeasurementSetting { Enabled = false, Threshold = new ObservableCollection<Thresholds>() };
-            ListAvailableTemplates = new ObservableCollection<Template> { Template.None, Template.Quick, Template.Fault };
             ListAvailableOperators = new ObservableCollection<Operator> { Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual };
         }
     }
@@ -46,7 +45,7 @@ namespace IDUNv2.ViewModels
 
         public double Value { get; set; }
 
-        public Template? Template { get; set; }
+        public Models.Reports.TemplateModel Template { get; set; }
 
 
     }
@@ -60,21 +59,15 @@ namespace IDUNv2.ViewModels
         Equal
     }
 
-    public enum Template
-    {
-        Quick,
-        Fault,
-        None
-    }
 
     public class MeasurementListSettingsVM : BaseViewModel
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        public ObservableCollection<Models.Reports.TemplateModel> Templates { get; set; }
 
         public ObservableCollection<MeasurementSetting> _measurementSettingList = new ObservableCollection<MeasurementSetting>();
-
-
+        
         public ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>()
         {
 
@@ -96,6 +89,7 @@ namespace IDUNv2.ViewModels
         public MeasurementListSettingsVM()
         {
             CurrentMeasurements = MeasurementConfigurationList.FirstOrDefault();
+            Templates = new ObservableCollection<Models.Reports.TemplateModel>(AppData.FaultReports.GetFaultReportTemplates());
         }
 
         public async void SaveMCListToLocal()
