@@ -35,7 +35,7 @@ namespace IDUNv2.Pages.Reports
         {
             await viewModel.InitAsync();
             this.DataContext = viewModel;
-            viewModel.CurDiscovery = viewModel.DiscoveryList.FirstOrDefault();
+            //viewModel.CurDiscovery = viewModel.DiscoveryList.FirstOrDefault();
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -64,11 +64,14 @@ namespace IDUNv2.Pages.Reports
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
-            var x = viewModel.CurTemplate;
-            var d = x.Directive;
-            var f = x.FaultDescr;
+            //viewModel.
+        }
+
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.CreateTemplate();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IDUNv2.Models.Reports;
 
 namespace IDUNv2.Services
 {
@@ -30,6 +31,12 @@ namespace IDUNv2.Services
         public List<Models.Reports.TemplateModel> GetFaultReportTemplates()
         {
             return _reportTemplates;
+        }
+
+        public TemplateModel AddTemplate(TemplateModel template)
+        {
+            _reportTemplates.Add(template);
+            return template;
         }
 
         public async Task<List<FaultReport>> GetFaultReports()

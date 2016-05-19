@@ -7,13 +7,22 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.Models.Reports
 {
-    public class TemplateModel
+    public class TemplateModel : BaseModel
     {
-        public string Name { get; set; }
-        public string Directive { get; set; }
-        public string FaultDescr { get; set; }
-        public WorkOrderDiscCode Discovery { get; set; }
-        public WorkOrderSymptCode Symptom { get; set; }
-        public MaintenancePriority Priority { get; set; }
+        #region PropertyFields
+        private string _name;
+        private string _directive;
+        private string _faultDescr;
+        private WorkOrderDiscCode _discovery;
+        private WorkOrderSymptCode _symptom;
+        private MaintenancePriority _priority;
+        #endregion
+
+        public string Name { get { return _name; } set { _name = value; Notify(); } }
+        public string Directive { get { return _directive; } set { _directive = value; Notify(); } }
+        public string FaultDescr { get { return _faultDescr; } set { _faultDescr = value; Notify(); } }
+        public WorkOrderDiscCode Discovery { get { return _discovery; } set { _discovery = value; Notify(); } }
+        public WorkOrderSymptCode Symptom { get { return _symptom; } set { _symptom = value; Notify(); } }
+        public MaintenancePriority Priority { get { return _priority; } set { _priority = value; Notify(); } }
     }
 }
