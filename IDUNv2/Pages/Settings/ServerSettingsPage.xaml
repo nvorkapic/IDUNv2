@@ -1,13 +1,45 @@
-﻿<Page
+﻿<Page Height="365"
     x:Class="IDUNv2.Pages.Settings.ServerSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IDUNv2.Pages.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBlock VerticalAlignment="Center" FontSize="20">Server Settings</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <TextBlock Margin="10" Padding="10,0,0,0">Object ID</TextBlock>
+                        <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"></TextBox>
+                    </StackPanel>
+                    <StackPanel Padding="0,10,0,0">
+                        <TextBlock Margin="10,0,10,10" VerticalAlignment="Center">Cloud URL</TextBlock>
+                        <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"></TextBox>
+                    </StackPanel>
+                </StackPanel>
 
+                <StackPanel>
+                    <TextBlock Margin="10">User Authentication</TextBlock>
+                    <StackPanel>
+                        <TextBox PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"></TextBox>
+                        <PasswordBox PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"></PasswordBox>
+                    </StackPanel>
+                </StackPanel>
+                <Button Content="Save" Margin="10" Width="75" Height="50" Click="Save"></Button>
+
+            </StackPanel>
+            <TextBlock Foreground="Red" Text="Please check that all information is entered properly and try again!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Warning" FontWeight="Bold"></TextBlock>
+            <TextBlock Foreground="Green" Text="Server settings successfully saved!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Confirmation" FontWeight="Bold"></TextBlock>
+            <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="250"  Width="750" Visibility="Collapsed" HorizontalAlignment="Left"/>
+
+
+
+        </StackPanel>
+      
     </Grid>
 </Page>

@@ -46,7 +46,6 @@ namespace IDUNv2.Pages.Reports
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(null);
             osk.Visibility = Visibility.Collapsed;
         }
 

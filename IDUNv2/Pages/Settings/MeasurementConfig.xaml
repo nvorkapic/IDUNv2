@@ -28,7 +28,7 @@
                             <TextBlock Text="to / than" Padding="5"></TextBlock>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,5,0">
-                                    <TextBox x:Name="ValueTB" Text="{Binding Value, Mode=TwoWay}" Margin="0,0,5,0" GotFocus="TBGotFoc" Width="140" LostFocus="TBLostFoc"></TextBox>
+                                    <TextBox x:Name="ValueTB" Text="{Binding Value, Mode=TwoWay}" Margin="0,0,5,0" GotFocus="TBGotFoc" Width="140" LostFocus="TBLostFoc" PlaceholderText="Decimal number"></TextBox>
                                 </StackPanel>
                                 <TextBlock Text="value" Padding="5" HorizontalAlignment="Center"></TextBlock>
                             </StackPanel>

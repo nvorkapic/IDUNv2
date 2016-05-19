@@ -33,6 +33,10 @@ namespace OnScreenKeyboard
         
         public void SetTarget(TextBox control)
         {
+            TargetBox = control;   
+        }
+        public void SetTarget(PasswordBox control)
+        {
             TargetBox = control;
         }
 
@@ -63,6 +67,7 @@ namespace OnScreenKeyboard
         
         private void Target_GotFocus(object sender, RoutedEventArgs e)
         {
+
             var t = sender as TextBox;
             if (t.FocusState == FocusState.Pointer)
             {
@@ -70,6 +75,7 @@ namespace OnScreenKeyboard
                 //turn on the lights
             }
         }
+
 
         public OnScreenKeyBoard()
         {
