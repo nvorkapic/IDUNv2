@@ -1,4 +1,5 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.Common;
 using IDUNv2.Models.Reports;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,11 @@ namespace IDUNv2.ViewModels.Reports
             set { _curTemplate = value; Notify(); }
         }
 
+        public RelayCommand<object> SaveCommand { get; private set; }
+
         public TemplatesViewModel()
         {
+            SaveCommand = new RelayCommand<object>(ExecuteSaveCommand);
             Templates = new ObservableCollection<TemplateModel>(AppData.FaultReports.GetFaultReportTemplates());
             CurTemplate = Templates.FirstOrDefault();
         }
@@ -45,7 +49,13 @@ namespace IDUNv2.ViewModels.Reports
         public void CreateTemplate()
         {
             var template = new Models.Reports.TemplateModel { Name = "#New Template" };
-            Templates.Add(AppData.FaultReports.AddTemplate(template));
+            Templates.Add(template);
+            CurTemplate = template;
+        }
+
+        private void ExecuteSaveCommand(object param)
+        {
+            throw new NotImplementedException();
         }
     }
 }

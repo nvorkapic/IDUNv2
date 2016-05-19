@@ -49,21 +49,6 @@ namespace IDUNv2.Pages.Reports
             osk.Visibility = Visibility.Collapsed;
         }
 
-        private void Discovery_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Symptom_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Priority_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             //viewModel.

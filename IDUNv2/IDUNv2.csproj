@@ -98,6 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppData.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\TaskBinding.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Reports\TemplateModel.cs" />
