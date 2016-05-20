@@ -28,7 +28,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
                 <Image Source="/Assets/CloudIcon.png" Margin="15,0,10,0"></Image>
-                <TextBlock Text="IDUN" Foreground="White" VerticalAlignment="Center" FontSize="40"></TextBlock>
+                <TextBlock Text="IDUN" Foreground="White" VerticalAlignment="Center" FontSize="40" Margin="0,0,15,0"></TextBlock>
             </StackPanel>
             <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal" Height="50"/>

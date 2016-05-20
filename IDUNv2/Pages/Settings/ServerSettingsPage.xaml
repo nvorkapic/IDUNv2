@@ -1,4 +1,4 @@
-﻿<Page Height="365"
+﻿<Page
     x:Class="IDUNv2.Pages.Settings.ServerSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,16 +9,18 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <TextBlock VerticalAlignment="Center" FontSize="20">Server Settings</TextBlock>
-            <StackPanel Orientation="Horizontal">
+        <StackPanel Background="#FFE1E1E1">
+            <StackPanel Background="Black">
+                <TextBlock VerticalAlignment="Center" FontSize="20" Foreground="White">Server Settings</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Background="LightGray">
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel>
-                        <TextBlock Margin="10" Padding="10,0,0,0">Object ID</TextBlock>
+                    <StackPanel Background="DarkGray">
+                        <TextBlock Margin="10" Padding="10,0,0,0" Foreground="White">Object ID</TextBlock>
                         <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"></TextBox>
                     </StackPanel>
-                    <StackPanel Padding="0,10,0,0">
-                        <TextBlock Margin="10,0,10,10" VerticalAlignment="Center">Cloud URL</TextBlock>
+                    <StackPanel Padding="0,10,0,0" Background="DarkGray">
+                        <TextBlock Margin="10,0,10,10" VerticalAlignment="Center" Foreground="White">Cloud URL</TextBlock>
                         <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"></TextBox>
                     </StackPanel>
                 </StackPanel>
