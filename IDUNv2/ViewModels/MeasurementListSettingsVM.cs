@@ -20,7 +20,6 @@ namespace IDUNv2.ViewModels
         public string Icon { get; set; }
         public string Unit { get; set; }
 
-
         public ObservableCollection<Operator> ListAvailableOperators { get; set; }
 
         public MeasurementListSettingsItems(SensorType Type, string Icon, string Unit, string title)
