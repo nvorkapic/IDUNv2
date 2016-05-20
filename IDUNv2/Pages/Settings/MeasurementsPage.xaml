@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="Gainsboro">
+    <Grid Background="#FFE1E1E1">
         <StackPanel>
             <ListView ItemsSource="{Binding MeasurementConfigurationList}" SelectedItem="{Binding CurrentMeasurements, Mode=TwoWay}" Style="{StaticResource ListViewStyle}" Background="#FF668100" RequestedTheme="Dark">
                 <ListView.ItemsPanel>
@@ -126,10 +126,10 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-            <Button Content="Show JSON" Click="JSONClick"></Button>
+            <!--<Button Content="Show JSON" Click="JSONClick"></Button>
             <ScrollViewer ScrollViewer.IsVerticalRailEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Enabled">
                 <TextBlock x:Name="JSONShow"></TextBlock>
-            </ScrollViewer>
+            </ScrollViewer>-->
         </StackPanel>
     </Grid>
 </Page>
