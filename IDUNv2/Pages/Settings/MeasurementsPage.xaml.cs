@@ -279,7 +279,7 @@ namespace IDUNv2.Pages.Settings
         {
             StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
             string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
-            //JSONShow.Text = ConfigText;
+            JSONShow.Text = ConfigText;
         }
     }
 }

@@ -27,8 +27,8 @@
                 <StackPanel Height="auto">
                     <StackPanel Orientation="Horizontal" Background="Black" RequestedTheme="Dark">
                         <CheckBox x:Name="EnableCheck" Content="Enable Measurement:" Margin="5,0,5,0" VerticalAlignment="Center" IsChecked="{Binding CurrentMeasurements.Config.Enabled, Mode=TwoWay}"></CheckBox>
-                        <Image Source="{Binding CurrentMeasurements.Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
-                        <TextBlock Text="{Binding CurrentMeasurements.Title}" VerticalAlignment="Center"></TextBlock>
+                        <Image Source="{Binding CurrentMeasurements.Config.Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
+                        <TextBlock Text="{Binding CurrentMeasurements.Config.Title}" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                     <StackPanel x:Name="ConfigContent" Visibility="Collapsed" Background="#FFB7B8BC">
                         <TextBlock x:Name="WarningAdd" Text="You are trying to add Report Template with a Value that is already assigned to a trigger!" Padding="5" Visibility="Collapsed" FontWeight="Bold" Foreground="Red"></TextBlock>
@@ -102,7 +102,7 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <ScrollViewer Grid.Column="0">
-                                    <ListView ItemsSource="{Binding CurrentMeasurements.Setting.Threshold, Mode=TwoWay}" x:Name="ReportList" MaxHeight="165">
+                                    <ListView ItemsSource="{Binding CurrentMeasurements.Config.Thresholds, Mode=TwoWay}" x:Name="ReportList" MaxHeight="165">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
@@ -110,7 +110,7 @@
                                                     <TextBlock Text="{Binding Operator}" Margin=" 0,0,5,0" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
                                                     <TextBlock Text="to/than" Margin=" 0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                                     <TextBlock Text="{Binding Value}" Margin=" 0,0,5,0" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
-                                                    <TextBlock Text="{Binding CurrentMeasurements.Unit}" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
+                                                    <TextBlock Text="{Binding Unit, Source=CurrentMeasurements}" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>
                                                     <TextBlock Text="," Margin=" 0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                                     <TextBlock Text="Report Template named" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                                     <TextBlock Text="{Binding Template.Name}" Margin=" 0,0,5,0" VerticalAlignment="Center" FontStyle="Italic"></TextBlock>

@@ -10,11 +10,11 @@
         <DataTemplate x:Key="MainMenuData">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Icon}" Margin="5" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding Title}" Margin="15,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Label}" Margin="15,0,0,0" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SubMenuData">
-            <TextBlock Text="{Binding Title}" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Label}" TextAlignment="Center"/>
         </DataTemplate>
     </Page.Resources>
     <Grid>
