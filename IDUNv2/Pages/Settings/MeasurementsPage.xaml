@@ -7,17 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <StackPanel>
-            <ListView ItemsSource="{Binding MeasurementConfigurationList}" SelectedItem="{Binding CurrentMeasurements, Mode=TwoWay}" Style="{StaticResource ListViewStyle}">
+            <ListView ItemsSource="{Binding MeasurementConfigurationList}" SelectedItem="{Binding CurrentMeasurements, Mode=TwoWay}" Style="{StaticResource ListViewStyle}" Background="#FF668100" RequestedTheme="Dark">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
-                <ListView.Background>
-                    <SolidColorBrush Color="#FF171717"/>
-                </ListView.Background>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -28,15 +25,15 @@
             </ListView>
             <StackPanel>
                 <StackPanel Height="auto">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Background="Black" RequestedTheme="Dark">
                         <CheckBox x:Name="EnableCheck" Content="Enable Measurement:" Margin="5,0,5,0" VerticalAlignment="Center" IsChecked="{Binding CurrentMeasurements.Setting.Enabled, Mode=TwoWay}"></CheckBox>
                         <Image Source="{Binding CurrentMeasurements.Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
                         <TextBlock Text="{Binding CurrentMeasurements.Title}" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
-                    <StackPanel x:Name="ConfigContent" Visibility="Collapsed">
-                        <TextBlock x:Name="WarningAdd" Text="You are trying to add Report Template with a Value that is already assigned to a trigger!" Padding="5" Visibility="Collapsed" FontWeight="Bold" Foreground="Red" ></TextBlock>
+                    <StackPanel x:Name="ConfigContent" Visibility="Collapsed" Background="#FFB7B8BC">
+                        <TextBlock x:Name="WarningAdd" Text="You are trying to add Report Template with a Value that is already assigned to a trigger!" Padding="5" Visibility="Collapsed" FontWeight="Bold" Foreground="Red"></TextBlock>
                         <TextBlock x:Name="WarningValues" Text="You are missing a value or have entered invalid value!" Padding="5" Visibility="Collapsed" FontWeight="Bold" Foreground="Red" ></TextBlock>
-                        <StackPanel>
+                        <StackPanel Margin="0,5,0,0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="When current value is" Padding="5"></TextBlock>
                                 <StackPanel Orientation="Vertical" Margin="0,0,5,0">
@@ -96,12 +93,12 @@
                             <Button Grid.Column="3" Grid.Row="3" Height="55" Width="95" Content="←" Grid.ColumnSpan="1" Click="KeyboardBtnClick" IsTabStop="False" FontSize="30"/>
                         </Grid>
 
-                        <StackPanel HorizontalAlignment="Left" Width="724" x:Name="ReportSectionPanel">
+                        <StackPanel HorizontalAlignment="Left" Width="750" x:Name="ReportSectionPanel" Background="#BFC6C6C6" >
 
                             <TextBlock Text="Applied Report Templates:" Padding="10" ></TextBlock>
                             <Grid x:Name="Reports">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="650"></ColumnDefinition>
+                                    <ColumnDefinition Width="700"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <ScrollViewer Grid.Column="0">
@@ -130,7 +127,9 @@
                 </StackPanel>
             </StackPanel>
             <Button Content="Show JSON" Click="JSONClick"></Button>
-            <TextBlock x:Name="JSONShow"></TextBlock>
+            <ScrollViewer ScrollViewer.IsVerticalRailEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Enabled">
+                <TextBlock x:Name="JSONShow"></TextBlock>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Page>

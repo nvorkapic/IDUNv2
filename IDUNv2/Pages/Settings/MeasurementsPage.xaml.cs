@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
+using IDUNv2.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -224,7 +225,7 @@ namespace IDUNv2.Pages.Settings
 
                     if (find.Count == 0)
                     {
-                        viewModel.CurrentMeasurements.Setting.Threshold.Insert(0, new Thresholds { Operator = op, Template = tp, Value = vl });
+                        viewModel.CurrentMeasurements.Setting.Threshold.Insert(0, new ThresholdConfig { Operator = op, Template = tp, Value = vl });
                         WarningAdd.Visibility = Visibility.Collapsed; WarningValues.Visibility = Visibility.Collapsed;
                         viewModel.SaveMCListToLocal();
                     }
@@ -249,7 +250,7 @@ namespace IDUNv2.Pages.Settings
 
         private void RBtn_Click(object sender, RoutedEventArgs e)
         {
-            var item = ReportList.SelectedItem as Thresholds;
+            var item = ReportList.SelectedItem as ThresholdConfig;
             viewModel.CurrentMeasurements.Setting.Threshold.Remove(item);
             if (viewModel.CurrentMeasurements.Setting.Threshold.Count == 0)
                 ReportSectionPanel.Visibility = Visibility.Collapsed;
@@ -276,7 +277,7 @@ namespace IDUNv2.Pages.Settings
         {
             StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
             string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
-            JSONShow.Text = ConfigText;
+            //JSONShow.Text = ConfigText;
         }
     }
 }
