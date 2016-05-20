@@ -27,8 +27,8 @@
                 <StackPanel Height="auto">
                     <StackPanel Orientation="Horizontal" Background="Black" RequestedTheme="Dark">
                         <CheckBox x:Name="EnableCheck" Content="Enable Measurement:" Margin="5,0,5,0" VerticalAlignment="Center" IsChecked="{Binding CurrentMeasurements.Config.Enabled, Mode=TwoWay}"></CheckBox>
-                        <Image Source="{Binding CurrentMeasurements.Config.Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
-                        <TextBlock Text="{Binding CurrentMeasurements.Config.Title}" VerticalAlignment="Center"></TextBlock>
+                        <Image Source="{Binding CurrentMeasurements.Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
+                        <TextBlock Text="{Binding CurrentMeasurements.Title}" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                     <StackPanel x:Name="ConfigContent" Visibility="Collapsed" Background="#FFB7B8BC">
                         <TextBlock x:Name="WarningAdd" Text="You are trying to add Report Template with a Value that is already assigned to a trigger!" Padding="5" Visibility="Collapsed" FontWeight="Bold" Foreground="Red"></TextBlock>

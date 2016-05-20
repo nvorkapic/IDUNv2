@@ -23,13 +23,15 @@ namespace IDUNv2.ViewModels
 
         public ObservableCollection<Operator> ListAvailableOperators { get; set; }
 
-        public MeasurementListSettingsItems(SensorType Type, string Icon, string Unit)
+        public MeasurementListSettingsItems(SensorType Type, string Icon, string Unit, string title)
         {
+            this.Title = title;
             this.Config = ConfigService.GetSensorConfig(Type);
             this.Icon = Icon;
             this.Unit = Unit;
             ListAvailableOperators = new ObservableCollection<Operator> { Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual };
         }
+
     }
 
 
@@ -80,7 +82,7 @@ namespace IDUNv2.ViewModels
         {
             foreach (var s in ConfigService.Sensors)
             {
-                _measurementConfigurationList.Add(new MeasurementListSettingsItems(s.Type, Assets.SensorIcons[s.Type].Item1, Assets.SensorIcons[s.Type].Item2));
+                _measurementConfigurationList.Add(new MeasurementListSettingsItems(s.Type, Assets.SensorIcons[s.Type].Item1, Assets.SensorIcons[s.Type].Item2, Assets.SensorIcons[s.Type].Item3));
             }
         }
     }

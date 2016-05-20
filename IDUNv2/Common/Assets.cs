@@ -9,18 +9,18 @@ namespace IDUNv2.Common
 {
     public static class Assets
     {
-        private static Dictionary<SensorType, Tuple<string, string>> sensorIcons = new Dictionary<SensorType, Tuple<string, string>>()
+        private static Dictionary<SensorType, Tuple<string, string, string>> sensorIcons = new Dictionary<SensorType, Tuple<string, string, string>>()
         {
-            { SensorType.Usage, new Tuple<string, string> ("/Assets/Finger.png", "" )},
-            { SensorType.Temperature, new Tuple<string, string>("/Assets/Thermometer.png", "°C") },
-            {SensorType.Pressure, new Tuple<string, string>("/Assets/Pressure.png", "hPa") },
-            {SensorType.Humidity, new Tuple<string, string>("/Assets/Humidity.png", "%") },
-            {SensorType.Accelerometer,new Tuple<string, string>("/Assets/Accelerometer.png", "m/s²") },
-            {SensorType.Magnetometer, new Tuple<string, string>("/Assets/Magnet.png", "μT")},
-            {SensorType.Gyroscope, new Tuple<string, string>("/Assets/Gyroscope.png", "rad/s") }
+            { SensorType.Usage, new Tuple<string, string, string> ("/Assets/Finger.png", "", "Usage" )},
+            { SensorType.Temperature, new Tuple<string, string, string>("/Assets/Thermometer.png", "°C","Temperature") },
+            {SensorType.Pressure, new Tuple<string, string, string>("/Assets/Pressure.png", "hPa","Pressure") },
+            {SensorType.Humidity, new Tuple<string, string, string>("/Assets/Humidity.png", "%", "Humidity") },
+            {SensorType.Accelerometer,new Tuple<string, string, string>("/Assets/Accelerometer.png", "m/s²", "Accelerometer") },
+            {SensorType.Magnetometer, new Tuple<string, string, string>("/Assets/Magnet.png", "μT", "Magnetometer")},
+            {SensorType.Gyroscope, new Tuple<string, string, string>("/Assets/Gyroscope.png", "rad/s", "Gyroscope") }
 
         };
 
-        public static Dictionary<SensorType, Tuple<string, string>> SensorIcons { get { return sensorIcons; } }
+        public static Dictionary<SensorType, Tuple<string, string, string>> SensorIcons { get { return sensorIcons; } }
     }
 }
