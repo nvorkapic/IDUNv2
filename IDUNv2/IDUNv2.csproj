@@ -163,7 +163,6 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MeasurementListSettingsVM.cs" />
-    <Compile Include="ViewModels\Reports\TemplatesViewModel.cs" />
     <Compile Include="ViewModels\ServerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
