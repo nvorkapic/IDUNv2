@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using IDUNv2.Models;
 
 namespace IDUNv2.Services
 {
@@ -15,14 +16,19 @@ namespace IDUNv2.Services
 
         private static Models.SensorConfig[] sensors = new Models.SensorConfig[]
         {
-            new Models.SensorConfig { Type = Models.SensorType.Usage },
-            new Models.SensorConfig { Type = Models.SensorType.Temperature },
-            new Models.SensorConfig { Type = Models.SensorType.Pressure },
-            new Models.SensorConfig { Type = Models.SensorType.Humidity },
-            new Models.SensorConfig { Type = Models.SensorType.Accelerometer },
-            new Models.SensorConfig { Type = Models.SensorType.Magnetometer },
-            new Models.SensorConfig { Type = Models.SensorType.Gyroscope },
+            new Models.SensorConfig(SensorType.Usage),
+            new Models.SensorConfig(SensorType.Temperature),
+            new Models.SensorConfig(SensorType.Pressure),
+            new Models.SensorConfig(SensorType.Humidity),
+            new Models.SensorConfig(SensorType.Accelerometer),
+            new Models.SensorConfig(SensorType.Magnetometer),
+            new Models.SensorConfig(SensorType.Gyroscope)
         };
+
+        internal static SensorConfig GetSensorConfig(SensorType type)
+        {
+            return sensors[(int)type];
+        }
 
         public static Models.SensorConfig[] Sensors { get { return sensors; }}
 

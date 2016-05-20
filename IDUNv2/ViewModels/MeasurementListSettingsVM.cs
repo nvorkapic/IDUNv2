@@ -1,4 +1,6 @@
-﻿using IDUNv2.Models;
+﻿using IDUNv2.Common;
+using IDUNv2.Models;
+using IDUNv2.Services;
 using IDUNv2.ViewModels;
 using Newtonsoft.Json;
 using System;
@@ -13,58 +15,42 @@ namespace IDUNv2.ViewModels
 {
     public class MeasurementListSettingsItems
     {
-        public SensorType Sensor { get; set; }
+        public SensorConfig Config { get; set; }
         public string Title { get; set; }
         public string Icon { get; set; }
         public string Unit { get; set; }
-        public MeasurementSetting Setting { get; set; }
+
 
         public ObservableCollection<Operator> ListAvailableOperators { get; set; }
-        public MeasurementListSettingsItems(SensorType sensor, string Icon, string Unit)
+
+        public MeasurementListSettingsItems(SensorType Type, string Icon, string Unit)
         {
-            this.Title = sensor.ToString();
+            this.Config = ConfigService.GetSensorConfig(Type);
             this.Icon = Icon;
             this.Unit = Unit;
-            this.Sensor = sensor;
-            Setting = new MeasurementSetting { Enabled = false, Threshold = new ObservableCollection<ThresholdConfig>() };
             ListAvailableOperators = new ObservableCollection<Operator> { Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual };
         }
     }
 
-    public class MeasurementSetting : ViewModelBase
-    {
-        public bool Enabled { get; set; }
-        public ObservableCollection<ThresholdConfig> Threshold { get; set; }
-    }
+
 
     public class MeasurementListSettingsVM : ViewModelBase
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
         public ObservableCollection<Models.Reports.TemplateModel> Templates { get; set; }
 
-        public ObservableCollection<MeasurementSetting> _measurementSettingList = new ObservableCollection<MeasurementSetting>();
-        
-        public ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>()
-        {
-
-            new MeasurementListSettingsItems (SensorType.Usage, "/Assets/Finger.png",""),
-            new MeasurementListSettingsItems (SensorType.Temperature, "/Assets/Thermometer.png","°C"),
-            new MeasurementListSettingsItems (SensorType.Pressure, "/Assets/Pressure.png", "kPa" ),
-            new MeasurementListSettingsItems (SensorType.Humidity, "/Assets/Humidity.png","%"),
-            new MeasurementListSettingsItems (SensorType.Accelerometer,"/Assets/Accelerometer.png","m/s²" ),
-            new MeasurementListSettingsItems (SensorType.Magnetometer, "/Assets/Magnet.png","μT" ),
-            new MeasurementListSettingsItems (SensorType.Gyroscope, "/Assets/Gyroscope.png","rad/s" )
-        };
+        public ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>();
 
         public ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList { get { return _measurementConfigurationList;}}
 
-        //public ObservableCollection<MeasurementSetting> MeasurementSettingList { get { return _measurementSettingList; } }
 
         private MeasurementListSettingsItems _currentMeasurements;
         public MeasurementListSettingsItems CurrentMeasurements { get { return _currentMeasurements; } set { _currentMeasurements = value; Notify(); } }
         public MeasurementListSettingsVM()
         {
+            InitializeConfigurationList();
             CurrentMeasurements = MeasurementConfigurationList.FirstOrDefault();
             Templates = new ObservableCollection<Models.Reports.TemplateModel>(AppData.FaultReports.GetFaultReportTemplates());
         }
@@ -88,6 +74,13 @@ namespace IDUNv2.ViewModels
             catch
             {
 
+            }
+        }
+        public void InitializeConfigurationList()
+        {
+            foreach (var s in ConfigService.Sensors)
+            {
+                _measurementConfigurationList.Add(new MeasurementListSettingsItems(s.Type, Assets.SensorIcons[s.Type].Item1, Assets.SensorIcons[s.Type].Item2));
             }
         }
     }

@@ -95,7 +95,7 @@ namespace IDUNv2.Pages.Settings
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (viewModel.CurrentMeasurements.Setting.Threshold.Count == 0)
+            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
                 ReportSectionPanel.Visibility = Visibility.Collapsed;
             else
                 ReportSectionPanel.Visibility = Visibility.Visible;
@@ -119,10 +119,12 @@ namespace IDUNv2.Pages.Settings
             else
                 ConfigContent.Visibility = Visibility.Collapsed;
 
-            if (viewModel.CurrentMeasurements.Setting.Threshold.Count == 0)
+            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
                 ReportSectionPanel.Visibility = Visibility.Collapsed;
             else
                 ReportSectionPanel.Visibility = Visibility.Visible;
+
+            
         }
 
 
@@ -221,11 +223,11 @@ namespace IDUNv2.Pages.Settings
                 if (double.TryParse(ValueTB.Text, out vl) == true)
                 {
 
-                    var find = viewModel.CurrentMeasurements.Setting.Threshold.ToList().FindAll(x => x.Value == vl);
-
+                    var find = viewModel.CurrentMeasurements.Config.Thresholds.ToList().FindAll(x => x.Value == vl);
+                    
                     if (find.Count == 0)
                     {
-                        viewModel.CurrentMeasurements.Setting.Threshold.Insert(0, new ThresholdConfig { Operator = op, Template = tp, Value = vl });
+                        viewModel.CurrentMeasurements.Config.Thresholds.Insert(0, new ThresholdConfig { Operator = op, Template = tp, Value = vl });
                         WarningAdd.Visibility = Visibility.Collapsed; WarningValues.Visibility = Visibility.Collapsed;
                         viewModel.SaveMCListToLocal();
                     }
@@ -242,7 +244,7 @@ namespace IDUNv2.Pages.Settings
                 WarningValues.Visibility = Visibility.Visible;
             }
 
-            if (viewModel.CurrentMeasurements.Setting.Threshold.Count == 0)
+            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
                 ReportSectionPanel.Visibility = Visibility.Collapsed;
             else
                 ReportSectionPanel.Visibility = Visibility.Visible;
@@ -251,8 +253,8 @@ namespace IDUNv2.Pages.Settings
         private void RBtn_Click(object sender, RoutedEventArgs e)
         {
             var item = ReportList.SelectedItem as ThresholdConfig;
-            viewModel.CurrentMeasurements.Setting.Threshold.Remove(item);
-            if (viewModel.CurrentMeasurements.Setting.Threshold.Count == 0)
+            viewModel.CurrentMeasurements.Config.Thresholds.Remove(item);
+            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
                 ReportSectionPanel.Visibility = Visibility.Collapsed;
             else
                 ReportSectionPanel.Visibility = Visibility.Visible;
