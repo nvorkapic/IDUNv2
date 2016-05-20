@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels.Reports
 {
-    public class TemplatesViewModel : BaseViewModel
+    public class TemplatesViewModel : ViewModelBase
     {
         public List<WorkOrderDiscCode> DiscoveryList { get; set; }
         public List<WorkOrderSymptCode> SymptomList { get; set; }

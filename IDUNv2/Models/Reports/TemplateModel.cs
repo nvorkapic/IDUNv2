@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.Models.Reports
 {
-    public class TemplateModel : BaseModel
+    public class TemplateModel : ModelBase
     {
         #region PropertyFields
         private string _name;

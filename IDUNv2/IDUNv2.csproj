@@ -100,7 +100,7 @@
     <Compile Include="AppData.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\TaskBinding.cs" />
-    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Reports\TemplateModel.cs" />
     <Compile Include="OnScreenKeyboard\KeyAssignmentSet.cs" />
     <Compile Include="OnScreenKeyboard\KeyboardViewModel.cs" />
@@ -154,7 +154,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FaultReportService.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MeasurementListSettingsVM.cs" />
     <Compile Include="ViewModels\Reports\TemplatesViewModel.cs" />

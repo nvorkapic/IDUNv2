@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace IDUNv2.ViewModels
 {
-    public class MainMenuItem : BaseViewModel
+    public class MainMenuItem : ViewModelBase
     {
         public string Label { get; set; }
         public string Icon { get; set; }
@@ -22,7 +22,7 @@ namespace IDUNv2.ViewModels
         public string Icon { get; set; }
     }
 
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : ViewModelBase
     {
         private List<MainMenuItem> _mainMenu = new List<MainMenuItem>
         {

@@ -10,7 +10,7 @@ using Windows.Storage;
 
 namespace IDUNv2.ViewModels
 {
-    public class MeasurementSetting : BaseViewModel
+    public class MeasurementSetting : ViewModelBase
     {
         public bool Enabled { get; set; }
         public ObservableCollection<Thresholds> Threshold { get; set; }
@@ -60,7 +60,7 @@ namespace IDUNv2.ViewModels
     }
 
 
-    public class MeasurementListSettingsVM : BaseViewModel
+    public class MeasurementListSettingsVM : ViewModelBase
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;

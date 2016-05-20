@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.Models
 {
-    public class BaseModel : INotifyPropertyChanged
+    public class ModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
