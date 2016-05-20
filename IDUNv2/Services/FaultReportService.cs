@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDUNv2.Models.Reports;
+using System.IO;
+using Windows.Storage;
 
 namespace IDUNv2.Services
 {
@@ -26,6 +28,18 @@ namespace IDUNv2.Services
         public FaultReportService(CloudClient cloudClient)
         {
             this.cloudClient = cloudClient;
+
+            var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
+            using (var db = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path))
+            {
+                db.CreateTable<TemplateModel>();
+                var tm = db.GetMapping<TemplateModel>();
+
+                var i = db.Insert(new TemplateModel { Name = "Template 1" });
+                var ts = (from t in db.Table<TemplateModel>()
+                          select t).ToList();
+                var name = ts.FirstOrDefault()?.Name;
+            }
         }
 
         public List<Models.Reports.TemplateModel> GetFaultReportTemplates()
