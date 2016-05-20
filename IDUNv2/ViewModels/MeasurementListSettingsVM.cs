@@ -10,13 +10,7 @@ using Windows.Storage;
 
 namespace IDUNv2.ViewModels
 {
-    public class MeasurementSetting : BaseViewModel
-    {
-        public bool Enabled { get; set; }
-        public ObservableCollection<Thresholds> Threshold { get; set; }
-    }
-
-
+    #region MeasurementListModel
     public class MeasurementListSettingsItems
     {
         public string Title { get; set; }
@@ -24,10 +18,7 @@ namespace IDUNv2.ViewModels
         public string Unit { get; set; }
         public MeasurementSetting Setting { get; set; }
 
-
         public ObservableCollection<Operator> ListAvailableOperators { get; set; }
-
-
         public MeasurementListSettingsItems(string Title, string Icon, string Unit)
         {
             this.Title = Title;
@@ -38,16 +29,17 @@ namespace IDUNv2.ViewModels
         }
     }
 
+    public class MeasurementSetting : BaseViewModel
+    {
+        public bool Enabled { get; set; }
+        public ObservableCollection<Thresholds> Threshold { get; set; }
+    }
+
     public class Thresholds
     {
-
         public Operator? Operator { get; set; }
-
         public double Value { get; set; }
-
         public Models.Reports.TemplateModel Template { get; set; }
-
-
     }
 
     public enum Operator
@@ -58,7 +50,7 @@ namespace IDUNv2.ViewModels
         GreaterOrEqual,
         Equal
     }
-
+    #endregion
 
     public class MeasurementListSettingsVM : BaseViewModel
     {
