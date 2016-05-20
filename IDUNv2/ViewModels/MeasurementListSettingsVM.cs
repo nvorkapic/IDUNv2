@@ -30,21 +30,17 @@ namespace IDUNv2.ViewModels
             this.Unit = Unit;
             ListAvailableOperators = new ObservableCollection<Operator> { Operator.Equal, Operator.Greater, Operator.GreaterOrEqual, Operator.Less, Operator.LessOrEqual };
         }
-
     }
-
-
 
     public class MeasurementListSettingsVM : ViewModelBase
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-
-        public ObservableCollection<Models.Reports.TemplateModel> Templates { get; set; }
+        public ObservableCollection<ReportTemplate> Templates { get; set; }
 
         public ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>();
 
-        public ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList { get { return _measurementConfigurationList;}}
+        public ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList { get { return _measurementConfigurationList; } }
 
 
         private MeasurementListSettingsItems _currentMeasurements;
@@ -53,7 +49,7 @@ namespace IDUNv2.ViewModels
         {
             InitializeConfigurationList();
             CurrentMeasurements = MeasurementConfigurationList.FirstOrDefault();
-            Templates = new ObservableCollection<Models.Reports.TemplateModel>(AppData.FaultReports.GetFaultReportTemplates());
+            Templates = new ObservableCollection<ReportTemplate>(AppData.FaultReports.GetFaultReportTemplates());
         }
 
         public async void SaveMCListToLocal()
@@ -85,7 +81,4 @@ namespace IDUNv2.ViewModels
             }
         }
     }
-
-
-   
 }

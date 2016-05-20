@@ -1,6 +1,6 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 using IDUNv2.Common;
-using IDUNv2.Models.Reports;
+using IDUNv2.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,21 +15,21 @@ namespace IDUNv2.ViewModels.Reports
         public List<WorkOrderDiscCode> DiscoveryList { get; set; }
         public List<WorkOrderSymptCode> SymptomList { get; set; }
         public List<MaintenancePriority> PriorityList { get; set; }
-        public ObservableCollection<TemplateModel> Templates { get; set; }
+        public ObservableCollection<ReportTemplate> Templates { get; set; }
 
-        private TemplateModel _curTemplate;
-        public TemplateModel CurTemplate
+        private ReportTemplate _curTemplate;
+        public ReportTemplate CurTemplate
         {
             get { return _curTemplate; }
             set { _curTemplate = value; Notify(); }
         }
 
-        public RelayCommand<object> SaveCommand { get; private set; }
+        public RelayCommand SaveCommand { get; private set; }
 
         public TemplatesViewModel()
         {
-            SaveCommand = new RelayCommand<object>(ExecuteSaveCommand);
-            Templates = new ObservableCollection<TemplateModel>(AppData.FaultReports.GetFaultReportTemplates());
+            SaveCommand = new RelayCommand(ExecuteSaveCommand);
+            Templates = new ObservableCollection<ReportTemplate>(AppData.FaultReports.GetFaultReportTemplates());
             CurTemplate = Templates.FirstOrDefault();
         }
 
@@ -48,12 +48,12 @@ namespace IDUNv2.ViewModels.Reports
 
         public void CreateTemplate()
         {
-            var template = new Models.Reports.TemplateModel { Name = "#New Template" };
+            var template = new ReportTemplate { Name = "#New Template" };
             Templates.Add(template);
             CurTemplate = template;
         }
 
-        private void ExecuteSaveCommand(object param)
+        private void ExecuteSaveCommand()
         {
             throw new NotImplementedException();
         }

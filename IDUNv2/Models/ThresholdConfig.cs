@@ -1,5 +1,4 @@
-﻿using SQLite.Net.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -21,6 +20,6 @@ namespace IDUNv2.Models
     {
         public Operator Operator { get; set; }
         public double Value { get; set; }
-        public Models.Reports.TemplateModel Template { get; set; }
+        public ReportTemplate Template { get; set; }
     }
 }

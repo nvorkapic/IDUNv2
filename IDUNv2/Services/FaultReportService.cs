@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDUNv2.Models.Reports;
+using IDUNv2.Models;
 using System.IO;
 using Windows.Storage;
 
@@ -14,11 +14,11 @@ namespace IDUNv2.Services
     {
         private CloudClient cloudClient;
 
-        private List<Models.Reports.TemplateModel> _reportTemplates = new List<Models.Reports.TemplateModel>
+        private List<ReportTemplate> _templates = new List<ReportTemplate>
         {
-            new Models.Reports.TemplateModel { Name = "Template 1" },
-            new Models.Reports.TemplateModel { Name = "Template 2" },
-            new Models.Reports.TemplateModel { Name = "Template 3" },
+            new ReportTemplate { Name = "Template 1" },
+            new ReportTemplate { Name = "Template 2" },
+            new ReportTemplate { Name = "Template 3" },
         };
 
         public List<WorkOrderDiscCode> DiscCodes { get; private set; }
@@ -28,28 +28,16 @@ namespace IDUNv2.Services
         public FaultReportService(CloudClient cloudClient)
         {
             this.cloudClient = cloudClient;
-
-            var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
-            using (var db = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path))
-            {
-                db.CreateTable<TemplateModel>();
-                var tm = db.GetMapping<TemplateModel>();
-
-                var i = db.Insert(new TemplateModel { Name = "Template 1" });
-                var ts = (from t in db.Table<TemplateModel>()
-                          select t).ToList();
-                var name = ts.FirstOrDefault()?.Name;
-            }
         }
 
-        public List<Models.Reports.TemplateModel> GetFaultReportTemplates()
+        public List<ReportTemplate> GetFaultReportTemplates()
         {
-            return _reportTemplates;
+            return _templates;
         }
 
-        public TemplateModel AddTemplate(TemplateModel template)
+        public ReportTemplate AddTemplate(ReportTemplate template)
         {
-            _reportTemplates.Add(template);
+            _templates.Add(template);
             return template;
         }
 

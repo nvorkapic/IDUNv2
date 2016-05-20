@@ -217,7 +217,7 @@ namespace IDUNv2.Pages.Settings
             try
             {
                 var op = (Operator)operatorCB.SelectedItem;
-                var tp = (Models.Reports.TemplateModel)TemplateCB.SelectedItem;
+                var tp = (ReportTemplate)TemplateCB.SelectedItem;
                 double vl;
 
                 if (double.TryParse(ValueTB.Text, out vl) == true)

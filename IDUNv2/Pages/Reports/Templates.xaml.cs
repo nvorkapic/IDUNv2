@@ -1,4 +1,4 @@
-﻿using IDUNv2.ViewModels.Reports;
+﻿using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +23,7 @@ namespace IDUNv2.Pages.Reports
     /// </summary>
     public sealed partial class Templates : Page
     {
-        private TemplatesViewModel viewModel = new TemplatesViewModel();
+        private ReportsPageViewModel viewModel = new ReportsPageViewModel();
 
         public Templates()
         {

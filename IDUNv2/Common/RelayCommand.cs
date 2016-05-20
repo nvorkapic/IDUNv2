@@ -7,9 +7,9 @@ using System.Windows.Input;
 
 namespace IDUNv2.Common
 {
-    public class RelayCommand<T> : ICommand
+    public class RelayCommand : ICommand
     {
-        private Action<T> _execute;
+        private Action _execute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -17,7 +17,7 @@ namespace IDUNv2.Common
             remove { }
         }
 
-        public RelayCommand(Action<T> execute)
+        public RelayCommand(Action execute)
         {
             _execute = execute;
         }
@@ -29,7 +29,7 @@ namespace IDUNv2.Common
 
         public void Execute(object parameter)
         {
-            _execute((T)parameter);
+            _execute();
         }
     }
 }
