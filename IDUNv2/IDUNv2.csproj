@@ -99,8 +99,10 @@
     </Compile>
     <Compile Include="AppData.cs" />
     <Compile Include="Common\Assets.cs" />
-    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\TaskBinding.cs" />
+    <Compile Include="Converters\DirtyFlagConverter.cs" />
+    <Compile Include="Models\FaultCodesCache.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\SensorConfig.cs" />
     <Compile Include="Models\ThresholdConfig.cs" />

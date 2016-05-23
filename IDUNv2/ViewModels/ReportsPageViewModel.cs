@@ -1,4 +1,5 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.Common;
 using IDUNv2.Models;
 using IDUNv2.Services;
 using System;
@@ -15,10 +16,13 @@ namespace IDUNv2.ViewModels
     {
         private ReportService _reports;
         private ReportTemplateViewModel _selectedTemplate;
+        private FaultCodesCache _cache;
 
-        public List<WorkOrderDiscCode> DiscoveryList { get; set; }
-        public List<WorkOrderSymptCode> SymptomList { get; set; }
-        public List<MaintenancePriority> PriorityList { get; set; }
+        public ActionCommand SaveCommand { get; private set; }
+
+        public List<WorkOrderDiscCode> DiscoveryList { get { return _cache.DiscCodes; } }
+        public List<WorkOrderSymptCode> SymptomList { get { return _cache.SymptCodes; } }
+        public List<MaintenancePriority> PriorityList { get { return _cache.PrioCodes; } }
         public ObservableCollection<ReportTemplateViewModel> Templates { get; set; }
 
         public ReportTemplateViewModel SelectedTemplate
@@ -27,47 +31,42 @@ namespace IDUNv2.ViewModels
             set { _selectedTemplate = value;  Notify(); }
         }
 
-        public ReportsPageViewModel(ReportService reports)
+        private async void SaveCommand_Execute()
         {
-            _reports = reports;
-            Templates = new ObservableCollection<ReportTemplateViewModel>
-                (_reports.GetTemplates().Result.Select(t => new ReportTemplateViewModel(t)));
-            SelectedTemplate = Templates.FirstOrDefault();
-            Templates.CollectionChanged += Templates_CollectionChanged;
+            SelectedTemplate.Model = await _reports.SetTemplate(SelectedTemplate.Model);
+            SelectedTemplate.Dirty = false;
         }
 
-        private async void Templates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public ReportsPageViewModel(ReportService reports, FaultCodesCache cache)
         {
-            var vm = e.NewItems.Cast<ReportTemplateViewModel>().SingleOrDefault();
-            if (vm != null)
-            {
-                if (e.Action == NotifyCollectionChangedAction.Add)
-                    await _reports.SetTemplate(vm.Model);
-            }
+            SaveCommand = new ActionCommand(SaveCommand_Execute);
+            _cache = cache;
+            _reports = reports;
+            Templates = new ObservableCollection<ReportTemplateViewModel>
+                (_reports.GetTemplates().Result.Select(t => new ReportTemplateViewModel(t, _cache)));
+            SelectedTemplate = Templates.FirstOrDefault();
         }
 
         public async Task InitAsync()
         {
-            DiscoveryList = await _reports.GetDiscCodes();
-            SymptomList = await _reports.GetSymptCodes();
-            PriorityList = await _reports.GetPrioCodes();
-
-            try
-            {
-                Templates[0].Discovery = DiscoveryList[0];
-                Templates[1].Discovery = DiscoveryList[1];
-                Templates[2].Discovery = DiscoveryList[2];
-                SelectedTemplate = Templates[0];
-            }
-            catch (Exception)
-            {
-            }  
+            _cache = await FaultCodesCache.CreateAsync(AppData.CloudClient);
+            SelectedTemplate = Templates.FirstOrDefault();
+            //try
+            //{
+            //    Templates[0].Discovery = DiscoveryList[0];
+            //    Templates[1].Discovery = DiscoveryList[1];
+            //    Templates[2].Discovery = DiscoveryList[2];
+            //    SelectedTemplate = Templates[0];
+            //}
+            //catch (Exception)
+            //{
+            //}  
         }
 
         public void CreateTemplate()
         {
-            var model = new ReportTemplate { Name = "#New Template" };
-            SelectedTemplate = new ReportTemplateViewModel(model);
+            SelectedTemplate = new ReportTemplateViewModel(new ReportTemplate { Name = "#New Template" }, _cache);
+            SelectedTemplate.Dirty = true;
             Templates.Add(SelectedTemplate);
         }
     }

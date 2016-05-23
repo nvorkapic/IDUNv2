@@ -23,7 +23,7 @@ namespace IDUNv2.Pages.Reports
     /// </summary>
     public sealed partial class Templates : Page
     {
-        private ReportsPageViewModel viewModel = new ReportsPageViewModel(AppData.Reports);
+        private ReportsPageViewModel viewModel = new ReportsPageViewModel(AppData.Reports, AppData.FaultCodesCache);
 
         public Templates()
         {

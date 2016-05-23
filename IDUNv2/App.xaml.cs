@@ -31,8 +31,6 @@ namespace IDUNv2
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-            AppData.InitCloud();
         }
 
         /// <summary>
@@ -81,6 +79,7 @@ namespace IDUNv2
                 Window.Current.Activate();
             }
 
+            await AppData.InitCloud();
             await AppData.InitServices().ConfigureAwait(false);
         }
 

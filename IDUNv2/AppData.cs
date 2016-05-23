@@ -2,13 +2,16 @@
 using Addovation.Common.Models;
 using IDUNv2.Models;
 using IDUNv2.Services;
+using SQLite.Net.Platform.WinRT;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Credentials;
+using Windows.Storage;
 using Xamarin;
 
 namespace IDUNv2
@@ -65,8 +68,11 @@ namespace IDUNv2
 
     public static class AppData
     {
-        public static CloudClient CloudClient { get; set; }
-        public static ReportService Reports { get; set; }
+        public static string DbPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
+        public static SQLitePlatformWinRT SqlitePlatform { get; } = new SQLitePlatformWinRT();
+        public static CloudClient CloudClient { get; private set; }
+        public static ReportService Reports { get; private set; }
+        public static FaultCodesCache FaultCodesCache { get; private set; }
 
         private static void InitInsights()
         {
@@ -88,14 +94,14 @@ namespace IDUNv2
         //    }
         //}
 
-        public static void InitCloud()
+        public static async Task<bool> InitCloud()
         {
             try
             {
                 InitInsights();
                 //InitCredential();
                 //var vault = new PasswordVault();
-                //var cred = vault.FindAllByResource("idun").Where(c => c.UserName == "alain").Single();
+                //var cred = vault.FindAllByResource("idun").Where(c => c.UserName == "alex").Single();
                 //cred.RetrievePassword();
 
                 var cloudUrl = CommonDictionary.CloudUrls["testcloud.addovation.com"];
@@ -106,6 +112,8 @@ namespace IDUNv2
                     ConnectionInfo = connectionInfo,
                     SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
                 };
+
+                return await CloudClient.Authenticate();
             }
             catch (Exception ex)
             {
@@ -116,7 +124,7 @@ namespace IDUNv2
         public static async Task InitServices()
         {
             Reports = new ReportService();
-            await Reports.InitCaches();
+            FaultCodesCache = await FaultCodesCache.CreateAsync(CloudClient);
         }
     }
 }

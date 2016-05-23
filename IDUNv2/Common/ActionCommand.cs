@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace IDUNv2.Common
 {
-    public class RelayCommand : ICommand
+    public class ActionCommand : ICommand
     {
         private Action _execute;
 
@@ -17,7 +17,7 @@ namespace IDUNv2.Common
             remove { }
         }
 
-        public RelayCommand(Action execute)
+        public ActionCommand(Action execute)
         {
             _execute = execute;
         }

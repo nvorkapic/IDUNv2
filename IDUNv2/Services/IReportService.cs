@@ -12,9 +12,6 @@ namespace IDUNv2.Services
     {
         Task<List<ReportTemplate>> GetTemplates();
         Task<ReportTemplate> SetTemplate(ReportTemplate template);
-        Task<List<WorkOrderDiscCode>> GetDiscCodes(bool useCache = true);
-        Task<List<WorkOrderSymptCode>> GetSymptCodes(bool useCache = true);
-        Task<List<MaintenancePriority>> GetPrioCodes(bool useCache = true);
         Task<List<FaultReport>> GetFaultReports();
         Task<FaultReport> SetFaultReport(FaultReport report);
     }

@@ -8,44 +8,58 @@ using IDUNv2.Models;
 using System.IO;
 using Windows.Storage;
 using Newtonsoft.Json;
+using SQLite.Net;
 
 namespace IDUNv2.Services
 {
     public class ReportService : IReportService
     {
+        private static SQLiteConnection db = new SQLiteConnection(AppData.SqlitePlatform, AppData.DbPath);
         private CloudClient cloudClient;
 
-        private List<ReportTemplate> _templates = new List<ReportTemplate>
-        {
-            new ReportTemplate { Name = "Template 1" },
-            new ReportTemplate { Name = "Template 2" },
-            new ReportTemplate { Name = "Template 3" },
-        };
-
-        public List<WorkOrderDiscCode> DiscCodes { get; private set; }
-        public List<WorkOrderSymptCode> SymptCodes { get; private set; }
-        public List<MaintenancePriority> PrioCodes { get; private set; }
+        //private List<ReportTemplate> _templates = new List<ReportTemplate>
+        //{
+        //    new ReportTemplate { Name = "Template 1" },
+        //    new ReportTemplate { Name = "Template 2" },
+        //    new ReportTemplate { Name = "Template 3" },
+        //};
 
         public ReportService()
         {
             this.cloudClient = AppData.CloudClient;
+            db.CreateTable<ReportTemplate>();
+            db.InsertOrReplace(new ReportTemplate { Id = 1, Name = "Template 1" });
+            db.InsertOrReplace(new ReportTemplate { Id = 2, Name = "Template 2" });
+            db.InsertOrReplace(new ReportTemplate { Id = 3, Name = "Template 3" });
         }
 
         public Task<List<ReportTemplate>> GetTemplates()
         {
-            return Task.FromResult(_templates);
+            var templates = db.Table<ReportTemplate>().ToList();
+            return Task.FromResult(templates);
         }
 
         public Task<ReportTemplate> SetTemplate(ReportTemplate template)
         {
-            int i = _templates.FindIndex(t => t.Name == template.Name);
-            if (i >= 0)
+            //int i = _templates.FindIndex(t => t.Name == template.Name);
+            //if (i >= 0)
+            //{
+            //    _templates[i] = template;
+            //}
+            //else
+            //{
+            //    _templates.Add(template);
+            //}
+            //var t = db.Find<ReportTemplate>(template.Id);
+            //int key = db.Insert(template);
+
+            if (template.Id == 0)
             {
-                _templates[i] = template;
+                db.Insert(template);
             }
             else
             {
-                _templates.Add(template);
+                db.Update(template);
             }
 
             //var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Templates", CreationCollisionOption.OpenIfExists);
@@ -56,34 +70,6 @@ namespace IDUNv2.Services
             return Task.FromResult(template);
         }
 
-        private static async Task<List<T>> GetCachedList<T>(Func<Task<List<T>>> getFunc, List<T> cachedList, bool useCached)
-        {
-            List<T> results = cachedList;
-            if (results == null || !useCached)
-            {
-                results = await getFunc().ConfigureAwait(false);
-            }
-            return results;
-        }
-
-        public async Task<List<WorkOrderDiscCode>> GetDiscCodes(bool useCached = true)
-        {
-            DiscCodes = await GetCachedList(cloudClient.GetWorkOrderDiscCodes, DiscCodes, useCached).ConfigureAwait(false);
-            return DiscCodes;
-        }
-
-        public async Task<List<WorkOrderSymptCode>> GetSymptCodes(bool useCached = true)
-        {
-            SymptCodes = await GetCachedList(cloudClient.GetWorkOrderSymptCodes, SymptCodes, useCached).ConfigureAwait(false);
-            return SymptCodes;
-        }
-
-        public async Task<List<MaintenancePriority>> GetPrioCodes(bool useCached = true)
-        {
-            PrioCodes = await GetCachedList(cloudClient.GetMaintenancePriorities, PrioCodes, useCached).ConfigureAwait(false);
-            return PrioCodes;
-        }
-
         public async Task<List<FaultReport>> GetFaultReports()
         {
             return await cloudClient.GetFaultReports().ConfigureAwait(false);
@@ -92,13 +78,6 @@ namespace IDUNv2.Services
         public Task<FaultReport> SetFaultReport(FaultReport report)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task InitCaches()
-        {
-            DiscCodes = await GetDiscCodes(false).ConfigureAwait(false);
-            SymptCodes = await GetSymptCodes(false).ConfigureAwait(false);
-            PrioCodes = await GetPrioCodes(false).ConfigureAwait(false);
         }
     }
 }
