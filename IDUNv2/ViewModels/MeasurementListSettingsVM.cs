@@ -34,9 +34,11 @@ namespace IDUNv2.ViewModels
 
     public class MeasurementListSettingsVM : ViewModelBase
     {
+        private IReportService reportService;
+
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        public ObservableCollection<ReportTemplate> Templates { get; set; }
+        public List<ReportTemplate> Templates { get; set; }
 
         public ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>();
 
@@ -45,11 +47,12 @@ namespace IDUNv2.ViewModels
 
         private MeasurementListSettingsItems _currentMeasurements;
         public MeasurementListSettingsItems CurrentMeasurements { get { return _currentMeasurements; } set { _currentMeasurements = value; Notify(); } }
-        public MeasurementListSettingsVM()
+        public MeasurementListSettingsVM(IReportService reportService)
         {
+            this.reportService = reportService;
             InitializeConfigurationList();
             CurrentMeasurements = MeasurementConfigurationList.FirstOrDefault();
-            Templates = new ObservableCollection<ReportTemplate>(AppData.FaultReports.GetFaultReportTemplates());
+            Templates = reportService.GetTemplates().Result;
         }
 
         public async void SaveMCListToLocal()

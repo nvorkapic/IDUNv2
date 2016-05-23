@@ -18,6 +18,7 @@ using Windows.Storage;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using IDUNv2.Models;
+using IDUNv2.Services;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -75,7 +76,7 @@ namespace IDUNv2.Pages.Settings
         }
         #endregion
 
-        public MeasurementListSettingsVM viewModel = new MeasurementListSettingsVM();
+        public MeasurementListSettingsVM viewModel = new MeasurementListSettingsVM(AppData.Reports);
 
         public object Setting { get; private set; }
 
