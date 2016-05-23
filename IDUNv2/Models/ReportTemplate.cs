@@ -1,4 +1,5 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace IDUNv2.Models
 {
     public class ReportTemplate
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Directive { get; set; }
         public string FaultDescr { get; set; }

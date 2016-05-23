@@ -1,8 +1,10 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 using IDUNv2.Models;
+using IDUNv2.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ namespace IDUNv2.ViewModels
 {
     public class ReportsPageViewModel : ViewModelBase
     {
+        private ReportService _reports;
         private ReportTemplateViewModel _selectedTemplate;
 
         public List<WorkOrderDiscCode> DiscoveryList { get; set; }
@@ -24,24 +27,41 @@ namespace IDUNv2.ViewModels
             set { _selectedTemplate = value;  Notify(); }
         }
 
-        public ReportsPageViewModel()
+        public ReportsPageViewModel(ReportService reports)
         {
+            _reports = reports;
             Templates = new ObservableCollection<ReportTemplateViewModel>
-                (AppData.FaultReports.GetFaultReportTemplates().Select(t => new ReportTemplateViewModel(t)));
+                (_reports.GetTemplates().Result.Select(t => new ReportTemplateViewModel(t)));
             SelectedTemplate = Templates.FirstOrDefault();
+            Templates.CollectionChanged += Templates_CollectionChanged;
+        }
+
+        private async void Templates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var vm = e.NewItems.Cast<ReportTemplateViewModel>().SingleOrDefault();
+            if (vm != null)
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add)
+                    await _reports.SetTemplate(vm.Model);
+            }
         }
 
         public async Task InitAsync()
         {
-            DiscoveryList = await AppData.FaultReports.GetDiscCodes();
-            SymptomList = await AppData.FaultReports.GetSymptCodes();
-            PriorityList = await AppData.FaultReports.GetPrioCodes();
+            DiscoveryList = await _reports.GetDiscCodes();
+            SymptomList = await _reports.GetSymptCodes();
+            PriorityList = await _reports.GetPrioCodes();
 
-            Templates[0].Discovery = DiscoveryList[0];
-            Templates[1].Discovery = DiscoveryList[1];
-            Templates[2].Discovery = DiscoveryList[2];
-
-            SelectedTemplate = Templates[0];
+            try
+            {
+                Templates[0].Discovery = DiscoveryList[0];
+                Templates[1].Discovery = DiscoveryList[1];
+                Templates[2].Discovery = DiscoveryList[2];
+                SelectedTemplate = Templates[0];
+            }
+            catch (Exception)
+            {
+            }  
         }
 
         public void CreateTemplate()

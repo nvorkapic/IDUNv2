@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using IDUNv2.Models;
 using System.IO;
 using Windows.Storage;
+using Newtonsoft.Json;
 
 namespace IDUNv2.Services
 {
-    public class FaultReportService
+    public class ReportService : IReportService
     {
         private CloudClient cloudClient;
 
@@ -25,25 +26,34 @@ namespace IDUNv2.Services
         public List<WorkOrderSymptCode> SymptCodes { get; private set; }
         public List<MaintenancePriority> PrioCodes { get; private set; }
 
-        public FaultReportService(CloudClient cloudClient)
+        public ReportService()
         {
-            this.cloudClient = cloudClient;
+            this.cloudClient = AppData.CloudClient;
         }
 
-        public List<ReportTemplate> GetFaultReportTemplates()
+        public Task<List<ReportTemplate>> GetTemplates()
         {
-            return _templates;
+            return Task.FromResult(_templates);
         }
 
-        public ReportTemplate AddTemplate(ReportTemplate template)
+        public Task<ReportTemplate> SetTemplate(ReportTemplate template)
         {
-            _templates.Add(template);
-            return template;
-        }
+            int i = _templates.FindIndex(t => t.Name == template.Name);
+            if (i >= 0)
+            {
+                _templates[i] = template;
+            }
+            else
+            {
+                _templates.Add(template);
+            }
 
-        public async Task<List<FaultReport>> GetFaultReports()
-        {
-            return await cloudClient.GetFaultReports().ConfigureAwait(false);
+            //var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Templates", CreationCollisionOption.OpenIfExists);
+            //var file = await folder.CreateFileAsync(template.Name + ".json", CreationCollisionOption.ReplaceExisting);
+            //var json = JsonConvert.SerializeObject(template);
+            //await FileIO.WriteTextAsync(file, json);
+
+            return Task.FromResult(template);
         }
 
         private static async Task<List<T>> GetCachedList<T>(Func<Task<List<T>>> getFunc, List<T> cachedList, bool useCached)
@@ -72,6 +82,16 @@ namespace IDUNv2.Services
         {
             PrioCodes = await GetCachedList(cloudClient.GetMaintenancePriorities, PrioCodes, useCached).ConfigureAwait(false);
             return PrioCodes;
+        }
+
+        public async Task<List<FaultReport>> GetFaultReports()
+        {
+            return await cloudClient.GetFaultReports().ConfigureAwait(false);
+        }
+
+        public Task<FaultReport> SetFaultReport(FaultReport report)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task InitCaches()

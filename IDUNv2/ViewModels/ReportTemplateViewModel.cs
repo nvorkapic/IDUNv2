@@ -12,6 +12,11 @@ namespace IDUNv2.ViewModels
     {
         private ReportTemplate model;
 
+        public ReportTemplate Model
+        {
+            get { return model; }
+        }
+
         public string Name
         {
             get { return model.Name; }

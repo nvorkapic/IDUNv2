@@ -28,7 +28,7 @@ namespace IDUNv2
         protected override void OnError(string error, Exception ex)
         {
             //throw ex;
-            Debug.WriteLine(ex.Message);
+            Debug.WriteLine(error);
         }
     }
 
@@ -66,7 +66,7 @@ namespace IDUNv2
     public static class AppData
     {
         public static CloudClient CloudClient { get; set; }
-        public static FaultReportService FaultReports { get; set; }
+        public static ReportService Reports { get; set; }
 
         private static void InitInsights()
         {
@@ -115,8 +115,8 @@ namespace IDUNv2
 
         public static async Task InitServices()
         {
-            FaultReports = new FaultReportService(CloudClient);
-            await FaultReports.InitCaches();
+            Reports = new ReportService();
+            await Reports.InitCaches();
         }
     }
 }
