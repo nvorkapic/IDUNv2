@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDUNv2.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,8 +23,25 @@ namespace IDUNv2.ViewModels
         public string Icon { get; set; }
     }
 
+    
     public class MainViewModel : ViewModelBase
     {
+        public ObservableCollection<Notification> NotificationList { get; set; } = new ObservableCollection<Notification>();
+
+       
+        private Notification _latestNotification;
+        public Notification LatestNotification { get { return _latestNotification; } set { _latestNotification = value; Notify(); } }
+
+        public MainViewModel()
+        {
+            NotificationList.CollectionChanged += NotificationList_CollectionChanged;
+        }
+
+        private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            LatestNotification = NotificationList.FirstOrDefault();
+        }
+
         private List<MainMenuItem> _mainMenu = new List<MainMenuItem>
         {
             new MainMenuItem

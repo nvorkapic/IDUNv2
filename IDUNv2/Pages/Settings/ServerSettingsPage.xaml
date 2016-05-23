@@ -8,40 +8,55 @@
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
 
+
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Background="#FFE1E1E1">
             <StackPanel Background="Black">
                 <TextBlock VerticalAlignment="Center" FontSize="20" Foreground="White">Server Settings</TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Background="LightGray">
+            <TextBlock Foreground="Red" Text="Please check that all information is entered properly and try again!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Warning" FontWeight="Bold"></TextBlock>
+            <TextBlock Foreground="Green" Text="Server settings successfully saved!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Confirmation" FontWeight="Bold"></TextBlock>
+            <StackPanel Orientation="Horizontal" Background="#FF668100">
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Background="DarkGray">
-                        <TextBlock Margin="10" Padding="10,0,0,0" Foreground="White">Object ID</TextBlock>
-                        <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"></TextBox>
+                    <StackPanel Background="#FF668100">
+                        <TextBlock Margin="10" Padding="10,0,0,0" Foreground="White">
+            				<Run Text="Object ID"/>
+                        </TextBlock>
+                        <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"/>
                     </StackPanel>
-                    <StackPanel Padding="0,10,0,0" Background="DarkGray">
-                        <TextBlock Margin="10,0,10,10" VerticalAlignment="Center" Foreground="White">Cloud URL</TextBlock>
-                        <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"></TextBox>
+                    <StackPanel Padding="0,10,0,0" Background="#FF668100">
+                        <TextBlock Margin="10,0,10,10" VerticalAlignment="Center" Foreground="White">
+            				<Run Text="Cloud URL"/>
+                        </TextBlock>
+                        <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"/>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Margin="10">User Authentication</TextBlock>
+                    <TextBlock Margin="10" Foreground="White">
+            			<Run Text="User Authentication"/>
+                    </TextBlock>
                     <StackPanel>
-                        <TextBox PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"></TextBox>
-                        <PasswordBox PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"></PasswordBox>
+                        <TextBox PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
+                        <PasswordBox PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
                     </StackPanel>
                 </StackPanel>
-                <Button Content="Save" Margin="10" Width="75" Height="50" Click="Save"></Button>
+                <Button Content="Save" Margin="10" Width="75" Height="50" Click="Save" Foreground="White">
+                </Button>
 
             </StackPanel>
-            <TextBlock Foreground="Red" Text="Please check that all information is entered properly and try again!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Warning" FontWeight="Bold"></TextBlock>
-            <TextBlock Foreground="Green" Text="Server settings successfully saved!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Confirmation" FontWeight="Bold"></TextBlock>
             <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="250"  Width="750" Visibility="Collapsed" HorizontalAlignment="Left"/>
 
-
+            
 
         </StackPanel>
-      
+        <ToolTip Width="300" Height="Auto" FontSize="20" Foreground="White" Background="Black" x:Name="Tooltip" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock x:Name="Result" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
+                <Button Content="rEARGAERGAERG" Width="50" Height="50" Background="White"></Button>
+            </StackPanel>
+            
+        </ToolTip>
     </Grid>
 </Page>

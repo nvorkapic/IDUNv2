@@ -67,6 +67,7 @@ namespace IDUNv2
     {
         public static CloudClient CloudClient { get; set; }
         public static FaultReportService FaultReports { get; set; }
+        
 
         private static void InitInsights()
         {

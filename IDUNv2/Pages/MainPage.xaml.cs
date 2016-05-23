@@ -1,4 +1,5 @@
-﻿using IDUNv2.ViewModels;
+﻿using IDUNv2.Models;
+using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,15 +22,27 @@ namespace IDUNv2.Pages
 {
     public sealed partial class MainPage : Page
     {
+        public static MainPage Current;
         private MainViewModel viewModel = new MainViewModel();
+
+        public Notification SelectedNotificationItem = new Notification();
         public MainPage()
         {
             
             this.InitializeComponent();
             this.DataContext = viewModel;
             this.Loaded += MainPage_Loaded;
+            Current = this;
 
-            
+            viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
+        }
+
+        private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (viewModel.NotificationList == null)
+                NotificationButton.Visibility = Visibility.Collapsed;
+            else
+                NotificationButton.Visibility = Visibility.Visible;
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -69,6 +82,67 @@ namespace IDUNv2.Pages
         private void subLoaded(object sender, RoutedEventArgs e)
         {
             (sender as ListView).SelectedIndex = 0;
+        }
+
+        public void AddNotificatoin(NotificationType Type, string ShortDescription, string LongDescription)
+        {
+            DateTime Date = new DateTime();
+            Date = DateTime.Now;
+            viewModel.NotificationList.Insert(0, new Notification { Type = Type, ShortDescription = ShortDescription, LongDescription = LongDescription, Date = Date.ToString("dd/MM/yyyy HH:mm:ss") });
+        }
+
+        private void NotificationItemSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            if (NotificationFlyOutList.Items.Count != 0 && NotificationFlyOutList.SelectedItem != null)
+            {
+                var NotificationListView = (ListView)sender;
+                SelectedNotificationItem = NotificationListView.SelectedItem as Notification;
+
+                ExtendedNotification.DataContext = SelectedNotificationItem;
+
+            }
+
+
+
+        }
+
+        private void NotificationViewed_Click(object sender, RoutedEventArgs e)
+        {
+            
+            viewModel.NotificationList.Remove(SelectedNotificationItem);
+            if (NotificationFlyOutList.Items.Count == 0)
+            {
+                NotificationListPanel.Visibility = Visibility.Collapsed;
+            }
+            NotificationFlyOutList.SelectedItem = NotificationFlyOutList.Items.FirstOrDefault();
+        }
+
+
+        private void NotificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotificationListPanel.Visibility == Visibility.Visible)
+                NotificationListPanel.Visibility = Visibility.Collapsed;
+            else
+            {
+                NotificationListPanel.Visibility = Visibility.Visible;
+                NotificationFlyOutList.SelectedItem = NotificationFlyOutList.Items.FirstOrDefault();
+            }
+                
+        }
+
+        private void NotificationFlyOutList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            //var listView = (ListView)sender;
+            //var selectedItem = listView.SelectedItem as ListViewItem;
+            //if (e.ClickedItem==listView.SelectedItem)
+            //{
+            //    selectedItem.IsSelected = false;
+            //}
+            //else
+            //{
+            //    selectedItem.IsSelected = true;
+            //}
+            
         }
     }
 }

@@ -101,7 +101,9 @@
     <Compile Include="Common\Assets.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\TaskBinding.cs" />
+    <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\SensorConfig.cs" />
     <Compile Include="Models\ThresholdConfig.cs" />
     <Compile Include="Models\ReportTemplate.cs" />
