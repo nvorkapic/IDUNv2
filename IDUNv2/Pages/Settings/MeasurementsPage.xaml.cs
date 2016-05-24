@@ -105,9 +105,16 @@ namespace IDUNv2.Pages.Settings
         private void EnableCheck_Checked(object sender, RoutedEventArgs e)
         {
             if (EnableCheck.IsChecked == true)
+            {
                 ConfigContent.Visibility = Visibility.Visible;
+                MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Enabled", "Application will record selected measurement: " + viewModel.CurrentMeasurements.Title);
+            }
             else
+            {
                 ConfigContent.Visibility = Visibility.Collapsed;
+                MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Disabled", "Application will stop recording selected measurement: " + viewModel.CurrentMeasurements.Title);
+            }
+                
         }
 
         private async void MeasurementsPage_Loaded(object sender, RoutedEventArgs e)
@@ -228,12 +235,22 @@ namespace IDUNv2.Pages.Settings
                     
                     if (find.Count == 0)
                     {
-                        viewModel.CurrentMeasurements.Config.Thresholds.Insert(0, new ThresholdConfig { Operator = op, Template = tp, Value = vl });
-                        WarningAdd.Visibility = Visibility.Collapsed; WarningValues.Visibility = Visibility.Collapsed;
-                        viewModel.SaveMCListToLocal();
+                        if (tp != null)
+                        {
+                            viewModel.CurrentMeasurements.Config.Thresholds.Insert(0, new ThresholdConfig { Operator = op, Template = tp, Value = vl });
+                            WarningAdd.Visibility = Visibility.Collapsed; WarningValues.Visibility = Visibility.Collapsed;
+                            viewModel.SaveMCListToLocal();
+                            MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Added", viewModel.CurrentMeasurements.Title + " has new Trigger added.\nOperator: " + op + "\nValue: " + vl + "\nTemplate: " + tp.Name);
+                        }
+                        else
+                        {
+                            MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
+                        }
+                        
                     }
                     else
-                        WarningAdd.Visibility = Visibility.Visible;
+                        
+                        MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Trigger Error", viewModel.CurrentMeasurements.Title + ": You are trying to add Report Template with a Value that is already assigned to a trigger!");
                 }
                 else
                 {
@@ -242,7 +259,7 @@ namespace IDUNv2.Pages.Settings
             }
             catch
             {
-                WarningValues.Visibility = Visibility.Visible;
+                MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
             }
 
             if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
@@ -253,13 +270,21 @@ namespace IDUNv2.Pages.Settings
 
         private void RBtn_Click(object sender, RoutedEventArgs e)
         {
-            var item = ReportList.SelectedItem as ThresholdConfig;
-            viewModel.CurrentMeasurements.Config.Thresholds.Remove(item);
-            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
-                ReportSectionPanel.Visibility = Visibility.Collapsed;
+            if (ReportList.SelectedItem !=null)
+            {
+                var item = ReportList.SelectedItem as ThresholdConfig;
+                MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Removed", viewModel.CurrentMeasurements.Title + " has Trigger removed.\nOperator: " + item.Operator + "\nValue: " + item.Value + "\nTemplate: " + item.Template.Name);
+                viewModel.CurrentMeasurements.Config.Thresholds.Remove(item);
+                ReportList.SelectedItem = ReportList.Items.FirstOrDefault();
+                if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
+                    ReportSectionPanel.Visibility = Visibility.Collapsed;
+                else
+                    ReportSectionPanel.Visibility = Visibility.Visible;
+                viewModel.SaveMCListToLocal();
+            }
             else
-                ReportSectionPanel.Visibility = Visibility.Visible;
-            viewModel.SaveMCListToLocal();
+                MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Remove Error", viewModel.CurrentMeasurements.Title + ": Cannot remove Item from Report List if it's not selected!");
+
         }
 
         public async void LoadMCListFromLocal()

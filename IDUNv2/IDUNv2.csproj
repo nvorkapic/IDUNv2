@@ -101,14 +101,18 @@
     <Compile Include="Common\Assets.cs" />
     <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\TaskBinding.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
     <Compile Include="Models\FaultCodesCache.cs" />
+    <Compile Include="Models\Measurement.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Navigation.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\SensorConfig.cs" />
     <Compile Include="Models\ThresholdConfig.cs" />
     <Compile Include="Models\ReportTemplate.cs" />
+    <Compile Include="Models\WarningDialog.cs" />
     <Compile Include="OnScreenKeyboard\KeyAssignmentSet.cs" />
     <Compile Include="OnScreenKeyboard\KeyboardViewModel.cs" />
     <Compile Include="OnScreenKeyboard\KeyModel.cs" />
@@ -118,9 +122,6 @@
     <Compile Include="OnScreenKeyboard\RelayCommand.cs" />
     <Compile Include="OnScreenKeyboard\ViewModel.cs" />
     <Compile Include="Pages\About\Index.xaml.cs">
-      <DependentUpon>Index.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AdditionalApps\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdditionalApps\LEDControlPage.xaml.cs">
@@ -135,17 +136,8 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Measurements\Index.xaml.cs">
-      <DependentUpon>Index.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Measurements\UsagePage.xaml.cs">
-      <DependentUpon>UsagePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Measurements\xMeasurementsPage.xaml.cs">
-      <DependentUpon>xMeasurementsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Measurements\xyzMeasurementsPage.xaml.cs">
-      <DependentUpon>xyzMeasurementsPage.xaml</DependentUpon>
+    <Compile Include="Pages\Measurements\Measurement.xaml.cs">
+      <DependentUpon>Measurement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Reports\Templates.xaml.cs">
       <DependentUpon>Templates.xaml</DependentUpon>
@@ -162,7 +154,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IReportService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="ViewModels\MeasurementViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -246,10 +240,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AdditionalApps\Index.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\AdditionalApps\LEDControlPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -266,19 +256,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Measurements\Index.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Measurements\UsagePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Measurements\xMeasurementsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Measurements\xyzMeasurementsPage.xaml">
+    <Page Include="Pages\Measurements\Measurement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

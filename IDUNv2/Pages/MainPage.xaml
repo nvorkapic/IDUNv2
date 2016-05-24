@@ -9,6 +9,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <con:NotificationTypeConverter x:Key="NotifyIcon"/>
+        <con:NullToVisibilityConverter x:Key="NullConverter"/>
         <DataTemplate x:Key="MainMenuData">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Icon}" Margin="5" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
@@ -27,6 +28,7 @@
         <RelativePanel Height="50"  Background="Black">
             <StackPanel Orientation="Horizontal">
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="#FF668100" Click="MainMenuExpand_Click"/>
+                <TextBlock Text="{Binding CurMainMenu.Label}" VerticalAlignment="Center" FontSize="25" Margin="10" Foreground="White"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
                 <Button RequestedTheme="Dark" Width="auto" x:Name="NotificationButton" Visibility="Collapsed" Background="Black" Click="NotificationButton_Click">
@@ -38,7 +40,7 @@
                     </Button.Content>
                 </Button>
                 <Image Source="/Assets/CloudIcon.png" Margin="15,0,10,0"></Image>
-                <TextBlock Text="IDUN" Foreground="White" VerticalAlignment="Center" FontSize="40" Margin="0,0,15,0"></TextBlock>
+                <TextBlock Text="IDUN" Foreground="White" VerticalAlignment="Center" FontSize="40" Margin="0,0,15,0" FontFamily="Tahoma"/>
             </StackPanel>
             <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal" Height="50"/>
@@ -55,21 +57,6 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <!--<RelativePanel Height="50">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding CurMainMenu.Icon}" Margin="5" VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
-                            <TextBlock Text="{Binding CurMainMenu.Label}" VerticalAlignment="Center" FontSize="25"/>
-                            <TextBlock Text="&#xE8DB;"  VerticalAlignment="Center" FontSize="25" FontFamily="Segoe MDL2 Assets" />
-                            <TextBlock Text="{Binding CurSubMenu.Label}" VerticalAlignment="Center" FontSize="25"/>
-                            <Image x:Name="HeaderSubImage" VerticalAlignment="Center" Margin="10,0,0,0" Height="25" Width="25"></Image>
-                        </StackPanel>
-                        <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal">
-                            <StackPanel Orientation="Horizontal" Height="40">
-                                <TextBox Width="195" VerticalAlignment="Center"/>
-                                <AppBarButton Icon="Find" />
-                            </StackPanel>
-                        </StackPanel>
-                    </RelativePanel>-->
                     <ListView Grid.Row="1" ItemsSource="{Binding SubMenu}" SelectionChanged="SubMenu_SelectionChanged" Loaded="subLoaded" ItemTemplate="{StaticResource SubMenuData}" Style="{StaticResource ListViewStyle}" Background="#FF435500" RequestedTheme="Dark">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -92,19 +79,21 @@
                     <ColumnDefinition Width="200"></ColumnDefinition>
                     <ColumnDefinition Width="600"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ListView ItemsSource="{Binding NotificationList}" ScrollViewer.HorizontalScrollMode="Enabled" SelectionChanged="NotificationItemSelectionChange" x:Name="NotificationFlyOutList" SelectionMode="Single" ItemClick="NotificationFlyOutList_ItemClick" Grid.Column="0" Background="#E5000000">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Converter={StaticResource NotifyIcon}}" Margin="5" VerticalAlignment="Center"></TextBlock>
-                                    <TextBlock Text="{Binding ShortDescription}" VerticalAlignment="Center"></TextBlock>
+                <ScrollViewer>
+                    <ListView ItemsSource="{Binding NotificationList}" ScrollViewer.HorizontalScrollMode="Enabled" SelectionChanged="NotificationItemSelectionChange" x:Name="NotificationFlyOutList" SelectionMode="Single"  Grid.Column="0" Background="#E5000000" MaxHeight="330">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Converter={StaticResource NotifyIcon}}" Margin="5" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="{Binding ShortDescription}" VerticalAlignment="Center"></TextBlock>
+                                    </StackPanel>
+
                                 </StackPanel>
-                              
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
                 <StackPanel Grid.Column="1" x:Name="ExtendedNotification" Background="#D8000000">
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
@@ -124,5 +113,16 @@
             </Grid>
             
         </StackPanel>
+        <ToolTip x:Name="WarningToolTip" Height="190" Grid.RowSpan="2" RequestedTheme="Dark" Visibility="{Binding WarningDialog, Converter={StaticResource NullConverter}}"  >
+            <StackPanel>
+                <TextBlock Padding="10" Foreground="Red" Text="{Binding WarningDialog.Header}"></TextBlock>
+                <TextBlock Padding="10" TextWrapping="WrapWholeWords" Text="{Binding WarningDialog.Content}"></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Margin="10" x:Name="ReturnBtn" Click="WarningReturn_Click">Return</Button>
+                    <Button Margin="10" x:Name="LeaveBtn" Click="WarningLeave_Click">Leave</Button>
+                </StackPanel>
+            </StackPanel>
+        </ToolTip>
+
     </Grid>
 </Page>

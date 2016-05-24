@@ -51,12 +51,31 @@ namespace IDUNv2.Pages.Reports
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            //viewModel.
+            MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Saved", "Template is configured and saved and ready for use!");
         }
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
             viewModel.CreateTemplate();
+            MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
         }
-    }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            int dirtyTemplatesNr = 0;
+            foreach (var item in viewModel.Templates)
+            {
+                if (item.Dirty)
+                    ++dirtyTemplatesNr;
+            }
+            if (dirtyTemplatesNr >= 1)
+            {
+                MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
+            }
+
+
+            }
+
+        }
 }

@@ -35,6 +35,8 @@ namespace IDUNv2.Pages
             Current = this;
 
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
+
+            
         }
 
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -70,7 +72,7 @@ namespace IDUNv2.Pages
                 
             if (lb.SelectedItem == null)
             {
-                lb.SelectedIndex = 0;
+                lb.SelectedItem = lb.Items.FirstOrDefault();
             }
         }
 
@@ -130,19 +132,20 @@ namespace IDUNv2.Pages
                 
         }
 
-        private void NotificationFlyOutList_ItemClick(object sender, ItemClickEventArgs e)
+        private void WarningReturn_Click(object sender, RoutedEventArgs e)
         {
-            //var listView = (ListView)sender;
-            //var selectedItem = listView.SelectedItem as ListViewItem;
-            //if (e.ClickedItem==listView.SelectedItem)
-            //{
-            //    selectedItem.IsSelected = false;
-            //}
-            //else
-            //{
-            //    selectedItem.IsSelected = true;
-            //}
+            viewModel.WarningDialog = null;
+        }
+        
+        private void WarningLeave_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.WarningDialog = null;
             
+        }
+
+        public void ShowWarning(string Header, string Content)
+        {
+            viewModel.WarningDialog = new WarningDialog { Header = Header, Content = Content };
         }
     }
 }

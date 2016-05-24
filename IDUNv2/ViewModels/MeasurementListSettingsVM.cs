@@ -38,6 +38,7 @@ namespace IDUNv2.ViewModels
 
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
         public List<ReportTemplate> Templates { get; set; }
 
         public ObservableCollection<MeasurementListSettingsItems> _measurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>();
@@ -47,6 +48,7 @@ namespace IDUNv2.ViewModels
 
         private MeasurementListSettingsItems _currentMeasurements;
         public MeasurementListSettingsItems CurrentMeasurements { get { return _currentMeasurements; } set { _currentMeasurements = value; Notify(); } }
+
         public MeasurementListSettingsVM(IReportService reportService)
         {
             this.reportService = reportService;
