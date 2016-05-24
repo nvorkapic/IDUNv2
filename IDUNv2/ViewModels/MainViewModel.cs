@@ -12,12 +12,12 @@ namespace IDUNv2.ViewModels
 {
 
 
-
+    
     public class MainViewModel : ViewModelBase
     {
         public ObservableCollection<Notification> NotificationList { get; set; } = new ObservableCollection<Notification>();
 
-
+       
         private Notification _latestNotification;
         public Notification LatestNotification { get { return _latestNotification; } set { _latestNotification = value; Notify(); } }
 

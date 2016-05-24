@@ -2,6 +2,7 @@
 using Addovation.Common.Models;
 using IDUNv2.Models;
 using IDUNv2.Services;
+using SenseHat;
 using SQLite.Net.Platform.WinRT;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Credentials;
 using Windows.Storage;
@@ -73,6 +75,7 @@ namespace IDUNv2
         public static CloudClient CloudClient { get; private set; }
         public static ReportService Reports { get; private set; }
         public static FaultCodesCache FaultCodesCache { get; private set; }
+        public static SensorTimer SensorTimer = new SensorTimer(1);
 
         private static void InitInsights()
         {

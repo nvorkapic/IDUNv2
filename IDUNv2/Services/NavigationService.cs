@@ -29,6 +29,7 @@ namespace IDUNv2.Services
                 Icon = "\xE90F",
                 SubMenu = new List<SubMenuItem>()
                 {
+                    new SubMenuItem { Label = "Testing", PageType = typeof(Pages.SensorsPage) },
                     new SubMenuItem { Label = "Usage", PageType = typeof(Pages.Measurements.Measurement),Icon = "/Assets/Usage.png" },
                     new SubMenuItem { Label = "Temperature", PageType = typeof(Pages.Measurements.Measurement), Icon = "/Assets/Thermometer.png" },
                     new SubMenuItem { Label = "Pressure", PageType = typeof(Pages.Measurements.Measurement), Icon = "/Assets/Pressure.png" },
