@@ -14,10 +14,10 @@ namespace IDUNv2.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
+            var n = value as Notification;
+            if (n == null)
                 return "";
-            var type = (Notification)value;
-            switch(type.Type)
+            switch(n.Type)
                 {
                 case NotificationType.Error: return "\xE730";
                 case NotificationType.Warning: return "\xE8C9";
