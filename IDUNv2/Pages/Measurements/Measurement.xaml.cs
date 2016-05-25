@@ -1,4 +1,5 @@
-﻿using IDUNv2.ViewModels;
+﻿using IDUNv2.Models;
+using IDUNv2.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,9 @@ namespace IDUNv2.Pages.Measurements
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        public MeasurementViewModel viewModel = new MeasurementViewModel();
+
+        ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>();
+
 
         public Measurement()
         {
@@ -38,8 +41,27 @@ namespace IDUNv2.Pages.Measurements
 
         private async void Measurement_Loaded(object sender, RoutedEventArgs e)
         {
-            await viewModel.LoadMCListFromLocal();
-            this.DataContext = viewModel;
+            try
+            {
+                StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
+                string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
+                MeasurementConfigurationList = JsonConvert.DeserializeObject<ObservableCollection<MeasurementListSettingsItems>>(ConfigText);
+
+                foreach (var item in MeasurementConfigurationList)
+                {
+                    MeasurementViewModel.Measurements.Add(new MeasurementModel { MeasurementName = item.Title, Enabled = item.Config.Enabled, ThresholdList = item.Config.Thresholds });
+                }
+                MeasurementModel CurrentMeasurement = MeasurementViewModel.Measurements.Where(x => x.MeasurementName == MainPage.SubMenI.Label).FirstOrDefault();
+                this.DataContext = CurrentMeasurement;
+            }
+            catch
+            {
+                foreach(var s in Services.ConfigService.Sensors)
+                {
+                    MeasurementViewModel.Measurements.Add(new MeasurementModel { MeasurementName = Common.Assets.SensorIcons[s.Type].Item3 });
+                }
+            }
+
 
         }
 

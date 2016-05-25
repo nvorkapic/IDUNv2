@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page RequestedTheme="Dark"
     x:Class="IDUNv2.Pages.About.Index"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,6 +8,13 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Image Source="/Assets/1200.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin=" 10"></Image>
+        <StackPanel VerticalAlignment="Bottom" Margin="15">
+            <TextBlock HorizontalAlignment="Right">Copyright © 2016</TextBlock>
+            <TextBlock HorizontalAlignment="Right">Mårten Hansson</TextBlock>
+            <TextBlock HorizontalAlignment="Right">Nikola Vorkapic</TextBlock>
+            <Image Source="/Assets/logo-addovation.png" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Image>
+        </StackPanel>
+        
     </Grid>
 </Page>

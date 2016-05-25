@@ -88,7 +88,6 @@
                                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Converter={StaticResource NotifyIcon}}" Margin="5" VerticalAlignment="Center"></TextBlock>
                                         <TextBlock Text="{Binding ShortDescription}" VerticalAlignment="Center"></TextBlock>
                                     </StackPanel>
-
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -105,7 +105,7 @@
     <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
     <Compile Include="Models\FaultCodesCache.cs" />
-    <Compile Include="Models\Measurement.cs" />
+    <Compile Include="Models\MeasurementModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Navigation.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -170,6 +170,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\1200.png" />
     <Content Include="Assets\Accelerometer.png" />
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
@@ -184,6 +185,7 @@
     <Content Include="Assets\index.png" />
     <Content Include="Assets\Information.png" />
     <Content Include="Assets\LED.png" />
+    <Content Include="Assets\logo-addovation.png" />
     <Content Include="Assets\Magnet.png" />
     <Content Include="Assets\microphone.png" />
     <Content Include="Assets\Overview.png" />
@@ -275,6 +277,11 @@
     <Page Include="Pages\Settings\ServerSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\IDUNStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
   <ItemGroup>

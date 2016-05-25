@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="#FFE1E1E1">
+    <Grid x:Name="MainGrid" Background="#FFE1E1E1">
         <StackPanel>
             <ListView ItemsSource="{Binding MeasurementConfigurationList}" SelectedItem="{Binding CurrentMeasurements, Mode=TwoWay}" Style="{StaticResource ListViewStyle}" Background="#FF668100" RequestedTheme="Dark">
                 <ListView.ItemsPanel>
@@ -25,7 +25,7 @@
             </ListView>
             <StackPanel>
                 <StackPanel Height="auto">
-                    <StackPanel Orientation="Horizontal" Background="Black" RequestedTheme="Dark">
+                    <StackPanel x:Name="TopSeparatorWithTitleStackPanel" Orientation="Horizontal" Background="Black" RequestedTheme="Dark">
                         <CheckBox x:Name="EnableCheck" Content="Enable Measurement:" Margin="5,0,5,0" VerticalAlignment="Center" IsChecked="{Binding CurrentMeasurements.Config.Enabled, Mode=TwoWay}"></CheckBox>
                         <Image Source="{Binding CurrentMeasurements.Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
                         <TextBlock Text="{Binding CurrentMeasurements.Title}" VerticalAlignment="Center"></TextBlock>
@@ -92,16 +92,20 @@
                             <Button Grid.Column="2" Grid.Row="3" Height="55" Width="95" Content="-" Click="KeyboardBtnClick" IsTabStop="False" FontSize="30"/>
                             <Button Grid.Column="3" Grid.Row="3" Height="55" Width="95" Content="←" Grid.ColumnSpan="1" Click="KeyboardBtnClick" IsTabStop="False" FontSize="30"/>
                         </Grid>
-
+                        <Grid Background="Gainsboro">
                         <StackPanel HorizontalAlignment="Left" x:Name="ReportSectionPanel" Background="Gainsboro" RequestedTheme="Light">
-
-                            <TextBlock Text="Applied Report Templates:" Padding="10" ></TextBlock>
                             <Grid x:Name="Reports">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="700"></ColumnDefinition>
+                                    <ColumnDefinition MinWidth="730"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <ScrollViewer Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Applied Report Templates:" Grid.Row="0" Padding="10" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                <Button x:Name="RBtn" Grid.Row="0" Content="Remove" VerticalAlignment="Center" Click="RBtn_Click" HorizontalAlignment="Right"></Button>
+                                <ScrollViewer Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
                                     <ListView ItemsSource="{Binding CurrentMeasurements.Config.Thresholds, Mode=TwoWay}" x:Name="ReportList" MaxHeight="165">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
@@ -120,9 +124,10 @@
                                         </ListView.ItemTemplate>
                                     </ListView>
                                 </ScrollViewer>
-                                <Button x:Name="RBtn" Grid.Column="1" Content="Remove" VerticalAlignment="Top" Click="RBtn_Click"></Button>
+                                
                             </Grid>
                         </StackPanel>
+                        </Grid>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

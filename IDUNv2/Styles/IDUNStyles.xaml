@@ -1,0 +1,54 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IDUNv2.Styles">
+
+    <!--Using RequestedTheme="Dark"-->
+    
+    <!--MainPageBrushes-->
+    
+    <!--1--><SolidColorBrush x:Key="MainMenuBackgroundBrush" Color="#FF435600"></SolidColorBrush>
+    <!--1--><SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="#FF435500"></SolidColorBrush>
+    <!--3 FF668100--><SolidColorBrush x:Key="HamburgerButtonBrush" Color="#FF668100"></SolidColorBrush>
+
+    <!--1--><SolidColorBrush x:Key="ExtendedNotificationBackgroundBrush" Color="#D8000000"></SolidColorBrush>
+
+    <!--1--><SolidColorBrush x:Key="NotificationListPanelBackgroundBrush" Color="#7F000000"></SolidColorBrush>
+    <!--1--><SolidColorBrush x:Key="NotificationListBackgroundBrush" Color="#E5000000"></SolidColorBrush>
+    
+    <!--Settings.MeasurementsPage -->
+
+    <!--6 Black--><SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>
+
+    <!--3 FF668100--><SolidColorBrush x:Key="MeasurementConfigurationListBackgroundBrush" Color="#FF668100"></SolidColorBrush>
+    <!--3 FFE1E1E1--><SolidColorBrush x:Key="MainGridBackgroundBrush" Color="#FFE1E1E1"></SolidColorBrush>
+    <!--4 FFB7B8BC--><SolidColorBrush x:Key="ConfigContentBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
+    <!--3 Gainsboro--><SolidColorBrush x:Key="ReportSectionPanelBackgroundBrush" Color="Gainsboro"></SolidColorBrush>
+    
+    <!--Settings.ServerSettingsPage -->
+
+    <!--6 Black--><!--<SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>-->
+
+    <!--3 FFE1E1E1--><SolidColorBrush x:Key="MainStackPanelBackgroundBrush" Color="#FFE1E1E1"></SolidColorBrush>
+    <!--4 FFB7B8BC--><SolidColorBrush x:Key="ServerInputContentPanelBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
+    <!--6 Black--><SolidColorBrush x:Key="SaveButtonBackgrounBrush" Color="Black"></SolidColorBrush>
+
+    <!--Reports.Templates -->
+
+    <!--6 Black--><!--<SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>-->
+
+    <!--4 FFB7B8BC--><SolidColorBrush x:Key="TemplateListGridBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
+    <!--6 Black--><SolidColorBrush x:Key="CreateTemplateButtonBackgroundBrush" Color="Black"></SolidColorBrush>
+        <!--RequestedTheme for TemplateInputGrid is Light-->
+    <!--3 Gainsboro--><SolidColorBrush x:Key="TemplateInputGridBackgroundBrush" Color="Gainsboro"></SolidColorBrush>
+    
+    <!--Measurements.Measurement -->
+
+    <!--6 Black--><!--<SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>-->
+
+    <!--3 FFE1E1E1--><!--<SolidColorBrush x:Key="MainGridBackgroundBrush" Color="#FFE1E1E1"></SolidColorBrush>-->
+    <!--4 FFB7B8BC--><SolidColorBrush x:Key="CentralInformationStackPanelBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
+    <!--3 Gainsboro--><SolidColorBrush x:Key="ReportListMainBackgroundBrush" Color="Gainsboro"></SolidColorBrush>
+
+    
+</ResourceDictionary>

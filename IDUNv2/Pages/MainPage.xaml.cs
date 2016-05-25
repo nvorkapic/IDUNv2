@@ -23,6 +23,7 @@ namespace IDUNv2.Pages
     public sealed partial class MainPage : Page
     {
         public static MainPage Current;
+        public static SubMenuItem SubMenI;
         private MainViewModel viewModel = new MainViewModel();
 
         public Notification SelectedNotificationItem = new Notification();
@@ -64,6 +65,7 @@ namespace IDUNv2.Pages
         {
             var lb = sender as ListView;
             var item = lb.SelectedItem as SubMenuItem;
+            SubMenI = lb.SelectedItem as SubMenuItem;
             if (item != null)
             {
                 viewModel.SelectSubMenu(ContentFrame, item);
