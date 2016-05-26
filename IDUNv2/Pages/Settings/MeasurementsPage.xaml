@@ -25,7 +25,7 @@
             </ListView>
             <StackPanel>
                 <StackPanel Height="auto">
-                    <StackPanel x:Name="TopSeparatorWithTitleStackPanel" Orientation="Horizontal" Background="Black" RequestedTheme="Dark">
+                    <StackPanel x:Name="TopSeparatorWithTitleStackPanel" Orientation="Horizontal" Background="Black" RequestedTheme="Dark" Height="30">
                         <CheckBox x:Name="EnableCheck" Content="Enable Measurement:" Margin="5,0,5,0" VerticalAlignment="Center" IsChecked="{Binding CurrentMeasurements.Config.Enabled, Mode=TwoWay}"></CheckBox>
                         <Image Source="{Binding CurrentMeasurements.Icon}" Width="25" Height="25" VerticalAlignment="Center" Margin="0,0,10,0"></Image>
                         <TextBlock Text="{Binding CurrentMeasurements.Title}" VerticalAlignment="Center"></TextBlock>

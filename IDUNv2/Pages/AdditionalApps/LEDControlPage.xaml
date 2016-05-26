@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page RequestedTheme="Dark" 
     x:Class="IDUNv2.Pages.AdditionalApps.LEDControlPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,7 +7,48 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#FFE1E1E1">
 
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel Orientation="Horizontal" Background="Black">
+                <Image x:Name="ledImage" HorizontalAlignment="Left" Height="398" VerticalAlignment="Center" Width="398" Margin="5"/>
+                
+            </StackPanel>
+
+            <Grid HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="120"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+             
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="RGB Color Slider Selector" Foreground="Black" Padding="5,0,0,20"></TextBlock>
+                <StackPanel  Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="Red" Margin="10" Foreground="Red"></TextBlock>
+                        <Slider x:Name="sliderRed" Margin="15,0,0,0"  HorizontalAlignment="Center" Height="48"  VerticalAlignment="Center" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderRed_ValueChanged" Value="31" Foreground="Black"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="Green" Margin="10" Foreground="Green"></TextBlock>
+                        <Slider x:Name="sliderGreen" Margin="0,0,0,0" HorizontalAlignment="Center" Height="48"  VerticalAlignment="Top" Width="165" Maximum="63" LargeChange="4" ValueChanged="sliderGreen_ValueChanged" Value="63" Foreground="Black"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center"  Text="Blue" Margin="10" Foreground="Blue"></TextBlock>
+                        <Slider x:Name="sliderBlue" HorizontalAlignment="Center" Margin="10,0,0,0" Height="48" VerticalAlignment="Top" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderBlue_ValueChanged" Value="31" Foreground="Black"/>
+                    </StackPanel>
+                </StackPanel>
+                <ToggleButton x:Name="fillToggle" Grid.Row="2" Grid.Column="0" IsChecked="True" Unchecked="unCheckfill" Checked="fillToggle_Checked" Loaded="onLoad" Content="Fill" Width="150" HorizontalAlignment="Center"  />
+                <StackPanel VerticalAlignment="Bottom" Grid.Row="3" >
+                    <Rectangle x:Name="colorPreview" HorizontalAlignment="Center" Height="100" Stroke="Black" VerticalAlignment="Bottom" Width="110"/>
+                </StackPanel>
+            </Grid>
+
+
+        </StackPanel>
     </Grid>
 </Page>

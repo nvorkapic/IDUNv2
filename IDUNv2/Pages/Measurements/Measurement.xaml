@@ -9,9 +9,9 @@
 
     <Grid x:Name="MainGrid" Background="#FFE1E1E1">
         <StackPanel>
-            <StackPanel Orientation="Horizontal" x:Name="TopSeparatorWithTitleStackPanel" Background="Black" RequestedTheme="Dark">
+            <StackPanel Orientation="Horizontal" x:Name="TopSeparatorWithTitleStackPanel" Background="Black" RequestedTheme="Dark" Height="30">
                 <TextBlock Margin="5,0,0,0" VerticalAlignment="Center">Measurement:</TextBlock>
-                <TextBlock Margin="5,0,0,0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Text="{Binding MeasurementName}"></TextBlock>
+                <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding MeasurementName}"></TextBlock>
                 <TextBlock Margin="5,0,0,0" VerticalAlignment="Center">IsEnabled</TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" x:Name="CentralInformationStackPanel" Background="#FFB7B8BC">
