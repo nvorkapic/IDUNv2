@@ -1,4 +1,5 @@
-﻿using IDUNv2.Models;
+﻿using IDUNv2.Common;
+using IDUNv2.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Windows.Storage;
 namespace IDUNv2.ViewModels
 {
 
-    public class MeasurementViewModel :ViewModelBase
+    public class MeasurementViewModel : NotifyBase
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;

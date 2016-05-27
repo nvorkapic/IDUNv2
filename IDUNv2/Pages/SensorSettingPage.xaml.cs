@@ -22,10 +22,10 @@ using IDUNv2.Services;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace IDUNv2.Pages.Settings
+namespace IDUNv2.Pages
 {
 
-    public sealed partial class MeasurementsPage : Page
+    public sealed partial class SensorSettingPage : Page
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
@@ -80,7 +80,7 @@ namespace IDUNv2.Pages.Settings
 
         public object Setting { get; private set; }
 
-        public MeasurementsPage()
+        public SensorSettingPage()
         {
             this.InitializeComponent();
 
@@ -107,12 +107,12 @@ namespace IDUNv2.Pages.Settings
             if (EnableCheck.IsChecked == true)
             {
                 ConfigContent.Visibility = Visibility.Visible;
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Enabled", "Application will record selected measurement: " + viewModel.CurrentMeasurements.Title);
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Enabled", "Application will record selected measurement: " + viewModel.CurrentMeasurements.Title);
             }
             else
             {
                 ConfigContent.Visibility = Visibility.Collapsed;
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Disabled", "Application will stop recording selected measurement: " + viewModel.CurrentMeasurements.Title);
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Disabled", "Application will stop recording selected measurement: " + viewModel.CurrentMeasurements.Title);
             }
                 
         }
@@ -240,17 +240,17 @@ namespace IDUNv2.Pages.Settings
                             viewModel.CurrentMeasurements.Config.Thresholds.Insert(0, new ThresholdConfig { Operator = op, Template = tp, Value = vl });
                             WarningAdd.Visibility = Visibility.Collapsed; WarningValues.Visibility = Visibility.Collapsed;
                             viewModel.SaveMCListToLocal();
-                            MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Added", viewModel.CurrentMeasurements.Title + " has new Trigger added.\nOperator: " + op + "\nValue: " + vl + "\nTemplate: " + tp.Name);
+                            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Added", viewModel.CurrentMeasurements.Title + " has new Trigger added.\nOperator: " + op + "\nValue: " + vl + "\nTemplate: " + tp.Name);
                         }
                         else
                         {
-                            MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
+                            ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
                         }
                         
                     }
                     else
-                        
-                        MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Trigger Error", viewModel.CurrentMeasurements.Title + ": You are trying to add Report Template with a Value that is already assigned to a trigger!");
+
+                        ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Trigger Error", viewModel.CurrentMeasurements.Title + ": You are trying to add Report Template with a Value that is already assigned to a trigger!");
                 }
                 else
                 {
@@ -259,7 +259,7 @@ namespace IDUNv2.Pages.Settings
             }
             catch
             {
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
             }
 
             if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
@@ -273,7 +273,7 @@ namespace IDUNv2.Pages.Settings
             if (ReportList.SelectedItem !=null)
             {
                 var item = ReportList.SelectedItem as ThresholdConfig;
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Removed", viewModel.CurrentMeasurements.Title + " has Trigger removed.\nOperator: " + item.Operator + "\nValue: " + item.Value + "\nTemplate: " + item.Template.Name);
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Removed", viewModel.CurrentMeasurements.Title + " has Trigger removed.\nOperator: " + item.Operator + "\nValue: " + item.Value + "\nTemplate: " + item.Template.Name);
                 viewModel.CurrentMeasurements.Config.Thresholds.Remove(item);
                 ReportList.SelectedItem = ReportList.Items.FirstOrDefault();
                 if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
@@ -283,7 +283,7 @@ namespace IDUNv2.Pages.Settings
                 viewModel.SaveMCListToLocal();
             }
             else
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Remove Error", viewModel.CurrentMeasurements.Title + ": Cannot remove Item from Report List if it's not selected!");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Remove Error", viewModel.CurrentMeasurements.Title + ": Cannot remove Item from Report List if it's not selected!");
 
         }
 

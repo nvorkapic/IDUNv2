@@ -32,7 +32,7 @@ namespace IDUNv2.ViewModels
         }
     }
 
-    public class MeasurementListSettingsVM : ViewModelBase
+    public class MeasurementListSettingsVM : NotifyBase
     {
         private IReportService reportService;
 

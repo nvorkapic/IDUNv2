@@ -2,7 +2,10 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -106,70 +109,59 @@
     <Compile Include="AppData.cs" />
     <Compile Include="Common\Assets.cs" />
     <Compile Include="Common\ActionCommand.cs" />
+    <Compile Include="Common\NotifyBase.cs" />
     <Compile Include="Common\TaskBinding.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
     <Compile Include="Models\FaultCodesCache.cs" />
     <Compile Include="Models\MeasurementModel.cs" />
-    <Compile Include="Models\ModelBase.cs" />
-    <Compile Include="Models\Navigation.cs" />
+    <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\SensorConfig.cs" />
     <Compile Include="Models\ThresholdConfig.cs" />
     <Compile Include="Models\ReportTemplate.cs" />
     <Compile Include="Models\WarningDialog.cs" />
-    <Compile Include="OnScreenKeyboard\KeyAssignmentSet.cs" />
-    <Compile Include="OnScreenKeyboard\KeyboardViewModel.cs" />
-    <Compile Include="OnScreenKeyboard\KeyModel.cs" />
-    <Compile Include="OnScreenKeyboard\OnScreenKeyboard.xaml.cs">
+    <Compile Include="Controls\OnScreenKeyboard\KeyAssignmentSet.cs" />
+    <Compile Include="Controls\OnScreenKeyboard\KeyboardViewModel.cs" />
+    <Compile Include="Controls\OnScreenKeyboard\KeyModel.cs" />
+    <Compile Include="Controls\OnScreenKeyboard\OnScreenKeyboard.xaml.cs">
       <DependentUpon>OnScreenKeyboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OnScreenKeyboard\RelayCommand.cs" />
-    <Compile Include="OnScreenKeyboard\ViewModel.cs" />
-    <Compile Include="Pages\About\Index.xaml.cs">
-      <DependentUpon>Index.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AdditionalApps\LEDControlPage.xaml.cs">
-      <DependentUpon>LEDControlPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AdditionalApps\SpeechSynthesisPage.xaml.cs">
-      <DependentUpon>SpeechSynthesisPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Home\IndexPage.xaml.cs">
-      <DependentUpon>IndexPage.xaml</DependentUpon>
+    <Compile Include="Controls\OnScreenKeyboard\RelayCommand.cs" />
+    <Compile Include="Controls\OnScreenKeyboard\ViewModel.cs" />
+    <Compile Include="Pages\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Measurements\Measurement.xaml.cs">
-      <DependentUpon>Measurement.xaml</DependentUpon>
+    <Compile Include="Pages\ShellPage.xaml.cs">
+      <DependentUpon>ShellPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Reports\Templates.xaml.cs">
-      <DependentUpon>Templates.xaml</DependentUpon>
+    <Compile Include="Pages\MeasurementPage.xaml.cs">
+      <DependentUpon>MeasurementPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Reports\Index.xaml.cs">
-      <DependentUpon>Index.xaml</DependentUpon>
+    <Compile Include="Pages\ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SensorsPage.xaml.cs">
       <DependentUpon>SensorsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Settings\MeasurementsPage.xaml.cs">
-      <DependentUpon>MeasurementsPage.xaml</DependentUpon>
+    <Compile Include="Pages\SensorSettingPage.xaml.cs">
+      <DependentUpon>SensorSettingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Settings\ServerSettingsPage.xaml.cs">
-      <DependentUpon>ServerSettingsPage.xaml</DependentUpon>
+    <Compile Include="Pages\ServerSettingPage.xaml.cs">
+      <DependentUpon>ServerSettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IReportService.cs" />
-    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="ViewModels\MeasurementViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\MeasurementListSettingsVM.cs" />
     <Compile Include="ViewModels\ServerViewModel.cs" />
   </ItemGroup>
@@ -243,39 +235,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="OnScreenKeyboard\OnScreenKeyboard.xaml">
+    <Page Include="Controls\OnScreenKeyboard\OnScreenKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\About\Index.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AdditionalApps\LEDControlPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AdditionalApps\SpeechSynthesisPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Home\IndexPage.xaml">
+    <Page Include="Pages\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\Measurements\Measurement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reports\Templates.xaml">
+    <Page Include="Pages\ShellPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\MeasurementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reports\Index.xaml">
+    <Page Include="Pages\ReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -283,11 +263,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Settings\MeasurementsPage.xaml">
+    <Page Include="Pages\SensorSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Settings\ServerSettingsPage.xaml">
+    <Page Include="Pages\ServerSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,17 +19,17 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace IDUNv2.Pages.Settings
+namespace IDUNv2.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ServerSettingsPage : Page
+    public sealed partial class ServerSettingPage : Page
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-        public ServerSettingsPage()
+        public ServerSettingPage()
         {
             this.InitializeComponent();
 
@@ -66,7 +66,7 @@ namespace IDUNv2.Pages.Settings
                 //Result.Foreground = new SolidColorBrush(Colors.Red);
                 //Result.Text = "Please check that all information is entered correctly and try again!";
                 //Tooltip.Visibility = Visibility.Visible;
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Server Settings Error", "Please check that all information is entered correctly and try again!");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Server Settings Error", "Please check that all information is entered correctly and try again!");
             }
             else
             {
@@ -84,7 +84,7 @@ namespace IDUNv2.Pages.Settings
                 //myTimer();
                 //Confirmation.Visibility = Visibility.Visible;
                 //AppData.Notify.Add("NotifyString");
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.");
                 //Result.Foreground = new SolidColorBrush(Colors.Green);
                 //Result.Text = "Server settings successfully saved!";
                 //Tooltip.Visibility = Visibility.Visible;

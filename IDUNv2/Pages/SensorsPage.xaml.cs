@@ -1,4 +1,5 @@
-﻿using SenseHat;
+﻿using IDUNv2.Models;
+using SenseHat;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,6 +55,7 @@ namespace IDUNv2.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            //var SubMenu = e.Parameter as List<SubMenuItem>;
             //AppData.SensorTimer.OnTemperature += OnTemperature;
             //AppData.SensorTimer.OnHumidity += OnHumidity;
         }

@@ -49,6 +49,9 @@ namespace SenseHat
                 while (true)
                 {
                     hts221.Update();
+
+                    //AppData.Sensors[SensorId.Temperature].CurrentReading = Temp;
+
                     if (hts221.Temperature.HasValue)
                         Temp = hts221.Temperature.Value;
                     if (hts221.Humidity.HasValue)

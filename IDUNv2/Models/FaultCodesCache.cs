@@ -78,9 +78,18 @@ namespace IDUNv2.Models
         {
             var cache = new FaultCodesCache(cloudClient);
 
-            cache.DiscCodes = await cache.GetDiscCodes(false).ConfigureAwait(false);
-            cache.SymptCodes = await cache.GetSymptCodes(false).ConfigureAwait(false);
-            cache.PrioCodes = await cache.GetPrioCodes(false).ConfigureAwait(false);
+            if (cloudClient == null)
+            {
+                cache.DiscCodes = new List<WorkOrderDiscCode>();
+                cache.SymptCodes = new List<WorkOrderSymptCode>();
+                cache.PrioCodes = new List<MaintenancePriority>();
+            }
+            else
+            {
+                cache.DiscCodes = await cache.GetDiscCodes(false).ConfigureAwait(false);
+                cache.SymptCodes = await cache.GetSymptCodes(false).ConfigureAwait(false);
+                cache.PrioCodes = await cache.GetPrioCodes(false).ConfigureAwait(false);
+            }
 
             cache.discDict = cache.DiscCodes.ToDictionary(ks => ks.ErrDiscoverCode, es => es);
             cache.symptDict = cache.SymptCodes.ToDictionary(ks => ks.ErrSymptom, es => es);

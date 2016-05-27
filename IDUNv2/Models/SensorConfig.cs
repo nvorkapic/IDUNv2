@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDUNv2.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace IDUNv2.Models
         Gyroscope
     }
 
-    public class SensorConfig : ModelBase
+    public class SensorConfig : NotifyBase
     {
         private bool _enabled;
 

@@ -16,16 +16,16 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace IDUNv2.Pages.Reports
+namespace IDUNv2.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Templates : Page
+    public sealed partial class ReportPage : Page
     {
         private ReportsPageViewModel viewModel = new ReportsPageViewModel(AppData.Reports, AppData.FaultCodesCache);
 
-        public Templates()
+        public ReportPage()
         {
             this.InitializeComponent();
             this.Loaded += Templates_Loaded;
@@ -51,13 +51,13 @@ namespace IDUNv2.Pages.Reports
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Saved", "Template is configured and saved and ready for use!");
+            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Saved", "Template is configured and saved and ready for use!");
         }
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
             viewModel.CreateTemplate();
-            MainPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
+            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -71,7 +71,7 @@ namespace IDUNv2.Pages.Reports
             }
             if (dirtyTemplatesNr >= 1)
             {
-                MainPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
             }
 
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class ReportsPageViewModel : ViewModelBase
+    public class ReportsPageViewModel : NotifyBase
     {
         private ReportService _reports;
         private ReportTemplateViewModel _selectedTemplate;

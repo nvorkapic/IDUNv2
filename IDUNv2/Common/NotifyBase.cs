@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDUNv2.Models
+namespace IDUNv2.Common
 {
-    public class ModelBase : INotifyPropertyChanged
+    public class NotifyBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

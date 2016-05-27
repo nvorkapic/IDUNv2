@@ -1,4 +1,5 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.Common;
 using IDUNv2.Models;
 using IDUNv2.Services;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class ReportTemplateViewModel : ViewModelBase
+    public class ReportTemplateViewModel : NotifyBase
     {
         private FaultCodesCache cache;
         private ReportTemplate model;

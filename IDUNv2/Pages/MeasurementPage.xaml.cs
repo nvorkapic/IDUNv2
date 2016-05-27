@@ -20,23 +20,27 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace IDUNv2.Pages.Measurements
+namespace IDUNv2.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Measurement : Page
+    public sealed partial class MeasurementPage : Page
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
         ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>();
 
-
-        public Measurement()
+        public MeasurementPage()
         {
             this.InitializeComponent();
             this.Loaded += Measurement_Loaded;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
         }
 
         private async void Measurement_Loaded(object sender, RoutedEventArgs e)
@@ -51,20 +55,16 @@ namespace IDUNv2.Pages.Measurements
                 {
                     MeasurementViewModel.Measurements.Add(new MeasurementModel { MeasurementName = item.Title, Enabled = item.Config.Enabled, ThresholdList = item.Config.Thresholds });
                 }
-                MeasurementModel CurrentMeasurement = MeasurementViewModel.Measurements.Where(x => x.MeasurementName == MainPage.SubMenI.Label).FirstOrDefault();
-                this.DataContext = CurrentMeasurement;
+                //MeasurementModel CurrentMeasurement = MeasurementViewModel.Measurements.Where(x => x.MeasurementName == MainPage.SubMenI.Label).FirstOrDefault();
+                //this.DataContext = CurrentMeasurement;
             }
             catch
             {
-                foreach(var s in Services.ConfigService.Sensors)
+                foreach (var s in Services.ConfigService.Sensors)
                 {
                     MeasurementViewModel.Measurements.Add(new MeasurementModel { MeasurementName = Common.Assets.SensorIcons[s.Type].Item3 });
                 }
             }
-
-
         }
-
-
     }
 }
