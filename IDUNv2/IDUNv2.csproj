@@ -119,6 +119,7 @@
     <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\SensorConfig.cs" />
+    <Compile Include="Models\SensorTrigger.cs" />
     <Compile Include="Models\ThresholdConfig.cs" />
     <Compile Include="Models\ReportTemplate.cs" />
     <Compile Include="Models\WarningDialog.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IReportService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\SensorService.cs" />
     <Compile Include="ViewModels\MeasurementViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />

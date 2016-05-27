@@ -2,6 +2,7 @@
 using SenseHat;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -35,6 +36,7 @@ namespace IDUNv2.Pages
         private void CompositionTarget_Rendering(object sender, object e)
         {
             temp = AppData.SensorTimer.Temp;
+
             humid = AppData.SensorTimer.Humid;
             TempText.Text = temp + " \u00B0C";
             HumidText.Text = humid + " \u00B0C";

@@ -8,16 +8,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.Models
 {
-    public enum SensorType
-    {
-        Usage,
-        Temperature,
-        Pressure,
-        Humidity,
-        Accelerometer,
-        Magnetometer,
-        Gyroscope
-    }
+   
 
     public class SensorConfig : NotifyBase
     {
