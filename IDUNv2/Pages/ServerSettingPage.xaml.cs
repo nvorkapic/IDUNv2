@@ -55,7 +55,7 @@ namespace IDUNv2.Pages
             osk.Visibility = Visibility.Collapsed;
         }
 
-        private void Save(object sender, RoutedEventArgs e)
+        private async void Save(object sender, RoutedEventArgs e)
         {
             Confirmation.Visibility = Visibility.Collapsed;
             if (OIDTB.Text.Length == 0 || CURLTB.Text.Length == 0 || UNTB.Text.Length == 0 || PASSTB.Password.Length <= 3 || SIDTB.Text.Length == 0)
@@ -86,6 +86,8 @@ namespace IDUNv2.Pages
                 //Result.Foreground = new SolidColorBrush(Colors.Green);
                 //Result.Text = "Server settings successfully saved!";
                 //Tooltip.Visibility = Visibility.Visible;
+
+                await AppData.InitCloud();
             }
         }
 

@@ -99,6 +99,8 @@ namespace IDUNv2
 
         public static async Task<bool> InitCloud()
         {
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
             try
             {
                 InitInsights();
@@ -107,8 +109,8 @@ namespace IDUNv2
                 //var cred = vault.FindAllByResource("idun").Where(c => c.UserName == "alex").Single();
                 //cred.RetrievePassword();
 
-                var cloudUrl = CommonDictionary.CloudUrls["testcloud.addovation.com"];
-                var connectionInfo = new ConnectionInfo(cloudUrl, "race8.addovation.com", "alex", "alex");
+                var cloudUrl = CommonDictionary.CloudUrls[localSettings.Values["URL"].ToString()];
+                var connectionInfo = new ConnectionInfo(cloudUrl, localSettings.Values["SystemID"].ToString(), localSettings.Values["Username"].ToString(), localSettings.Values["Password"].ToString());
 
                 CloudClient = new CloudClient
                 {
