@@ -40,9 +40,10 @@ namespace IDUNv2.Services
         }
 
         public Task<SensorTrigger> InsertTrigger(SensorTrigger trigger)
-        {      
-            db.Insert(trigger);
-            return Task.FromResult(trigger);
+        {
+                db.Insert(trigger);
+                return Task.FromResult(trigger);
+
         }
 
         public Task<SensorTrigger> DeleteTrigger(SensorTrigger trigger)
@@ -50,5 +51,11 @@ namespace IDUNv2.Services
             db.Delete(trigger);
             return Task.FromResult(trigger);
         }
+        public Task<SensorTrigger> FindTrigger(int Id)
+        {
+            var trigger = db.Find<SensorTrigger>(Id);
+            return Task.FromResult(trigger);
+        }
+
     }
 }

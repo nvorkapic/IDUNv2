@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using IDUNv2.Models;
 using IDUNv2.Services;
+using SQLite.Net;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,6 +30,7 @@ namespace IDUNv2.Pages
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        private static SQLiteConnection db = new SQLiteConnection(AppData.SqlitePlatform, AppData.DbPath);
 
         #region Keyboard
         private object _host;
@@ -89,11 +91,16 @@ namespace IDUNv2.Pages
         public float value = 0;
         private void AddTrigger(object sender, RoutedEventArgs e)
         {
-
-            viewModel.AddTrigger();
-            ElementCount();
-
  
+            if (viewModel.SensorTriggerList.Where(x => x.SensorId == viewModel.CurrentTrigger.SensorId).
+                Where(x => x.TemplateId == viewModel.CurrentTrigger.TemplateId).
+                Where(x => x.Comparer == viewModel.CurrentTrigger.Comparer).
+                Where(x => x.Value == viewModel.CurrentTrigger.Value).Count() == 0)
+            {
+                viewModel.AddTrigger();
+                ElementCount();
+            }
+        
         }
 
         public void ElementCount()

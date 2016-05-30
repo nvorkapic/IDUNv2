@@ -18,14 +18,14 @@ namespace IDUNv2.ViewModels
         public SensorType[] Types { get; set; }
         public List<ReportTemplate> Templates { get; set; }
 
-        ReportService RS = new ReportService();
+
         SensorService SS = new SensorService();
 
         public SensorTriggerViewModel()
         {
             Comparers = Enum.GetValues(typeof(SensorTriggerComparer)).Cast<SensorTriggerComparer>().ToArray();
             Types = Enum.GetValues(typeof(SensorType)).Cast<SensorType>().ToArray();
-            Templates = RS.GetTemplates().Result;
+            Templates = AppData.Reports.GetTemplates().Result;
             CurrentTrigger = new SensorTrigger();
         }
 

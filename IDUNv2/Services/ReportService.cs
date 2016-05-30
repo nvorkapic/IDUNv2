@@ -39,6 +39,13 @@ namespace IDUNv2.Services
             return Task.FromResult(templates);
         }
 
+        public Task<ReportTemplate> FindTemplate(int Id)
+        {
+            var template= db.Find<ReportTemplate>(Id);
+            return Task.FromResult(template);
+            
+        }
+
         public Task<ReportTemplate> SetTemplate(ReportTemplate template)
         {
             //int i = _templates.FindIndex(t => t.Name == template.Name);
