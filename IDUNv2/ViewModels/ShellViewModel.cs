@@ -19,11 +19,10 @@ namespace IDUNv2.ViewModels
 
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
-            new NavMenuItem { Label = "Home", Symbol = Symbol.Home, PageType = typeof(Pages.MainPage) },
-            new NavMenuItem { Label = "Measurements", Symbol = Symbol.Repair, PageType = typeof(Pages.SensorsPage) },
+            new NavMenuItem { Label = "Sensors", Symbol = Symbol.ViewAll, PageType = typeof(Pages.SensorPage) },
             new NavMenuItem { Label = "Reports", Symbol = Symbol.Document, PageType = typeof(Pages.ReportPage) },
-            new NavMenuItem { Label = "LED Control", Symbol = Symbol.Pin, PageType = typeof(Pages.AdditionalApps.LEDControlPage) },
-            new NavMenuItem { Label = "SpeechSynthesis", Symbol = Symbol.Microphone, PageType = typeof(Pages.AdditionalApps.SpeechSynthesisPage) },
+            new NavMenuItem { Label = "LEDs", Symbol = Symbol.Video, PageType = typeof(Pages.LEDControlPage) },
+            new NavMenuItem { Label = "Speech", Symbol = Symbol.Audio, PageType = typeof(Pages.SpeechSynthesisPage) },
             new NavMenuItem { Label = "Sensor Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorSettingPage) },
             new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.ServerSettingPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) }

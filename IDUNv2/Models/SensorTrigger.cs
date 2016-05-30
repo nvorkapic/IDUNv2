@@ -7,17 +7,6 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.Models
 {
-    public enum SensorType
-    {
-        Usage,
-        Temperature,
-        Pressure,
-        Humidity,
-        Accelerometer,
-        Magnetometer,
-        Gyroscope
-    }
-
     public enum SensorTriggerComparer
     {
         Above,
@@ -26,7 +15,6 @@ namespace IDUNv2.Models
 
     public class SensorTrigger
     {
-        
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 

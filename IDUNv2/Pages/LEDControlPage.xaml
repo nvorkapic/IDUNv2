@@ -1,21 +1,17 @@
 ﻿<Page RequestedTheme="Dark" 
-    x:Class="IDUNv2.Pages.AdditionalApps.LEDControlPage"
+    x:Class="IDUNv2.Pages.LEDControlPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:IDUNv2.Pages.AdditionalApps"
+    xmlns:local="using:IDUNv2.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Grid Background="#FFE1E1E1">
-
         <StackPanel Orientation="Horizontal">
-
             <StackPanel Orientation="Horizontal" Background="Black">
                 <Image x:Name="ledImage" HorizontalAlignment="Left" Height="398" VerticalAlignment="Center" Width="398" Margin="5"/>
-                
             </StackPanel>
-
             <Grid HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -25,7 +21,6 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-             
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="RGB Color Slider Selector" Foreground="Black" Padding="5,0,0,20"></TextBlock>
                 <StackPanel  Grid.Row="1">
@@ -47,8 +42,6 @@
                     <Rectangle x:Name="colorPreview" HorizontalAlignment="Center" Height="100" Stroke="Black" VerticalAlignment="Bottom" Width="110"/>
                 </StackPanel>
             </Grid>
-
-
         </StackPanel>
     </Grid>
 </Page>

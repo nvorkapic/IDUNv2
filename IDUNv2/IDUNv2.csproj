@@ -118,6 +118,7 @@
     <Compile Include="Models\MeasurementModel.cs" />
     <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Sensor.cs" />
     <Compile Include="Models\SensorConfig.cs" />
     <Compile Include="Models\SensorTrigger.cs" />
     <Compile Include="Models\ThresholdConfig.cs" />
@@ -149,8 +150,8 @@
     <Compile Include="Pages\ReportPage.xaml.cs">
       <DependentUpon>ReportPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SensorsPage.xaml.cs">
-      <DependentUpon>SensorsPage.xaml</DependentUpon>
+    <Compile Include="Pages\SensorPage.xaml.cs">
+      <DependentUpon>SensorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SensorSettingPage.xaml.cs">
       <DependentUpon>SensorSettingPage.xaml</DependentUpon>
@@ -275,7 +276,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SensorsPage.xaml">
+    <Page Include="Pages\SensorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

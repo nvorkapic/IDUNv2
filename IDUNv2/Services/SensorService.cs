@@ -12,7 +12,6 @@ namespace IDUNv2.Services
     {
         private static SQLiteConnection db = new SQLiteConnection(AppData.SqlitePlatform, AppData.DbPath);
 
-
         public SensorService()
         {
             db.CreateTable<SensorTrigger>();

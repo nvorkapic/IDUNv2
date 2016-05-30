@@ -21,12 +21,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public sealed partial class SensorsPage : Page
+    public sealed partial class SensorPage : Page
     {
         private float temp;
         private float humid;
 
-        public SensorsPage()
+        public SensorPage()
         {
             this.InitializeComponent();
             this.DataContext = this;
