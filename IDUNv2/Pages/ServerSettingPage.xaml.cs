@@ -59,7 +59,7 @@ namespace IDUNv2.Pages
         private async void Save(object sender, RoutedEventArgs e)
         {
             Confirmation.Visibility = Visibility.Collapsed;
-            if (OIDTB.Text.Length == 0 || CURLTB.Text.Length == 0 || UNTB.Text.Length == 0 || PASSTB.Password.Length <= 3)
+            if (OIDTB.Text.Length == 0 || CURLTB.Text.Length == 0 || UNTB.Text.Length == 0 || PASSTB.Password.Length <= 3 || SIDTB.Text.Length == 0)
             {
                 //myTimer();
                 //Warning.Visibility = Visibility.Visible;
@@ -75,7 +75,7 @@ namespace IDUNv2.Pages
 
                 List<ServerViewModel> ServerData = new List<ServerViewModel>();
 
-                ServerData.Add(new ServerViewModel { ObjectID = OIDTB.Text, URL= CURLTB.Text, Username = UNTB.Text, Password = PASSTB.Password });
+                ServerData.Add(new ServerViewModel { ObjectID = OIDTB.Text, URL= CURLTB.Text, Username = UNTB.Text, Password = PASSTB.Password, SystemID=SIDTB.Text });
 
                 string json = JsonConvert.SerializeObject(ServerData.ToArray(), Formatting.Indented);
                 StorageFile ConfigFile = await localFolder.CreateFileAsync("ServerData.txt", CreationCollisionOption.ReplaceExisting);
@@ -121,6 +121,7 @@ namespace IDUNv2.Pages
                 CURLTB.Text = ServerData.FirstOrDefault().URL;
                 UNTB.Text = ServerData.FirstOrDefault().Username;
                 PASSTB.Password = ServerData.FirstOrDefault().Password;
+                SIDTB.Text = ServerData.FirstOrDefault().SystemID;
             }
             catch
             {

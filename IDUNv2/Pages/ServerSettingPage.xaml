@@ -25,11 +25,15 @@
                         </TextBlock>
                         <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"/>
                     </StackPanel>
-                    <StackPanel Padding="0,10,0,0">
-                        <TextBlock Margin="10,0,10,10" VerticalAlignment="Center">
+                    <StackPanel Padding="0,0,0,0">
+                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center">
             				<Run Text="Cloud URL"/>
                         </TextBlock>
                         <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"/>
+                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center">
+            				<Run Text="System ID"/>
+                        </TextBlock>
+                        <TextBox PlaceholderText="Enter SystemID here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="SIDTB"/>
                     </StackPanel>
                 </StackPanel>
 

@@ -76,236 +76,53 @@ namespace IDUNv2.Pages
         }
         #endregion
 
-        public MeasurementListSettingsVM viewModel = new MeasurementListSettingsVM(AppData.Reports);
-
-        public object Setting { get; private set; }
+        public SensorTriggerViewModel viewModel = new SensorTriggerViewModel();
 
         public SensorSettingPage()
         {
             this.InitializeComponent();
-
-            this.Loaded += MeasurementsPage_Loaded;
-
-            SetTarget(ValueTB);
-
-            EnableCheck.Checked += EnableCheck_Checked;
-            EnableCheck.Unchecked += EnableCheck_Checked;
-
-            viewModel.PropertyChanged += ViewModel_PropertyChanged;
-        }
-
-        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
-                ReportSectionPanel.Visibility = Visibility.Collapsed;
-            else
-                ReportSectionPanel.Visibility = Visibility.Visible;
-        }
-
-        private void EnableCheck_Checked(object sender, RoutedEventArgs e)
-        {
-            if (EnableCheck.IsChecked == true)
-            {
-                ConfigContent.Visibility = Visibility.Visible;
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Enabled", "Application will record selected measurement: " + viewModel.CurrentMeasurements.Title);
-            }
-            else
-            {
-                ConfigContent.Visibility = Visibility.Collapsed;
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Disabled", "Application will stop recording selected measurement: " + viewModel.CurrentMeasurements.Title);
-            }
-                
-        }
-
-        private async void MeasurementsPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            await viewModel.LoadMCListFromLocal();
             this.DataContext = viewModel;
-
-            if (EnableCheck.IsChecked == true)
-                ConfigContent.Visibility = Visibility.Visible;
-            else
-                ConfigContent.Visibility = Visibility.Collapsed;
-
-            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
-                ReportSectionPanel.Visibility = Visibility.Collapsed;
-            else
-                ReportSectionPanel.Visibility = Visibility.Visible;
-
-            
+            ElementCount();
+            osk.SetTarget(ValueTB);
         }
 
-
-        private void ListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        public float value = 0;
+        private void AddTrigger(object sender, RoutedEventArgs e)
         {
-            var _listView = (ListView)sender;
-            var _measurementItem = ((_listView.SelectedItem) as MeasurementListSettingsItems);
 
-            viewModel.CurrentMeasurements = _measurementItem;
+            viewModel.AddTrigger();
+            ElementCount();
 
+ 
         }
 
-        private void TBGotFoc(object sender, RoutedEventArgs e)
+        public void ElementCount()
         {
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
-            {
-
-                Keyboard.Visibility = Visibility.Visible;
-                ReportSectionPanel.Visibility = Visibility.Collapsed;
-        }
-    }
-
-        private void TBLostFoc(object sender, RoutedEventArgs e)
-        {
-
-            var textB = (TextBox)sender;
-
-            if (textB.Text != "")
-            {
-                if (textB.Text.ToCharArray().Last() == '.')
-                {
-                    char[] textarray = textB.Text.ToArray();
-                    textarray = textarray.Take(textarray.Count() - 1).ToArray();
-                    string s = new string(textarray);
-                    textB.Text = s;
-                }
-                if (textB.Text.ToCharArray().Last() == '-')
-                {
-                    textB.Text = "";
-                }
-            }
-            int chrnr = 0;
-            foreach (char chr in textB.Text)
-            {
-                if (chr == '-') { ++chrnr; }
-            }
-            if (chrnr > 1)
-                textB.Text = "";
-
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
-            {
-                Keyboard.Visibility = Visibility.Collapsed;
-                ReportSectionPanel.Visibility = Visibility.Visible;
-        }
-    }
-        private void KeyboardBtnClick(object sender, RoutedEventArgs e)
-        {
-
-            var target = (TextBox)TargetBox;
-            var btn = (Button)sender;
-
-            if ((btn.Content as string) != "←")
-            {
-                if (!target.Text.Contains("."))
-                {
-                    target.Text = target.Text + btn.Content;
-                }
-                else
-                {
-                    if (btn.Content.ToString() != ".")
-                    {
-                        target.Text = target.Text + btn.Content;
-                    }
-                }
-            }
-            else
-            {
-                if (target.Text != null || target.Text != string.Empty)
-                {
-                    char[] textarray = target.Text.ToArray();
-                    textarray = textarray.Take(textarray.Count() - 1).ToArray();
-                    string s = new string(textarray);
-                    target.Text = s;
-                }
-            }
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var op = (Operator)operatorCB.SelectedItem;
-                var tp = (ReportTemplate)TemplateCB.SelectedItem;
-                double vl;
-
-                if (double.TryParse(ValueTB.Text, out vl) == true)
-                {
-
-                    var find = viewModel.CurrentMeasurements.Config.Thresholds.ToList().FindAll(x => x.Value == vl);
-                    
-                    if (find.Count == 0)
-                    {
-                        if (tp != null)
-                        {
-                            viewModel.CurrentMeasurements.Config.Thresholds.Insert(0, new ThresholdConfig { Operator = op, Template = tp, Value = vl });
-                            WarningAdd.Visibility = Visibility.Collapsed; WarningValues.Visibility = Visibility.Collapsed;
-                            viewModel.SaveMCListToLocal();
-                            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Added", viewModel.CurrentMeasurements.Title + " has new Trigger added.\nOperator: " + op + "\nValue: " + vl + "\nTemplate: " + tp.Name);
-                        }
-                        else
-                        {
-                            ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
-                        }
-                        
-                    }
-                    else
-
-                        ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Trigger Error", viewModel.CurrentMeasurements.Title + ": You are trying to add Report Template with a Value that is already assigned to a trigger!");
-                }
-                else
-                {
-                    ValueTB.Focus(FocusState.Keyboard);
-                }
-            }
-            catch
-            {
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Measurement Values Error", viewModel.CurrentMeasurements.Title + ": You are missing a value or have entered invalid value!");
-            }
-
-            if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
-                ReportSectionPanel.Visibility = Visibility.Collapsed;
-            else
-                ReportSectionPanel.Visibility = Visibility.Visible;
-        }
-
-        private void RBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (ReportList.SelectedItem !=null)
-            {
-                var item = ReportList.SelectedItem as ThresholdConfig;
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Measurement Trigger Removed", viewModel.CurrentMeasurements.Title + " has Trigger removed.\nOperator: " + item.Operator + "\nValue: " + item.Value + "\nTemplate: " + item.Template.Name);
-                viewModel.CurrentMeasurements.Config.Thresholds.Remove(item);
-                ReportList.SelectedItem = ReportList.Items.FirstOrDefault();
-                if (viewModel.CurrentMeasurements.Config.Thresholds.Count == 0)
-                    ReportSectionPanel.Visibility = Visibility.Collapsed;
-                else
-                    ReportSectionPanel.Visibility = Visibility.Visible;
-                viewModel.SaveMCListToLocal();
-            }
-            else
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Remove Error", viewModel.CurrentMeasurements.Title + ": Cannot remove Item from Report List if it's not selected!");
+            TriggerCount.Text = viewModel.SensorTriggerList.Count().ToString();
+            UsageNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Usage).Count().ToString();
+            TemperatureNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Temperature).Count().ToString();
+            PressureNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Pressure).Count().ToString();
+            HumidityNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Humidity).Count().ToString();
+            AccelerometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Accelerometer).Count().ToString();
+            MagnetometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Magnetometer).Count().ToString();
+            GyroscopeNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Gyroscope).Count().ToString();
 
         }
 
-        public async void LoadMCListFromLocal()
+        private void ViewTriggerList(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
-                string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
-                viewModel._measurementConfigurationList = JsonConvert.DeserializeObject<ObservableCollection<MeasurementListSettingsItems>>(ConfigText);
-            }
-            catch
-            {
-
-            }
+            this.Frame.Navigate(typeof(TriggerList));
         }
 
-        private async void JSONClick(object sender, RoutedEventArgs e)
+        private void TBOnFocus(object sender, RoutedEventArgs e)
         {
-            StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
-            string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
-            //JSONShow.Text = ConfigText;
+            osk.Visibility = Visibility.Visible;
+        }
+
+        private void TBLostFocus(object sender, RoutedEventArgs e)
+        {
+            osk.Visibility = Visibility.Collapsed;
         }
     }
 }
+

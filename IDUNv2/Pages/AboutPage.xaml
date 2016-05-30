@@ -13,7 +13,6 @@
             <TextBlock HorizontalAlignment="Right">Copyright © 2016</TextBlock>
             <TextBlock HorizontalAlignment="Right">Mårten Hansson</TextBlock>
             <TextBlock HorizontalAlignment="Right">Nikola Vorkapic</TextBlock>
-            <Image Source="/Assets/logo-addovation.png" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Image>
         </StackPanel>
         
     </Grid>

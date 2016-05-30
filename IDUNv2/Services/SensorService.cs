@@ -24,7 +24,7 @@ namespace IDUNv2.Services
             return Task.FromResult(triggers);
         }
 
-        public Task<SensorTrigger> SetTemplate(SensorTrigger trigger)
+        public Task<SensorTrigger> SetTrigger(SensorTrigger trigger)
         {
 
             if (trigger.Id == 0)
@@ -36,6 +36,18 @@ namespace IDUNv2.Services
                 db.Update(trigger);
             }
 
+            return Task.FromResult(trigger);
+        }
+
+        public Task<SensorTrigger> InsertTrigger(SensorTrigger trigger)
+        {      
+            db.Insert(trigger);
+            return Task.FromResult(trigger);
+        }
+
+        public Task<SensorTrigger> DeleteTrigger(SensorTrigger trigger)
+        {
+            db.Delete(trigger);
             return Task.FromResult(trigger);
         }
     }

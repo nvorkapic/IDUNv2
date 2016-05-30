@@ -23,6 +23,7 @@ namespace IDUNv2.Models
         Above,
         Below
     }
+
     public class SensorTrigger
     {
         
