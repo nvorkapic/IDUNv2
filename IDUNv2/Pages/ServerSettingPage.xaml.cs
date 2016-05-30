@@ -27,7 +27,6 @@ namespace IDUNv2.Pages
     public sealed partial class ServerSettingPage : Page
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
         public ServerSettingPage()
         {
@@ -56,7 +55,7 @@ namespace IDUNv2.Pages
             osk.Visibility = Visibility.Collapsed;
         }
 
-        private async void Save(object sender, RoutedEventArgs e)
+        private void Save(object sender, RoutedEventArgs e)
         {
             Confirmation.Visibility = Visibility.Collapsed;
             if (OIDTB.Text.Length == 0 || CURLTB.Text.Length == 0 || UNTB.Text.Length == 0 || PASSTB.Password.Length <= 3 || SIDTB.Text.Length == 0)
@@ -74,17 +73,16 @@ namespace IDUNv2.Pages
                     Warning.Visibility = Visibility.Collapsed;
 
                 List<ServerViewModel> ServerData = new List<ServerViewModel>();
-
-                ServerData.Add(new ServerViewModel { ObjectID = OIDTB.Text, URL= CURLTB.Text, Username = UNTB.Text, Password = PASSTB.Password, SystemID=SIDTB.Text });
-
-                string json = JsonConvert.SerializeObject(ServerData.ToArray(), Formatting.Indented);
-                StorageFile ConfigFile = await localFolder.CreateFileAsync("ServerData.txt", CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteTextAsync(ConfigFile, json);
+                localSettings.Values["ObjectID"] = OIDTB.Text;
+                localSettings.Values["SystemID"] = SIDTB.Text;
+                localSettings.Values["URL"] = CURLTB.Text;
+                localSettings.Values["Username"] = UNTB.Text;
+                localSettings.Values["Password"] = PASSTB.Password;
 
                 //myTimer();
                 //Confirmation.Visibility = Visibility.Visible;
                 //AppData.Notify.Add("NotifyString");
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.Super Long Text Test.");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Server settings have been saved locally.");
                 //Result.Foreground = new SolidColorBrush(Colors.Green);
                 //Result.Text = "Server settings successfully saved!";
                 //Tooltip.Visibility = Visibility.Visible;
@@ -106,22 +104,16 @@ namespace IDUNv2.Pages
         //    var timer = (DispatcherTimer)sender;
         //    timer.Stop();
         //}
-        public async void LoadData()
+        public void LoadData()
         {
             try
             {
-                StorageFile ConfigFile = await localFolder.GetFileAsync("ServerData.txt");
-                string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
 
-                List<ServerViewModel> ServerData = new List<ServerViewModel>();
-
-                ServerData = JsonConvert.DeserializeObject<List<ServerViewModel>>(ConfigText);
-
-                OIDTB.Text = ServerData.FirstOrDefault().ObjectID;
-                CURLTB.Text = ServerData.FirstOrDefault().URL;
-                UNTB.Text = ServerData.FirstOrDefault().Username;
-                PASSTB.Password = ServerData.FirstOrDefault().Password;
-                SIDTB.Text = ServerData.FirstOrDefault().SystemID;
+                OIDTB.Text =localSettings.Values["ObjectID"].ToString();
+                SIDTB.Text = localSettings.Values["SystemID"].ToString();
+                CURLTB.Text=localSettings.Values["URL"].ToString();
+                UNTB.Text= localSettings.Values["Username"].ToString();
+                PASSTB.Password=localSettings.Values["Password"].ToString();
             }
             catch
             {

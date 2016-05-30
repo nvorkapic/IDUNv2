@@ -23,7 +23,8 @@ namespace IDUNv2.ViewModels
             new NavMenuItem { Label = "Measurements", Symbol = Symbol.Repair, PageType = typeof(Pages.SensorsPage) },
             new NavMenuItem { Label = "Reports", Symbol = Symbol.Document, PageType = typeof(Pages.ReportPage) },
             new NavMenuItem { Label = "Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.MainPage) },
-            new NavMenuItem { Label = "Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorSettingPage) },
+            new NavMenuItem { Label = "Sensor Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorSettingPage) },
+            new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.ServerSettingPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) }
         };
 
