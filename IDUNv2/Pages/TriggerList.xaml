@@ -12,7 +12,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Background="#FFE1E1E1">
             <TextBlock Margin="10">List of all assigned triggers:</TextBlock>
-            <ListView Margin="10" ItemsSource="{Binding SensorTriggerList}" Foreground="Black" SelectionChanged="ListSelectionChange" x:Name="TriggerListView" MaxHeight="300" ScrollViewer.VerticalScrollMode="Enabled">
+            <ListView Margin="10" ItemsSource="{Binding SensorTriggerList}" Foreground="Black" SelectionChanged="ListSelectionChange" x:Name="TriggerListView" MaxHeight="300" ScrollViewer.VerticalScrollMode="Enabled" Background="Gainsboro">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -21,7 +21,7 @@
                             <TextBlock Margin="5" Text="is"></TextBlock>
                             <TextBlock Margin="5" Text="{Binding Comparer}"></TextBlock>
                             <TextBlock Margin="5" Text="{Binding Value}"></TextBlock>
-                            <TextBlock Margin="5" Text="trigger using Template"></TextBlock>
+                            <TextBlock Margin="5" Text="trigger using Template:"></TextBlock>
                             <TextBlock Margin="5" Text="{Binding TemplateId}"></TextBlock>
                             <TextBlock Margin="5" Text="will be fired."></TextBlock>
                         </StackPanel>

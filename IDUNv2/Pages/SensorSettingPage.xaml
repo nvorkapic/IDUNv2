@@ -27,7 +27,7 @@
             <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="1" Text="Enter Trigger Value" VerticalAlignment="Center"></TextBlock>
             <TextBox x:Name="ValueTB" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding CurrentTrigger.Value, Mode=TwoWay}" GotFocus="TBOnFocus" LostFocus="TBLostFocus"></TextBox>
             <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="2" Text="Select Trigger Template" VerticalAlignment="Center"></TextBlock>
-            <ComboBox Grid.Column="1" Grid.Row="2" Width="300" VerticalAlignment="Center"  ItemsSource="{Binding Templates}" SelectedValue="{Binding CurrentTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id">
+            <ComboBox Grid.Column="1" Grid.Row="2" Width="300" VerticalAlignment="Center"  ItemsSource="{Binding Templates}" SelectedValue="{Binding CurrentTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id" Loaded="templateOnLoad" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"></TextBlock>

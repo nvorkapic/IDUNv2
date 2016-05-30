@@ -123,6 +123,12 @@ namespace IDUNv2.Pages
         {
             osk.Visibility = Visibility.Collapsed;
         }
+
+        private void templateOnLoad(object sender, RoutedEventArgs e)
+        {
+            var lv = (ComboBox)sender;
+            lv.SelectedItem = lv.Items.FirstOrDefault();
+        }
     }
 }
 

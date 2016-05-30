@@ -57,7 +57,6 @@ namespace IDUNv2.Pages
             CurrentTrigger = list.SelectedItem as SensorTrigger;
         }
 
-
     }
 
 }
