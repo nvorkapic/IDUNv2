@@ -49,7 +49,7 @@
         <SplitView Grid.Row="1"
                    DisplayMode="CompactOverlay"
                    CompactPaneLength="50"
-                   OpenPaneLength="165"
+                   OpenPaneLength="175"
                    IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}">
             <SplitView.Pane>
                 <ListView ItemsSource="{Binding NavList}"
