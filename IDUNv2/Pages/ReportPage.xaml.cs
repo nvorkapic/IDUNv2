@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -48,15 +49,21 @@ namespace IDUNv2.Pages
             osk.Visibility = Visibility.Collapsed;
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private async void Save_Click(object sender, RoutedEventArgs e)
         {
             ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Saved", "Template is configured and saved and ready for use!");
+            var dialog = new ContentDialog { Title = "Template Saved", Content = "Template is configured and saved and ready for use!", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, PrimaryButtonText = "OK", RequestedTheme=ElementTheme.Dark };
+
+            var showdialog = await dialog.ShowAsync();
         }
 
-        private void Create_Click(object sender, RoutedEventArgs e)
+        private async void Create_Click(object sender, RoutedEventArgs e)
         {
             viewModel.CreateTemplate();
             ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
+            var dialog = new ContentDialog { Title = "Template Created", Content = "New Template has been added. Please configure and save to ensure proper functionality!", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark,  PrimaryButtonText = "OK" };
+
+            var showdialog = await dialog.ShowAsync();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -51,12 +51,15 @@ namespace IDUNv2.Pages
                 
                 string WarningHeader = "Report Trigger Removed from the List";
                 string WarningContent = "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses TemplateId " + CurrentTrigger.TemplateId.ToString() + ", has been Removed.";
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses TemplateId " + CurrentTrigger.TemplateId.ToString() + ", has been Removed.");
                 await ss.DeleteTrigger(CurrentTrigger);
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
                 
-                var dialog = new ContentDialog { Title = WarningHeader,Content= WarningContent, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Background = new SolidColorBrush(Colors.Gainsboro), Foreground = new SolidColorBrush(Colors.Black), PrimaryButtonText="OK", SecondaryButtonText="Cancel" };
+                var dialog = new ContentDialog { Title = WarningHeader,Content= WarningContent, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText ="OK"};
                
-                var showdialog = await dialog.ShowAsync();  
+                var showdialog = await dialog.ShowAsync();
+
+                
             }
         }
 
@@ -76,7 +79,7 @@ namespace IDUNv2.Pages
 
 
             var contentString ="Sensor: "+ListItem.SensorId + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: "+ SelectedTemplate.SymptCode+"\n Priority: "+ SelectedTemplate.PrioCode + "\n Discovery" + SelectedTemplate.DiscCode+ "";
-            var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK" };
+            var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
 
             var showdialog = await dialog.ShowAsync();
 

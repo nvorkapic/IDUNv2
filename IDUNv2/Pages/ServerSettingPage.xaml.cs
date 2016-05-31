@@ -66,6 +66,9 @@ namespace IDUNv2.Pages
                 //Result.Text = "Please check that all information is entered correctly and try again!";
                 //Tooltip.Visibility = Visibility.Visible;
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Server Settings Error", "Please check that all information is entered correctly and try again!");
+                var dialog = new ContentDialog { Title = "Server Settings Error", Content = "Please check that all information is entered correctly and try again!", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText = "OK" };
+
+                var showdialog = await dialog.ShowAsync();
             }
             else
             {
@@ -86,6 +89,10 @@ namespace IDUNv2.Pages
                 //Result.Foreground = new SolidColorBrush(Colors.Green);
                 //Result.Text = "Server settings successfully saved!";
                 //Tooltip.Visibility = Visibility.Visible;
+                var dialog = new ContentDialog { Title = "Server Settings Saved", Content = "Server settings have been saved locally.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark , PrimaryButtonText = "OK" };
+
+                var showdialog = await dialog.ShowAsync();
+
 
                 await AppData.InitCloud();
             }
