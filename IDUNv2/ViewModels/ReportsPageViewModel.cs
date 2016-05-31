@@ -42,25 +42,14 @@ namespace IDUNv2.ViewModels
             SaveCommand = new ActionCommand(SaveCommand_Execute);
             _cache = cache;
             _reports = reports;
-            Templates = new ObservableCollection<ReportTemplateViewModel>
-                (_reports.GetTemplates().Result.Select(t => new ReportTemplateViewModel(t, _cache)));
-            SelectedTemplate = Templates.FirstOrDefault();
         }
 
         public async Task InitAsync()
         {
-            _cache = await FaultCodesCache.CreateAsync(AppData.CloudClient);
+            await _cache.InitAsync();
+            Templates = new ObservableCollection<ReportTemplateViewModel>
+                (_reports.GetTemplates().Result.Select(t => new ReportTemplateViewModel(t, _cache)));
             SelectedTemplate = Templates.FirstOrDefault();
-            //try
-            //{
-            //    Templates[0].Discovery = DiscoveryList[0];
-            //    Templates[1].Discovery = DiscoveryList[1];
-            //    Templates[2].Discovery = DiscoveryList[2];
-            //    SelectedTemplate = Templates[0];
-            //}
-            //catch (Exception)
-            //{
-            //}  
         }
 
         public void CreateTemplate()

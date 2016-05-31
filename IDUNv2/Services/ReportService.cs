@@ -28,9 +28,9 @@ namespace IDUNv2.Services
         {
             this.cloudClient = AppData.CloudClient;
             db.CreateTable<ReportTemplate>();
-            db.InsertOrReplace(new ReportTemplate { Id = 1, Name = "Template 1" });
-            db.InsertOrReplace(new ReportTemplate { Id = 2, Name = "Template 2" });
-            db.InsertOrReplace(new ReportTemplate { Id = 3, Name = "Template 3" });
+            //db.InsertOrReplace(new ReportTemplate { Id = 1, Name = "Template 1" });
+            //db.InsertOrReplace(new ReportTemplate { Id = 2, Name = "Template 2" });
+            //db.InsertOrReplace(new ReportTemplate { Id = 3, Name = "Template 3" });
         }
 
         public Task<List<ReportTemplate>> GetTemplates()

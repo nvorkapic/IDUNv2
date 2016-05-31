@@ -11,10 +11,6 @@ namespace IDUNv2.Models
     {
         private CloudClient cloudClient;
 
-        private static WorkOrderDiscCode EmptyDiscCode = new WorkOrderDiscCode { Description = "", ErrDiscoverCode = "" };
-        private static WorkOrderSymptCode EmptySymptCode = new WorkOrderSymptCode { Description = "", ErrSymptom = "" };
-        private static MaintenancePriority EmptyPrioCode = new MaintenancePriority { Description = "", PriorityId = "" };
-
         private Dictionary<string, WorkOrderDiscCode> discDict;
         private Dictionary<string, WorkOrderSymptCode> symptDict;
         private Dictionary<string, MaintenancePriority> prioDict;
@@ -35,20 +31,41 @@ namespace IDUNv2.Models
 
         public WorkOrderDiscCode GetDiscovery(string discCode)
         {
-            if (discCode == null) return EmptyDiscCode;
-            return discDict[discCode];
+            if (discCode == null) return null;
+            try
+            {
+                return discDict[discCode];
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
         }
 
         public WorkOrderSymptCode GetSymptom(string symptCode)
         {
-            if (symptCode == null) return EmptySymptCode;
-            return symptDict[symptCode];
+            if (symptCode == null) return null;
+            try
+            {
+                return symptDict[symptCode];
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
         }
 
         public MaintenancePriority GetPriority(string prioCode)
         {
-            if (prioCode == null) return EmptyPrioCode;
-            return prioDict[prioCode];
+            if (prioCode == null) return null;
+            try
+            {
+                return prioDict[prioCode];
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
         }
 
         private async Task<List<WorkOrderDiscCode>> GetDiscCodes(bool useCached = true)
@@ -74,27 +91,30 @@ namespace IDUNv2.Models
             this.cloudClient = cloudClient;
         }
 
-        public static async Task<FaultCodesCache> CreateAsync(CloudClient cloudClient)
+        public async Task InitAsync()
         {
-            var cache = new FaultCodesCache(cloudClient);
-
             if (cloudClient == null)
             {
-                cache.DiscCodes = new List<WorkOrderDiscCode>();
-                cache.SymptCodes = new List<WorkOrderSymptCode>();
-                cache.PrioCodes = new List<MaintenancePriority>();
+                DiscCodes = new List<WorkOrderDiscCode>();
+                SymptCodes = new List<WorkOrderSymptCode>();
+                PrioCodes = new List<MaintenancePriority>();
             }
             else
             {
-                cache.DiscCodes = await cache.GetDiscCodes(false).ConfigureAwait(false);
-                cache.SymptCodes = await cache.GetSymptCodes(false).ConfigureAwait(false);
-                cache.PrioCodes = await cache.GetPrioCodes(false).ConfigureAwait(false);
+                DiscCodes = await GetDiscCodes(false).ConfigureAwait(false);
+                SymptCodes = await GetSymptCodes(false).ConfigureAwait(false);
+                PrioCodes = await GetPrioCodes(false).ConfigureAwait(false);
             }
 
-            cache.discDict = cache.DiscCodes.ToDictionary(ks => ks.ErrDiscoverCode, es => es);
-            cache.symptDict = cache.SymptCodes.ToDictionary(ks => ks.ErrSymptom, es => es);
-            cache.prioDict = cache.PrioCodes.ToDictionary(ks => ks.PriorityId, es => es);
+            discDict = DiscCodes.ToDictionary(ks => ks.ErrDiscoverCode, es => es);
+            symptDict = SymptCodes.ToDictionary(ks => ks.ErrSymptom, es => es);
+            prioDict = PrioCodes.ToDictionary(ks => ks.PriorityId, es => es);
+        }
 
+        public static async Task<FaultCodesCache> CreateAsync(CloudClient cloudClient)
+        {
+            var cache = new FaultCodesCache(cloudClient);
+            await cache.InitAsync();
             return cache;
         }
     }

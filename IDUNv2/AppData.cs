@@ -133,7 +133,7 @@ namespace IDUNv2
                     SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
                 };
 
-                //return await CloudClient.Authenticate();
+                FaultCodesCache = await FaultCodesCache.CreateAsync(CloudClient);
                 return await Task.FromResult(true);
             }
             catch (Exception ex)
@@ -142,10 +142,10 @@ namespace IDUNv2
             }
         }
 
-        public static async Task InitServices()
+        public static Task InitServices()
         {
             Reports = new ReportService();
-            FaultCodesCache = await FaultCodesCache.CreateAsync(null);
+            return Task.CompletedTask;
         }
     }
 }
