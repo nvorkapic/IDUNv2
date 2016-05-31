@@ -35,13 +35,13 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid x:Name="TemplateListGrid" Margin="0,20,0,0" Padding="10" Background="#FFB7B8BC">
+        <Grid x:Name="TemplateListGrid" Margin="0,20,0,0" Padding="10" Background="Black">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,10,0,0">
-                <Button x:Name="CreateTemplateButton" Content="Create" Click="Create_Click" Background="Black"/>
+                <Button x:Name="CreateTemplateButton" Content="Create" Click="Create_Click"/>
             </StackPanel>
             <ListBox Margin="0,50,0,10" MinWidth="200" ItemTemplate="{StaticResource TemplateListData}" ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}" />
         </Grid>
-        <Grid x:Name="TemplateInputGrid" Grid.Column="1" Margin="0,28,0,-3" Padding="10" Background="Gainsboro" RequestedTheme="Light">
+        <Grid x:Name="TemplateInputGrid" Grid.Column="1" Margin="0,28,0,-3" Padding="10" Background="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -70,7 +70,7 @@
             <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" SelectedItem="{Binding SelectedTemplate.Discovery, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
             <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" SelectedItem="{Binding SelectedTemplate.Symptom, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
             <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding SelectedTemplate.Priority, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
-            <Button Grid.Row="7" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" Command="{Binding SaveCommand}" Foreground="Black" Background="#FFB0B0B0" Click="Save_Click"/>
+            <Button Grid.Row="7" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" Command="{Binding SaveCommand}" Click="Save_Click"/>
         </Grid>
         <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
         <StackPanel Background="Black" Height="30" Grid.ColumnSpan="2" VerticalAlignment="Top">

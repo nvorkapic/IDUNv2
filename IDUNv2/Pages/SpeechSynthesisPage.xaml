@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page RequestedTheme="Dark"
     x:Class="IDUNv2.Pages.SpeechSynthesisPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,14 +14,14 @@
                 <ListBox x:Name="listBox" Height="200"  Width="350" SelectionChanged="onSelectChange" RenderTransformOrigin="2,0" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False">
                     <ListBox.ItemTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding Name}" FontSize="15" Foreground="Black" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" ></TextBlock>
+                            <TextBlock Text="{Binding Name}" FontSize="15" Foreground="White" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" ></TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="btnRead" Content="Read Text" VerticalAlignment="Stretch" Width="150" Foreground="Black" FontWeight="Bold" BorderBrush="{x:Null}" Click="btnRead_Click" Height="45"/>
-                <Button x:Name="btnClear" Content="Clear Text" VerticalAlignment="Stretch" Width="150" Foreground="Black" FontWeight="Bold" BorderBrush="{x:Null}" Click="btnClear_Click" Height="45"/>
+                <Button x:Name="btnRead" Content="Read Text" VerticalAlignment="Stretch" Width="150" FontWeight="Bold" BorderBrush="{x:Null}" Click="btnRead_Click" Height="45"/>
+                <Button x:Name="btnClear" Content="Clear Text" VerticalAlignment="Stretch" Width="150"  FontWeight="Bold" BorderBrush="{x:Null}" Click="btnClear_Click" Height="45"/>
             </StackPanel>
         </StackPanel>
         <oks:OnScreenKeyBoard x:Name="keyboard" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="225" Width="750" Margin="0,0,0,-40" Visibility="Collapsed" />

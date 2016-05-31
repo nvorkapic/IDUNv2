@@ -11,13 +11,13 @@
 
 
     <Grid >
-        <StackPanel x:Name="MainStackPanel" Background="#FFE1E1E1">
+        <StackPanel x:Name="MainStackPanel" Background="Black">
             <Grid x:Name="TopSeparatorWithTitleStackPanel" Background="Black" Height="30">
                 <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Server Settings</TextBlock>
             </Grid>
             <TextBlock Foreground="Red" Text="Please check that all information is entered properly and try again!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Warning" FontWeight="Bold"></TextBlock>
             <TextBlock Foreground="Green" Text="Server settings successfully saved!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Confirmation" FontWeight="Bold"></TextBlock>
-            <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal" Background="#FFB7B8BC" RequestedTheme="Light">
+            <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal" Background="Black">
                 <StackPanel Orientation="Horizontal">
                     <StackPanel >
                         <TextBlock Margin="10" Padding="10,0,0,0">
@@ -46,7 +46,7 @@
                         <PasswordBox PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
                     </StackPanel>
                 </StackPanel>
-                <Button x:Name="SaveButton" Content="Save" Margin="10" Width="75" Height="50" Click="Save" Background="black" RequestedTheme="Dark">
+                <Button x:Name="SaveButton" Content="Save" Margin="10" Width="75" Height="50" Click="Save" RequestedTheme="Dark">
                 </Button>
 
             </StackPanel>

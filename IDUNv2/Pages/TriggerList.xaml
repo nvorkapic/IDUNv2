@@ -1,4 +1,4 @@
-﻿<Page 
+﻿<Page RequestedTheme="Dark"
     x:Class="IDUNv2.Pages.TriggerList"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,9 +10,9 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Background="#FFE1E1E1">
+        <StackPanel >
             <TextBlock Margin="10">List of all assigned triggers:</TextBlock>
-            <ListView Margin="10" ItemsSource="{Binding SensorTriggerList}" Foreground="Black" SelectionChanged="ListSelectionChange" x:Name="TriggerListView" MaxHeight="300" ScrollViewer.VerticalScrollMode="Enabled" Background="Gainsboro" DoubleTapped="DoubleTapList" SelectionMode="Single">
+            <ListView Margin="10" ItemsSource="{Binding SensorTriggerList}" Foreground="White" Background="Black" SelectionChanged="ListSelectionChange" x:Name="TriggerListView" MaxHeight="300" ScrollViewer.VerticalScrollMode="Enabled" DoubleTapped="DoubleTapList" SelectionMode="Single" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
