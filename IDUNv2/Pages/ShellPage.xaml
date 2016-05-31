@@ -9,7 +9,6 @@
     mc:Ignorable="d">
     <Page.Resources>
         <con:NotificationTypeConverter x:Key="NotifyIcon"/>
-        <con:NullToVisibilityConverter x:Key="NullConverter"/>
         <DataTemplate x:Key="NavMenuData">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding SymbolChar}" Margin="5" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
@@ -100,18 +99,6 @@
                     <Button Content="Mark as Read" HorizontalAlignment="Right" Padding="10" Click="NotificationViewed_Click" VerticalAlignment="Center"></Button>
                 </StackPanel>
             </Grid>
-
         </StackPanel>
-        <ToolTip x:Name="WarningToolTip" Height="190" Grid.RowSpan="2" RequestedTheme="Dark" Visibility="{Binding WarningDialog, Converter={StaticResource NullConverter}}"  >
-            <StackPanel>
-                <TextBlock Padding="10" Foreground="Red" Text="{Binding WarningDialog.Header}"></TextBlock>
-                <TextBlock Padding="10" TextWrapping="WrapWholeWords" Text="{Binding WarningDialog.Content}"></TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Margin="10" x:Name="ReturnBtn" Click="WarningReturn_Click">Return</Button>
-                    <Button Margin="10" x:Name="LeaveBtn" Click="WarningLeave_Click">Leave</Button>
-                </StackPanel>
-            </StackPanel>
-        </ToolTip>
-
     </Grid>
 </Page>

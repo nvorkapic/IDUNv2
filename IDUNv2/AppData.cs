@@ -108,9 +108,24 @@ namespace IDUNv2
                 //var vault = new PasswordVault();
                 //var cred = vault.FindAllByResource("idun").Where(c => c.UserName == "alex").Single();
                 //cred.RetrievePassword();
+                string url;
+                string systemid;
+                string username;
+                string password;
 
-                var cloudUrl = CommonDictionary.CloudUrls[localSettings.Values["URL"].ToString()];
-                var connectionInfo = new ConnectionInfo(cloudUrl, localSettings.Values["SystemID"].ToString(), localSettings.Values["Username"].ToString(), localSettings.Values["Password"].ToString());
+                    url = localSettings.Values["URL"] as string;
+                    systemid = localSettings.Values["SystemID"] as string;
+                    username = localSettings.Values["Username"] as string;
+                    password = localSettings.Values["Password"] as string;
+        
+                    url = url ?? "testcloud.addovation.com";
+                    systemid =systemid ?? "race8.addovation.com";
+                    username =username ?? "alex";
+                    password =password?? "alex";
+            
+
+                var cloudUrl = CommonDictionary.CloudUrls[url];
+                var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
 
                 CloudClient = new CloudClient
                 {

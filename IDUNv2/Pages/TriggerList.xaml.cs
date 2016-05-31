@@ -30,7 +30,7 @@ namespace IDUNv2.Pages
         
         public SensorTriggerViewModel viewModel = new SensorTriggerViewModel();
         public SensorTrigger CurrentTrigger = new SensorTrigger();
-
+        
         public TriggerList()
         {
             this.InitializeComponent();
@@ -42,12 +42,22 @@ namespace IDUNv2.Pages
             this.DataContext = viewModel;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
+           
             if (CurrentTrigger != null)
             {
-                ss.DeleteTrigger(CurrentTrigger);
+                
+                string WarningHeader = "Report Trigger Removed from the List";
+                string WarningContent = "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes" + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses " + CurrentTrigger.TemplateId.ToString() + " TemplateId has been removed.";
+                await ss.DeleteTrigger(CurrentTrigger);
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
+
+                var dialog = new ContentDialog { Title = WarningHeader, Content = WarningContent, HorizontalAlignment=HorizontalAlignment.Center, VerticalAlignment=VerticalAlignment.Center, PrimaryButtonText="OK"};
+   
+                var showdialog = await dialog.ShowAsync();
+
+                
             }
         }
 

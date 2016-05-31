@@ -102,20 +102,5 @@ namespace IDUNv2.Pages
                 NotificationFlyOutList.SelectedItem = NotificationFlyOutList.Items.FirstOrDefault();
             }
         }
-
-        private void WarningReturn_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.WarningDialog = null;
-        }
-
-        private void WarningLeave_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.WarningDialog = null;
-        }
-
-        public void ShowWarning(string Header, string Content)
-        {
-            viewModel.WarningDialog = new WarningDialog { Header = Header, Content = Content };
-        }
     }
 }

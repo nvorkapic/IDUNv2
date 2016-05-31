@@ -58,8 +58,5 @@ namespace IDUNv2.ViewModels
             SelectedNavMenuItem = item;
             target.Navigate(item.PageType);
         }
-
-        private WarningDialog _warningDialog;
-        public WarningDialog WarningDialog { get {return _warningDialog;} set{_warningDialog = value; Notify(); } }
     }
 }
