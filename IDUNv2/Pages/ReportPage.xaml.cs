@@ -63,6 +63,8 @@ namespace IDUNv2.Pages
         {
             base.OnNavigatedFrom(e);
             int dirtyTemplatesNr = 0;
+            if (viewModel.Templates == null)
+                return;
             foreach (var item in viewModel.Templates)
             {
                 if (item.Dirty)
