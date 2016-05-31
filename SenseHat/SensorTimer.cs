@@ -17,10 +17,17 @@ namespace SenseHat
         public float Humidity { get; set; }
         public float Pressure { get; set; }
 
+        public bool IsValid { get; private set; }
+
         private async Task Init()
         {
             await hts221.Init().ConfigureAwait(false);
             await lps25h.Init().ConfigureAwait(false);
+
+            if (hts221.IsValid && lps25h.IsValid)
+            {
+                IsValid = true;
+            }
         }
 
         public SensorTimer(int period)

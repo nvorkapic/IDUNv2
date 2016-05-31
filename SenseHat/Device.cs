@@ -15,6 +15,8 @@ namespace SenseHat
     {
         protected I2cDevice device;
 
+        public bool IsValid { get; set; }
+
         public virtual void Dispose()
         {
             if (device != null)

@@ -23,6 +23,11 @@ namespace SenseHat
         {
             await GetDevice(C_Addr, I2cBusSpeed.FastMode);
 
+            if (device != null)
+            {
+                IsValid = true;
+            }
+
             // PD ODR2-0 DIFF BDU RESET SIM
             //  1    100    0   1     0   0
             // Active mode, 25Hz, default, non-continous, disable, default

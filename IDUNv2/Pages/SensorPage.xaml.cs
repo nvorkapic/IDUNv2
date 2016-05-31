@@ -68,11 +68,18 @@ namespace IDUNv2.Pages
 
         private void Timer_Tick(object sender, object e)
         {
-            //double y = (30.0 + rnd.NextDouble() * 1.1);
-            //viewModel.Reading = (float)y;
-            viewModel.Temperature = AppData.SensorTimer.Temperature;
-            viewModel.Humidity = AppData.SensorTimer.Humidity;
-            viewModel.Pressure = AppData.SensorTimer.Pressure;
+            if (AppData.SensorTimer.IsValid)
+            {
+                viewModel.Temperature = AppData.SensorTimer.Temperature;
+                viewModel.Humidity = AppData.SensorTimer.Humidity;
+                viewModel.Pressure = AppData.SensorTimer.Pressure;
+            }
+            else
+            {
+                viewModel.Temperature = (float)(30.0 + rnd.NextDouble() * 2.1);
+                viewModel.Humidity = (float)(30.0 + rnd.NextDouble() * 5.1);
+                viewModel.Pressure = (float)(30.0 + rnd.NextDouble() * 10.1);
+            }
         }
 
         private void OnHumidity(float value)

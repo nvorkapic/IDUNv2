@@ -74,6 +74,11 @@ namespace SenseHat
         {
             await GetDevice(C_Addr, I2cBusSpeed.FastMode);
 
+            if (device != null)
+            {
+                IsValid = true;
+            }
+
             // PD RESERVED BDU ODR1-0
             //  1     0000   1     11
             // active, n/a, non-continous, 12.5Hz for both
