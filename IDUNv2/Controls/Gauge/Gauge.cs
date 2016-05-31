@@ -90,6 +90,13 @@ namespace IDUNv2.Controls
                 typeof (Gauge),
                 new PropertyMetadata(new SolidColorBrush(Colors.Orange)));
 
+        public static readonly DependencyProperty DangerBrushProperty =
+            DependencyProperty.Register(
+                "DangerBrush",
+                typeof(Brush),
+                typeof(Gauge),
+                new PropertyMetadata(new SolidColorBrush(Colors.Red)));
+
         public static readonly DependencyProperty ValueBrushProperty =
             DependencyProperty.Register(
                 "ValueBrush",
@@ -182,6 +189,12 @@ namespace IDUNv2.Controls
         {
             get { return (Brush)GetValue(TrailBrushProperty); }
             set { SetValue(TrailBrushProperty, value); }
+        }
+
+        public Brush DangerBrush
+        {
+            get { return (Brush)GetValue(DangerBrushProperty); }
+            set { SetValue(DangerBrushProperty, value); }
         }
 
         public Brush ScaleBrush
