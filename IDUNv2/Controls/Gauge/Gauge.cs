@@ -15,6 +15,7 @@ namespace IDUNv2.Controls
     [TemplatePart(Name = NeedlePartName, Type = typeof(Path))]
     [TemplatePart(Name = ScalePartName, Type = typeof(Path))]
     [TemplatePart(Name = TrailPartName, Type = typeof(Path))]
+    [TemplatePart(Name = DangerPartName, Type = typeof(Path))]
     [TemplatePart(Name = ValueTextPartName, Type = typeof(TextBlock))]
     public class Gauge : Control
     {
@@ -22,6 +23,7 @@ namespace IDUNv2.Controls
         private const string NeedlePartName = "PART_Needle";
         private const string ScalePartName = "PART_Scale";
         private const string TrailPartName = "PART_Trail";
+        private const string DangerPartName = "PART_Danger";
         private const string ValueTextPartName = "PART_ValueText";
         private const double Degrees2Radians = Math.PI / 180;
         #endregion Constants
@@ -39,6 +41,13 @@ namespace IDUNv2.Controls
                 "Maximum",
                 typeof (double),
                 typeof (Gauge),
+                new PropertyMetadata(100.0));
+
+        public static readonly DependencyProperty DangerHiProperty =
+            DependencyProperty.Register(
+                "DangerHi",
+                typeof(double),
+                typeof(Gauge),
                 new PropertyMetadata(100.0));
 
         public static readonly DependencyProperty ScaleWidthProperty =
@@ -161,6 +170,12 @@ namespace IDUNv2.Controls
             set { SetValue(MaximumProperty, value); }
         }
 
+        public double DangerHi
+        {
+            get { return (double)GetValue(DangerHiProperty); }
+            set { SetValue(DangerHiProperty, value); }
+        }
+
         public Double ScaleWidth
         {
             get { return (Double)GetValue(ScaleWidthProperty); }
@@ -251,12 +266,13 @@ namespace IDUNv2.Controls
             // Draw Scale
             var scale = this.GetTemplateChild(ScalePartName) as Path;
 
+            var middleOfScale = 77 - this.ScaleWidth / 2;
+
             if (scale != null)
             {
                 var pg = new PathGeometry();
                 var pf = new PathFigure();
                 pf.IsClosed = false;
-                var middleOfScale = 77 - this.ScaleWidth / 2;
                 pf.StartPoint = ScalePoint(-150, middleOfScale);
                 var seg = new ArcSegment();
                 seg.SweepDirection = SweepDirection.Clockwise;
@@ -266,6 +282,25 @@ namespace IDUNv2.Controls
                 pf.Segments.Add(seg);
                 pg.Figures.Add(pf);
                 scale.Data = pg;
+            }
+
+            var danger = GetTemplateChild(DangerPartName) as Path;
+            if (danger != null)
+            {
+                danger.Visibility = Visibility.Visible;
+                var pg = new PathGeometry();
+                var pf = new PathFigure();
+                pf.IsClosed = false;
+                pf.StartPoint = ScalePoint(ValueToAngle(DangerHi), middleOfScale);
+                var seg = new ArcSegment();
+                seg.SweepDirection = SweepDirection.Clockwise;
+                // We start from -150, so +30 becomes a large arc.
+                seg.IsLargeArc = false;
+                seg.Size = new Size(middleOfScale, middleOfScale);
+                seg.Point = ScalePoint(150, middleOfScale);
+                pf.Segments.Add(seg);
+                pg.Figures.Add(pf);
+                danger.Data = pg;
             }
 
             OnValueChanged(this, null);

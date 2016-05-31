@@ -27,8 +27,9 @@
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Grid.Column="0">
                 <controls:Gauge
-                    Minimum="0"
+                    Minimum="-40"
                     Maximum="100"
+                    DangerHi="70"
                     Value="{Binding Temperature}"          
                     ValueStringFormat="F2"
                     Unit="° Celcius"
@@ -38,6 +39,7 @@
                 <controls:Gauge
                     Minimum="0"
                     Maximum="100"
+                    DangerHi="80"
                     Value="{Binding Humidity}"          
                     ValueStringFormat="F2"
                     Unit="% Humidity"
@@ -46,7 +48,9 @@
                     NeedleBrush="SaddleBrown"
                     TrailBrush="SaddleBrown"
                     ValueBrush="SaddleBrown"
-                    UnitBrush="SaddleBrown">
+                    UnitBrush="SaddleBrown"
+                    DangerBrush="Red"
+                    >
                     <controls:Gauge.ScaleBrush>
                         <SolidColorBrush
                                 Color="SaddleBrown"

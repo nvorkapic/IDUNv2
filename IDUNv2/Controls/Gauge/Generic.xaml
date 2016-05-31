@@ -43,7 +43,7 @@
                             <Path Name="PART_Trail"
                                   Stroke="{TemplateBinding TrailBrush}"
                                   StrokeThickness="{TemplateBinding ScaleWidth}" />
-                            <Path Name="PATH_danger"
+                            <Path Name="PART_Danger"
                                   Stroke="{TemplateBinding DangerBrush}"
                                   StrokeThickness="{TemplateBinding ScaleWidth}" />
                             <!-- Scale Ticks -->
