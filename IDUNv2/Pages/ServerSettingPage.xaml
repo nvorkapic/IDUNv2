@@ -17,42 +17,46 @@
             </Grid>
             <TextBlock Foreground="Red" Text="Please check that all information is entered properly and try again!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Warning" FontWeight="Bold"></TextBlock>
             <TextBlock Foreground="Green" Text="Server settings successfully saved!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Confirmation" FontWeight="Bold"></TextBlock>
-            <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal" Background="Black">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel >
-                        <TextBlock Margin="10" Padding="10,0,0,0">
+            <StackPanel>
+                <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal" Background="Black">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
             				<Run Text="Object ID"/>
-                        </TextBlock>
-                        <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"/>
-                    </StackPanel>
-                    <StackPanel Padding="0,0,0,0">
-                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center">
-            				<Run Text="Cloud URL"/>
-                        </TextBlock>
-                        <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"/>
-                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center">
+                                </TextBlock>
+                                <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
             				<Run Text="System ID"/>
-                        </TextBlock>
-                        <TextBox PlaceholderText="Enter SystemID here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="SIDTB"/>
-                    </StackPanel>
-                </StackPanel>
+                                </TextBlock>
+                                <TextBox PlaceholderText="Enter SystemID here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="SIDTB"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
+            				<Run Text="Cloud URL"/>
+                                </TextBlock>
+                                <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"/>
+                            </StackPanel>
 
-                <StackPanel>
-                    <TextBlock Margin="10">
-            			<Run Text="User Authentication"/>
-                    </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+
                     <StackPanel>
-                        <TextBox PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
-                        <PasswordBox PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
+                        <TextBlock Margin="10">
+            			<Run Text="User Authentication"/>
+                        </TextBlock>
+                        <StackPanel>
+                            <TextBox PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
+                            <PasswordBox PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                <Button x:Name="SaveButton" Content="Save" Margin="10" Width="75" Height="50" Click="Save" RequestedTheme="Dark">
-                </Button>
-
+                <Button x:Name="SaveButton" Content="Save Device Server Settings" Margin="10" Height="50" Click="Save" RequestedTheme="Dark" HorizontalAlignment="Center"></Button>
             </StackPanel>
-            <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="250"  Width="750" Visibility="Collapsed" HorizontalAlignment="Left"/>
 
-            
+
 
         </StackPanel>
         <ToolTip Width="300" Height="Auto" FontSize="20" Background="Black" x:Name="Tooltip" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -62,5 +66,6 @@
             </StackPanel>
             
         </ToolTip>
+        <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="250"  Width="750"  Visibility="Collapsed"  HorizontalAlignment="Left"/>
     </Grid>
 </Page>

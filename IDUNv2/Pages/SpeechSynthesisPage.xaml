@@ -10,8 +10,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Width="750" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal" Width="750" HorizontalAlignment="Left">
-                <TextBox x:Name="textBoxRead" Height="200" Width="400" TextWrapping="Wrap" Text="Enter your text here." Background="Black" BorderBrush="{x:Null}" Foreground="White" SelectionHighlightColor="#FF60A3E6" FontSize="25" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" HorizontalAlignment="Left" GotFocus="TextForSpeech_GotFocus" LostFocus="TextForSpeech_LostFocus"/>
-                <ListBox x:Name="listBox" Height="200"  Width="350" SelectionChanged="onSelectChange" RenderTransformOrigin="2,0" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False">
+                <TextBox x:Name="textBoxRead" Height="200" Width="400" TextWrapping="Wrap" Text="Enter your text here." Background="Black" BorderBrush="Gray" Foreground="White" SelectionHighlightColor="#FF60A3E6" FontSize="25" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" HorizontalAlignment="Left" GotFocus="TextForSpeech_GotFocus" LostFocus="TextForSpeech_LostFocus"/>
+                <ListBox x:Name="listBox" Height="200"  Width="350" SelectionChanged="onSelectChange" RenderTransformOrigin="2,0" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" BorderBrush="Gray">
                     <ListBox.ItemTemplate>
                         <DataTemplate >
                             <TextBlock Text="{Binding Name}" FontSize="15" Foreground="White" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" ></TextBlock>

@@ -17,14 +17,12 @@ namespace IDUNv2.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
         [NotNull]
         public SensorType SensorId { get; set; }
         [NotNull]
         public SensorTriggerComparer Comparer { get; set; }
         [NotNull]
         public float Value { get; set; }
-
         [Indexed]
         public int TemplateId { get; set; }
     }

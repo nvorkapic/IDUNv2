@@ -11,11 +11,9 @@ namespace IDUNv2.Models
     public class ReportTemplate
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        
+        public int Id { get; set; }       
         [MaxLength(64), NotNull]
         public string Name { get; set; }
-
         public string Directive { get; set; }
         public string FaultDescr { get; set; }
         public string DiscCode { get; set; }

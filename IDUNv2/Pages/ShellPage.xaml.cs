@@ -24,7 +24,6 @@ namespace IDUNv2.Pages
     {
         public static ShellPage Current;
         private ShellViewModel viewModel = new ShellViewModel();
-
         public Notification SelectedNotificationItem = new Notification();
 
         public ShellPage()
@@ -33,7 +32,6 @@ namespace IDUNv2.Pages
             this.DataContext = viewModel;
             this.Loaded += MainPage_Loaded;
             Current = this;
-
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
         }
 

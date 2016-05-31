@@ -15,33 +15,23 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace IDUNv2.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class SpeechSynthesisPage : Page
     {
         private SpeechSynthesizer synthesizer;
-
         private ResourceContext speechContext;
         private ResourceMap speechResourceMap;
 
         public SpeechSynthesisPage()
         {
             this.InitializeComponent();
-
             synthesizer = new SpeechSynthesizer();
-
             keyboard.RegisterTarget(textBoxRead);
-
             speechContext = ResourceContext.GetForCurrentView();
             speechContext.Languages = new string[] { SpeechSynthesizer.DefaultVoice.Language };
-
             speechResourceMap = ResourceManager.Current.MainResourceMap.GetSubtree("LocalizationTTSResources");
-
             InitializeListboxVoiceChooser();
         }
 
@@ -54,21 +44,15 @@ namespace IDUNv2.Pages
         private async void btnRead_Click(object sender, RoutedEventArgs e)
         {
             MediaElement mediaElement = new MediaElement();
-
             SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(textBoxRead.Text);
-
             mediaElement.SetSource(stream, stream.ContentType);
             mediaElement.Play();
         }
 
         private void InitializeListboxVoiceChooser()
         {
-            // Get all of the installed voices.
             var voices = SpeechSynthesizer.AllVoices;
-
-            // Get the currently selected voice.
             VoiceInformation currentVoice = synthesizer.Voice;
-
             foreach (VoiceInformation voice in voices.OrderBy(p => p.Language))
             {
                 ComboBoxItem item = new ComboBoxItem();
@@ -76,8 +60,6 @@ namespace IDUNv2.Pages
                 item.Tag = voice;
                 item.Content = voice.DisplayName + " (Language: " + voice.Language + ")";
                 listBox.Items.Add(item);
-
-                // Check to see if we're looking at the current voice and set it as selected in the listbox.
                 if (currentVoice.Id == voice.Id)
                 {
                     item.IsSelected = true;
@@ -91,11 +73,8 @@ namespace IDUNv2.Pages
             ComboBoxItem item = (ComboBoxItem)(listBox.SelectedItem);
             VoiceInformation voice = (VoiceInformation)(item.Tag);
             synthesizer.Voice = voice;
-
             MediaElement mediaElement = new MediaElement();
-
             SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync("Hello!");
-
             mediaElement.SetSource(stream, stream.ContentType);
             mediaElement.Play();
         }

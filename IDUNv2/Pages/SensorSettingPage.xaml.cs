@@ -22,11 +22,8 @@ using IDUNv2.Services;
 using SQLite.Net;
 using Windows.UI;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace IDUNv2.Pages
 {
-
     public sealed partial class SensorSettingPage : Page
     {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -100,14 +97,12 @@ namespace IDUNv2.Pages
             {
                 viewModel.AddTrigger();
                 ElementCount();
-
                 var Header = "Trigger Added";
                 var Content = "Report Trigger: " + viewModel.CurrentTrigger.SensorId.ToString() + " that fires when value goes " + viewModel.CurrentTrigger.Comparer.ToString() + " " + viewModel.CurrentTrigger.Value.ToString() + " and uses TemplateId " + viewModel.CurrentTrigger.TemplateId.ToString() + ", has been Added.";
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, Header, Content);
                 var dialog = new ContentDialog { Title = Header, Content = Content, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark , PrimaryButtonText = "OK" };
                 var showdialog = await dialog.ShowAsync();
             }
-        
         }
 
         public void ElementCount()
@@ -120,7 +115,6 @@ namespace IDUNv2.Pages
             AccelerometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Accelerometer).Count().ToString();
             MagnetometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Magnetometer).Count().ToString();
             GyroscopeNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Gyroscope).Count().ToString();
-
         }
 
         private void ViewTriggerList(object sender, RoutedEventArgs e)

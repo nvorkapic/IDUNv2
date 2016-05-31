@@ -18,13 +18,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace IDUNv2.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public class LedMatrix
     {
         private I2cDevice device;
@@ -54,12 +49,6 @@ namespace IDUNv2.Pages
             {
 
             }
-            //if (device == null)
-            //{
-            //    throw new Exception("failed to get device");
-            //}
-
-            // Clear display
             var data = new byte[1 + 192];
             device?.Write(data);
         }
@@ -203,17 +192,13 @@ namespace IDUNv2.Pages
         private LedMatrix ledMatrix;
         private bool[] ledStatus = new bool[8 * 8];
         private byte r5 = 31, g6 = 63, b5 = 31;
-
         Bitmap ledBitmap;
-
         private int px, py;
 
         public LEDControlPage()
         {
             this.InitializeComponent();
-
             this.Loaded += LEDControlPage_Loaded;
-
             ledMatrix = new LedMatrix();
             ledMatrix.Init();
         }
@@ -222,10 +207,8 @@ namespace IDUNv2.Pages
         {
             ledImage.PointerMoved += LedImage_PointerMoved;
             ledImage.PointerPressed += LedImage_PointerPressed;
-
             ledBitmap = new Bitmap((int)ledImage.Width, (int)ledImage.Height);
             ledImage.Source = ledBitmap.Sink;
-
             CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
 
@@ -238,9 +221,7 @@ namespace IDUNv2.Pages
             int i = y * 8 + x;
 
             //Debug.WriteLine("set led: {0}, {1} [{2}]", x, y, i);
-
             ledStatus[i] = fillToggle.IsChecked.Value;
-
             if (ledStatus[i])
             {
                 ledMatrix.SetPixel(x, y, r5, g6, b5);
@@ -249,7 +230,6 @@ namespace IDUNv2.Pages
             {
                 ledMatrix.SetPixel(x, y, 0, 0, 0);
             }
-
             ledMatrix.Flush();
         }
 

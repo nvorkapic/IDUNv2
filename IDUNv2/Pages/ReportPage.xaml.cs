@@ -15,13 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace IDUNv2.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class ReportPage : Page
     {
         private ReportsPageViewModel viewModel = new ReportsPageViewModel(AppData.Reports, AppData.FaultCodesCache);
@@ -53,7 +48,6 @@ namespace IDUNv2.Pages
         {
             ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Saved", "Template is configured and saved and ready for use!");
             var dialog = new ContentDialog { Title = "Template Saved", Content = "Template is configured and saved and ready for use!", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, PrimaryButtonText = "OK", RequestedTheme=ElementTheme.Dark };
-
             var showdialog = await dialog.ShowAsync();
         }
 
@@ -62,7 +56,6 @@ namespace IDUNv2.Pages
             viewModel.CreateTemplate();
             ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
             var dialog = new ContentDialog { Title = "Template Created", Content = "New Template has been added. Please configure and save to ensure proper functionality!", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark,  PrimaryButtonText = "OK" };
-
             var showdialog = await dialog.ShowAsync();
         }
 
@@ -73,17 +66,16 @@ namespace IDUNv2.Pages
             if (viewModel.Templates == null)
                 return;
             foreach (var item in viewModel.Templates)
-            {
-                if (item.Dirty)
+                {
+                    if (item.Dirty)
                     ++dirtyTemplatesNr;
-            }
+                }
             if (dirtyTemplatesNr >= 1)
-            {
+                {
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
-            }
+                }
 
+         }
 
-            }
-
-        }
+    }
 }
