@@ -111,6 +111,10 @@
     <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\NotifyBase.cs" />
     <Compile Include="Common\TaskBinding.cs" />
+    <Compile Include="Controls\Gauge\Gauge.cs" />
+    <Compile Include="Controls\SensorGraph.xaml.cs">
+      <DependentUpon>SensorGraph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
@@ -248,9 +252,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Gauge\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\OnScreenKeyboard\OnScreenKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SensorGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AboutPage.xaml">
       <SubType>Designer</SubType>

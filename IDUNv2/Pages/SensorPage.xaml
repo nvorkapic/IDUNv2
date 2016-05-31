@@ -1,30 +1,74 @@
 ﻿<Page
-    x:Class="IDUNv2.Pages.SensorPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IDUNv2.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:IDUNv2.Controls"
+    x:Class="IDUNv2.Pages.SensorPage"
     mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Controls/Gauge/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Temperature: " />
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Humidity: " />
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Pressure: " />
-            
-            <TextBlock x:Name="TempText" Grid.Row="0" Grid.Column="1" />
-            <TextBlock x:Name="HumidText" Grid.Row="1" Grid.Column="1" />
-            <TextBlock x:Name="PressText" Grid.Row="2" Grid.Column="1" />
+            <Border Grid.Row="0" Grid.Column="0">
+                <controls:Gauge
+                    Minimum="0"
+                    Maximum="100"
+                    Value="{Binding Reading}"          
+                    ValueStringFormat="F2"
+                    Unit="° Celcius"
+                    UnitBrush="DarkGray" />
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1">
+                <controls:Gauge
+                    Minimum="0"
+                    Maximum="100"
+                    Value="{Binding Reading}"          
+                    ValueStringFormat="F2"
+                    Unit="% Humidity"
+                    TickBrush="Transparent"
+                    ScaleTickBrush="Transparent"
+                    NeedleBrush="SaddleBrown"
+                    TrailBrush="SaddleBrown"
+                    ValueBrush="SaddleBrown"
+                    UnitBrush="SaddleBrown">
+                    <controls:Gauge.ScaleBrush>
+                        <SolidColorBrush
+                                Color="SaddleBrown"
+                                Opacity=".2" />
+                    </controls:Gauge.ScaleBrush>
+                </controls:Gauge>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="0">
+                <controls:Gauge
+                    Minimum="0"
+                    Maximum="100"
+                    Value="{Binding Reading}"
+                    NeedleBrush="Transparent"
+                    ScaleTickBrush="Black"
+                    ScaleBrush="DarkSlateGray"
+                    TickBrush="Transparent"
+                    TrailBrush="DarkSeaGreen"
+                    ValueBrush="DarkSeaGreen"
+                    ValueStringFormat="N1"
+                    Unit="hPa Pressure"
+                    UnitBrush="DarkGray" />
+            </Border>
         </Grid>
     </Grid>
 </Page>

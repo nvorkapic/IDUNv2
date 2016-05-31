@@ -1,4 +1,5 @@
-﻿using IDUNv2.Models;
+﻿using IDUNv2.Common;
+using IDUNv2.Models;
 using SenseHat;
 using System;
 using System.Collections.Generic;
@@ -21,25 +22,43 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
+    public class SensorPageViewModel : NotifyBase
+    {
+        private float _reading;
+        public float Reading
+        {
+            get { return _reading; }
+            set { _reading = value; Notify(); }
+        }
+    }
+
     public sealed partial class SensorPage : Page
     {
         private float temp;
         private float humid;
+        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+
+        private Random rnd = new Random();
+
+        private SensorPageViewModel viewModel = new SensorPageViewModel();
 
         public SensorPage()
         {
             this.InitializeComponent();
-            this.DataContext = this;
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
+            this.DataContext = viewModel;
+
+            //Graph.DataPoints = dataPoints;
+
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
-        private void CompositionTarget_Rendering(object sender, object e)
+        private void Timer_Tick(object sender, object e)
         {
-            temp = AppData.SensorTimer.Temp;
-
-            humid = AppData.SensorTimer.Humid;
-            TempText.Text = temp + " \u00B0C";
-            HumidText.Text = humid + " \u00B0C";
+            double y = (30.0 + rnd.NextDouble() * 1.1);
+            viewModel.Reading = (float)y;
+            //viewModel.Reading = AppData.SensorTimer.Temp;
+            //Graph.AddDataPoint(y, 0.1);
         }
 
         private void OnHumidity(float value)
