@@ -30,41 +30,14 @@ namespace IDUNv2.Pages
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-        ObservableCollection<MeasurementListSettingsItems> MeasurementConfigurationList = new ObservableCollection<MeasurementListSettingsItems>();
-
         public MeasurementPage()
         {
             this.InitializeComponent();
-            this.Loaded += Measurement_Loaded;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-        }
-
-        private async void Measurement_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                StorageFile ConfigFile = await localFolder.GetFileAsync("MeasurementConfiguration.txt");
-                string ConfigText = await FileIO.ReadTextAsync(ConfigFile);
-                MeasurementConfigurationList = JsonConvert.DeserializeObject<ObservableCollection<MeasurementListSettingsItems>>(ConfigText);
-
-                foreach (var item in MeasurementConfigurationList)
-                {
-                    MeasurementViewModel.Measurements.Add(new MeasurementModel { MeasurementName = item.Title, Enabled = item.Config.Enabled, ThresholdList = item.Config.Thresholds });
-                }
-                //MeasurementModel CurrentMeasurement = MeasurementViewModel.Measurements.Where(x => x.MeasurementName == MainPage.SubMenI.Label).FirstOrDefault();
-                //this.DataContext = CurrentMeasurement;
-            }
-            catch
-            {
-                foreach (var s in Services.ConfigService.Sensors)
-                {
-                    MeasurementViewModel.Measurements.Add(new MeasurementModel { MeasurementName = Common.Assets.SensorIcons[s.Type].Item3 });
-                }
-            }
         }
     }
 }
