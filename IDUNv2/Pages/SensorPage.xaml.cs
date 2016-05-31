@@ -24,11 +24,26 @@ namespace IDUNv2.Pages
 {
     public class SensorPageViewModel : NotifyBase
     {
-        private float _reading;
-        public float Reading
+        private float _temperature;
+        private float _humidity;
+        private float _pressure;
+
+        public float Temperature
         {
-            get { return _reading; }
-            set { _reading = value; Notify(); }
+            get { return _temperature; }
+            set { _temperature = value; Notify(); }
+        }
+
+        public float Humidity
+        {
+            get { return _humidity; }
+            set { _humidity = value; Notify(); }
+        }
+
+        public float Pressure
+        {
+            get { return _pressure; }
+            set { _pressure = value; Notify(); }
         }
     }
 
@@ -47,18 +62,17 @@ namespace IDUNv2.Pages
             this.InitializeComponent();
             this.DataContext = viewModel;
 
-            //Graph.DataPoints = dataPoints;
-
             timer.Tick += Timer_Tick;
             timer.Start();
         }
 
         private void Timer_Tick(object sender, object e)
         {
-            double y = (30.0 + rnd.NextDouble() * 1.1);
-            viewModel.Reading = (float)y;
-            //viewModel.Reading = AppData.SensorTimer.Temp;
-            //Graph.AddDataPoint(y, 0.1);
+            //double y = (30.0 + rnd.NextDouble() * 1.1);
+            //viewModel.Reading = (float)y;
+            viewModel.Temperature = AppData.SensorTimer.Temperature;
+            viewModel.Humidity = AppData.SensorTimer.Humidity;
+            viewModel.Pressure = AppData.SensorTimer.Pressure;
         }
 
         private void OnHumidity(float value)

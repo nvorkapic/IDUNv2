@@ -17,23 +17,7 @@ namespace SenseHat
 
         private const float pressureFactor = 1.0f / 4096.0f;
 
-        public OptionalValue<float> Pressure
-        {
-            get
-            {
-                OptionalValue<float> v;
-                v.IsValid = false;
-                v.Value = 0.0f;
-                var status = Read8(C_Status);
-                if ((status & 2) == 2)
-                {
-                    var raw = (Int32)Read24LE(C_PressOutXL + 0x80);
-                    v.IsValid = true;
-                    v.Value =  raw * pressureFactor;
-                }
-                return v;
-            }
-        }
+        public float? Pressure { get; set; }
 
         public override async Task Init()
         {
@@ -58,6 +42,20 @@ namespace SenseHat
             //    0    1         0         0      0       0        0       0
             // normal, enable, disable, disable, i2c enable, normal, normal, waiting
             WriteByte(C_Ctrl2, 0x40);
+        }
+
+        public void Update()
+        {
+            var status = Read8(C_Status);
+            if ((status & 2) == 2)
+            {
+                var raw = (Int32)Read24LE(C_PressOutXL + 0x80);
+                Pressure = raw * pressureFactor;
+            }
+            else
+            {
+                Pressure = null;
+            }
         }
     }
 }

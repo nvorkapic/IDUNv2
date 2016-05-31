@@ -111,7 +111,6 @@
     <Compile Include="LPS25H.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Device.cs" />
-    <Compile Include="SensorReading.cs" />
     <Compile Include="SensorTimer.cs" />
     <EmbeddedResource Include="Properties\SenseHat.rd.xml" />
   </ItemGroup>

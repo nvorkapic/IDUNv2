@@ -29,7 +29,7 @@
                 <controls:Gauge
                     Minimum="0"
                     Maximum="100"
-                    Value="{Binding Reading}"          
+                    Value="{Binding Temperature}"          
                     ValueStringFormat="F2"
                     Unit="° Celcius"
                     UnitBrush="DarkGray" />
@@ -38,7 +38,7 @@
                 <controls:Gauge
                     Minimum="0"
                     Maximum="100"
-                    Value="{Binding Reading}"          
+                    Value="{Binding Humidity}"          
                     ValueStringFormat="F2"
                     Unit="% Humidity"
                     TickBrush="Transparent"
@@ -58,7 +58,7 @@
                 <controls:Gauge
                     Minimum="0"
                     Maximum="100"
-                    Value="{Binding Reading}"
+                    Value="{Binding Pressure}"
                     NeedleBrush="Transparent"
                     ScaleTickBrush="Black"
                     ScaleBrush="DarkSlateGray"
