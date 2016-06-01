@@ -43,8 +43,11 @@
                             <Path Name="PART_Trail"
                                   Stroke="{TemplateBinding TrailBrush}"
                                   StrokeThickness="{TemplateBinding ScaleWidth}" />
-                            <Path Name="PART_Danger"
-                                  Stroke="{TemplateBinding DangerBrush}"
+                            <Path Name="PART_DangerLo"
+                                  Stroke="{TemplateBinding DangerLoBrush}"
+                                  StrokeThickness="{TemplateBinding ScaleWidth}" />
+                            <Path Name="PART_DangerHi"
+                                  Stroke="{TemplateBinding DangerHiBrush}"
                                   StrokeThickness="{TemplateBinding ScaleWidth}" />
                             <!-- Scale Ticks -->
                             <Line x:Name="ScaleTicksProxy"
