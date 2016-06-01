@@ -61,29 +61,50 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid>
-                                            <Rectangle Height="{Binding X1, ElementName=ScaleTicksProxy}"
+                                        <Rectangle Height="{Binding X1, ElementName=ScaleTicksProxy}"
                                                    Width="2"
                                                    Fill="{Binding Fill, ElementName=ScaleTicksProxy}">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <TranslateTransform X="-0.5" Y="-77" />
-                                                        <RotateTransform Angle="{Binding}" />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                            <TextBlock Text="{Binding}">
-                                                <TextBlock.RenderTransform>
-                                                    <TransformGroup>
-                                                        <TranslateTransform X="-0.5" Y="-77" />
-                                                        <RotateTransform Angle="{Binding}" />
-                                                    </TransformGroup>
-                                                </TextBlock.RenderTransform>
-                                            </TextBlock>
-                                        </Grid>
+                                            <Rectangle.RenderTransform>
+                                                <TransformGroup>
+                                                    <TranslateTransform X="-0.5" Y="-77" />
+                                                    <RotateTransform Angle="{Binding}" />
+                                                </TransformGroup>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+
+                            <!-- Tick labels -->
+                            <Line x:Name="LabelProxy"
+                                  Visibility="Collapsed"
+                                  X1="{TemplateBinding LabelX}"
+                                  Y1="{TemplateBinding LabelY}"/>
+                            <ItemsControl ItemsSource="{TemplateBinding Values}"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Grid />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Item1}"
+                                                   RenderTransformOrigin="0.5,0.5"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center">
+                                            <TextBlock.RenderTransform>
+                                                <TransformGroup>
+                                                    <TranslateTransform X="{Binding X1, ElementName=LabelProxy}" Y="{Binding Y1, ElementName=LabelProxy}" />
+                                                    <RotateTransform Angle="{Binding Item2}" />
+                                                </TransformGroup>
+                                            </TextBlock.RenderTransform>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
                             <!-- Value and Unit -->
                             <StackPanel VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center">

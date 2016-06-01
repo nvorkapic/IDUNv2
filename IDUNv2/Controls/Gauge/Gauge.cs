@@ -147,13 +147,35 @@ namespace IDUNv2.Controls
                 typeof (IEnumerable<double>),
                 typeof (Gauge),
                 new PropertyMetadata(null));
+
+        protected static readonly DependencyProperty ValuesProperty =
+            DependencyProperty.Register(
+                "Values",
+                typeof(IEnumerable<Tuple<double, double>>),
+                typeof(Gauge),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty LabelXProperty =
+            DependencyProperty.Register(
+                "LabelX",
+                typeof(double),
+                typeof(Gauge),
+                new PropertyMetadata(0.0));
+
+        public static readonly DependencyProperty LabelYProperty =
+            DependencyProperty.Register(
+                "LabelY",
+                typeof(double),
+                typeof(Gauge),
+                new PropertyMetadata(-100.0));
         #endregion Dependency Property Registrations
 
         #region Constructors
         public Gauge()
         {
             this.DefaultStyleKey = typeof(Gauge);
-            this.Ticks = this.GetTicks();
+            //this.Ticks = this.GetTicks();
+            InitTicksAndValues();
         }
         #endregion Constructors
 
@@ -259,6 +281,25 @@ namespace IDUNv2.Controls
             get { return (IEnumerable<double>)GetValue(TicksProperty); }
             set { SetValue(TicksProperty, value); }
         }
+
+        protected IEnumerable<Tuple<double, double>> Values
+        {
+            get { return (IEnumerable<Tuple<double, double>>)GetValue(ValuesProperty); }
+            set { SetValue(ValuesProperty, value); }
+        }
+
+        public double LabelX
+        {
+            get { return (double)GetValue(LabelXProperty); }
+            set { SetValue(LabelXProperty, value); }
+        }
+
+        public double LabelY
+        {
+            get { return (double)GetValue(LabelYProperty); }
+            set { SetValue(LabelYProperty, value); }
+        }
+
         #endregion Properties
 
         protected override void OnApplyTemplate()
@@ -302,6 +343,8 @@ namespace IDUNv2.Controls
                 pg.Figures.Add(pf);
                 danger.Data = pg;
             }
+
+            InitTicksAndValues();
 
             OnValueChanged(this, null);
             base.OnApplyTemplate();
@@ -387,14 +430,32 @@ namespace IDUNv2.Controls
             return (value - this.Minimum) / (this.Maximum - this.Minimum) * angularRange + minAngle;
         }
 
-        private IEnumerable<double> GetTicks()
+        private void InitTicksAndValues()
         {
+            var middleOfScale = 77 - ScaleWidth / 2;
             var tickSpacing = (this.Maximum - this.Minimum) / 10;
 
-            for (double tick = this.Minimum; tick <= this.Maximum; tick += tickSpacing)
+            var ticks = new List<double>((int)tickSpacing);
+            var values = new List<Tuple<double, double>>((int)tickSpacing);
+            for (double v = this.Minimum; v <= this.Maximum; v += tickSpacing)
             {
-                yield return ValueToAngle(tick);
+                double ang = ValueToAngle(v);
+                ticks.Add(ang);
+                values.Add(new Tuple<double, double>(v, ang));
             }
+
+            this.Ticks = ticks;
+            this.Values = values;
         }
+
+        //private IEnumerable<double> GetTicks()
+        //{
+        //    var tickSpacing = (this.Maximum - this.Minimum) / 10;
+
+        //    for (double tick = this.Minimum; tick <= this.Maximum; tick += tickSpacing)
+        //    {
+        //        yield return ValueToAngle(tick);
+        //    }
+        //}
     }
 }
