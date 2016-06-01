@@ -23,6 +23,7 @@
                 <controls:Gauge
                     Minimum="-100"
                     Maximum="100"
+                    DangerLo="-40"
                     DangerHi="70"
                     Value="{Binding Temperature}"          
                     ValueStringFormat="F2"
@@ -33,7 +34,7 @@
                     TrailBrush="DarkSeaGreen"
                     ValueBrush="DarkSeaGreen"
                     UnitBrush="DarkGray"
-                    DangerBrush="Red"
+                    DangerHiBrush="Red"
                     ScaleBrush="DarkSlateGray"
                     LabelY="-88"
                     />
@@ -43,6 +44,7 @@
                 <controls:Gauge
                     Minimum="0"
                     Maximum="100"
+                    DangerLo="10"
                     DangerHi="80"
                     Value="{Binding Humidity}"          
                     ValueStringFormat="F2"
@@ -53,7 +55,7 @@
                     TrailBrush="DarkSeaGreen"
                     ValueBrush="DarkSeaGreen"
                     UnitBrush="DarkGray"
-                    DangerBrush="Red"
+                    DangerHiBrush="Red"
                     ScaleBrush="DarkSlateGray"
                     LabelY="-88"/>
             </StackPanel>
@@ -62,6 +64,7 @@
                 <controls:Gauge
                     Minimum="500"
                     Maximum="2000"
+                    DangerLo="800"
                     DangerHi="1800"
                     Value="{Binding Pressure}"
                     ValueStringFormat="N0"
@@ -72,7 +75,7 @@
                     TrailBrush="DarkSeaGreen"
                     ValueBrush="DarkSeaGreen"
                     UnitBrush="DarkGray"
-                    DangerBrush="Red"
+                    DangerHiBrush="Red"
                     ScaleBrush="DarkSlateGray"
                     LabelY="-88"/>
             </StackPanel>

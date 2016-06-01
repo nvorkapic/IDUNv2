@@ -15,7 +15,8 @@ namespace IDUNv2.Controls
     [TemplatePart(Name = NeedlePartName, Type = typeof(Path))]
     [TemplatePart(Name = ScalePartName, Type = typeof(Path))]
     [TemplatePart(Name = TrailPartName, Type = typeof(Path))]
-    [TemplatePart(Name = DangerPartName, Type = typeof(Path))]
+    [TemplatePart(Name = DangerLoPartName, Type = typeof(Path))]
+    [TemplatePart(Name = DangerHiPartName, Type = typeof(Path))]
     [TemplatePart(Name = ValueTextPartName, Type = typeof(TextBlock))]
     public class Gauge : Control
     {
@@ -23,7 +24,8 @@ namespace IDUNv2.Controls
         private const string NeedlePartName = "PART_Needle";
         private const string ScalePartName = "PART_Scale";
         private const string TrailPartName = "PART_Trail";
-        private const string DangerPartName = "PART_Danger";
+        private const string DangerLoPartName = "PART_DangerLo";
+        private const string DangerHiPartName = "PART_DangerHi";
         private const string ValueTextPartName = "PART_ValueText";
         private const double Degrees2Radians = Math.PI / 180;
         #endregion Constants
@@ -42,6 +44,13 @@ namespace IDUNv2.Controls
                 typeof (double),
                 typeof (Gauge),
                 new PropertyMetadata(100.0));
+
+        public static readonly DependencyProperty DangerLoProperty =
+            DependencyProperty.Register(
+                "DangerLo",
+                typeof(double),
+                typeof(Gauge),
+                new PropertyMetadata(0.0));
 
         public static readonly DependencyProperty DangerHiProperty =
             DependencyProperty.Register(
@@ -99,9 +108,16 @@ namespace IDUNv2.Controls
                 typeof (Gauge),
                 new PropertyMetadata(new SolidColorBrush(Colors.Orange)));
 
-        public static readonly DependencyProperty DangerBrushProperty =
+        public static readonly DependencyProperty DangerLoBrushProperty =
             DependencyProperty.Register(
-                "DangerBrush",
+                "DangerLoBrush",
+                typeof(Brush),
+                typeof(Gauge),
+                new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
+
+        public static readonly DependencyProperty DangerHiBrushProperty =
+            DependencyProperty.Register(
+                "DangerHiBrush",
                 typeof(Brush),
                 typeof(Gauge),
                 new PropertyMetadata(new SolidColorBrush(Colors.Red)));
@@ -192,6 +208,12 @@ namespace IDUNv2.Controls
             set { SetValue(MaximumProperty, value); }
         }
 
+        public double DangerLo
+        {
+            get { return (double)GetValue(DangerLoProperty); }
+            set { SetValue(DangerLoProperty, value); }
+        }
+
         public double DangerHi
         {
             get { return (double)GetValue(DangerHiProperty); }
@@ -228,10 +250,16 @@ namespace IDUNv2.Controls
             set { SetValue(TrailBrushProperty, value); }
         }
 
-        public Brush DangerBrush
+        public Brush DangerLoBrush
         {
-            get { return (Brush)GetValue(DangerBrushProperty); }
-            set { SetValue(DangerBrushProperty, value); }
+            get { return (Brush)GetValue(DangerLoBrushProperty); }
+            set { SetValue(DangerLoBrushProperty, value); }
+        }
+
+        public Brush DangerHiBrush
+        {
+            get { return (Brush)GetValue(DangerHiBrushProperty); }
+            set { SetValue(DangerHiBrushProperty, value); }
         }
 
         public Brush ScaleBrush
@@ -325,23 +353,44 @@ namespace IDUNv2.Controls
                 scale.Data = pg;
             }
 
-            var danger = GetTemplateChild(DangerPartName) as Path;
-            if (danger != null)
+            var dangerLo = GetTemplateChild(DangerLoPartName) as Path;
+            if (dangerLo != null)
             {
-                danger.Visibility = Visibility.Visible;
+                dangerLo.Visibility = Visibility.Visible;
                 var pg = new PathGeometry();
                 var pf = new PathFigure();
                 pf.IsClosed = false;
-                pf.StartPoint = ScalePoint(ValueToAngle(DangerHi), middleOfScale);
+                var ang = ValueToAngle(DangerLo);
+                pf.StartPoint = ScalePoint(ang, middleOfScale);
+                var seg = new ArcSegment();
+                seg.SweepDirection = SweepDirection.Counterclockwise;
+                // We start from -150, so +30 becomes a large arc.
+                seg.IsLargeArc = ang > 30.0;
+                seg.Size = new Size(middleOfScale, middleOfScale);
+                seg.Point = ScalePoint(-150, middleOfScale);
+                pf.Segments.Add(seg);
+                pg.Figures.Add(pf);
+                dangerLo.Data = pg;
+            }
+
+            var dangerHi = GetTemplateChild(DangerHiPartName) as Path;
+            if (dangerHi != null)
+            {
+                dangerHi.Visibility = Visibility.Visible;
+                var pg = new PathGeometry();
+                var pf = new PathFigure();
+                pf.IsClosed = false;
+                var ang = ValueToAngle(DangerHi);
+                pf.StartPoint = ScalePoint(ang, middleOfScale);
                 var seg = new ArcSegment();
                 seg.SweepDirection = SweepDirection.Clockwise;
                 // We start from -150, so +30 becomes a large arc.
-                seg.IsLargeArc = false;
+                seg.IsLargeArc = ang < -30.0;
                 seg.Size = new Size(middleOfScale, middleOfScale);
                 seg.Point = ScalePoint(150, middleOfScale);
                 pf.Segments.Add(seg);
                 pg.Figures.Add(pf);
-                danger.Data = pg;
+                dangerHi.Data = pg;
             }
 
             InitTicksAndValues();
