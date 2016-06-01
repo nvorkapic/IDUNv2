@@ -19,38 +19,59 @@ namespace IDUNv2.Models
         Gyroscope
     }
 
-    public delegate void SensorHandler(Sensor sender, float reading);
+    public enum SensorState
+    {
+        Normal,
+        Faulted
+    }
 
     public class Sensor
     {
+        /// <summary>
+        /// Size of databuffer. Must be a power of two!
+        /// </summary>
+        public const int BUFFER_SIZE = 128;
+
         public string Name { get; set; }
-        public List<SensorTrigger> Triggers { get; set; }
+        public float RangeMin { get; set; }
+        public float RangeMax { get; set; }
+        public float DangerLo { get; private set; }
+        public float DangerHi { get; private set; }
+        public int? TemplateLoId { get; private set; }
+        public int? TemplateHiId { get; private set; }
+        public SensorState State { get; set; }
+
+        private float[] dataBuffer = new float[BUFFER_SIZE];
+        private int dataBufferIdx;
+
+        public float Data { get; set; }
 
         public Sensor(string name)
         {
             Name = name;
         }
-    }
 
-    public static class SensorRegistry
-    {
-        private static Dictionary<Type, Sensor> sensors = new Dictionary<Type, Sensor>();
-
-        public static void Add<T>(T sensor)
-            where T : Sensor
+        public void UpdateData(float data)
         {
-            sensors[typeof(T)] = sensor;
+            Data = data;
+            dataBuffer[dataBufferIdx] = data;
+            dataBufferIdx = (dataBufferIdx + 1) & (BUFFER_SIZE - 1);
         }
 
-        public static T Get<T>()
-            where T : Sensor
+        public void SetDangerLo(float val, int templateId)
         {
-            return sensors[typeof(T)] as T;
+            DangerLo = val;
+            TemplateLoId = templateId;
         }
 
-        public static void Foo()
+        public void SetDangerHi(float val, int templateId)
         {
-            SensorRegistry.Add(new Sensor("Temperature"));
+            DangerHi = val;
+            TemplateHiId = templateId;
         }
+
+        public static Sensor TemperatureSensor = new Sensor("Temperature");
+        public static Sensor HumiditySensor = new Sensor("Humidity");
+        public static Sensor PressureSensor = new Sensor("Pressure");
     }
 }
