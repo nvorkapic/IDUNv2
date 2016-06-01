@@ -17,7 +17,7 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid>
+        <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
@@ -34,7 +34,8 @@
                     Value="{Binding Temperature}"          
                     ValueStringFormat="F2"
                     Unit="° Celcius"
-                    UnitBrush="DarkGray" />
+                    UnitBrush="DarkGray"
+                    />
             </Border>
             <Border Grid.Row="0" Grid.Column="1">
                 <controls:Gauge

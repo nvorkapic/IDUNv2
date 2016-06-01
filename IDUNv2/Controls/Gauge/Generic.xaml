@@ -61,16 +61,26 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Rectangle Height="{Binding X1, ElementName=ScaleTicksProxy}"
+                                        <Grid>
+                                            <Rectangle Height="{Binding X1, ElementName=ScaleTicksProxy}"
                                                    Width="2"
                                                    Fill="{Binding Fill, ElementName=ScaleTicksProxy}">
-                                            <Rectangle.RenderTransform>
-                                                <TransformGroup>
-                                                    <TranslateTransform X="-0.5" Y="-77" />
-                                                    <RotateTransform Angle="{Binding}" />
-                                                </TransformGroup>
-                                            </Rectangle.RenderTransform>
-                                        </Rectangle>
+                                                <Rectangle.RenderTransform>
+                                                    <TransformGroup>
+                                                        <TranslateTransform X="-0.5" Y="-77" />
+                                                        <RotateTransform Angle="{Binding}" />
+                                                    </TransformGroup>
+                                                </Rectangle.RenderTransform>
+                                            </Rectangle>
+                                            <TextBlock Text="{Binding}">
+                                                <TextBlock.RenderTransform>
+                                                    <TransformGroup>
+                                                        <TranslateTransform X="-0.5" Y="-77" />
+                                                        <RotateTransform Angle="{Binding}" />
+                                                    </TransformGroup>
+                                                </TextBlock.RenderTransform>
+                                            </TextBlock>
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
