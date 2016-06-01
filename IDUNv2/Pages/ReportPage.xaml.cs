@@ -21,6 +21,8 @@ namespace IDUNv2.Pages
     {
         private ReportsPageViewModel viewModel = new ReportsPageViewModel(AppData.Reports, AppData.FaultCodesCache);
 
+        private ReportTemplateViewModel selectedItem;
+
         public ReportPage()
         {
             this.InitializeComponent();
@@ -59,6 +61,22 @@ namespace IDUNv2.Pages
             var showdialog = await dialog.ShowAsync();
         }
 
+        //private async void Remove_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        viewModel.RemoveTemplate(selectedItem);
+        //        ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Removed", "Template has been Removed.");
+        //        var dialog = new ContentDialog { Title = "Template Removed", Content = "New Template has been Removed.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText = "OK" };
+        //        var showdialog = await dialog.ShowAsync();
+        //    }
+        //    catch
+        //    {
+
+        //    }
+            
+        //}
+
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
@@ -79,5 +97,10 @@ namespace IDUNv2.Pages
 
          }
 
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var list = (ListBox)sender;
+            selectedItem = (ReportTemplateViewModel)list.SelectedItem;
+        }
     }
 }

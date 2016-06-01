@@ -58,5 +58,10 @@ namespace IDUNv2.ViewModels
             SelectedTemplate.Dirty = true;
             Templates.Add(SelectedTemplate);
         }
+
+        //public void RemoveTemplate(ReportTemplateViewModel Template)
+        //{
+        //    Templates.Remove(Template);
+        //}
     }
 }

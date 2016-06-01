@@ -11,8 +11,8 @@ namespace IDUNv2.Common
     {
         private static Dictionary<SensorType, Tuple<string, string, string>> sensorIcons = new Dictionary<SensorType, Tuple<string, string, string>>()
         {
-            { SensorType.Usage, new Tuple<string, string, string> ("/Assets/Finger.png", "", "Usage" )},
-            { SensorType.Temperature, new Tuple<string, string, string>("/Assets/Thermometer.png", "°C","Temperature") },
+            {SensorType.Usage, new Tuple<string, string, string> ("/Assets/Finger.png", "", "Usage" )},
+            {SensorType.Temperature, new Tuple<string, string, string>("/Assets/Thermometer.png", "°C","Temperature") },
             {SensorType.Pressure, new Tuple<string, string, string>("/Assets/Pressure.png", "hPa","Pressure") },
             {SensorType.Humidity, new Tuple<string, string, string>("/Assets/Humidity.png", "%", "Humidity") },
             {SensorType.Accelerometer,new Tuple<string, string, string>("/Assets/Accelerometer.png", "m/s²", "Accelerometer") },

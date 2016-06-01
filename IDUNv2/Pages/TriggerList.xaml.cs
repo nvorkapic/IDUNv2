@@ -42,10 +42,13 @@ namespace IDUNv2.Pages
         {
             if (CurrentTrigger != null)
             {
+                await AppData.InitCloud();
+                var templates = AppData.Reports.GetTemplates().Result;
+                var template = templates.Where(x => x.Id == CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 string WarningHeader = "Report Trigger Removed from the List";
-                string WarningContent = "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses TemplateId " + CurrentTrigger.TemplateId.ToString() + ", has been Removed.";
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses TemplateId " + CurrentTrigger.TemplateId.ToString() + ", has been Removed.");
+                string WarningContent = "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.";
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
                 await ss.DeleteTrigger(CurrentTrigger);
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
                 var dialog = new ContentDialog { Title = WarningHeader,Content= WarningContent, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText ="OK"};
