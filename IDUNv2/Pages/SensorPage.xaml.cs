@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using Windows.Foundation;
@@ -43,6 +44,42 @@ namespace IDUNv2.Pages
             get { return _pressure; }
             set { _pressure = value; Notify(); }
         }
+
+        #region Bias Values
+
+        private float _biasTemp;
+        private float _biasHumid;
+        private float _biasPress;
+
+        public float BiasTemp
+        {
+            get { return _biasTemp; }
+            set { _biasTemp = value; Notify(); }
+        }
+        public float BiasHumid
+        {
+            get { return _biasHumid; }
+            set { _biasHumid = value; Notify(); }
+        }
+        public float BiasPress
+        {
+            get { return _biasPress; }
+            set { _biasPress = value; Notify(); }
+        }
+        #endregion
+
+        public ActionCommand<string> ResetCommand { get; private set; }
+
+        private void ResetCommand_Execute(string propName)
+        {
+            var pi = GetType().GetProperty(propName);
+            pi.SetValue(this, 0.0f);
+        }
+
+        public SensorPageViewModel()
+        {
+            ResetCommand = new ActionCommand<string>(ResetCommand_Execute);
+        }
     }
 
     public sealed partial class SensorPage : Page
@@ -63,18 +100,22 @@ namespace IDUNv2.Pages
 
         private void Timer_Tick(object sender, object e)
         {
-            if (AppData.SensorTimer.IsValid)
+            if (AppData.SensorWatcher.IsValid)
             {
-                viewModel.Temperature = AppData.SensorTimer.Temperature;
-                viewModel.Humidity = AppData.SensorTimer.Humidity;
-                viewModel.Pressure = AppData.SensorTimer.Pressure;
+                viewModel.Temperature = AppData.SensorWatcher.Temperature;
+                viewModel.Humidity = AppData.SensorWatcher.Humidity;
+                viewModel.Pressure = AppData.SensorWatcher.Pressure;
             }
             else
             {
                 viewModel.Temperature = (float)(30.0 + rnd.NextDouble() * 2.1);
                 viewModel.Humidity = (float)(30.0 + rnd.NextDouble() * 5.1);
-                viewModel.Pressure = (float)(30.0 + rnd.NextDouble() * 10.1);
+                viewModel.Pressure = 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
             }
+
+            viewModel.Temperature += viewModel.BiasTemp;
+            viewModel.Humidity += viewModel.BiasHumid;
+            viewModel.Pressure += viewModel.BiasPress;
         }
 
         private void OnHumidity(float value)

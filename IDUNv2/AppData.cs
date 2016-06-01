@@ -75,7 +75,7 @@ namespace IDUNv2
         public static CloudClient CloudClient { get; private set; }
         public static ReportService Reports { get; private set; }
         public static FaultCodesCache FaultCodesCache { get; private set; }
-        public static SensorTimer SensorTimer = new SensorTimer(1);
+        public static SensorWatcher SensorWatcher = new SensorWatcher(1);
 
         private static void InitInsights()
         {
@@ -84,19 +84,6 @@ namespace IDUNv2
             InsightsHelper.ResetUser();
         }
 
-        //private static void InitCredential()
-        //{
-        //    var vault = new PasswordVault();
-        //    try
-        //    {
-        //        var credList = vault.FindAllByResource("idun");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        vault.Add(new PasswordCredential("idun", "alex", "alex"));
-        //    }
-        //}
-
         public static async Task<bool> InitCloud()
         {
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -104,25 +91,15 @@ namespace IDUNv2
             try
             {
                 InitInsights();
-                //InitCredential();
-                //var vault = new PasswordVault();
-                //var cred = vault.FindAllByResource("idun").Where(c => c.UserName == "alex").Single();
-                //cred.RetrievePassword();
-                string url;
-                string systemid;
-                string username;
-                string password;
-
-                    url = localSettings.Values["URL"] as string;
-                    systemid = localSettings.Values["SystemID"] as string;
-                    username = localSettings.Values["Username"] as string;
-                    password = localSettings.Values["Password"] as string;
+                string url = localSettings.Values["URL"] as string;
+                string systemid = localSettings.Values["SystemID"] as string; ;
+                string username = localSettings.Values["Username"] as string; ;
+                string password = localSettings.Values["Password"] as string; ;
         
-                    url = url ?? "testcloud.addovation.com";
-                    systemid =systemid ?? "race8.addovation.com";
-                    username =username ?? "alex";
-                    password =password?? "alex";
-            
+                url = url ?? "testcloud.addovation.com";
+                systemid =systemid ?? "race8.addovation.com";
+                username =username ?? "alex";
+                password =password?? "alex";            
 
                 var cloudUrl = CommonDictionary.CloudUrls[url];
                 var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);

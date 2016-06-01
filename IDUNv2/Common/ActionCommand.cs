@@ -7,9 +7,9 @@ using System.Windows.Input;
 
 namespace IDUNv2.Common
 {
-    public class ActionCommand : ICommand
+    public class ActionCommand<T> : ICommand
     {
-        private Action _execute;
+        private Action<T> _execute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -17,19 +17,19 @@ namespace IDUNv2.Common
             remove { }
         }
 
-        public ActionCommand(Action execute)
+        public ActionCommand(Action<T> execute)
         {
             _execute = execute;
         }
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object param)
         {
             return true;
         }
 
-        public void Execute(object parameter)
+        public void Execute(object param)
         {
-            _execute();
+            _execute((T)param);
         }
     }
 }

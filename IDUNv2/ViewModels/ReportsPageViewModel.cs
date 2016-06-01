@@ -18,7 +18,7 @@ namespace IDUNv2.ViewModels
         private ReportTemplateViewModel _selectedTemplate;
         private FaultCodesCache _cache;
 
-        public ActionCommand SaveCommand { get; private set; }
+        public ActionCommand<object> SaveCommand { get; private set; }
 
         public List<WorkOrderDiscCode> DiscoveryList { get { return _cache.DiscCodes; } }
         public List<WorkOrderSymptCode> SymptomList { get { return _cache.SymptCodes; } }
@@ -31,7 +31,7 @@ namespace IDUNv2.ViewModels
             set { _selectedTemplate = value;  Notify(); }
         }
 
-        private async void SaveCommand_Execute()
+        private async void SaveCommand_Execute(object param)
         {
             SelectedTemplate.Model = await _reports.SetTemplate(SelectedTemplate.Model);
             SelectedTemplate.Dirty = false;
@@ -39,7 +39,7 @@ namespace IDUNv2.ViewModels
 
         public ReportsPageViewModel(ReportService reports, FaultCodesCache cache)
         {
-            SaveCommand = new ActionCommand(SaveCommand_Execute);
+            SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
             _cache = cache;
             _reports = reports;
         }

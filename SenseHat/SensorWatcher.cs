@@ -8,7 +8,7 @@ using Windows.System.Threading;
 
 namespace SenseHat
 {
-    public class SensorTimer
+    public class SensorWatcher
     {
         private readonly HTS221 hts221 = new HTS221();
         private readonly LPS25H lps25h = new LPS25H();
@@ -30,7 +30,7 @@ namespace SenseHat
             }
         }
 
-        public SensorTimer(int period)
+        public SensorWatcher(int period)
         {
             Task.Run(async () =>
             {

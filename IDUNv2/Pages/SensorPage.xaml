@@ -17,65 +17,86 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Grid.Column="0">
+            <Border Grid.Row="0" Grid.Column="0" Margin="10">
                 <controls:Gauge
                     Minimum="-100"
                     Maximum="100"
                     DangerHi="70"
                     Value="{Binding Temperature}"          
                     ValueStringFormat="F2"
-                    Unit="° Celcius"
+                    Unit="° C"
+                    TickBrush="Transparent"
+                    ScaleTickBrush="Transparent"
+                    NeedleBrush="White"
+                    TrailBrush="DarkSeaGreen"
+                    ValueBrush="DarkSeaGreen"
                     UnitBrush="DarkGray"
-                    ScaleTickBrush="Green"
+                    DangerBrush="Red"
+                    ScaleBrush="DarkSlateGray"
+                    LabelY="-88"
                     />
             </Border>
-            <Border Grid.Row="0" Grid.Column="1">
+            <Border Grid.Row="0" Grid.Column="1" Margin="10">
                 <controls:Gauge
                     Minimum="0"
                     Maximum="100"
                     DangerHi="80"
                     Value="{Binding Humidity}"          
                     ValueStringFormat="F2"
-                    Unit="% Humidity"
+                    Unit="% RH"
                     TickBrush="Transparent"
                     ScaleTickBrush="Transparent"
                     NeedleBrush="White"
-                    TrailBrush="SaddleBrown"
-                    ValueBrush="SaddleBrown"
-                    UnitBrush="SaddleBrown"
-                    DangerBrush="Red"
-                    >
-                    <controls:Gauge.ScaleBrush>
-                        <SolidColorBrush
-                                Color="SaddleBrown"
-                                Opacity=".2" />
-                    </controls:Gauge.ScaleBrush>
-                </controls:Gauge>
-            </Border>
-            <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="0">
-                <controls:Gauge
-                    Minimum="0"
-                    Maximum="100"
-                    Value="{Binding Pressure}"
-                    NeedleBrush="Transparent"
-                    ScaleTickBrush="Black"
-                    ScaleBrush="DarkSlateGray"
-                    TickBrush="Transparent"
                     TrailBrush="DarkSeaGreen"
                     ValueBrush="DarkSeaGreen"
-                    ValueStringFormat="N1"
-                    Unit="hPa Pressure"
-                    UnitBrush="DarkGray" />
+                    UnitBrush="DarkGray"
+                    DangerBrush="Red"
+                    ScaleBrush="DarkSlateGray"
+                    LabelY="-88"
+                    />
             </Border>
-        </Grid>
+            <Border Grid.Row="0" Grid.Column="2" Margin="10">
+                <controls:Gauge
+                    Minimum="500"
+                    Maximum="2000"
+                    DangerHi="1800"
+                    Value="{Binding Pressure}"
+                    ValueStringFormat="N0"
+                    Unit="hPa"
+                    TickBrush="Transparent"
+                    ScaleTickBrush="Transparent"
+                    NeedleBrush="White"
+                    TrailBrush="DarkSeaGreen"
+                    ValueBrush="DarkSeaGreen"
+                    UnitBrush="DarkGray"
+                    DangerBrush="Red"
+                    ScaleBrush="DarkSlateGray"
+                    LabelY="-88"
+                    />
+            </Border>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
+            <Slider Minimum="-200" Maximum="200" Value="{Binding BiasTemp, Mode=TwoWay}" />
+            <TextBlock Text="{Binding BiasTemp}" HorizontalAlignment="Center" />
+            <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasTemp"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+            <Slider Minimum="-100" Maximum="100" Value="{Binding BiasHumid, Mode=TwoWay}" />
+            <TextBlock Text="{Binding BiasHumid}" HorizontalAlignment="Center" />
+            <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasHumid"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="10">
+            <Slider Minimum="-1000" Maximum="1000" Value="{Binding BiasPress, Mode=TwoWay}" />
+            <TextBlock Text="{Binding BiasPress}" HorizontalAlignment="Center" />
+            <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasPress"/>
+        </StackPanel>
     </Grid>
 </Page>
