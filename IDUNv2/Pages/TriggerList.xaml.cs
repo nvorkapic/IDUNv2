@@ -42,6 +42,7 @@ namespace IDUNv2.Pages
         {
             if (CurrentTrigger != null)
             {
+
                 string WarningHeader = "Report Trigger Removed from the List";
                 string WarningContent = "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses TemplateId " + CurrentTrigger.TemplateId.ToString() + ", has been Removed.";
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses TemplateId " + CurrentTrigger.TemplateId.ToString() + ", has been Removed.");
@@ -60,15 +61,28 @@ namespace IDUNv2.Pages
 
         private async void DoubleTapList(object sender, DoubleTappedRoutedEventArgs e)
         {
-            var ListItem = ((ListView)sender).SelectedItem as SensorTrigger;
-            var TemplateID = (((ListView)sender).SelectedItem as SensorTrigger).TemplateId;
-            ReportService RS = new ReportService();
-            var Templates = RS.GetTemplates().Result;
-            var SelectedTemplate = Templates.Where(x => x.Id == TemplateID).FirstOrDefault();
-            var contentString ="Sensor: "+ListItem.SensorId + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: "+ SelectedTemplate.SymptCode+"\n Priority: "+ SelectedTemplate.PrioCode + "\n Discovery: " + SelectedTemplate.DiscCode;
-            var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
-            var showdialog = await dialog.ShowAsync();
+            try
+            {
+                var ListItem = ((ListView)sender).SelectedItem as SensorTrigger;
+                var TemplateID = (((ListView)sender).SelectedItem as SensorTrigger).TemplateId;
+                ReportService RS = new ReportService();
+                var Templates = RS.GetTemplates().Result;
+
+                var SelectedTemplate = Templates.Where(x => x.Id == TemplateID).FirstOrDefault();
+
+                await AppData.FaultCodesCache.InitAsync();
+                var Sympt = AppData.FaultCodesCache.GetSymptom(SelectedTemplate.SymptCode).Description;
+                var Prio = AppData.FaultCodesCache.GetPriority(SelectedTemplate.PrioCode).Description;
+                var Disc = AppData.FaultCodesCache.GetDiscovery(SelectedTemplate.DiscCode).Description;
+
+                var contentString = "Sensor: " + ListItem.SensorId + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: " + Sympt + "\n Priority: " + Prio + "\n Discovery: " + Disc;
+                var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
+                var showdialog = await dialog.ShowAsync();
+            }
+            catch
+            {
+
+            }
         }
     }
-
 }
