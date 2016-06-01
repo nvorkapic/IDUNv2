@@ -7,15 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:oks="using:OnScreenKeyboard"
     mc:Ignorable="d">
-    
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/IDUNStyles.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
-    
     <Grid Background="{StaticResource StandardBackground}">
         <StackPanel Width="750" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal" Width="750" HorizontalAlignment="Left">

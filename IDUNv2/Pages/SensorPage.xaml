@@ -7,17 +7,9 @@
     xmlns:controls="using:IDUNv2.Controls"
     x:Class="IDUNv2.Pages.SensorPage"
     mc:Ignorable="d">
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Controls/Gauge/Generic.xaml" />
-                <ResourceDictionary Source="/Styles/IDUNStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
+        <Grid HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -26,7 +18,8 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Grid.Column="0" Margin="10">
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
+                <TextBlock Text="Temperature" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <controls:Gauge
                     Minimum="-100"
                     Maximum="100"
@@ -44,8 +37,9 @@
                     ScaleBrush="DarkSlateGray"
                     LabelY="-88"
                     />
-            </Border>
-            <Border Grid.Row="0" Grid.Column="1" Margin="10">
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
+                <TextBlock Text="Humidity" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <controls:Gauge
                     Minimum="0"
                     Maximum="100"
@@ -61,10 +55,10 @@
                     UnitBrush="DarkGray"
                     DangerBrush="Red"
                     ScaleBrush="DarkSlateGray"
-                    LabelY="-88"
-                    />
-            </Border>
-            <Border Grid.Row="0" Grid.Column="2" Margin="10">
+                    LabelY="-88"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="2" Margin="10">
+                <TextBlock Text="Pressure" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <controls:Gauge
                     Minimum="500"
                     Maximum="2000"
@@ -80,23 +74,23 @@
                     UnitBrush="DarkGray"
                     DangerBrush="Red"
                     ScaleBrush="DarkSlateGray"
-                    LabelY="-88"
-                    />
-            </Border>
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
-            <Slider Minimum="-200" Maximum="200" Value="{Binding BiasTemp, Mode=TwoWay}" />
-            <TextBlock Text="{Binding BiasTemp}" HorizontalAlignment="Center" />
-            <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasTemp"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
-            <Slider Minimum="-100" Maximum="100" Value="{Binding BiasHumid, Mode=TwoWay}" />
-            <TextBlock Text="{Binding BiasHumid}" HorizontalAlignment="Center" />
-            <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasHumid"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="2" Margin="10">
-            <Slider Minimum="-1000" Maximum="1000" Value="{Binding BiasPress, Mode=TwoWay}" />
-            <TextBlock Text="{Binding BiasPress}" HorizontalAlignment="Center" />
-            <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasPress"/>
-        </StackPanel>
+                    LabelY="-88"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
+                <Slider Minimum="-200" Maximum="200" Value="{Binding BiasTemp, Mode=TwoWay}" />
+                <TextBlock Text="{Binding BiasTemp}" HorizontalAlignment="Center" />
+                <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasTemp"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+                <Slider Minimum="-100" Maximum="100" Value="{Binding BiasHumid, Mode=TwoWay}" />
+                <TextBlock Text="{Binding BiasHumid}" HorizontalAlignment="Center" />
+                <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasHumid"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="2" Margin="10">
+                <Slider Minimum="-1000" Maximum="1000" Value="{Binding BiasPress, Mode=TwoWay}" />
+                <TextBlock Text="{Binding BiasPress}" HorizontalAlignment="Center" />
+                <Button Content="Reset" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding ResetCommand}" CommandParameter="BiasPress"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

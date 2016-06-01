@@ -7,16 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
-
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/IDUNStyles.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
-
-    <Grid >
+    <Grid>
         <StackPanel x:Name="MainStackPanel" Background="{StaticResource StandardBackground}">
             <Grid x:Name="TopSeparatorWithTitleStackPanel" Height="30">
                 <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Server Settings</TextBlock>
