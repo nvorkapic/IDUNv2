@@ -7,9 +7,58 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VSGroup">
+                <VisualState x:Name="VSPhone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RecAd1.Width" Value="100"></Setter>
+                        <Setter Target="RecAd2.Width" Value="100"></Setter>
+                        <Setter Target="RecAd3.Width" Value="100"></Setter>
+                        <Setter Target="RecAd4.Width" Value="100"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VSTablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RecAd1.Width" Value="200"></Setter>
+                        <Setter Target="RecAd2.Width" Value="200"></Setter>
+                        <Setter Target="RecAd3.Width" Value="200"></Setter>
+                        <Setter Target="RecAd4.Width" Value="200"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VSDesktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RecAd1.Width" Value="400"></Setter>
+                        <Setter Target="RecAd2.Width" Value="400"></Setter>
+                        <Setter Target="RecAd3.Width" Value="400"></Setter>
+                        <Setter Target="RecAd4.Width" Value="400"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VSDesktopL">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RecAd1.Width" Value="400"></Setter>
+                        <Setter Target="RecAd2.Width" Value="400"></Setter>
+                        <Setter Target="RecAd3.Width" Value="400"></Setter>
+                        <Setter Target="RecAd4.Width" Value="400"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" x:Name="TopStackPanel">
             <StackPanel Width="350" Height="170" VerticalAlignment="Top" Margin="5">
                 <Grid Background="{ThemeResource AppBarItemDisabledForegroundThemeBrush}">
                     <TextBlock Margin="5" FontSize="25" VerticalAlignment="Center">Temperature</TextBlock>
@@ -19,7 +68,7 @@
                     </StackPanel>
                 </Grid>
 
-                <Rectangle Height="120" Width="auto">
+                    <Rectangle Height="120" x:Name="RecAd1">
                     <Rectangle.Fill>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black" Offset="0"/>
@@ -35,7 +84,7 @@
                         <TextBlock FontSize="40" HorizontalAlignment="Right">1072.13 hPAa</TextBlock>
                     </StackPanel>
                 </Grid>
-                <Rectangle Height="120" Width="auto">
+                    <Rectangle Height="120" x:Name="RecAd2">
                     <Rectangle.Fill>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black" Offset="0"/>
@@ -45,7 +94,7 @@
                 </Rectangle>
             </StackPanel>
         </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" x:Name="BottomStackPanel">
                 <StackPanel Width="350" Height="170" VerticalAlignment="Top" Margin="5">
                     <Grid Background="{ThemeResource AppBarItemDisabledForegroundThemeBrush}">
                         <TextBlock Margin="5" FontSize="25" VerticalAlignment="Center">Humidity</TextBlock>
@@ -55,7 +104,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <Rectangle Height="120" Width="auto">
+                    <Rectangle Height="120" x:Name="RecAd3">
                         <Rectangle.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="0"/>
@@ -71,7 +120,7 @@
                             <TextBlock FontSize="40" HorizontalAlignment="Right">257852</TextBlock>
                         </StackPanel>
                     </Grid>
-                    <Rectangle Height="120" Width="auto">
+                    <Rectangle Height="120" x:Name="RecAd4">
                         <Rectangle.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="0"/>
@@ -115,5 +164,5 @@
             </StackPanel>
 
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
 </Page>
