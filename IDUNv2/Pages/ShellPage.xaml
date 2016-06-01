@@ -7,18 +7,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
     <Page.Resources>
-        <con:NotificationTypeConverter x:Key="NotifyIcon"/>
-        <DataTemplate x:Key="NavMenuData">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding SymbolChar}" Margin="5" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding Label}" Margin="15,0,0,0" VerticalAlignment="Center"/>
-            </StackPanel>
-        </DataTemplate>
-        <DataTemplate x:Key="SubMenuData">
-            <TextBlock Text="{Binding Label}" TextAlignment="Center"/>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/IDUNStyles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

@@ -7,6 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/IDUNStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    
     <Grid Background="{StaticResource StandardBackground}">
         <Image Source="/Assets/1200.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin=" 10"></Image>
         <StackPanel VerticalAlignment="Bottom" Margin="15">

@@ -8,7 +8,13 @@
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
 
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/IDUNStyles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid >
         <StackPanel x:Name="MainStackPanel" Background="{StaticResource StandardBackground}">
