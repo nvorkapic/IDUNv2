@@ -8,7 +8,7 @@
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
 
-    <Grid x:Name="MainGrid" Background="Black">
+    <Grid x:Name="MainGrid" Background="{StaticResource StandardBackground}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>

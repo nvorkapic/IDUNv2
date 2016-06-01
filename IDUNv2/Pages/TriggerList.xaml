@@ -6,13 +6,12 @@
     xmlns:con="using:IDUNv2.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel >
-            <TextBlock Margin="10">List of all assigned triggers:</TextBlock>
-            <ListView Margin="10" ItemsSource="{Binding SensorTriggerList}" Foreground="White" Background="Black" SelectionChanged="ListSelectionChange" x:Name="TriggerListView" MaxHeight="300" ScrollViewer.VerticalScrollMode="Enabled" DoubleTapped="DoubleTapList" SelectionMode="Single" >
+    <Grid Background="{StaticResource StandardBackground}">
+        <StackPanel>
+            <TextBlock Margin="10" >List of all assigned triggers:</TextBlock>
+            <ListView Margin="10" ItemsSource="{Binding SensorTriggerList}" Foreground="{StaticResource StandardForeground}" Background="{StaticResource StandardBackground}" SelectionChanged="ListSelectionChange" x:Name="TriggerListView" MaxHeight="300" ScrollViewer.VerticalScrollMode="Enabled" DoubleTapped="DoubleTapList" SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

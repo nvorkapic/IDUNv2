@@ -31,7 +31,6 @@ namespace IDUNv2.Pages
 
         private void TBGotFocus(object sender, RoutedEventArgs e)
         {
-            Confirmation.Visibility = Visibility.Collapsed;
             osk.SetTarget(sender as TextBox);
             osk.Visibility = Visibility.Visible;
         }
@@ -40,7 +39,6 @@ namespace IDUNv2.Pages
         {
 
             osk.SetTarget(sender as PasswordBox);
-            Confirmation.Visibility = Visibility.Collapsed;
             osk.Visibility = Visibility.Visible;
         }
 
@@ -51,7 +49,6 @@ namespace IDUNv2.Pages
 
         private async void Save(object sender, RoutedEventArgs e)
         {
-            Confirmation.Visibility = Visibility.Collapsed;
             if (OIDTB.Text.Length == 0 || CURLTB.Text.Length == 0 || UNTB.Text.Length == 0 || PASSTB.Password.Length <= 3 || SIDTB.Text.Length == 0)
             {
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Server Settings Error", "Please check that all information is entered correctly and try again!");
@@ -60,8 +57,6 @@ namespace IDUNv2.Pages
             }
             else
             {
-                if (Warning.Visibility == Visibility.Visible)
-                    Warning.Visibility = Visibility.Collapsed;
                 List<ServerViewModel> ServerData = new List<ServerViewModel>();
                 localSettings.Values["ObjectID"] = OIDTB.Text;
                 localSettings.Values["SystemID"] = SIDTB.Text;

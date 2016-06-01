@@ -11,14 +11,12 @@
 
 
     <Grid >
-        <StackPanel x:Name="MainStackPanel" Background="Black">
-            <Grid x:Name="TopSeparatorWithTitleStackPanel" Background="Black" Height="30">
+        <StackPanel x:Name="MainStackPanel" Background="{StaticResource StandardBackground}">
+            <Grid x:Name="TopSeparatorWithTitleStackPanel" Height="30">
                 <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Server Settings</TextBlock>
             </Grid>
-            <TextBlock Foreground="Red" Text="Please check that all information is entered properly and try again!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Warning" FontWeight="Bold"></TextBlock>
-            <TextBlock Foreground="Green" Text="Server settings successfully saved!" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="Confirmation" FontWeight="Bold"></TextBlock>
             <StackPanel>
-                <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal" Background="Black">
+                <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
@@ -53,19 +51,13 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                <Button x:Name="SaveButton" Content="Save Device Server Settings" Margin="10" Height="50" Click="Save" RequestedTheme="Dark" HorizontalAlignment="Center"></Button>
+                <Button x:Name="SaveButton" Content="Save Device Server Settings" Margin="10" Height="50" Click="Save" HorizontalAlignment="Center"></Button>
             </StackPanel>
 
 
 
         </StackPanel>
-        <ToolTip Width="300" Height="Auto" FontSize="20" Background="Black" x:Name="Tooltip" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel>
-                <TextBlock x:Name="Result" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
-                <Button Content="rEARGAERGAERG" Width="50" Height="50" Background="White"></Button>
-            </StackPanel>
-            
-        </ToolTip>
+
         <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="250"  Width="750"  Visibility="Collapsed"  HorizontalAlignment="Left"/>
     </Grid>
 </Page>

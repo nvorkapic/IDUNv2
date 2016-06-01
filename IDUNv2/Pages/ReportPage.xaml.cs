@@ -59,7 +59,7 @@ namespace IDUNv2.Pages
             var showdialog = await dialog.ShowAsync();
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
             int dirtyTemplatesNr = 0;
@@ -73,7 +73,9 @@ namespace IDUNv2.Pages
             if (dirtyTemplatesNr >= 1)
                 {
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
-                }
+                var dialog = new ContentDialog { Title = "Unsaved Templates", Content = "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText = "OK" };
+                var showdialog = await dialog.ShowAsync();
+            }
 
          }
 

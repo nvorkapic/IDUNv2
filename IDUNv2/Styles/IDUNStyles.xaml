@@ -7,48 +7,46 @@
     
     <!--MainPageBrushes-->
     
-    <!--1--><SolidColorBrush x:Key="MainMenuBackgroundBrush" Color="#FF435600"></SolidColorBrush>
-    <!--1--><SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="#FF435500"></SolidColorBrush>
-    <!--3 FF668100--><SolidColorBrush x:Key="HamburgerButtonBrush" Color="#FF668100"></SolidColorBrush>
+    <SolidColorBrush x:Key="MainMenuBrush" Color="#FF435600"></SolidColorBrush>
+    <SolidColorBrush x:Key="SubMenuBrush" Color="#FF435500"></SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonBrush" Color="#FF668100"></SolidColorBrush>
+    <SolidColorBrush x:Key="StandardBackground" Color="Black"></SolidColorBrush>
+    <SolidColorBrush x:Key="StandardForeground" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="StandardBorder" Color="Gray"></SolidColorBrush>
+    <SolidColorBrush x:Key="TextHighLight" Color="#FF60A3E6"></SolidColorBrush>
+    <SolidColorBrush x:Key="NotificationBackground" Color="#7F000000"></SolidColorBrush>
+    <SolidColorBrush x:Key="NotificationListBackground" Color="#E5000000"></SolidColorBrush>
+    <SolidColorBrush x:Key="ExtendedNotificationBackground" Color="#D8000000"></SolidColorBrush>
 
-    <!--1--><SolidColorBrush x:Key="ExtendedNotificationBackgroundBrush" Color="#D8000000"></SolidColorBrush>
+    <!--<Color x:Key="AccentColor">#FF60A917</Color>
 
-    <!--1--><SolidColorBrush x:Key="NotificationListPanelBackgroundBrush" Color="#7F000000"></SolidColorBrush>
-    <!--1--><SolidColorBrush x:Key="NotificationListBackgroundBrush" Color="#E5000000"></SolidColorBrush>
-    
-    <!--Settings.MeasurementsPage -->
+    <SolidColorBrush x:Key="Accent" Color="{RelativeSource AccentColor}" />
+    <SolidColorBrush x:Key="ValidationErrorBackground">#F06666</SolidColorBrush>
+    <LinearGradientBrush x:Key="WindowBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFFFFFF6" Offset="0" />
+        <GradientStop Color="#FFC8CAAA" Offset="1" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#F0F0F0" />
+    <SolidColorBrush x:Key="InputBackground" Color="#ffffff" />
+    <SolidColorBrush x:Key="InputBackgroundHover" Color="#ffffff" />
+    <SolidColorBrush x:Key="InputBorder" Color="#cccccc" />
+    <SolidColorBrush x:Key="InputBorderHover" Color="#cccccc" />
+    <SolidColorBrush x:Key="InputText" Color="#333333" />
+    <SolidColorBrush x:Key="InputTextHover" Color="#333333" />
+    <SolidColorBrush x:Key="InputTextDisabled" Color="#919191" />
 
-    <!--6 Black--><SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemBackgroundHover" Color="#dddddd" />
+    <SolidColorBrush x:Key="ItemBackgroundSelected" Color="{RelativeSource AccentColor}" />
+    <SolidColorBrush x:Key="ItemBorder" Color="#cccccc" />
+    <SolidColorBrush x:Key="ItemText" Color="#333333" />
+    <SolidColorBrush x:Key="ItemTextSelected" Color="#ffffff" />
+    <SolidColorBrush x:Key="ItemTextHover" Color="#333333" />
+    <SolidColorBrush x:Key="ItemTextDisabled" Color="#919191" />
+    <Color x:Key="WindowBackgroundColor">#ffffff</Color>
+    <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource WindowBackgroundColor}" />
+    <SolidColorBrush x:Key="WindowBorder" Color="{RelativeSource AccentColor}" Opacity=".5" />
+    <SolidColorBrush x:Key="WindowBorderActive" Color="{RelativeSource AccentColor}" />
+    <SolidColorBrush x:Key="PopupBackground" Color="#ffffff" />
+    <SolidColorBrush x:Key="ProgressBackground" Color="#dddddd" />-->
 
-    <!--3 FF668100--><SolidColorBrush x:Key="MeasurementConfigurationListBackgroundBrush" Color="#FF668100"></SolidColorBrush>
-    <!--3 FFE1E1E1--><SolidColorBrush x:Key="MainGridBackgroundBrush" Color="#FFE1E1E1"></SolidColorBrush>
-    <!--4 FFB7B8BC--><SolidColorBrush x:Key="ConfigContentBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
-    <!--3 Gainsboro--><SolidColorBrush x:Key="ReportSectionPanelBackgroundBrush" Color="Gainsboro"></SolidColorBrush>
-    
-    <!--Settings.ServerSettingsPage -->
-
-    <!--6 Black--><!--<SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>-->
-
-    <!--3 FFE1E1E1--><SolidColorBrush x:Key="MainStackPanelBackgroundBrush" Color="#FFE1E1E1"></SolidColorBrush>
-    <!--4 FFB7B8BC--><SolidColorBrush x:Key="ServerInputContentPanelBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
-    <!--6 Black--><SolidColorBrush x:Key="SaveButtonBackgrounBrush" Color="Black"></SolidColorBrush>
-
-    <!--Reports.Templates -->
-
-    <!--6 Black--><!--<SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>-->
-
-    <!--4 FFB7B8BC--><SolidColorBrush x:Key="TemplateListGridBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
-    <!--6 Black--><SolidColorBrush x:Key="CreateTemplateButtonBackgroundBrush" Color="Black"></SolidColorBrush>
-        <!--RequestedTheme for TemplateInputGrid is Light-->
-    <!--3 Gainsboro--><SolidColorBrush x:Key="TemplateInputGridBackgroundBrush" Color="Gainsboro"></SolidColorBrush>
-    
-    <!--Measurements.Measurement -->
-
-    <!--6 Black--><!--<SolidColorBrush x:Key="TopSeparatorWithTitleStackPanelBackgroundBrush" Color="Black"></SolidColorBrush>-->
-
-    <!--3 FFE1E1E1--><!--<SolidColorBrush x:Key="MainGridBackgroundBrush" Color="#FFE1E1E1"></SolidColorBrush>-->
-    <!--4 FFB7B8BC--><SolidColorBrush x:Key="CentralInformationStackPanelBackgroundBrush" Color="#FFB7B8BC"></SolidColorBrush>
-    <!--3 Gainsboro--><SolidColorBrush x:Key="ReportListMainBackgroundBrush" Color="Gainsboro"></SolidColorBrush>
-
-    
 </ResourceDictionary>

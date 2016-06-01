@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{StaticResource StandardBackground}">
         <Image Source="/Assets/1200.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin=" 10"></Image>
         <StackPanel VerticalAlignment="Bottom" Margin="15">
             <TextBlock HorizontalAlignment="Right">Copyright © 2016</TextBlock>

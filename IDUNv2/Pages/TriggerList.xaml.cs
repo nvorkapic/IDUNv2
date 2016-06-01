@@ -65,7 +65,7 @@ namespace IDUNv2.Pages
             ReportService RS = new ReportService();
             var Templates = RS.GetTemplates().Result;
             var SelectedTemplate = Templates.Where(x => x.Id == TemplateID).FirstOrDefault();
-            var contentString ="Sensor: "+ListItem.SensorId + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: "+ SelectedTemplate.SymptCode+"\n Priority: "+ SelectedTemplate.PrioCode + "\n Discovery: " + SelectedTemplate.DiscCode+ "";
+            var contentString ="Sensor: "+ListItem.SensorId + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: "+ SelectedTemplate.SymptCode+"\n Priority: "+ SelectedTemplate.PrioCode + "\n Discovery: " + SelectedTemplate.DiscCode;
             var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
             var showdialog = await dialog.ShowAsync();
         }
