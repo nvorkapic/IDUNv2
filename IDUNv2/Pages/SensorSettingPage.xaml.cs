@@ -140,16 +140,16 @@ namespace IDUNv2.Pages
         {
            Keyboard.Visibility = Visibility.Collapsed;
 
-            var textB = (TextBox)sender;
+           var textB = (TextBox)sender;
           
-                    if (textB.Text != "")
-                                if (textB.Text.ToCharArray().Last() == '.')
-                                {
-                char[] textarray = textB.Text.ToArray();
-                textarray = textarray.Take(textarray.Count() - 1).ToArray();
-                string s = new string(textarray);
-                textB.Text = s;
-                                }
+           if (textB.Text != "")
+                if (textB.Text.ToCharArray().Last() == '.')
+                {
+                    char[] textarray = textB.Text.ToArray();
+                    textarray = textarray.Take(textarray.Count() - 1).ToArray();
+                    string s = new string(textarray);
+                    textB.Text = s;
+                }
         }
 
         private void templateOnLoad(object sender, RoutedEventArgs e)
@@ -173,66 +173,52 @@ namespace IDUNv2.Pages
         
             var target = (TextBox)TargetBox;
             var btn = (Button)sender;
-            
 
-            if ((btn.Content as string) != "Back")
-            {
-                if (!target.Text.Contains("."))
-                {
-                    if (btn.Content.ToString() != ".")
-                    {
-                        if ((btn.Content as string) == "-")
-                        {
-                            if (target.Text != null || target.Text != string.Empty)
-                            {
-                                if (target.Text.ElementAt(0) == '-')
-                                {
-                                    string[] parts = Regex.Split(target.Text, "-").Skip(1).ToArray();
-                                    target.Text = string.Join("", parts);
-                                }
-                                else
-                                    target.Text = "-" + target.Text;
-                            }
-                        }
-                        else
-                            target.Text = target.Text + btn.Content;
-                    }
-                }
-                else
-                {
-                    if (btn.Content.ToString() != ".")
-                    {
-                        if ((btn.Content as string) == "-")
-                        {
-                            if (target.Text != null || target.Text != string.Empty)
-                            {
-                                if (target.Text.ElementAt(0) == '-')
-                                {
-                                    string[] parts = Regex.Split(target.Text, "-").Skip(1).ToArray();
-                                    target.Text = string.Join("", parts);
+            target.Text = target.Text + btn.Content;
+     
+        }
+   
+        private void KeyboardBackBtnClick(object sender, RoutedEventArgs e)
+        {
+            var target = (TextBox)TargetBox;
+            var btn = (Button)sender;
 
-                                }                                   
-                                else
-                                    target.Text = "-" + target.Text;
-                            }
-                        }
-                        else
-                            target.Text = target.Text + btn.Content;
-                    }
-                }
-            }
-            else
+            if (target.Text != null || target.Text != string.Empty)
             {
-                if (target.Text != null || target.Text != string.Empty)
-                {
-                    char[] textarray = target.Text.ToArray();
-                    textarray = textarray.Take(textarray.Count() - 1).ToArray();
-                    string s = new string(textarray);
-                    target.Text = s;
-                    
-                }
+                char[] textarray = target.Text.ToArray();
+                textarray = textarray.Take(textarray.Count() - 1).ToArray();
+                string s = new string(textarray);
+                target.Text = s;
+
             }
         }
-    }
+        private void KeyboardMinusBtnClick(object sender, RoutedEventArgs e)
+        {
+            var target = (TextBox)TargetBox;
+            var btn = (Button)sender;
+
+            if (target.Text != null || target.Text != string.Empty)
+            {
+                if (target.Text.ElementAt(0) == '-')
+                {
+                    string[] parts = Regex.Split(target.Text, "-").Skip(1).ToArray();
+                    target.Text = string.Join("", parts);
+                }
+                else
+                    target.Text = "-" + target.Text;
+            }
+        }
+        private void KeyboardDecimalClick(object sender, RoutedEventArgs e)
+        {
+            var target = (TextBox)TargetBox;
+            var btn = (Button)sender;
+            
+            if (!target.Text.Contains("."))
+            {
+                target.Text = target.Text + ".";
+            }
+        }
+
+}
 }
 

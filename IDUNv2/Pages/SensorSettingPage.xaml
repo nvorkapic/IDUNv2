@@ -8,7 +8,7 @@
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid x:Name="MainGrid" Background="{StaticResource StandardBackground}">
-        <Grid x:Name="Keyboard" Width="240"  x:Uid="Key" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,90,30,0">
+        <Grid x:Name="Keyboard" Width="240"  x:Uid="Key" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,90,30,0" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
@@ -32,9 +32,9 @@
             <Button Grid.Column="1" Grid.Row="2" Height="59" Width="59" Content="8" Click="KeyboardBtnClick" IsTabStop="False"/>
             <Button Grid.Column="2" Grid.Row="2" Height="59" Width="59" Content="9" Click="KeyboardBtnClick" IsTabStop="False"/>
             <Button Grid.Column="1" Grid.Row="3" Height="59" Width="59" Content="0" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="0" Grid.Row="3" Height="59" Width="59" Content="." Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="4" Grid.Row="1" Height="59" Content="-" Width="59" FontSize="25" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="4" Grid.Row="0" Height="59" Content="Back" Width="59" FontSize="10" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="0" Grid.Row="3" Height="59" Width="59" Content="." Click="KeyboardDecimalClick" IsTabStop="False"/>
+            <Button Grid.Column="4" Grid.Row="1" Height="59" Content="-" Width="59" FontSize="25" Click="KeyboardMinusBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="4" Grid.Row="0" Height="59" Content="Back" Width="59" FontSize="10" Click="KeyboardBackBtnClick" IsTabStop="False"/>
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -55,9 +55,9 @@
                 <RadioButton   Content="Above Trigger Value" GroupName="TrigerComparer" IsChecked="True" Checked="AboveChecked"></RadioButton>
                 <RadioButton Margin="10,0,5,0" Content="Below Trigger Value" GroupName="TrigerComparer" Checked="BelowChecked"></RadioButton>
             </StackPanel>
-  
+
             <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="2" Text="Enter Trigger Value" VerticalAlignment="Center"></TextBlock>
-            <TextBox x:Name="ValueTB" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding CurrentTrigger.Value, Mode=TwoWay}" GotFocus="TBOnFocus" LostFocus="TBLostFocus" Width="300" HorizontalAlignment="Left"></TextBox>
+            <TextBox x:Name="ValueTB" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding CurrentTrigger.Value, Mode=TwoWay}" GotFocus="TBOnFocus" LostFocus="TBLostFocus" Width="300" HorizontalAlignment="Left"/>
             <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="3" Text="Select Trigger Template" VerticalAlignment="Center"></TextBlock>
             <ComboBox Grid.Column="1" Grid.Row="3" Width="300" VerticalAlignment="Center"  ItemsSource="{Binding Templates}" SelectedValue="{Binding CurrentTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id" Loaded="templateOnLoad" >
                 <ComboBox.ItemTemplate>
@@ -109,6 +109,6 @@
 
 
         </Grid>
-        
+
     </Grid>
 </Page>
