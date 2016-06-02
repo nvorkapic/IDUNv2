@@ -22,19 +22,18 @@
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="0" Text="Select Trigger Comparer" VerticalAlignment="Center"></TextBlock>
-            <ComboBox Grid.Column="1" Grid.Row="0" Width="300" VerticalAlignment="Center" ItemsSource="{Binding Comparers}" SelectedItem="{Binding CurrentTrigger.Comparer, Mode=TwoWay}"></ComboBox>
-            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="1" Text="Enter Trigger Value" VerticalAlignment="Center"></TextBlock>
-            <TextBox x:Name="ValueTB" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding CurrentTrigger.Value, Mode=TwoWay}" GotFocus="TBOnFocus" LostFocus="TBLostFocus"></TextBox>
-            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="2" Text="Select Trigger Template" VerticalAlignment="Center"></TextBlock>
-            <ComboBox Grid.Column="1" Grid.Row="2" Width="300" VerticalAlignment="Center"  ItemsSource="{Binding Templates}" SelectedValue="{Binding CurrentTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id" Loaded="templateOnLoad" >
+            <RadioButton Margin="10,0,5,0" Grid.Column="1" Grid.Row="0" Content="Above Trigger Value" GroupName="TrigerComparer" IsChecked="True" Checked="AboveChecked"></RadioButton>
+            <RadioButton Margin="10,0,5,0" Grid.Column="1" Grid.Row="1" Content="Below Trigger Value" GroupName="TrigerComparer" Checked="BelowChecked"></RadioButton>
+            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="2" Text="Enter Trigger Value" VerticalAlignment="Center"></TextBlock>
+            <TextBox x:Name="ValueTB" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding CurrentTrigger.Value, Mode=TwoWay}" GotFocus="TBOnFocus" LostFocus="TBLostFocus"></TextBox>
+            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="3" Text="Select Trigger Template" VerticalAlignment="Center"></TextBlock>
+            <ComboBox Grid.Column="1" Grid.Row="3" Width="300" VerticalAlignment="Center"  ItemsSource="{Binding Templates}" SelectedValue="{Binding CurrentTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id" Loaded="templateOnLoad" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"></TextBlock>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="3" Text="Attach Trigger to a Measurement" VerticalAlignment="Center"></TextBlock>
-            <ComboBox Grid.Column="1" Grid.Row="3" Width="300" VerticalAlignment="Center" ItemsSource="{Binding Types}" SelectedItem="{Binding CurrentTrigger.SensorId, Mode=TwoWay}"></ComboBox>
             <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Add Trigger to the List" VerticalAlignment="Center" Click="AddTrigger"></Button>
       
             <StackPanel Grid.ColumnSpan="2" Grid.Row="5">

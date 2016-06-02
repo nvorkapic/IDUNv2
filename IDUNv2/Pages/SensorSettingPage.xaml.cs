@@ -86,6 +86,7 @@ namespace IDUNv2.Pages
             osk.SetTarget(ValueTB);
         }
 
+
         public float value = 0;
         private async void AddTrigger(object sender, RoutedEventArgs e)
         {
@@ -141,6 +142,16 @@ namespace IDUNv2.Pages
         {
             var lv = (ComboBox)sender;
             lv.SelectedItem = lv.Items.FirstOrDefault();
+        }
+
+        private void AboveChecked(object sender, RoutedEventArgs e)
+        {
+            viewModel.CurrentTrigger.Comparer = SensorTriggerComparer.Above;
+        }
+
+        private void BelowChecked(object sender, RoutedEventArgs e)
+        {
+            viewModel.CurrentTrigger.Comparer = SensorTriggerComparer.Below;
         }
     }
 }

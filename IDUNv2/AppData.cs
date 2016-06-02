@@ -99,7 +99,7 @@ namespace IDUNv2
                 url = url ?? "testcloud.addovation.com";
                 systemid =systemid ?? "race8.addovation.com";
                 username =username ?? "alex";
-                password =password?? "alex";            
+                password =password ?? "alex";            
 
                 var cloudUrl = CommonDictionary.CloudUrls[url];
                 var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
