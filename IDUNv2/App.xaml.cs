@@ -78,8 +78,7 @@ namespace IDUNv2
                 Window.Current.Activate();
             }
 
-            await AppData.InitCloud();
-            await AppData.InitServices().ConfigureAwait(false);
+            await AppData.InitAsync().ConfigureAwait(false);
         }
 
         /// <summary>

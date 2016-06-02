@@ -100,5 +100,10 @@ namespace IDUNv2.Pages
                 NotificationFlyOutList.SelectedItem = NotificationFlyOutList.Items.FirstOrDefault();
             }
         }
+
+        private void Image_Loaded(object sender, RoutedEventArgs e)
+        {
+ 
+        }
     }
 }

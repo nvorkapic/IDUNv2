@@ -119,6 +119,7 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
+    <Compile Include="Converters\StateToVisibilityConverter.cs" />
     <Compile Include="Models\FaultCodesCache.cs" />
     <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -198,6 +199,8 @@
     <Content Include="Assets\index.png" />
     <Content Include="Assets\Information.png" />
     <Content Include="Assets\LED.png" />
+    <Content Include="Assets\loading.gif" />
+    <Content Include="Assets\loadinggif.gif" />
     <Content Include="Assets\logo-addovation.png" />
     <Content Include="Assets\Magnet.png" />
     <Content Include="Assets\microphone.png" />

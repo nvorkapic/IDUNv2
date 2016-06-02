@@ -107,8 +107,8 @@ namespace IDUNv2.Pages
                 var Header = "Trigger Added";
                 var Content = "Report Trigger: " + viewModel.CurrentTrigger.SensorId.ToString() + " that fires when value goes " + viewModel.CurrentTrigger.Comparer.ToString() + " " + viewModel.CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Added.";
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, Header, Content);
-                var dialog = new ContentDialog { Title = Header, Content = Content, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark , PrimaryButtonText = "OK" };
-                var showdialog = await dialog.ShowAsync();
+                //var dialog = new ContentDialog { Title = Header, Content = Content, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark , PrimaryButtonText = "OK" };
+                //var showdialog = await dialog.ShowAsync();
             }
         }
 
