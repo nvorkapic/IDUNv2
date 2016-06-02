@@ -92,10 +92,12 @@ namespace IDUNv2.Pages
         private async void AddTrigger(object sender, RoutedEventArgs e)
         {
  
-            if (viewModel.SensorTriggerList.Where(x => x.SensorId == viewModel.CurrentTrigger.SensorId).
-                Where(x => x.TemplateId == viewModel.CurrentTrigger.TemplateId).
-                Where(x => x.Comparer == viewModel.CurrentTrigger.Comparer).
-                Where(x => x.Value == viewModel.CurrentTrigger.Value).Count() == 0)
+            //if (viewModel.SensorTriggerList.Where(x => x.SensorId == viewModel.CurrentTrigger.SensorId).
+            //    Where(x => x.TemplateId == viewModel.CurrentTrigger.TemplateId).
+            //    Where(x => x.Comparer == viewModel.CurrentTrigger.Comparer).
+            //    Where(x => x.Value == viewModel.CurrentTrigger.Value).Count() == 0)
+            //{
+            if (true)
             {
                 viewModel.AddTrigger();
                 ElementCount();
@@ -105,7 +107,7 @@ namespace IDUNv2.Pages
                 var template = templates.Where(x => x.Id == viewModel.CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 var Header = "Trigger Added";
-                var Content = "Report Trigger: " + viewModel.CurrentTrigger.SensorId.ToString() + " that fires when value goes " + viewModel.CurrentTrigger.Comparer.ToString() + " " + viewModel.CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Added.";
+                var Content = "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + viewModel.CurrentTrigger.Comparer.ToString() + " " + viewModel.CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Added.";
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, Header, Content);
                 //var dialog = new ContentDialog { Title = Header, Content = Content, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark , PrimaryButtonText = "OK" };
                 //var showdialog = await dialog.ShowAsync();
@@ -115,13 +117,13 @@ namespace IDUNv2.Pages
         public void ElementCount()
         {
             TriggerCount.Text = viewModel.SensorTriggerList.Count().ToString();
-            UsageNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Usage).Count().ToString();
-            TemperatureNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Temperature).Count().ToString();
-            PressureNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Pressure).Count().ToString();
-            HumidityNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Humidity).Count().ToString();
-            AccelerometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Accelerometer).Count().ToString();
-            MagnetometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Magnetometer).Count().ToString();
-            GyroscopeNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Gyroscope).Count().ToString();
+            //UsageNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Usage).Count().ToString();
+            //TemperatureNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Temperature).Count().ToString();
+            //PressureNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Pressure).Count().ToString();
+            //HumidityNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Humidity).Count().ToString();
+            //AccelerometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Accelerometer).Count().ToString();
+            //MagnetometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Magnetometer).Count().ToString();
+            //GyroscopeNumber.Text = viewModel.SensorTriggerList.Where(x => x.SensorId == SensorType.Gyroscope).Count().ToString();
         }
 
         private void ViewTriggerList(object sender, RoutedEventArgs e)

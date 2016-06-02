@@ -1,5 +1,6 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.Models;
+using IDUNv2.Sensors;
 using IDUNv2.Services;
 using System;
 using System.Collections.Generic;
@@ -15,16 +16,13 @@ namespace IDUNv2.ViewModels
         public List<SensorTrigger> SensorTriggerList { get { return SS.GetTriggers().Result; } set { } }
 
         public SensorTriggerComparer[] Comparers { get; set; }
-        public SensorType[] Types { get; set; }
         public List<ReportTemplate> Templates { get; set; }
-
 
         SensorService SS = new SensorService();
 
         public SensorTriggerViewModel()
         {
             Comparers = Enum.GetValues(typeof(SensorTriggerComparer)).Cast<SensorTriggerComparer>().ToArray();
-            Types = Enum.GetValues(typeof(SensorType)).Cast<SensorType>().ToArray();
             Templates = AppData.Reports.GetTemplates().Result;
             CurrentTrigger = new SensorTrigger();
         }
@@ -36,13 +34,10 @@ namespace IDUNv2.ViewModels
             set { currentTrigger = value; Notify(); }
         }
 
-        
         internal void AddTrigger()
         {
             SS.InsertTrigger(CurrentTrigger);
         }
-
     }
-
 }
 

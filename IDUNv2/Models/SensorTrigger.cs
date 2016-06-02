@@ -1,4 +1,5 @@
-﻿using SQLite.Net.Attributes;
+﻿using IDUNv2.Sensors;
+using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,11 @@ namespace IDUNv2.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [NotNull]
-        public SensorType SensorId { get; set; }
+        [Indexed]
+        public int TemplateId { get; set; }
         [NotNull]
         public SensorTriggerComparer Comparer { get; set; }
         [NotNull]
         public float Value { get; set; }
-        [Indexed]
-        public int TemplateId { get; set; }
     }
 }

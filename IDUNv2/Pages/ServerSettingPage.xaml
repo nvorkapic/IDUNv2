@@ -20,19 +20,19 @@
                                 <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
             				<Run Text="Object ID"/>
                                 </TextBlock>
-                                <TextBox PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"/>
+                                <TextBox Text="{Binding ObjectID}" PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
             				<Run Text="System ID"/>
                                 </TextBlock>
-                                <TextBox PlaceholderText="Enter SystemID here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="SIDTB"/>
+                                <TextBox Text="{Binding SystemID}" PlaceholderText="Enter SystemID here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="SIDTB"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
             				<Run Text="Cloud URL"/>
                                 </TextBlock>
-                                <TextBox PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"/>
+                                <TextBox Text="{Binding URL}" PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"/>
                             </StackPanel>
 
                         </StackPanel>
@@ -43,8 +43,8 @@
             			<Run Text="User Authentication"/>
                         </TextBlock>
                         <StackPanel>
-                            <TextBox PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
-                            <PasswordBox PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
+                            <TextBox Text="{Binding Username}" PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
+                            <PasswordBox Password="{Binding Password}" PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

@@ -47,8 +47,8 @@ namespace IDUNv2.Pages
                 var template = templates.Where(x => x.Id == CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 string WarningHeader = "Report Trigger Removed from the List";
-                string WarningContent = "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.";
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + CurrentTrigger.SensorId.ToString() + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
+                string WarningContent = "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.";
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
                 await ss.DeleteTrigger(CurrentTrigger);
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
                 var dialog = new ContentDialog { Title = WarningHeader,Content= WarningContent, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText ="OK"};
@@ -78,7 +78,7 @@ namespace IDUNv2.Pages
                 var Prio = AppData.FaultCodesCache.GetPriority(SelectedTemplate.PrioCode).Description;
                 var Disc = AppData.FaultCodesCache.GetDiscovery(SelectedTemplate.DiscCode).Description;
 
-                var contentString = "Sensor: " + ListItem.SensorId + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: " + Sympt + "\n Priority: " + Prio + "\n Discovery: " + Disc;
+                var contentString = "Sensor: " + "<SENSOR>" + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: " + Sympt + "\n Priority: " + Prio + "\n Discovery: " + Disc;
                 var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
                 var showdialog = await dialog.ShowAsync();
             }

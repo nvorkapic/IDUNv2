@@ -1,0 +1,76 @@
+﻿<Page
+    RequestedTheme="Dark"
+    x:Class="IDUNv2.Pages.ReportListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IDUNv2.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="ReportData">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding WoNo}" />
+                <TextBlock Grid.Column="1" Text="{Binding RegDate}" />
+                <TextBlock Grid.Column="2" Text="{Binding Contract}"/>
+                <TextBlock Grid.Column="3" Text="{Binding MchCode}"/>
+                <TextBlock Grid.Column="4" Text="{Binding MchName}"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="20,0,0,0" Grid.Column="0" Text="WO No" FontWeight="Bold"/>
+        <TextBlock Margin="20,0,0,0" Grid.Column="1" Text="Entry Date" FontWeight="Bold"/>
+        <TextBlock Margin="20,0,0,0" Grid.Column="2" Text="WO Site" FontWeight="Bold"/>
+        <TextBlock Margin="20,0,0,0" Grid.Column="3" Text="Object ID" FontWeight="Bold"/>
+        <TextBlock Margin="20,0,0,0" Grid.Column="4" Text="Description" FontWeight="Bold"/>
+        <ListBox Margin="10"
+                 Grid.Row="1"
+                 Grid.ColumnSpan="5"
+                 ItemsSource="{Binding Reports}"
+                 ItemTemplate="{StaticResource ReportData}"/>
+
+        <!--<TextBlock HorizontalAlignment="Left" Margin="30,35,0,0" TextWrapping="Wrap" Text="Fault report: " VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="170,55,0,0" VerticalAlignment="Top" Width="300">
+            <ComboBoxItem>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="200340" />
+                    <TextBlock Grid.Column="1" Text="5/19/2016 1:54:25 PM" />
+                </Grid>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="200341" />
+                    <TextBlock Grid.Column="1" Text="5/20/2016 2:00:05 PM" />
+                </Grid>
+            </ComboBoxItem>
+        </ComboBox>-->
+
+    </Grid>
+</Page>
