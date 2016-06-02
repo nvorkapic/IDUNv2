@@ -25,7 +25,7 @@ namespace IDUNv2.Pages
         public static ShellPage Current;
         private ShellViewModel viewModel = new ShellViewModel();
         public Notification SelectedNotificationItem = new Notification();
-        public static StackPanel LoadingIcon;
+        public static StackPanel Spinner;
 
         public ShellPage()
         {
@@ -35,7 +35,7 @@ namespace IDUNv2.Pages
             Current = this;
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
 
-            LoadingIcon = Loading;
+            Spinner = SpinnerPanel;
         }
 
 

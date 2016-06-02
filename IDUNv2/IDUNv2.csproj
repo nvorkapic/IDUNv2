@@ -178,6 +178,7 @@
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SensorService.cs" />
     <Compile Include="ViewModels\DeviceSettingsViewModel.cs" />
+    <Compile Include="ViewModels\ReportDetailViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />
     <Compile Include="ViewModels\SensorTriggerViewModel.cs" />

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,18 +15,19 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace IDUNv2.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class ReportDetailsPage : Page
     {
         public ReportDetailsPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.DataContext = new ReportDetailViewModel(e.Parameter as FaultReport);
         }
     }
 }

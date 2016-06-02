@@ -1,4 +1,5 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,9 +16,16 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 namespace IDUNv2.Pages
 {
-    public class ReportListViewModel
+    public class ReportListViewModel : NotifyBase
     {
         public List<FaultReport> Reports { get; set; }
+
+        private FaultReport selectedReport;
+        public FaultReport SelectedReport
+        {
+            get { return selectedReport; }
+            set { selectedReport = value; Notify(); }
+        }
     }
 
     public sealed partial class ReportListPage : Page
@@ -36,6 +44,11 @@ namespace IDUNv2.Pages
             var reports = await AppData.Reports.GetFaultReports();
             viewModel.Reports = reports.OrderByDescending(r => r.RegDate).ToList();
             this.DataContext = viewModel;
+        }
+
+        private void ListBox_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.ReportDetailsPage), viewModel.SelectedReport, new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
         }
     }
 }

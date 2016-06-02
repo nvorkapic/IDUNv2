@@ -95,10 +95,10 @@ namespace IDUNv2
 
         public static async Task InitAsync()
         {
-            ShellPage.LoadingIcon.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            ShellPage.Spinner.Visibility = Windows.UI.Xaml.Visibility.Visible;
             await InitCloud();
             await InitServices();
-            ShellPage.LoadingIcon.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            ShellPage.Spinner.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         public static async Task<bool> InitCloud()

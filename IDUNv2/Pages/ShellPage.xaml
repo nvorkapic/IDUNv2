@@ -12,7 +12,7 @@
         <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
     </Page.Resources>
     
-    <Grid>
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -51,13 +51,23 @@
                           ItemTemplate="{StaticResource NavMenuData}"
                           Background="{StaticResource MainMenuBrush}"
                           Tapped="NavMenu_Tapped" />
-                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="50" x:Name="Loading" Visibility="Collapsed">
+                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="50" x:Name="SpinnerPanel" Visibility="Collapsed">
                         <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Width="25" Margin="5,0,0,0"></Image>
                     </StackPanel>
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
-                <Frame x:Name="ContentFrame" />
+                <Frame x:Name="ContentFrame">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition>
+                                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                    <EntranceNavigationTransitionInfo/>
+                                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                            </NavigationThemeTransition>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
             </SplitView.Content>
         </SplitView>
         <StackPanel x:Name="NotificationListPanel" Visibility="Collapsed" Grid.Row="1" Background="{StaticResource NotificationBackground}" HorizontalAlignment="Right" VerticalAlignment="Stretch">

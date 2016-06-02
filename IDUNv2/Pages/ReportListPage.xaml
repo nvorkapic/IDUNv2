@@ -46,31 +46,9 @@
                  Grid.Row="1"
                  Grid.ColumnSpan="5"
                  ItemsSource="{Binding Reports}"
-                 ItemTemplate="{StaticResource ReportData}"/>
-
-        <!--<TextBlock HorizontalAlignment="Left" Margin="30,35,0,0" TextWrapping="Wrap" Text="Fault report: " VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="170,55,0,0" VerticalAlignment="Top" Width="300">
-            <ComboBoxItem>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="200340" />
-                    <TextBlock Grid.Column="1" Text="5/19/2016 1:54:25 PM" />
-                </Grid>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="200341" />
-                    <TextBlock Grid.Column="1" Text="5/20/2016 2:00:05 PM" />
-                </Grid>
-            </ComboBoxItem>
-        </ComboBox>-->
-
+                 ItemTemplate="{StaticResource ReportData}"
+                 SelectedItem="{Binding SelectedReport, Mode=TwoWay}"
+                 Tapped="ListBox_Tapped"
+                 />
     </Grid>
 </Page>
