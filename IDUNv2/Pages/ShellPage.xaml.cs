@@ -25,7 +25,7 @@ namespace IDUNv2.Pages
         public static ShellPage Current;
         private ShellViewModel viewModel = new ShellViewModel();
         public Notification SelectedNotificationItem = new Notification();
-        public static StackPanel Spinner;
+        public static Grid Spinner;
 
         public ShellPage()
         {
@@ -37,8 +37,6 @@ namespace IDUNv2.Pages
 
             Spinner = SpinnerPanel;
         }
-
-
 
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -93,7 +91,6 @@ namespace IDUNv2.Pages
             }
             NotificationFlyOutList.SelectedItem = NotificationFlyOutList.Items.FirstOrDefault();
         }
-
 
         private void NotificationButton_Click(object sender, RoutedEventArgs e)
         {

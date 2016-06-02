@@ -8,15 +8,15 @@
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid x:Name="MainGrid" Background="{StaticResource StandardBackground}">
-        <Grid x:Name="Keyboard" Width="240"  x:Uid="Key" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,90,30,0" Visibility="Collapsed">
+        <Grid x:Name="Keyboard" Width="300"  x:Uid="Key" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,300,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="60"></RowDefinition>
+
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"></ColumnDefinition>
                 <ColumnDefinition Width="60"></ColumnDefinition>
                 <ColumnDefinition Width="60"></ColumnDefinition>
                 <ColumnDefinition Width="60"></ColumnDefinition>
@@ -25,14 +25,14 @@
             <Button Grid.Column="0" Grid.Row="0" Height="59" Width="59" Content="1" Click="KeyboardBtnClick" IsTabStop="False"/>
             <Button Grid.Column="1" Grid.Row="0" Height="59" Width="59" Content="2" Click="KeyboardBtnClick" IsTabStop="False"/>
             <Button Grid.Column="2" Grid.Row="0" Height="59" Width="59" Content="3" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="0" Grid.Row="1" Height="59" Width="59" Content="4" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="1" Grid.Row="1" Height="59" Width="59" Content="5" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="2" Grid.Row="1" Height="59" Width="59" Content="6" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="0" Grid.Row="2" Height="59" Width="59" Content="7" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="1" Grid.Row="2" Height="59" Width="59" Content="8" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="2" Grid.Row="2" Height="59" Width="59" Content="9" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="1" Grid.Row="3" Height="59" Width="59" Content="0" Click="KeyboardBtnClick" IsTabStop="False"/>
-            <Button Grid.Column="0" Grid.Row="3" Height="59" Width="59" Content="." Click="KeyboardDecimalClick" IsTabStop="False"/>
+            <Button Grid.Column="3" Grid.Row="0" Height="59" Width="59" Content="4" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="0" Grid.Row="1" Height="59" Width="59" Content="5" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="1" Grid.Row="1" Height="59" Width="59" Content="6" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="2" Grid.Row="1" Height="59" Width="59" Content="7" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="3" Grid.Row="1" Height="59" Width="59" Content="8" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="1" Grid.Row="2" Height="59" Width="59" Content="9" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="2" Grid.Row="2" Height="59" Width="59" Content="0" Click="KeyboardBtnClick" IsTabStop="False"/>
+            <Button Grid.Column="4" Grid.Row="2" Height="59" Width="59" Content="." Click="KeyboardDecimalClick" IsTabStop="False"/>
             <Button Grid.Column="4" Grid.Row="1" Height="59" Content="-" Width="59" FontSize="25" Click="KeyboardMinusBtnClick" IsTabStop="False"/>
             <Button Grid.Column="4" Grid.Row="0" Height="59" Content="Back" Width="59" FontSize="10" Click="KeyboardBackBtnClick" IsTabStop="False"/>
         </Grid>
@@ -43,45 +43,50 @@
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" ></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="0" Text="Select Trigger Comparer" VerticalAlignment="Center"></TextBlock>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="10,0,5,0" Grid.ColumnSpan="3">
-                <RadioButton   Content="Above Trigger Value" GroupName="TrigerComparer" IsChecked="True" Checked="AboveChecked"></RadioButton>
-                <RadioButton Margin="10,0,5,0" Content="Below Trigger Value" GroupName="TrigerComparer" Checked="BelowChecked"></RadioButton>
+            <TextBlock Margin="10,0,0,0" Grid.Column="0" Grid.Row="0" Text="Select Trigger Comparer" VerticalAlignment="Bottom"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="10,0,5,0" Grid.ColumnSpan="3">
+                <RadioButton   Content="Above Value" GroupName="TrigerComparer" IsChecked="True" Checked="AboveChecked"></RadioButton>
+                <RadioButton Margin="5,0,5,0" Content="Below Value" GroupName="TrigerComparer" Checked="BelowChecked"></RadioButton>
             </StackPanel>
 
-            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="2" Text="Enter Trigger Value" VerticalAlignment="Center"></TextBlock>
-            <TextBox x:Name="ValueTB" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding CurrentTrigger.Value, Mode=TwoWay}" GotFocus="TBOnFocus" LostFocus="TBLostFocus" Width="300" HorizontalAlignment="Left"/>
-            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="3" Text="Select Trigger Template" VerticalAlignment="Center"></TextBlock>
-            <ComboBox Grid.Column="1" Grid.Row="3" Width="300" VerticalAlignment="Center"  ItemsSource="{Binding Templates}" SelectedValue="{Binding CurrentTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id" Loaded="templateOnLoad" >
+            <TextBlock Margin="10,0,75,0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Text="Enter Trigger Value" VerticalAlignment="Bottom"></TextBlock>
+            <TextBox x:Name="ValueTB" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding CurrentTrigger.Value, Mode=TwoWay}" GotFocus="TBOnFocus" LostFocus="TBLostFocus" Width="200" HorizontalAlignment="Right" Margin="0,11,0,7"/>
+            <TextBlock Margin="10,0,5,0" Grid.Column="0" Grid.Row="2" Text="Select Trigger Template" VerticalAlignment="Center"></TextBlock>
+            <ComboBox Grid.Column="1" Grid.Row="2" Width="300" VerticalAlignment="Center"  ItemsSource="{Binding Templates}" SelectedValue="{Binding CurrentTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id" Loaded="templateOnLoad" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"></TextBlock>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Add Trigger to the List" VerticalAlignment="Center" Click="AddTrigger"></Button>
+            <Button Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Grid.ColumnSpan="2" Height="35" Content="Add Trigger to the List" VerticalAlignment="top" Click="AddTrigger"></Button>
 
-            <StackPanel Grid.ColumnSpan="2" Grid.Row="5">
+            <StackPanel Grid.RowSpan="5" Grid.Row="1" Grid.Column="2" Margin="25,0,0,0" BorderBrush="{StaticResource StandardBorder}" BorderThickness="1" Width="225">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="10,5,5,0"  Text="There are"></TextBlock>
                     <TextBlock Margin="5,5,5,0" x:Name="TriggerCount"></TextBlock>
-                    <TextBlock Margin="5,5,5,0" Text="of Triggers present in the List."></TextBlock>
+                    <TextBlock Margin="5,5,5,0" Text="of Triggers"></TextBlock>
                 </StackPanel>
-                <Grid Margin="10,5,5,0">
+                <StackPanel>
+                    <TextBlock Margin="10,0,5,0" Text="present in the List."></TextBlock>
+                </StackPanel>
+                <Grid Width="170" Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120" ></ColumnDefinition>
-                        <ColumnDefinition Width="auto" MaxWidth="100"></ColumnDefinition>
-                        <ColumnDefinition Width="120" ></ColumnDefinition>
-                        <ColumnDefinition Width="auto" MaxWidth="100"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -96,14 +101,13 @@
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="Humidity" Margin="2"></TextBlock>
                     <TextBlock Grid.Column="1" Grid.Row="3" x:Name="HumidityNumber" Margin="2"></TextBlock>
 
-                    <TextBlock Grid.Column="2" Grid.Row="0" Text="Accelerometer" Margin="2"></TextBlock>
-                    <TextBlock Grid.Column="3" Grid.Row="0" x:Name="AccelerometerNumber" Margin="2"></TextBlock>
-                    <TextBlock Grid.Column="2" Grid.Row="1" Text="Magnetometer" Margin="2"></TextBlock>
-                    <TextBlock Grid.Column="3" Grid.Row="1" x:Name="MagnetometerNumber" Margin="2"></TextBlock>
-                    <TextBlock Grid.Column="2" Grid.Row="2" Text="Gyroscope" Margin="2"></TextBlock>
-                    <TextBlock Grid.Column="3" Grid.Row="2" x:Name="GyroscopeNumber" Margin="2"></TextBlock>
-                    <Button Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Width="102" Click="ViewTriggerList" Margin="70,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">View List</Button>
-
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Accelerometer" Margin="2"></TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="4" x:Name="AccelerometerNumber" Margin="2"></TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Magnetometer" Margin="2"></TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="5" x:Name="MagnetometerNumber" Margin="2"></TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Gyroscope" Margin="2"></TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="6" x:Name="GyroscopeNumber" Margin="2"></TextBlock>
+                    <Button Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2"  Click="ViewTriggerList" HorizontalAlignment="Center" Height="35" VerticalAlignment="Center" Margin="0,10,0,0" >View List</Button>
                 </Grid>
             </StackPanel>
 

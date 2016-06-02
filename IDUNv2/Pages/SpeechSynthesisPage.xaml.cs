@@ -68,15 +68,11 @@ namespace IDUNv2.Pages
             }
         }
 
-        private async void onSelectChange(object sender, SelectionChangedEventArgs e)
+        private void onSelectChange(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem item = (ComboBoxItem)(listBox.SelectedItem);
             VoiceInformation voice = (VoiceInformation)(item.Tag);
             synthesizer.Voice = voice;
-            MediaElement mediaElement = new MediaElement();
-            SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync("Hello!");
-            mediaElement.SetSource(stream, stream.ContentType);
-            mediaElement.Play();
         }
 
         private void TextForSpeech_GotFocus(object sender, RoutedEventArgs e)

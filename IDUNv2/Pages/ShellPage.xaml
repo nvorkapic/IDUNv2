@@ -105,9 +105,11 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="SpinnerPanel"  Background="{StaticResource MainMenuBrush}" Grid.RowSpan="2" Orientation="Horizontal" Visibility="Collapsed">
+        <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="35" x:Name="SpinnerPanel" Visibility="Collapsed">
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="{StaticResource MainMenuBrush}" Grid.RowSpan="2" Orientation="Horizontal">
             <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="35" Margin="5,0,0,0"></Image>
             <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
         </StackPanel>
+        </Grid>
     </Grid>
 </Page>
