@@ -1,11 +1,13 @@
 ﻿using Addovation.Common.Extensions;
 using Addovation.Common.Models;
 using IDUNv2.Models;
+using IDUNv2.Pages;
 using IDUNv2.Services;
 using SenseHat;
 using SQLite.Net.Platform.WinRT;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -82,21 +84,21 @@ namespace IDUNv2
         public static ReportService Reports { get; private set; }
         public static FaultCodesCache FaultCodesCache { get; private set; }
         public static SensorWatcher SensorWatcher = new SensorWatcher(1);
-        public static AppDataState State { get; private set; } = AppDataState.Idle;
 
         private static void InitInsights()
         {
             var analyticsKey = Insights.DebugModeKey;
             Insights.Initialize(analyticsKey, false);
             InsightsHelper.ResetUser();
+            
         }
 
         public static async Task InitAsync()
         {
-            State = AppDataState.Loading;
+            ShellPage.LoadingIcon.Visibility = Windows.UI.Xaml.Visibility.Visible;
             await InitCloud();
             await InitServices();
-            State = AppDataState.Finished;
+            ShellPage.LoadingIcon.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         public static async Task<bool> InitCloud()

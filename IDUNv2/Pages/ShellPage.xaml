@@ -51,7 +51,7 @@
                           ItemTemplate="{StaticResource NavMenuData}"
                           Background="{StaticResource MainMenuBrush}"
                           Tapped="NavMenu_Tapped" />
-                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="50" Visibility="{Binding Converter={StaticResource STVCon}, Path=State}" >
+                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="50" x:Name="Loading" Visibility="Collapsed">
                         <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Width="25" Margin="5,0,0,0"></Image>
                     </StackPanel>
                 </Grid>

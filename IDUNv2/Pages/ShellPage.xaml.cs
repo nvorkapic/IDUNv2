@@ -25,6 +25,7 @@ namespace IDUNv2.Pages
         public static ShellPage Current;
         private ShellViewModel viewModel = new ShellViewModel();
         public Notification SelectedNotificationItem = new Notification();
+        public static StackPanel LoadingIcon;
 
         public ShellPage()
         {
@@ -33,7 +34,11 @@ namespace IDUNv2.Pages
             this.Loaded += MainPage_Loaded;
             Current = this;
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
+
+            LoadingIcon = Loading;
         }
+
+
 
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
