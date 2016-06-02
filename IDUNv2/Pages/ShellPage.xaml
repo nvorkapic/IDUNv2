@@ -46,14 +46,11 @@
                    IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}">
             <SplitView.Pane>
                 <Grid>
-                <ListView ItemsSource="{Binding NavList}"
+                    <ListView ItemsSource="{Binding NavList}"
                           SelectedItem="{Binding SelectedNavMenuItem}"
                           ItemTemplate="{StaticResource NavMenuData}"
                           Background="{StaticResource MainMenuBrush}"
                           Tapped="NavMenu_Tapped" />
-                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="50" x:Name="SpinnerPanel" Visibility="Collapsed">
-                        <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Width="25" Margin="5,0,0,0"></Image>
-                    </StackPanel>
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
@@ -107,6 +104,10 @@
                     <Button Content="Mark as Read" HorizontalAlignment="Right" Padding="10" Click="NotificationViewed_Click" VerticalAlignment="Center"></Button>
                 </StackPanel>
             </Grid>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="SpinnerPanel"  Background="{StaticResource MainMenuBrush}" Grid.RowSpan="2" Orientation="Horizontal" Visibility="Collapsed">
+            <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="35" Margin="5,0,0,0"></Image>
+            <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
         </StackPanel>
     </Grid>
 </Page>
