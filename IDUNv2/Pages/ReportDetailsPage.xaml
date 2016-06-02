@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -24,34 +24,34 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="WO No:" />
+        <TextBlock Grid.Row="1" Grid.Column="0" FontWeight="Bold" Text="WO Site:" />
+        <TextBlock Grid.Row="2" Grid.Column="0" FontWeight="Bold" Text="Entry Date:" />
+        <TextBlock Grid.Row="3" Grid.Column="0" FontWeight="Bold" Text="Directive:" />
+        <TextBlock Grid.Row="4" Grid.Column="0" FontWeight="Bold" Text="Maint Org:" />
+        <TextBlock Grid.Row="5" Grid.Column="0" FontWeight="Bold" Text="Object ID:" />
+        <TextBlock Grid.Row="6" Grid.Column="0" FontWeight="Bold" Text="Site:" />
+        <TextBlock Grid.Row="7" Grid.Column="0" FontWeight="Bold" Text="Description:" />
+        <TextBlock Grid.Row="8" Grid.Column="0" FontWeight="Bold" Text="Fault Desc:" />
+        <TextBlock Grid.Row="9" Grid.Column="0" FontWeight="Bold" Text="Discovery:" />
+        <TextBlock Grid.Row="10" Grid.Column="0" FontWeight="Bold" Text="Symptom:" />
+        <TextBlock Grid.Row="11" Grid.Column="0" FontWeight="Bold" Text="Priority:" />
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="CONTRACT:" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="ERR_DESCR:" />
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="ERR_DESCR_LO:" />
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="ERR_DISCOVER_CODE:" />
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="ERR_SYMPTOM:" />
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="MCH_CODE:" />
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="MCH_CODE_CONTRACT:" />
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="MCH_NAME:" />
-        <TextBlock Grid.Row="8" Grid.Column="0" Text="ORG_CODE:" />
-        <TextBlock Grid.Row="9" Grid.Column="0" Text="PRIORITY_ID:" />
-        <TextBlock Grid.Row="10" Grid.Column="0" Text="REG_DATE:" />
-        <TextBlock Grid.Row="11" Grid.Column="0" Text="WO_NO:" />
-
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Details.Contract}" />
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Details.ErrDescr}" />
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Details.ErrDescrLo}" />
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Details.ErrDiscoverCode}" />
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Details.ErrSymptom}" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Details.WoNo}" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Details.Contract}" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Details.RegDate}" />
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Details.ErrDescr}" />
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Details.OrgCode}" />
         <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Details.MchCode}" />
         <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Details.MchCodeContract}" />
         <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Details.MchName}" />
-        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Details.OrgCode}" />
-        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Details.PriorityId}" />
-        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding Details.RegDate}" />
-        <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding Details.WoNo}" />
+        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Details.ErrDescrLo}" />
+        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Details.ErrDiscoverCode}" />
+        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding Details.ErrSymptom}" />
+        <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding Details.PriorityId}" />
+
     </Grid>
 </Page>
