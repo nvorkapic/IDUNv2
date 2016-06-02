@@ -8,6 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="SensorIdData">
+            <TextBlock Text="{Binding Description}"/>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{StaticResource StandardBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -30,22 +35,31 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto">
                 </ColumnDefinition>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.RowSpan="2" Text="Name:" Style="{StaticResource LabelStyle}"/>
-            <TextBlock Grid.Row="1" Text="Directive:" Style="{StaticResource LabelStyle}" />
-            <TextBlock Grid.Row="2" Text="Fault Desc:" Style="{StaticResource LabelStyle}" />
+            <TextBlock Grid.Row="0" Text="Name:" Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="1" Text="Sensor: " Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="2" Text="Directive:" Style="{StaticResource LabelStyle}" />
+            <TextBlock Grid.Row="3" Text="Fault Desc:" Style="{StaticResource LabelStyle}" />
             <TextBlock Grid.Row="4" Text="Discovery:" Style="{StaticResource LabelStyle}" />
             <TextBlock Grid.Row="5" Text="Symptom:" Style="{StaticResource LabelStyle}" />
             <TextBlock Grid.Row="6" Text="Priority:" Style="{StaticResource LabelStyle}"/>
 
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedTemplate.Name, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedTemplate.Directive, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedTemplate.FaultDescr, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" Height="96" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+            <ComboBox Grid.Row="1"
+                      Grid.Column="1"
+                      Margin="10,5,0,0"
+                      Width="250"
+                      ItemsSource="{Binding SensorIds}"
+                      SelectedItem="{Binding SelectedSensorId, Mode=TwoWay}"
+                      ItemTemplate="{StaticResource SensorIdData}" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedTemplate.Directive, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedTemplate.FaultDescr, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" Height="96" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
             <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" SelectedItem="{Binding SelectedTemplate.Discovery, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
             <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" SelectedItem="{Binding SelectedTemplate.Symptom, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
             <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding SelectedTemplate.Priority, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />

@@ -19,6 +19,7 @@ namespace IDUNv2.ViewModels
 
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
+            new NavMenuItem { Label = "Report List", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.ReportListPage) },
             new NavMenuItem { Label = "Sensors", Symbol = Symbol.ViewAll, PageType = typeof(Pages.SensorPage) },
             new NavMenuItem { Label = "Reports", Symbol = Symbol.Document, PageType = typeof(Pages.ReportPage) },
             new NavMenuItem { Label = "LEDs", Symbol = Symbol.Video, PageType = typeof(Pages.LEDControlPage) },

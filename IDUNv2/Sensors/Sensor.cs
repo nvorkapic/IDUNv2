@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDUNv2.Models
+namespace IDUNv2.Sensors
 {
-    public enum SensorType
+    public enum SensorId
     {
-        Usage,
+        Usage = 1,
         Temperature,
         Pressure,
         Humidity,
@@ -28,11 +28,12 @@ namespace IDUNv2.Models
     public class Sensor
     {
         /// <summary>
-        /// Size of databuffer. Must be a power of two!
+        /// Size of databuffer. Must be a power of two.
         /// </summary>
         public const int BUFFER_SIZE = 128;
 
-        public string Name { get; set; }
+        public SensorId Id { get; set; }
+        public string DeviceName { get; set; }
         public float RangeMin { get; set; }
         public float RangeMax { get; set; }
         public float DangerLo { get; private set; }
@@ -46,9 +47,10 @@ namespace IDUNv2.Models
 
         public float Data { get; set; }
 
-        public Sensor(string name)
+        public Sensor(SensorId id, string deviceName = "")
         {
-            Name = name;
+            Id = id;
+            DeviceName = deviceName;
         }
 
         public void UpdateData(float data)
@@ -70,8 +72,8 @@ namespace IDUNv2.Models
             TemplateHiId = templateId;
         }
 
-        public static Sensor TemperatureSensor = new Sensor("Temperature");
-        public static Sensor HumiditySensor = new Sensor("Humidity");
-        public static Sensor PressureSensor = new Sensor("Pressure");
+        public static Sensor TemperatureSensor = new Sensor(SensorId.Temperature, "HTS221");
+        public static Sensor HumiditySensor = new Sensor(SensorId.Humidity, "HTS221");
+        public static Sensor PressureSensor = new Sensor(SensorId.Pressure, "LPS25H");
     }
 }

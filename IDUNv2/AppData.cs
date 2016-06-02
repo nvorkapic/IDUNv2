@@ -136,7 +136,8 @@ namespace IDUNv2
 
         public static Task InitServices()
         {
-            Reports = new ReportService();
+            if (Reports == null)
+                Reports = new ReportService();
             return Task.CompletedTask;
         }
     }
