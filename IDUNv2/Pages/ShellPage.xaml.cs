@@ -103,7 +103,8 @@ namespace IDUNv2.Pages
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
         {
- 
+            var image = (Image)sender;
+            image.Source = new BitmapImage(new Uri(BaseUri, "Assets/loadinggif.gif"));
         }
     }
 }

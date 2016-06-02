@@ -6,7 +6,12 @@
     xmlns:con="using:IDUNv2.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:gif ="using:XamlAnimatedGif"
     mc:Ignorable="d">
+    <Page.Resources>
+        <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -16,10 +21,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="{StaticResource ButtonBrush}" Click="NavMenuExpand_Click"/>
                 <TextBlock Text="{Binding SelectedNavMenuItem.Label}" VerticalAlignment="Center" FontSize="25" Margin="10" Foreground="{StaticResource StandardForeground}"></TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Loading..." VerticalAlignment="Center"></TextBlock>
-                    <Image Loaded="Image_Loaded"></Image>
-                </StackPanel>
+                
             </StackPanel>
             <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
                 <Button Width="auto" x:Name="NotificationButton" Visibility="Collapsed" Background="{StaticResource StandardBackground}" Click="NotificationButton_Click">
@@ -43,11 +45,16 @@
                    OpenPaneLength="175"
                    IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}">
             <SplitView.Pane>
+                <Grid>
                 <ListView ItemsSource="{Binding NavList}"
                           SelectedItem="{Binding SelectedNavMenuItem}"
                           ItemTemplate="{StaticResource NavMenuData}"
                           Background="{StaticResource MainMenuBrush}"
                           Tapped="NavMenu_Tapped" />
+                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="50" Visibility="{Binding Converter={StaticResource STVCon}, Path=State}" >
+                        <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Width="25" Margin="5,0,0,0"></Image>
+                    </StackPanel>
+                </Grid>
             </SplitView.Pane>
             <SplitView.Content>
                 <Frame x:Name="ContentFrame" />
