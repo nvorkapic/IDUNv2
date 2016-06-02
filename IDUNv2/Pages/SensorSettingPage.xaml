@@ -8,7 +8,7 @@
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid x:Name="MainGrid" Background="{StaticResource StandardBackground}">
-        <Grid x:Name="Keyboard" Width="300"  x:Uid="Key" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,300,0">
+        <Grid x:Name="Keyboard" Width="300"  x:Uid="Key" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,300,0" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
