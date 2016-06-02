@@ -177,11 +177,12 @@
     <Compile Include="Services\IReportService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SensorService.cs" />
+    <Compile Include="ViewModels\DeviceSettingsViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />
     <Compile Include="ViewModels\SensorTriggerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="ViewModels\ServerViewModel.cs" />
+    <Compile Include="Models\DeviceSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

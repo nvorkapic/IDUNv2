@@ -106,10 +106,10 @@ namespace IDUNv2
             try
             {
                 InitInsights();
-                string url = localSettings.Values["URL"] as string;
-                string systemid = localSettings.Values["SystemID"] as string; ;
-                string username = localSettings.Values["Username"] as string; ;
-                string password = localSettings.Values["Password"] as string; ;
+                string url = DeviceSettings.URL;
+                string systemid = DeviceSettings.SystemID;
+                string username = DeviceSettings.Username;
+                string password = DeviceSettings.Password;
         
                 url = url ?? "testcloud.addovation.com";
                 systemid =systemid ?? "race8.addovation.com";

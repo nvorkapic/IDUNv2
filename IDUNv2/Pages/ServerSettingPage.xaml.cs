@@ -1,4 +1,5 @@
-﻿using IDUNv2.ViewModels;
+﻿using IDUNv2.Models;
+using IDUNv2.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,14 @@ namespace IDUNv2.Pages
 {
     public sealed partial class ServerSettingPage : Page
     {
-        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        //Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+        private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel();
 
         public ServerSettingPage()
         {
             this.InitializeComponent();
-            LoadData();
+            this.DataContext = viewModel;
         }
 
         private void TBGotFocus(object sender, RoutedEventArgs e)
@@ -57,33 +60,16 @@ namespace IDUNv2.Pages
             }
             else
             {
-                List<ServerViewModel> ServerData = new List<ServerViewModel>();
-                localSettings.Values["ObjectID"] = OIDTB.Text;
-                localSettings.Values["SystemID"] = SIDTB.Text;
-                localSettings.Values["URL"] = CURLTB.Text;
-                localSettings.Values["Username"] = UNTB.Text;
-                localSettings.Values["Password"] = PASSTB.Password;
+                viewModel.ObjectID = OIDTB.Text;
+                viewModel.SystemID = SIDTB.Text;
+                viewModel.URL = CURLTB.Text;
+                viewModel.Username = UNTB.Text;
+                viewModel.Password = PASSTB.Password;
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Server settings have been saved locally.");
                 var dialog = new ContentDialog { Title = "Server Settings Saved", Content = "Server settings have been saved locally.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark , PrimaryButtonText = "OK" };
-                var showdialog = await dialog.ShowAsync();
                 await AppData.InitCloud();
+                var showdialog = await dialog.ShowAsync();
             }
-        }
-
-        public void LoadData()
-        {
-            try
-            {
-                OIDTB.Text =localSettings.Values["ObjectID"].ToString();
-                SIDTB.Text = localSettings.Values["SystemID"].ToString();
-                CURLTB.Text=localSettings.Values["URL"].ToString();
-                UNTB.Text= localSettings.Values["Username"].ToString();
-                PASSTB.Password=localSettings.Values["Password"].ToString();
-            }
-            catch
-            {
-
-            }        
         }
     }
 }
