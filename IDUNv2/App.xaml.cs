@@ -1,4 +1,5 @@
-﻿using IDUNv2.Models;
+﻿using IDUNv2.Data;
+using IDUNv2.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +80,8 @@ namespace IDUNv2
                 Window.Current.Activate();
             }
 
-            await AppData.InitAsync().ConfigureAwait(false);
+            //await AppData.InitAsync().ConfigureAwait(false);
+            await AppData.FillCaches().ConfigureAwait(false);
         }
 
         /// <summary>

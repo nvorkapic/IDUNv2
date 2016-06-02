@@ -107,7 +107,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppData.cs" />
+    <Compile Include="Data\AppData.cs" />
     <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\NotifyBase.cs" />
     <Compile Include="Common\TaskBinding.cs" />
@@ -119,7 +119,9 @@
     <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
     <Compile Include="Converters\StateToVisibilityConverter.cs" />
-    <Compile Include="Models\FaultCodesCache.cs" />
+    <Compile Include="Data\CachingCloudClient.cs" />
+    <Compile Include="Data\InsightsHelper.cs" />
+    <Compile Include="Data\FaultCodesCache.cs" />
     <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Pages\ReportDetailsPage.xaml.cs">
@@ -174,16 +176,14 @@
       <DependentUpon>TriggerList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IReportService.cs" />
-    <Compile Include="Services\ReportService.cs" />
-    <Compile Include="Services\SensorService.cs" />
     <Compile Include="ViewModels\DeviceSettingsViewModel.cs" />
     <Compile Include="ViewModels\ReportDetailViewModel.cs" />
+    <Compile Include="ViewModels\ReportListViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />
     <Compile Include="ViewModels\SensorTriggerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="Models\DeviceSettings.cs" />
+    <Compile Include="Data\DeviceSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

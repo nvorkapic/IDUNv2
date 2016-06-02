@@ -1,7 +1,7 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 using IDUNv2.Common;
+using IDUNv2.Data;
 using IDUNv2.Models;
-using IDUNv2.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,6 @@ namespace IDUNv2.ViewModels
 {
     public class ReportTemplateViewModel : NotifyBase
     {
-        private FaultCodesCache cache;
         private ReportTemplate model;
 
         private void SetDirty([CallerMemberName] string caller = "")
@@ -55,25 +54,24 @@ namespace IDUNv2.ViewModels
 
         public WorkOrderDiscCode Discovery
         {
-            get { return cache.GetDiscovery(model.DiscCode); }
+            get { return AppData.GetWorkOrderDiscovery(model.DiscCode); }
             set { model.DiscCode = value.ErrDiscoverCode; SetDirty(); }
         }
 
         public WorkOrderSymptCode Symptom
         {
-            get { return cache.GetSymptom(model.SymptCode); }
+            get { return AppData.GetWorkOrderSymptom(model.SymptCode); }
             set { model.SymptCode = value.ErrSymptom; SetDirty(); }
         }
 
         public MaintenancePriority Priority
         {
-            get { return cache.GetPriority(model.PrioCode); }
+            get { return AppData.GetWorkOrderPiority(model.PrioCode); }
             set { model.PrioCode = value.PriorityId; SetDirty(); }
         }
 
-        public ReportTemplateViewModel(ReportTemplate model, FaultCodesCache cache)
+        public ReportTemplateViewModel(ReportTemplate model)
         {
-            this.cache = cache;
             this.model = model;
         }
     }

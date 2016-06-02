@@ -13,7 +13,7 @@ namespace IDUNv2.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        [MaxLength(64), NotNull]
+        //[MaxLength(64)]
         public string SensorId { get; set; }
 
         [MaxLength(64), NotNull]

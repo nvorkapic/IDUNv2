@@ -1,4 +1,3 @@
-
 using System;
 using IDUNv2.ViewModels;
 using System.Collections.Generic;
@@ -18,19 +17,15 @@ using Windows.Storage;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using IDUNv2.Models;
-using IDUNv2.Services;
 using SQLite.Net;
 using Windows.UI;
 using System.Text.RegularExpressions;
+using IDUNv2.Data;
 
 namespace IDUNv2.Pages
 {
     public sealed partial class SensorSettingPage : Page
     {
-        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        private static SQLiteConnection db = new SQLiteConnection(AppData.SqlitePlatform, AppData.DbPath);
-
         #region Keyboard
         private object _host;
 
@@ -91,7 +86,7 @@ namespace IDUNv2.Pages
         public float value = 0;
         private async void AddTrigger(object sender, RoutedEventArgs e)
         {
- 
+
             //if (viewModel.SensorTriggerList.Where(x => x.SensorId == viewModel.CurrentTrigger.SensorId).
             //    Where(x => x.TemplateId == viewModel.CurrentTrigger.TemplateId).
             //    Where(x => x.Comparer == viewModel.CurrentTrigger.Comparer).
@@ -102,8 +97,7 @@ namespace IDUNv2.Pages
                 viewModel.AddTrigger();
                 ElementCount();
 
-                await AppData.InitCloud();
-                var templates = AppData.Reports.GetTemplates().Result;
+                var templates = await AppData.GetReportTemplates();
                 var template = templates.Where(x => x.Id == viewModel.CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 var Header = "Trigger Added";
@@ -140,11 +134,12 @@ namespace IDUNv2.Pages
 
         private void TBLostFocus(object sender, RoutedEventArgs e)
         {
-           Keyboard.Visibility = Visibility.Collapsed;
+            Keyboard.Visibility = Visibility.Collapsed;
 
-           var textB = (TextBox)sender;
-          
-           if (textB.Text != "")
+            var textB = (TextBox)sender;
+
+            if (textB.Text != "")
+            {
                 if (textB.Text.ToCharArray().Last() == '.')
                 {
                     char[] textarray = textB.Text.ToArray();
@@ -152,6 +147,7 @@ namespace IDUNv2.Pages
                     string s = new string(textarray);
                     textB.Text = s;
                 }
+            }
         }
 
         private void templateOnLoad(object sender, RoutedEventArgs e)
@@ -172,14 +168,11 @@ namespace IDUNv2.Pages
 
         private void KeyboardBtnClick(object sender, RoutedEventArgs e)
         {
-        
             var target = (TextBox)TargetBox;
             var btn = (Button)sender;
-
             target.Text = target.Text + btn.Content;
-     
         }
-   
+
         private void KeyboardBackBtnClick(object sender, RoutedEventArgs e)
         {
             var target = (TextBox)TargetBox;
@@ -227,13 +220,12 @@ namespace IDUNv2.Pages
         {
             var target = (TextBox)TargetBox;
             var btn = (Button)sender;
-            
+
             if (!target.Text.Contains("."))
             {
                 target.Text = target.Text + ".";
             }
         }
-
-}
+    }
 }
 

@@ -1,4 +1,5 @@
-﻿using IDUNv2.ViewModels;
+﻿using IDUNv2.Data;
+using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,7 @@ namespace IDUNv2.Pages
 {
     public sealed partial class ReportPage : Page
     {
-        private ReportsPageViewModel viewModel = new ReportsPageViewModel(AppData.Reports, AppData.FaultCodesCache);
+        private ReportsPageViewModel viewModel = new ReportsPageViewModel();
 
         private ReportTemplateViewModel selectedItem;
 

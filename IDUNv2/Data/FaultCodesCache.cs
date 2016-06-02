@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDUNv2.Models
+namespace IDUNv2.Data
 {
     public class FaultCodesCache
     {
-        private CloudClient cloudClient;
+        private CloudClient cloud;
 
         private Dictionary<string, WorkOrderDiscCode> discDict;
         private Dictionary<string, WorkOrderSymptCode> symptDict;
@@ -70,30 +70,35 @@ namespace IDUNv2.Models
 
         private async Task<List<WorkOrderDiscCode>> GetDiscCodes(bool useCached = true)
         {
-            DiscCodes = await GetCachedList(cloudClient.GetWorkOrderDiscCodes, DiscCodes, useCached).ConfigureAwait(false);
+            DiscCodes = await GetCachedList(cloud.GetWorkOrderDiscCodes, DiscCodes, useCached).ConfigureAwait(false);
             return DiscCodes;
         }
 
         private async Task<List<WorkOrderSymptCode>> GetSymptCodes(bool useCached = true)
         {
-            SymptCodes = await GetCachedList(cloudClient.GetWorkOrderSymptCodes, SymptCodes, useCached).ConfigureAwait(false);
+            SymptCodes = await GetCachedList(cloud.GetWorkOrderSymptCodes, SymptCodes, useCached).ConfigureAwait(false);
             return SymptCodes;
         }
 
         private async Task<List<MaintenancePriority>> GetPrioCodes(bool useCached = true)
         {
-            PrioCodes = await GetCachedList(cloudClient.GetMaintenancePriorities, PrioCodes, useCached).ConfigureAwait(false);
+            PrioCodes = await GetCachedList(cloud.GetMaintenancePriorities, PrioCodes, useCached).ConfigureAwait(false);
             return PrioCodes;
         }
 
-        private FaultCodesCache(CloudClient cloudClient)
+        private FaultCodesCache(CloudClient cloud)
         {
-            this.cloudClient = cloudClient;
+            this.cloud = cloud;
+        }
+
+        public FaultCodesCache()
+        {
+
         }
 
         public async Task InitAsync()
         {
-            if (cloudClient == null)
+            if (cloud == null)
             {
                 DiscCodes = new List<WorkOrderDiscCode>();
                 SymptCodes = new List<WorkOrderSymptCode>();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDUNv2.Models
+namespace IDUNv2.Data
 {
     public static class DeviceSettings
     {

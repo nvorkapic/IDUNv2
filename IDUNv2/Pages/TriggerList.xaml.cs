@@ -1,5 +1,5 @@
-﻿using IDUNv2.Models;
-using IDUNv2.Services;
+﻿using IDUNv2.Data;
+using IDUNv2.Models;
 using IDUNv2.ViewModels;
 using SQLite;
 using System;
@@ -23,7 +23,6 @@ namespace IDUNv2.Pages
 
     public sealed partial class TriggerList : Page
     {
-        SensorService ss = new SensorService();
         public SensorTriggerViewModel viewModel = new SensorTriggerViewModel();
         public SensorTrigger CurrentTrigger = new SensorTrigger();
         
@@ -42,12 +41,11 @@ namespace IDUNv2.Pages
         {
             if (CurrentTrigger != null)
             {
-                await AppData.InitCloud();
-                var templates = AppData.Reports.GetTemplates().Result;
+                var templates = await AppData.GetReportTemplates();
                 var template = templates.Where(x => x.Id == CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
-                await ss.DeleteTrigger(CurrentTrigger);
+                await AppData.DeleteSensorTrigger(CurrentTrigger);
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
             }
         }
@@ -64,15 +62,14 @@ namespace IDUNv2.Pages
             {
                 var ListItem = ((ListView)sender).SelectedItem as SensorTrigger;
                 var TemplateID = (((ListView)sender).SelectedItem as SensorTrigger).TemplateId;
-                ReportService RS = new ReportService();
-                var Templates = RS.GetTemplates().Result;
+                var Templates = await AppData.GetReportTemplates();
 
                 var SelectedTemplate = Templates.Where(x => x.Id == TemplateID).FirstOrDefault();
 
-                await AppData.FaultCodesCache.InitAsync();
-                var Sympt = AppData.FaultCodesCache.GetSymptom(SelectedTemplate.SymptCode).Description;
-                var Prio = AppData.FaultCodesCache.GetPriority(SelectedTemplate.PrioCode).Description;
-                var Disc = AppData.FaultCodesCache.GetDiscovery(SelectedTemplate.DiscCode).Description;
+                await AppData.FillCaches();
+                var Sympt = AppData.GetWorkOrderSymptom(SelectedTemplate.SymptCode).Description;
+                var Prio = AppData.GetWorkOrderPiority(SelectedTemplate.PrioCode).Description;
+                var Disc = AppData.GetWorkOrderDiscovery(SelectedTemplate.DiscCode).Description;
 
                 var contentString = "Sensor: " + "<SENSOR>" + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: " + Sympt + "\n Priority: " + Prio + "\n Discovery: " + Disc;
                 var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
