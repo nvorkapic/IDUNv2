@@ -30,7 +30,9 @@ namespace IDUNv2.Pages
 
         private async void ReportListPage_Loaded(object sender, RoutedEventArgs e)
         {
+            ShellPage.SetSpinner(LoadingState.Loading);
             var reports = await DAL.GetFaultReports();
+            ShellPage.SetSpinner(LoadingState.Finished);
             viewModel.Reports = reports.OrderByDescending(r => r.RegDate).ToList();
             this.DataContext = viewModel;
         }
