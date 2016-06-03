@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using IDUNv2.DataAccess;
 
 namespace IDUNv2.Pages
 {
@@ -36,6 +37,19 @@ namespace IDUNv2.Pages
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
 
             Spinner = SpinnerPanel;
+        }
+
+        public static void SetSpinner(LoadingState state)
+        {
+            switch (state)
+            {
+                case LoadingState.Loading:
+                    Spinner.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    Spinner.Visibility = Visibility.Collapsed;
+                    break;
+            }
         }
 
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

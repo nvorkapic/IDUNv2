@@ -46,7 +46,9 @@ namespace IDUNv2.DataAccess
 
         public static async Task FillCaches()
         {
+            ShellPage.SetSpinner(LoadingState.Loading);
             await cloud.FillCaches();
+            ShellPage.SetSpinner(LoadingState.Finished);
         }
 
         #region Cloud
