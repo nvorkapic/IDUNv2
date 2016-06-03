@@ -20,7 +20,7 @@ using IDUNv2.Models;
 using SQLite.Net;
 using Windows.UI;
 using System.Text.RegularExpressions;
-using IDUNv2.Data;
+using IDUNv2.DataAccess;
 
 namespace IDUNv2.Pages
 {
@@ -97,7 +97,7 @@ namespace IDUNv2.Pages
                 viewModel.AddTrigger();
                 ElementCount();
 
-                var templates = await AppData.GetReportTemplates();
+                var templates = await DAL.GetReportTemplates();
                 var template = templates.Where(x => x.Id == viewModel.CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 var Header = "Trigger Added";

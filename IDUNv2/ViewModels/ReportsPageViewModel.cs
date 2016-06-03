@@ -1,6 +1,6 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 using IDUNv2.Common;
-using IDUNv2.Data;
+using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using System;
 using System.Collections.Generic;
@@ -18,9 +18,9 @@ namespace IDUNv2.ViewModels
 
         public ActionCommand<object> SaveCommand { get; private set; }
 
-        public List<WorkOrderDiscCode> DiscoveryList { get { return AppData.GetWorkOrderDiscCodes(); } }
-        public List<WorkOrderSymptCode> SymptomList { get { return AppData.GetWorkOrderSymptCodes(); } }
-        public List<MaintenancePriority> PriorityList { get { return AppData.GetWorkOrderPrioCodes(); } }
+        public List<WorkOrderDiscCode> DiscoveryList { get { return DAL.GetWorkOrderDiscCodes(); } }
+        public List<WorkOrderSymptCode> SymptomList { get { return DAL.GetWorkOrderSymptCodes(); } }
+        public List<MaintenancePriority> PriorityList { get { return DAL.GetWorkOrderPrioCodes(); } }
         public ObservableCollection<ReportTemplateViewModel> Templates { get; set; }
 
         public ReportTemplateViewModel SelectedTemplate
@@ -31,7 +31,7 @@ namespace IDUNv2.ViewModels
 
         private async void SaveCommand_Execute(object param)
         {
-            SelectedTemplate.Model = await AppData.SetReportTemplate(SelectedTemplate.Model);
+            SelectedTemplate.Model = await DAL.SetReportTemplate(SelectedTemplate.Model);
             SelectedTemplate.Dirty = false;
         }
 
@@ -42,8 +42,8 @@ namespace IDUNv2.ViewModels
 
         public async Task InitAsync()
         {
-            await AppData.FillCaches();
-            var temp = await AppData.GetReportTemplates();
+            await DAL.FillCaches();
+            var temp = await DAL.GetReportTemplates();
             Templates = new ObservableCollection<ReportTemplateViewModel>(temp.Select(t => new ReportTemplateViewModel(t)));
             SelectedTemplate = Templates.FirstOrDefault();
         }

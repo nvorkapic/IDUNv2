@@ -71,9 +71,5 @@ namespace IDUNv2.Sensors
             DangerHi = val;
             TemplateHiId = templateId;
         }
-
-        public static Sensor TemperatureSensor = new Sensor(SensorId.Temperature, "HTS221");
-        public static Sensor HumiditySensor = new Sensor(SensorId.Humidity, "HTS221");
-        public static Sensor PressureSensor = new Sensor(SensorId.Pressure, "LPS25H");
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDUNv2.Data
+namespace IDUNv2.DataAccess
 {
     public class CachingCloudClient : CloudClient
     {

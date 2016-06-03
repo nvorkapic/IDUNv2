@@ -19,36 +19,16 @@ using Windows.Security.Credentials;
 using Windows.Storage;
 using Xamarin;
 
-namespace IDUNv2.Data
+namespace IDUNv2.DataAccess
 {
-    public enum AppDataState
+    public enum LoadingState
     {
         Idle,
         Loading,
         Finished
     }
 
-    public class CachedList<T>
-    {
-        private List<T> list = new List<T>();
-        private Func<Task<List<T>>> getFunc;
-
-        public async Task<List<T>> GetList(bool useCached = true)
-        {
-            if (list == null || !useCached)
-            {
-                list = await getFunc().ConfigureAwait(false);
-            }
-            return list;
-        }
-
-        public CachedList(Func<Task<List<T>>> getFunc)
-        {
-            this.getFunc = getFunc;
-        }
-    }
-
-    public static class AppData
+    public static class DAL
     {
         private static readonly string DbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath);
@@ -56,7 +36,7 @@ namespace IDUNv2.Data
 
         private static CachingCloudClient cloud;
 
-        static AppData()
+        static DAL()
         {
             db.CreateTable<ReportTemplate>();
             db.CreateTable<SensorTrigger>();
@@ -138,21 +118,6 @@ namespace IDUNv2.Data
         }
 
         #endregion
-
-        //public static async Task InitAsync()
-        //{
-        //    ShellPage.Spinner.Visibility = Windows.UI.Xaml.Visibility.Visible;
-        //    await InitCloud();
-        //    await InitServices();
-        //    ShellPage.Spinner.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        //}
-
-        //public static Task InitServices()
-        //{
-        //    if (Reports == null)
-        //        Reports = new ReportService();
-        //    return Task.CompletedTask;
-        //}
 
         #region Reports
 

@@ -1,4 +1,4 @@
-﻿using IDUNv2.Data;
+﻿using IDUNv2.DataAccess;
 using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace IDUNv2.Pages
 
         private async void ReportListPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var reports = await AppData.GetFaultReports();
+            var reports = await DAL.GetFaultReports();
             viewModel.Reports = reports.OrderByDescending(r => r.RegDate).ToList();
             this.DataContext = viewModel;
         }

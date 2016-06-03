@@ -1,6 +1,6 @@
 ﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 using IDUNv2.Common;
-using IDUNv2.Data;
+using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using System;
 using System.Collections.Generic;
@@ -54,19 +54,19 @@ namespace IDUNv2.ViewModels
 
         public WorkOrderDiscCode Discovery
         {
-            get { return AppData.GetWorkOrderDiscovery(model.DiscCode); }
+            get { return DAL.GetWorkOrderDiscovery(model.DiscCode); }
             set { model.DiscCode = value.ErrDiscoverCode; SetDirty(); }
         }
 
         public WorkOrderSymptCode Symptom
         {
-            get { return AppData.GetWorkOrderSymptom(model.SymptCode); }
+            get { return DAL.GetWorkOrderSymptom(model.SymptCode); }
             set { model.SymptCode = value.ErrSymptom; SetDirty(); }
         }
 
         public MaintenancePriority Priority
         {
-            get { return AppData.GetWorkOrderPiority(model.PrioCode); }
+            get { return DAL.GetWorkOrderPiority(model.PrioCode); }
             set { model.PrioCode = value.PriorityId; SetDirty(); }
         }
 

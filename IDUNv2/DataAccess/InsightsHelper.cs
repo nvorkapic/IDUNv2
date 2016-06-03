@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin;
 
-namespace IDUNv2.Data
+namespace IDUNv2.DataAccess
 {
     public static class InsightsHelper
     {

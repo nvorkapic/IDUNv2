@@ -1,4 +1,4 @@
-﻿using IDUNv2.Data;
+﻿using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using IDUNv2.ViewModels;
 using SQLite;
@@ -41,11 +41,11 @@ namespace IDUNv2.Pages
         {
             if (CurrentTrigger != null)
             {
-                var templates = await AppData.GetReportTemplates();
+                var templates = await DAL.GetReportTemplates();
                 var template = templates.Where(x => x.Id == CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
-                await AppData.DeleteSensorTrigger(CurrentTrigger);
+                await DAL.DeleteSensorTrigger(CurrentTrigger);
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
             }
         }
@@ -62,14 +62,14 @@ namespace IDUNv2.Pages
             {
                 var ListItem = ((ListView)sender).SelectedItem as SensorTrigger;
                 var TemplateID = (((ListView)sender).SelectedItem as SensorTrigger).TemplateId;
-                var Templates = await AppData.GetReportTemplates();
+                var Templates = await DAL.GetReportTemplates();
 
                 var SelectedTemplate = Templates.Where(x => x.Id == TemplateID).FirstOrDefault();
 
-                await AppData.FillCaches();
-                var Sympt = AppData.GetWorkOrderSymptom(SelectedTemplate.SymptCode).Description;
-                var Prio = AppData.GetWorkOrderPiority(SelectedTemplate.PrioCode).Description;
-                var Disc = AppData.GetWorkOrderDiscovery(SelectedTemplate.DiscCode).Description;
+                await DAL.FillCaches();
+                var Sympt = DAL.GetWorkOrderSymptom(SelectedTemplate.SymptCode).Description;
+                var Prio = DAL.GetWorkOrderPiority(SelectedTemplate.PrioCode).Description;
+                var Disc = DAL.GetWorkOrderDiscovery(SelectedTemplate.DiscCode).Description;
 
                 var contentString = "Sensor: " + "<SENSOR>" + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: " + Sympt + "\n Priority: " + Prio + "\n Discovery: " + Disc;
                 var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };

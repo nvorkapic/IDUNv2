@@ -1,4 +1,4 @@
-﻿using IDUNv2.Data;
+﻿using IDUNv2.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace IDUNv2.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if ((AppDataState)value == AppDataState.Idle)
+            if ((LoadingState)value == LoadingState.Idle)
                 return Visibility.Collapsed;
             else
                 return Visibility.Visible;

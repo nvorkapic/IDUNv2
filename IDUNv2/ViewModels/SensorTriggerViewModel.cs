@@ -1,5 +1,5 @@
 ﻿using IDUNv2.Common;
-using IDUNv2.Data;
+using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using IDUNv2.Sensors;
 using System;
@@ -21,8 +21,8 @@ namespace IDUNv2.ViewModels
         public SensorTriggerViewModel()
         {
             Comparers = Enum.GetValues(typeof(SensorTriggerComparer)).Cast<SensorTriggerComparer>().ToArray();
-            Templates = AppData.GetReportTemplates().Result;
-            SensorTriggerList = AppData.GetSensorTriggers().Result;
+            Templates = DAL.GetReportTemplates().Result;
+            SensorTriggerList = DAL.GetSensorTriggers().Result;
             CurrentTrigger = new SensorTrigger();
         }
 
@@ -35,7 +35,7 @@ namespace IDUNv2.ViewModels
 
         internal void AddTrigger()
         {
-            AppData.SetSensorTrigger(CurrentTrigger);
+            DAL.SetSensorTrigger(CurrentTrigger);
         }
     }
 }

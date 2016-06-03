@@ -1,5 +1,5 @@
 ﻿using IDUNv2.Common;
-using IDUNv2.Data;
+using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using SenseHat;
 using System;
@@ -101,11 +101,11 @@ namespace IDUNv2.Pages
 
         private void Timer_Tick(object sender, object e)
         {
-            if (AppData.SensorWatcher.IsValid)
+            if (DAL.SensorWatcher.IsValid)
             {
-                viewModel.Temperature = AppData.SensorWatcher.Temperature;
-                viewModel.Humidity = AppData.SensorWatcher.Humidity;
-                viewModel.Pressure = AppData.SensorWatcher.Pressure;
+                viewModel.Temperature = DAL.SensorWatcher.Temperature;
+                viewModel.Humidity = DAL.SensorWatcher.Humidity;
+                viewModel.Pressure = DAL.SensorWatcher.Pressure;
             }
             else
             {

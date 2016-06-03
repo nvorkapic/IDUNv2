@@ -107,7 +107,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\AppData.cs" />
+    <Compile Include="DataAccess\DAL.cs" />
     <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\NotifyBase.cs" />
     <Compile Include="Common\TaskBinding.cs" />
@@ -119,9 +119,8 @@
     <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
     <Compile Include="Converters\StateToVisibilityConverter.cs" />
-    <Compile Include="Data\CachingCloudClient.cs" />
-    <Compile Include="Data\InsightsHelper.cs" />
-    <Compile Include="Data\FaultCodesCache.cs" />
+    <Compile Include="DataAccess\CachingCloudClient.cs" />
+    <Compile Include="DataAccess\InsightsHelper.cs" />
     <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Pages\ReportDetailsPage.xaml.cs">
@@ -183,7 +182,7 @@
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />
     <Compile Include="ViewModels\SensorTriggerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="Data\DeviceSettings.cs" />
+    <Compile Include="DataAccess\DeviceSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
