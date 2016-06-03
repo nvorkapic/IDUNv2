@@ -123,15 +123,18 @@
     <Compile Include="DataAccess\InsightsHelper.cs" />
     <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Models\Notification.cs" />
-    <Compile Include="Pages\ReportDetailsPage.xaml.cs">
-      <DependentUpon>ReportDetailsPage.xaml</DependentUpon>
+    <Compile Include="Pages\FaultReports\FaultReportDetailsPage.xaml.cs">
+      <DependentUpon>FaultReportDetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ReportListPage.xaml.cs">
-      <DependentUpon>ReportListPage.xaml</DependentUpon>
+    <Compile Include="Pages\FaultReports\FaultReportListingPage.xaml.cs">
+      <DependentUpon>FaultReportListingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sensors\Sensor.cs" />
     <Compile Include="Models\SensorTrigger.cs" />
-    <Compile Include="Models\ReportTemplate.cs" />
+    <Compile Include="Models\FaultReportTemplate.cs" />
     <Compile Include="Models\WarningDialog.cs" />
     <Compile Include="Controls\OnScreenKeyboard\KeyAssignmentSet.cs" />
     <Compile Include="Controls\OnScreenKeyboard\KeyboardViewModel.cs" />
@@ -156,8 +159,8 @@
     <Compile Include="Pages\MeasurementPage.xaml.cs">
       <DependentUpon>MeasurementPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ReportPage.xaml.cs">
-      <DependentUpon>ReportPage.xaml</DependentUpon>
+    <Compile Include="Pages\FaultReports\FaultReportTemplatesPage.xaml.cs">
+      <DependentUpon>FaultReportTemplatesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SensorPage.xaml.cs">
       <DependentUpon>SensorPage.xaml</DependentUpon>
@@ -176,7 +179,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DeviceSettingsViewModel.cs" />
-    <Compile Include="ViewModels\ReportDetailViewModel.cs" />
     <Compile Include="ViewModels\ReportListViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
     <Compile Include="ViewModels\ReportTemplateViewModel.cs" />
@@ -282,11 +284,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ReportDetailsPage.xaml">
+    <Page Include="Pages\FaultReports\FaultReportDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ReportListPage.xaml">
+    <Page Include="Pages\FaultReports\FaultReportListingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -298,7 +304,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ReportPage.xaml">
+    <Page Include="Pages\FaultReports\FaultReportTemplatesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

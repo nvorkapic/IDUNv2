@@ -13,7 +13,7 @@ namespace IDUNv2.ViewModels
 {
     public class ReportTemplateViewModel : NotifyBase
     {
-        private ReportTemplate model;
+        private FaultReportTemplate model;
 
         private void SetDirty([CallerMemberName] string caller = "")
         {
@@ -28,7 +28,7 @@ namespace IDUNv2.ViewModels
             set { dirty = value; Notify(); }
         }
 
-        public ReportTemplate Model
+        public FaultReportTemplate Model
         {
             get { return model; }
             set { model = value; Notify(); }
@@ -70,7 +70,7 @@ namespace IDUNv2.ViewModels
             set { model.PrioCode = value.PriorityId; SetDirty(); }
         }
 
-        public ReportTemplateViewModel(ReportTemplate model)
+        public ReportTemplateViewModel(FaultReportTemplate model)
         {
             this.model = model;
         }

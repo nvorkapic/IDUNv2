@@ -38,7 +38,7 @@ namespace IDUNv2.DataAccess
 
         static DAL()
         {
-            db.CreateTable<ReportTemplate>();
+            db.CreateTable<FaultReportTemplate>();
             db.CreateTable<SensorTrigger>();
 
             InitCloud();
@@ -119,21 +119,21 @@ namespace IDUNv2.DataAccess
 
         #endregion
 
-        #region Reports
+        #region Fault Reports
 
-        public static Task<List<ReportTemplate>> GetReportTemplates()
+        public static Task<List<FaultReportTemplate>> GetFaultReportTemplates()
         {
-            var templates = db.Table<ReportTemplate>().ToList();
+            var templates = db.Table<FaultReportTemplate>().ToList();
             return Task.FromResult(templates);
         }
 
-        public static Task<ReportTemplate> FindReportTemplate(int Id)
+        public static Task<FaultReportTemplate> FindFaultReportTemplate(int Id)
         {
-            var template = db.Find<ReportTemplate>(Id);
+            var template = db.Find<FaultReportTemplate>(Id);
             return Task.FromResult(template);
         }
 
-        public static Task<ReportTemplate> SetReportTemplate(ReportTemplate template)
+        public static Task<FaultReportTemplate> SetFaultReportTemplate(FaultReportTemplate template)
         {
             if (template.Id == 0)
                 db.Insert(template);

@@ -17,13 +17,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public sealed partial class ReportPage : Page
+    public sealed partial class FaultReportTemplatesPage : Page
     {
         private ReportsPageViewModel viewModel = new ReportsPageViewModel();
 
         private ReportTemplateViewModel selectedItem;
 
-        public ReportPage()
+        public FaultReportTemplatesPage()
         {
             this.InitializeComponent();
             this.Loaded += Templates_Loaded;

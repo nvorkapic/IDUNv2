@@ -50,7 +50,7 @@ namespace IDUNv2.Pages
             osk.Visibility = Visibility.Collapsed;
         }
 
-        private async void Save(object sender, RoutedEventArgs e)
+        private void Save(object sender, RoutedEventArgs e)
         {
             if (OIDTB.Text.Length == 0 || CURLTB.Text.Length == 0 || UNTB.Text.Length == 0 || PASSTB.Password.Length <= 3 || SIDTB.Text.Length == 0)
             {
@@ -63,9 +63,7 @@ namespace IDUNv2.Pages
                 viewModel.URL = CURLTB.Text;
                 viewModel.Username = UNTB.Text;
                 viewModel.Password = PASSTB.Password;
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Server settings have been saved locally.");         
-                await AppData.InitCloud();
-
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Server settings have been saved locally.");
             }
         }
     }

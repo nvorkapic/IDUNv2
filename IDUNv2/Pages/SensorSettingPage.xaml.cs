@@ -97,7 +97,7 @@ namespace IDUNv2.Pages
                 viewModel.AddTrigger();
                 ElementCount();
 
-                var templates = await DAL.GetReportTemplates();
+                var templates = await DAL.GetFaultReportTemplates();
                 var template = templates.Where(x => x.Id == viewModel.CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 var Header = "Trigger Added";

@@ -31,7 +31,7 @@ namespace IDUNv2.ViewModels
 
         private async void SaveCommand_Execute(object param)
         {
-            SelectedTemplate.Model = await DAL.SetReportTemplate(SelectedTemplate.Model);
+            SelectedTemplate.Model = await DAL.SetFaultReportTemplate(SelectedTemplate.Model);
             SelectedTemplate.Dirty = false;
         }
 
@@ -43,14 +43,14 @@ namespace IDUNv2.ViewModels
         public async Task InitAsync()
         {
             await DAL.FillCaches();
-            var temp = await DAL.GetReportTemplates();
+            var temp = await DAL.GetFaultReportTemplates();
             Templates = new ObservableCollection<ReportTemplateViewModel>(temp.Select(t => new ReportTemplateViewModel(t)));
             SelectedTemplate = Templates.FirstOrDefault();
         }
 
         public void CreateTemplate()
         {
-            SelectedTemplate = new ReportTemplateViewModel(new ReportTemplate { Name = "#New Template" });
+            SelectedTemplate = new ReportTemplateViewModel(new FaultReportTemplate { Name = "#New Template" });
             SelectedTemplate.Dirty = true;
             Templates.Add(SelectedTemplate);
         }

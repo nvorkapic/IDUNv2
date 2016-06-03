@@ -15,13 +15,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+
 namespace IDUNv2.Pages
 {
-    public sealed partial class ReportListPage : Page
+    public sealed partial class FaultReportListingPage : Page
     {
         private ReportListViewModel viewModel = new ReportListViewModel();
 
-        public ReportListPage()
+        public FaultReportListingPage()
         {
             this.InitializeComponent();
             Loaded += ReportListPage_Loaded;
@@ -36,7 +37,7 @@ namespace IDUNv2.Pages
 
         private void ListBox_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Pages.ReportDetailsPage),viewModel.SelectedReport, new DrillInNavigationTransitionInfo());
+            Frame.Navigate(typeof(Pages.FaultReportDetailsPage), viewModel.SelectedReport, new DrillInNavigationTransitionInfo());
         }
     }
 }

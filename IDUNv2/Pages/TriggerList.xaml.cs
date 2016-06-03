@@ -41,7 +41,7 @@ namespace IDUNv2.Pages
         {
             if (CurrentTrigger != null)
             {
-                var templates = await DAL.GetReportTemplates();
+                var templates = await DAL.GetFaultReportTemplates();
                 var template = templates.Where(x => x.Id == CurrentTrigger.TemplateId).FirstOrDefault().Name;
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
@@ -62,7 +62,7 @@ namespace IDUNv2.Pages
             {
                 var ListItem = ((ListView)sender).SelectedItem as SensorTrigger;
                 var TemplateID = (((ListView)sender).SelectedItem as SensorTrigger).TemplateId;
-                var Templates = await DAL.GetReportTemplates();
+                var Templates = await DAL.GetFaultReportTemplates();
 
                 var SelectedTemplate = Templates.Where(x => x.Id == TemplateID).FirstOrDefault();
 

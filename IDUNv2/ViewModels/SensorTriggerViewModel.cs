@@ -16,12 +16,12 @@ namespace IDUNv2.ViewModels
         public List<SensorTrigger> SensorTriggerList { get; set; }
 
         public SensorTriggerComparer[] Comparers { get; set; }
-        public List<ReportTemplate> Templates { get; set; }
+        public List<FaultReportTemplate> Templates { get; set; }
 
         public SensorTriggerViewModel()
         {
             Comparers = Enum.GetValues(typeof(SensorTriggerComparer)).Cast<SensorTriggerComparer>().ToArray();
-            Templates = DAL.GetReportTemplates().Result;
+            Templates = DAL.GetFaultReportTemplates().Result;
             SensorTriggerList = DAL.GetSensorTriggers().Result;
             CurrentTrigger = new SensorTrigger();
         }
