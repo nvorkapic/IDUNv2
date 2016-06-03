@@ -199,17 +199,30 @@ namespace IDUNv2.Pages
             var target = (TextBox)TargetBox;
             var btn = (Button)sender;
 
-            if (target.Text != null || target.Text != string.Empty)
+            if (target.Text != null || target.Text != string.Empty || target.Text != "")
             {
-                if (target.Text.ElementAt(0) == '-')
+                try
                 {
-                    string[] parts = Regex.Split(target.Text, "-").Skip(1).ToArray();
-                    target.Text = string.Join("", parts);
+                    if (target.Text.ElementAt(0) == '-')
+                    {
+                        string[] parts = Regex.Split(target.Text, "-").Skip(1).ToArray();
+                        target.Text = string.Join("", parts);
+                    }
+                    else
+                        target.Text = "-" + target.Text;
                 }
-                else
-                    target.Text = "-" + target.Text;
+                catch
+                {
+
+                }
+                
+            }
+            else
+            {
+                target.Text = "-";
             }
         }
+
         private void KeyboardDecimalClick(object sender, RoutedEventArgs e)
         {
             var target = (TextBox)TargetBox;

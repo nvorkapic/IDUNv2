@@ -27,7 +27,6 @@ namespace IDUNv2.ViewModels
             new NavMenuItem { Label = "Sensor Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorSettingPage) },
             new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.ServerSettingPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) },
-            new NavMenuItem { Label = "AddaptiveTriggerTest", Symbol = Symbol.Admin, PageType = typeof(Pages.MainPage) }
         };
 
         public ShellViewModel()

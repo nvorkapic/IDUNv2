@@ -40,10 +40,22 @@ namespace IDUNv2.Pages
 
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (viewModel.NotificationList == null)
-                NotificationButton.Visibility = Visibility.Collapsed;
-            else
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(2500);
+                timer.Tick += Timer_Tick;
+                timer.Start();
                 NotificationButton.Visibility = Visibility.Visible;
+
+            }
+                   
+        }
+        private void Timer_Tick(object sender, object e)
+        {
+            NotificationButton.Visibility = Visibility.Collapsed;
+            var timer = (DispatcherTimer)sender;
+            timer.Stop();
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -80,6 +92,10 @@ namespace IDUNv2.Pages
 
                 ExtendedNotification.DataContext = SelectedNotificationItem;
             }
+            else
+            {
+                ExtendedNotification.DataContext = new Notification { ShortDescription = "No Notifications", LongDescription = "Notifications have been read or the Notification List is Empty.", Type = NotificationType.Information, Date=DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") };
+            }
         }
 
         private void NotificationViewed_Click(object sender, RoutedEventArgs e)
@@ -107,6 +123,24 @@ namespace IDUNv2.Pages
         {
             var image = (Image)sender;
             image.Source = new BitmapImage(new Uri(BaseUri, "Assets/loadinggif.gif"));
+        }
+
+        private void NotificationIconTap(object sender, RoutedEventArgs e)
+        {
+            NotificationButton.Visibility = Visibility.Collapsed;
+            NotificationListPanel.Visibility = Visibility.Visible;
+            NotificationFlyOutList.SelectedItem = NotificationFlyOutList.Items.FirstOrDefault();
+        }
+
+        private void CloseNotification_Click(object sender, RoutedEventArgs e)
+        {
+            NotificationListPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void NotificationFlyOutList_Loaded(object sender, RoutedEventArgs e)
+        {
+            var list = (ListView)sender;
+            list.SelectedItem = list.Items.FirstOrDefault();
         }
     }
 }

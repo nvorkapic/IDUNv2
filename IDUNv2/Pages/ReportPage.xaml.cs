@@ -46,19 +46,24 @@ namespace IDUNv2.Pages
             osk.Visibility = Visibility.Collapsed;
         }
 
-        private async void Save_Click(object sender, RoutedEventArgs e)
+        private  void Save_Click(object sender, RoutedEventArgs e)
         {
             ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Saved", "Template is configured and saved and ready for use!");
-            var dialog = new ContentDialog { Title = "Template Saved", Content = "Template is configured and saved and ready for use!", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, PrimaryButtonText = "OK", RequestedTheme=ElementTheme.Dark };
-            var showdialog = await dialog.ShowAsync();
+
         }
 
-        private async void Create_Click(object sender, RoutedEventArgs e)
+        private  void Create_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.CreateTemplate();
-            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
-            var dialog = new ContentDialog { Title = "Template Created", Content = "New Template has been added. Please configure and save to ensure proper functionality!", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark,  PrimaryButtonText = "OK" };
-            var showdialog = await dialog.ShowAsync();
+            try
+            {
+                viewModel.CreateTemplate();
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
+            }
+            catch(Exception x)
+            {
+                var ex = x.Message;
+            }
+
         }
 
         //private async void Remove_Click(object sender, RoutedEventArgs e)
@@ -77,7 +82,7 @@ namespace IDUNv2.Pages
             
         //}
 
-        protected async override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
             int dirtyTemplatesNr = 0;
@@ -91,8 +96,7 @@ namespace IDUNv2.Pages
             if (dirtyTemplatesNr >= 1)
                 {
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
-                var dialog = new ContentDialog { Title = "Unsaved Templates", Content = "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText = "OK" };
-                var showdialog = await dialog.ShowAsync();
+
             }
 
          }

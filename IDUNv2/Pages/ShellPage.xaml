@@ -11,7 +11,6 @@
     <Page.Resources>
         <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
     </Page.Resources>
-    
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -21,17 +20,8 @@
             <StackPanel Orientation="Horizontal">
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="{StaticResource ButtonBrush}" Click="NavMenuExpand_Click"/>
                 <TextBlock Text="{Binding SelectedNavMenuItem.Label}" VerticalAlignment="Center" FontSize="25" Margin="10" Foreground="{StaticResource StandardForeground}"></TextBlock>
-                
             </StackPanel>
             <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
-                <Button Width="auto" x:Name="NotificationButton" Visibility="Collapsed" Background="{StaticResource StandardBackground}" Click="NotificationButton_Click">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding LatestNotification, Converter={StaticResource NotifyIcon}}" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
-                            <TextBlock Text="{Binding LatestNotification.ShortDescription}" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
                 <Image Source="/Assets/CloudIcon.png" Margin="15,0,10,0"></Image>
                 <TextBlock Text="IDUN" Foreground="{StaticResource StandardForeground}" VerticalAlignment="Center" FontSize="40" Margin="0,0,15,0" FontFamily="Tahoma"/>
             </StackPanel>
@@ -51,6 +41,14 @@
                           ItemTemplate="{StaticResource NavMenuData}"
                           Background="{StaticResource MainMenuBrush}"
                           Tapped="NavMenu_Tapped" />
+                    <Button  VerticalAlignment="Bottom" Click="NotificationIconTap" Background="{StaticResource MainMenuBrush}" Width="175"  Canvas.ZIndex="10">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="-70,0,-87,0">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C9;" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                <TextBlock Text="Notifications" VerticalAlignment="Center" Margin="20,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
@@ -74,7 +72,7 @@
                     <ColumnDefinition Width="600"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer>
-                    <ListView ItemsSource="{Binding NotificationList}" ScrollViewer.HorizontalScrollMode="Enabled" SelectionChanged="NotificationItemSelectionChange" x:Name="NotificationFlyOutList" SelectionMode="Single"  Grid.Column="0" Background="{StaticResource NotificationListBackground}" MaxHeight="330">
+                    <ListView ItemsSource="{Binding NotificationList}" ScrollViewer.HorizontalScrollMode="Enabled" SelectionChanged="NotificationItemSelectionChange" x:Name="NotificationFlyOutList" SelectionMode="Single"  Grid.Column="0" Background="{StaticResource NotificationListBackground}" MaxHeight="330" Loaded="NotificationFlyOutList_Loaded">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -101,15 +99,28 @@
                     <ScrollViewer  Padding="10" Height="200">
                         <TextBlock Text="{Binding LongDescription}" TextWrapping="WrapWholeWords" FontSize="15"></TextBlock>
                     </ScrollViewer>
-                    <Button Content="Mark as Read" HorizontalAlignment="Right" Padding="10" Click="NotificationViewed_Click" VerticalAlignment="Center"></Button>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Close Notification List" HorizontalAlignment="Left" Padding="10" Click="CloseNotification_Click" VerticalAlignment="Center"></Button>
+                        <Button Content="Mark as Read" HorizontalAlignment="Right" Padding="10" Click="NotificationViewed_Click" VerticalAlignment="Center" Margin="5,0,0,0"></Button>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="35" x:Name="SpinnerPanel" Visibility="Collapsed">
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="{StaticResource MainMenuBrush}" Grid.RowSpan="2" Orientation="Horizontal">
-            <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="35" Margin="5,0,0,0"></Image>
-            <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+        <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="50" x:Name="SpinnerPanel" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" Orientation="Horizontal">
+            <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="40" Margin="5,0,0,0"></Image>
+            <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
         </StackPanel>
+        </Grid>
+        <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="50" x:Name="NotificationButton" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
+            <Button Width="auto" Background="{x:Null}" Click="NotificationButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding LatestNotification, Converter={StaticResource NotifyIcon}}" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock Text="{Binding LatestNotification.ShortDescription}" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
         </Grid>
     </Grid>
 </Page>

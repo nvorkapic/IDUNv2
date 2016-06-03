@@ -9,11 +9,8 @@
     mc:Ignorable="d">
     <Grid>
         <StackPanel x:Name="MainStackPanel" Background="{StaticResource StandardBackground}">
-            <Grid x:Name="TopSeparatorWithTitleStackPanel" Height="30">
-                <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Server Settings</TextBlock>
-            </Grid>
             <StackPanel>
-                <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal">
+                <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
@@ -39,16 +36,20 @@
                     </StackPanel>
 
                     <StackPanel>
-                        <TextBlock Margin="10">
-            			<Run Text="User Authentication"/>
-                        </TextBlock>
                         <StackPanel>
-                            <TextBox Text="{Binding Username}" PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
-                            <PasswordBox Password="{Binding Password}" PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="User Authorisation" VerticalAlignment="Center" Width="130" Margin="10,0,0,0"></TextBlock>
+                                <TextBox Text="{Binding Username}" PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="130" Margin="10,0,0,0"></TextBlock>
+                                <PasswordBox Password="{Binding Password}" PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
+                            </StackPanel>
                         </StackPanel>
+                        <Button x:Name="SaveButton" Content="Save Device Server Settings" Height="50" Click="Save" HorizontalAlignment="Center"></Button>
                     </StackPanel>
                 </StackPanel>
-                <Button x:Name="SaveButton" Content="Save Device Server Settings" Margin="10" Height="50" Click="Save" HorizontalAlignment="Center"></Button>
+
             </StackPanel>
 
 
