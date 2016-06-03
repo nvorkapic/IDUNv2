@@ -138,5 +138,20 @@ namespace IDUNv2.Pages
         {
             base.OnNavigatedFrom(e);
         }
+
+        private void Override_Click(object sender, RoutedEventArgs e)
+        {
+            OverrideVisibility.Visibility = Visibility.Collapsed;
+            Override.Visibility = Visibility.Visible;
+            CloseOverride.Visibility = Visibility.Visible;
+        }
+
+        private void CloseOverride_Click(object sender, RoutedEventArgs e)
+        {
+            OverrideVisibility.Visibility = Visibility.Visible;
+            Override.Visibility = Visibility.Collapsed;
+            CloseOverride.Visibility = Visibility.Collapsed;
+
+        }
     }
 }
