@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{43BEE7D7-F52F-4525-8244-F78FF0722686}</ProjectGuid>
+    <ProjectGuid>{9329D1E2-B0EF-447D-9645-F28881D2C4D9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SenseHat</RootNamespace>
-    <AssemblyName>SenseHat</AssemblyName>
+    <RootNamespace>SensorLib</RootNamespace>
+    <AssemblyName>SensorLib</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,19 +107,19 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Device.cs" />
     <Compile Include="HTS221.cs" />
     <Compile Include="LPS25H.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Device.cs" />
+    <Compile Include="Sensor.cs" />
     <Compile Include="SensorWatcher.cs" />
-    <EmbeddedResource Include="Properties\SenseHat.rd.xml" />
+    <EmbeddedResource Include="Properties\SensorLib.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
       <Name>Windows IoT Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

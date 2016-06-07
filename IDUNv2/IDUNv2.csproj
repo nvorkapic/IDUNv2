@@ -107,6 +107,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SensorGauge.xaml.cs">
+      <DependentUpon>SensorGauge.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\DAL.cs" />
     <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\NotifyBase.cs" />
@@ -136,7 +139,6 @@
     <Compile Include="Pages\Triggers\SelectedTriggerPage.xaml.cs">
       <DependentUpon>SelectedTriggerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sensors\Sensor.cs" />
     <Compile Include="Models\SensorTrigger.cs" />
     <Compile Include="Models\FaultReportTemplate.cs" />
     <Compile Include="Models\WarningDialog.cs" />
@@ -182,6 +184,12 @@
       <DependentUpon>TriggerList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensorLib\Device.cs" />
+    <Compile Include="SensorLib\HTS221.cs" />
+    <Compile Include="SensorLib\LPS25H.cs" />
+    <Compile Include="SensorLib\Sensor.cs" />
+    <Compile Include="SensorLib\SensorReadings.cs" />
+    <Compile Include="SensorLib\SensorWatcher.cs" />
     <Compile Include="ViewModels\DeviceSettingsViewModel.cs" />
     <Compile Include="ViewModels\ReportListViewModel.cs" />
     <Compile Include="ViewModels\ReportsPageViewModel.cs" />
@@ -272,6 +280,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\SensorGauge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SensorGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -360,12 +372,6 @@
     <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
       <Name>Windows IoT Extensions for the UWP</Name>
     </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SenseHat\SenseHat.csproj">
-      <Project>{43BEE7D7-F52F-4525-8244-F78FF0722686}</Project>
-      <Name>SenseHat</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

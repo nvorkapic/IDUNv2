@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Devices.I2c;
 
-namespace SenseHat
+namespace IDUNv2.SensorLib
 {
     public class HTS221 : Device
     {
@@ -93,28 +93,20 @@ namespace SenseHat
             convertHumidity = GetHumidityConverter();
         }
 
-        public void Update()
+        public override void Update(SensorReadings readings)
         {
             var status = Read8(C_Status);
 
             if ((status & 1) == 1)
             {
                 var raw = (Int16)Read16LE(C_TempOutL + 0x80);
-                Temperature = convertTemperature(raw);
-            }
-            else
-            {
-                Temperature = null;
+                readings.Temperature = convertTemperature(raw);
             }
 
             if ((status & 2) == 2)
             {
                 var raw = (Int16)Read16LE(C_HumidityOutL + 0x80);
-                Humidity = convertHumidity(raw); ;
-            }
-            else
-            {
-                Humidity = null;
+                readings.Humidity = convertHumidity(raw); ;
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
 using IDUNv2.Models;
-using IDUNv2.Sensors;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

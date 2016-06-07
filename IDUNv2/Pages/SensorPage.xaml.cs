@@ -1,7 +1,7 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
 using IDUNv2.Models;
-using SenseHat;
+using IDUNv2.SensorLib;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,27 +24,31 @@ namespace IDUNv2.Pages
 {
     public class SensorPageViewModel : NotifyBase
     {
-        private float _temperature;
-        private float _humidity;
-        private float _pressure;
+        //private float _temperature;
+        //private float _humidity;
+        //private float _pressure;
 
-        public float Temperature
-        {
-            get { return _temperature; }
-            set { _temperature = value; Notify(); }
-        }
+        //public float Temperature
+        //{
+        //    get { return _temperature; }
+        //    set { _temperature = value; Notify(); }
+        //}
 
-        public float Humidity
-        {
-            get { return _humidity; }
-            set { _humidity = value; Notify(); }
-        }
+        //public float Humidity
+        //{
+        //    get { return _humidity; }
+        //    set { _humidity = value; Notify(); }
+        //}
 
-        public float Pressure
-        {
-            get { return _pressure; }
-            set { _pressure = value; Notify(); }
-        }
+        //public float Pressure
+        //{
+        //    get { return _pressure; }
+        //    set { _pressure = value; Notify(); }
+        //}
+
+        public Sensor TemperatureSensor { get { return DAL.SensorWatcher.TemperatureSensor; } }
+        public Sensor HumiditySensor { get { return DAL.SensorWatcher.HumiditySensor; } }
+        public Sensor PressureSensor { get { return DAL.SensorWatcher.PressureSensor; } }
 
         #region Bias Values
 
@@ -94,29 +98,64 @@ namespace IDUNv2.Pages
         public SensorPage()
         {
             this.InitializeComponent();
+
+            viewModel.TemperatureSensor.RangeMin = -100;
+            viewModel.TemperatureSensor.RangeMax = 100;
+            viewModel.TemperatureSensor.DangerLo = -40;
+            viewModel.TemperatureSensor.DangerHi = 80;
+
+            viewModel.HumiditySensor.RangeMin = 0;
+            viewModel.HumiditySensor.RangeMax = 100;
+            viewModel.HumiditySensor.DangerLo = 10;
+            viewModel.HumiditySensor.DangerHi = 95;
+
+            viewModel.PressureSensor.RangeMin = 500;
+            viewModel.PressureSensor.RangeMax = 2000;
+            viewModel.PressureSensor.DangerLo = 800;
+            viewModel.PressureSensor.DangerHi = 1800;
+
             this.DataContext = viewModel;
+        }
+
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            timer.Tick -= Timer_Tick;
+            timer.Stop();
+        }
+
         private void Timer_Tick(object sender, object e)
         {
+            SensorReadings readings = new SensorReadings();
+
             if (DAL.SensorWatcher.IsValid)
             {
-                viewModel.Temperature = DAL.SensorWatcher.Temperature;
-                viewModel.Humidity = DAL.SensorWatcher.Humidity;
-                viewModel.Pressure = DAL.SensorWatcher.Pressure;
+                readings.Temperature = DAL.SensorWatcher.Readings.Temperature;
+                readings.Humidity = DAL.SensorWatcher.Readings.Humidity;
+                readings.Pressure = DAL.SensorWatcher.Readings.Pressure;
             }
             else
             {
-                viewModel.Temperature = (float)(30.0 + rnd.NextDouble() * 2.1);
-                viewModel.Humidity = (float)(30.0 + rnd.NextDouble() * 5.1);
-                viewModel.Pressure = 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
+                readings.Temperature = (float)(30.0 + rnd.NextDouble() * 2.1);
+                readings.Humidity = (float)(30.0 + rnd.NextDouble() * 5.1);
+                readings.Pressure = 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
             }
 
-            viewModel.Temperature += viewModel.BiasTemp;
-            viewModel.Humidity += viewModel.BiasHumid;
-            viewModel.Pressure += viewModel.BiasPress;
+            readings.Temperature += viewModel.BiasTemp;
+            readings.Humidity += viewModel.BiasHumid;
+            readings.Pressure += viewModel.BiasPress;
+
+            DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.TemperatureSensor, readings);
+            DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.HumiditySensor, readings);
+            DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.PressureSensor, readings);
         }
 
         private void OnHumidity(float value)
@@ -127,31 +166,6 @@ namespace IDUNv2.Pages
         private void OnTemperature(float value)
         {
             humid = value;
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-        }
-
-        private void Override_Click(object sender, RoutedEventArgs e)
-        {
-            OverrideVisibility.Visibility = Visibility.Collapsed;
-            Override.Visibility = Visibility.Visible;
-            CloseOverride.Visibility = Visibility.Visible;
-        }
-
-        private void CloseOverride_Click(object sender, RoutedEventArgs e)
-        {
-            OverrideVisibility.Visibility = Visibility.Visible;
-            Override.Visibility = Visibility.Collapsed;
-            CloseOverride.Visibility = Visibility.Collapsed;
-
         }
     }
 }

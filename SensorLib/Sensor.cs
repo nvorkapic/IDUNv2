@@ -1,24 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IDUNv2.Sensors
+﻿namespace SensorLib
 {
-    public enum SensorId
-    {
-        Usage = 1,
-        Temperature,
-        Pressure,
-        Humidity,
-        Accelerometer,
-        Magnetometer,
-        Gyroscope
-    }
-
     public enum SensorState
     {
         Normal,
@@ -32,7 +13,10 @@ namespace IDUNv2.Sensors
         /// </summary>
         public const int BUFFER_SIZE = 128;
 
-        public SensorId Id { get; set; }
+        private float[] valueBuffer = new float[BUFFER_SIZE];
+        private int valueBufferIdx;
+
+        public string Id { get; set; }
         public string DeviceName { get; set; }
         public float RangeMin { get; set; }
         public float RangeMax { get; set; }
@@ -42,22 +26,21 @@ namespace IDUNv2.Sensors
         public int? TemplateHiId { get; private set; }
         public SensorState State { get; set; }
 
-        private float[] dataBuffer = new float[BUFFER_SIZE];
-        private int dataBufferIdx;
+        public float Value { get; set; }
+        public string ValueStringFormat { get; set; }
+        public string Unit { get; set; }
 
-        public float Data { get; set; }
-
-        public Sensor(SensorId id, string deviceName = "")
+        public Sensor(string id, string deviceName, string unit, string valueStringFormat = "F2")
         {
             Id = id;
             DeviceName = deviceName;
         }
 
-        public void UpdateData(float data)
+        public void UpdateValue(float value)
         {
-            Data = data;
-            dataBuffer[dataBufferIdx] = data;
-            dataBufferIdx = (dataBufferIdx + 1) & (BUFFER_SIZE - 1);
+            Value = value;
+            valueBuffer[valueBufferIdx] = value;
+            valueBufferIdx = (valueBufferIdx + 1) & (BUFFER_SIZE - 1);
         }
 
         public void SetDangerLo(float val, int templateId)
