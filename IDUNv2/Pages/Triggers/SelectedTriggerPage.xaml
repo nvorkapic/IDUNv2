@@ -1,0 +1,44 @@
+﻿<Page RequestedTheme="Dark"
+    x:Class="IDUNv2.Pages.SelectedTriggerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IDUNv2.Pages.Triggers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBlock Text="Selected Trigger Information"></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Name:" ></TextBlock>
+                <TextBlock Text="{Binding Sensor}" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Comparer:" ></TextBlock>
+                <TextBlock Text="{Binding Comparer}" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Value:" ></TextBlock>
+                <TextBlock Text="{Binding Value}" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Template:" ></TextBlock>
+                <TextBlock Text="{Binding TemplateName}" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Symptom:" ></TextBlock>
+                <TextBlock Text="{Binding Symptom}" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Priority:" ></TextBlock>
+                <TextBlock Text="{Binding Priority}" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Discovery:" ></TextBlock>
+                <TextBlock Text="{Binding Discovery}" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Return to Trigger List" Click="Button_Click"></Button>
+    </Grid>
+</Page>

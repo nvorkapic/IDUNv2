@@ -46,7 +46,9 @@ namespace IDUNv2.Pages
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
                 await DAL.DeleteSensorTrigger(CurrentTrigger);
+                //Doesn't reload list anymore
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
+                
             }
         }
 
@@ -70,10 +72,15 @@ namespace IDUNv2.Pages
                 var Sympt = DAL.GetWorkOrderSymptom(SelectedTemplate.SymptCode).Description;
                 var Prio = DAL.GetWorkOrderPiority(SelectedTemplate.PrioCode).Description;
                 var Disc = DAL.GetWorkOrderDiscovery(SelectedTemplate.DiscCode).Description;
-
+                
+                
                 var contentString = "Sensor: " + "<SENSOR>" + " " + ListItem.Comparer + " " + ListItem.Value + "\nTemplate\n Name: " + SelectedTemplate.Name + "\n Symptom: " + Sympt + "\n Priority: " + Prio + "\n Discovery: " + Disc;
-                var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
-                var showdialog = await dialog.ShowAsync();
+                
+                SelectedTrigger selectedTrigger = new SelectedTrigger { Sensor = "<SENSOR>", Comparer = ListItem.Comparer.ToString(), Value = ListItem.Value.ToString(), TemplateName = SelectedTemplate.Name, Symptom = Sympt, Discovery = Disc, Priority = Prio };
+
+                this.Frame.Navigate(typeof(SelectedTriggerPage), selectedTrigger);
+                //var dialog = new ContentDialog { Title = "Selected Trigger", Content = contentString, PrimaryButtonText = "OK", RequestedTheme = ElementTheme.Dark };
+                //var showdialog = await dialog.ShowAsync();
             }
             catch
             {
