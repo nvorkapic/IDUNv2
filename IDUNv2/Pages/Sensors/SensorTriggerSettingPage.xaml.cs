@@ -24,7 +24,7 @@ using IDUNv2.DataAccess;
 
 namespace IDUNv2.Pages
 {
-    public sealed partial class SensorSettingPage : Page
+    public sealed partial class SensorTriggerSettingPage : Page
     {
         #region Keyboard
         private object _host;
@@ -72,9 +72,9 @@ namespace IDUNv2.Pages
         }
         #endregion
 
-        public SensorTriggerViewModel viewModel = new SensorTriggerViewModel();
+        public SensorTriggerSettingViewModel viewModel = new SensorTriggerSettingViewModel();
 
-        public SensorSettingPage()
+        public SensorTriggerSettingPage()
         {
             this.InitializeComponent();
             this.DataContext = viewModel;

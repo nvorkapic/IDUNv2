@@ -23,7 +23,7 @@ namespace IDUNv2.Pages
 
     public sealed partial class TriggerList : Page
     {
-        public SensorTriggerViewModel viewModel = new SensorTriggerViewModel();
+        public SensorTriggerSettingViewModel viewModel = new SensorTriggerSettingViewModel();
         public SensorTrigger CurrentTrigger = new SensorTrigger();
         
         public TriggerList()
