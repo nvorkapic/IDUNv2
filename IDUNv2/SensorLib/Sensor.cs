@@ -1,5 +1,6 @@
 ﻿using IDUNv2.Common;
 using System;
+using System.Reflection;
 
 namespace IDUNv2.SensorLib
 {
@@ -109,6 +110,22 @@ namespace IDUNv2.SensorLib
 
         #endregion
 
+        #region Saved Properties
+
+        private static readonly string[] savedPropNames =
+        {
+            "RangeMin",
+            "RangeMax",
+            "DangerHi",
+            "DangerLo",
+            "TemplateLoId",
+            "TemplateHiId",
+            "ValueStringFormat",
+            "Unit"
+        };
+
+        #endregion
+
         private Func<SensorReadings, float?> readingExtracter;
 
         public Sensor(Func<SensorReadings, float?> readingExtracter, string name, string unit, string valueStringFormat = "F2")
@@ -117,6 +134,7 @@ namespace IDUNv2.SensorLib
             Name = name;
             Unit = unit;
             ValueStringFormat = valueStringFormat;
+            SaveToLocalSettings();
         }
 
         public void UpdateValue(DateTime timestamp, SensorReadings readings)
@@ -143,6 +161,37 @@ namespace IDUNv2.SensorLib
         {
             DangerHi = val;
             TemplateHiId = templateId;
+        }
+
+        private void SavePropertyFromContainer(Windows.Storage.ApplicationDataContainer container, string propName)
+        {
+            var pi = GetType().GetProperty(propName);
+            container.Values[_name + "." + propName] = pi.GetValue(this);
+        }
+
+        private void LoadPropertyFromContainer(Windows.Storage.ApplicationDataContainer container, string propName)
+        {
+            var pi = GetType().GetProperty(propName);
+            var val = container.Values[_name + "." + propName];
+            pi.SetValue(this, val);
+        }
+
+        public void SaveToLocalSettings()
+        {
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            foreach (var name in savedPropNames)
+            {
+                SavePropertyFromContainer(localSettings, name);
+            }
+        }
+
+        public void LoadFromLocalSettings()
+        {
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            foreach (var name in savedPropNames)
+            {
+                LoadPropertyFromContainer(localSettings, name);
+            }
         }
     }
 }
