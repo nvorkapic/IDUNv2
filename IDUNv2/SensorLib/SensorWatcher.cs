@@ -24,8 +24,8 @@ namespace IDUNv2.SensorLib
 
         private async Task Init()
         {
-            await hts221.Init().ConfigureAwait(false);
-            await lps25h.Init().ConfigureAwait(false);
+            await hts221.Init();
+            await lps25h.Init();
 
             if (hts221.IsValid)
             {
