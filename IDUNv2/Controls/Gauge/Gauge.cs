@@ -94,13 +94,6 @@ namespace IDUNv2.Controls
                 typeof (Gauge),
                 new PropertyMetadata(new SolidColorBrush(Colors.LightGray)));
 
-        public static readonly DependencyProperty TickBrushProperty =
-            DependencyProperty.Register(
-                "TickBrush",
-                typeof (Brush),
-                typeof (Gauge),
-                new PropertyMetadata(new SolidColorBrush(Colors.DimGray)));
-
         public static readonly DependencyProperty TrailBrushProperty =
             DependencyProperty.Register(
                 "TrailBrush",
@@ -129,13 +122,6 @@ namespace IDUNv2.Controls
                 typeof (Gauge),
                 new PropertyMetadata(new SolidColorBrush(Colors.DimGray)));
 
-        public static readonly DependencyProperty ScaleTickBrushProperty =
-            DependencyProperty.Register(
-                "ScaleTickBrush",
-                typeof (Brush),
-                typeof (Gauge),
-                new PropertyMetadata(new SolidColorBrush(Colors.White)));
-
         public static readonly DependencyProperty UnitBrushProperty =
             DependencyProperty.Register(
                 "UnitBrush",
@@ -154,13 +140,6 @@ namespace IDUNv2.Controls
             DependencyProperty.Register(
                 "ValueAngle",
                 typeof (double),
-                typeof (Gauge),
-                new PropertyMetadata(null));
-
-        protected static readonly DependencyProperty TicksProperty =
-            DependencyProperty.Register(
-                "Ticks",
-                typeof (IEnumerable<double>),
                 typeof (Gauge),
                 new PropertyMetadata(null));
 
@@ -190,8 +169,7 @@ namespace IDUNv2.Controls
         public Gauge()
         {
             this.DefaultStyleKey = typeof(Gauge);
-            //this.Ticks = this.GetTicks();
-            InitTicksAndValues();
+            InitLabels();
         }
         #endregion Constructors
 
@@ -268,18 +246,6 @@ namespace IDUNv2.Controls
             set { SetValue(ScaleBrushProperty, value); }
         }
 
-        public Brush ScaleTickBrush
-        {
-            get { return (Brush)GetValue(ScaleTickBrushProperty); }
-            set { SetValue(ScaleTickBrushProperty, value); }
-        }
-
-        public Brush TickBrush
-        {
-            get { return (Brush)GetValue(TickBrushProperty); }
-            set { SetValue(TickBrushProperty, value); }
-        }
-
         public Brush ValueBrush
         {
             get { return (Brush)GetValue(ValueBrushProperty); }
@@ -302,12 +268,6 @@ namespace IDUNv2.Controls
         {
             get { return (double)GetValue(ValueAngleProperty); }
             set { SetValue(ValueAngleProperty, value); }
-        }
-
-        protected IEnumerable<double> Ticks
-        {
-            get { return (IEnumerable<double>)GetValue(TicksProperty); }
-            set { SetValue(TicksProperty, value); }
         }
 
         protected IEnumerable<Tuple<double, double>> Values
@@ -393,8 +353,6 @@ namespace IDUNv2.Controls
                 dangerHi.Data = pg;
             }
 
-            InitTicksAndValues();
-
             OnValueChanged(this, null);
             base.OnApplyTemplate();
         }
@@ -479,32 +437,16 @@ namespace IDUNv2.Controls
             return (value - this.Minimum) / (this.Maximum - this.Minimum) * angularRange + minAngle;
         }
 
-        private void InitTicksAndValues()
+        private void InitLabels()
         {
             var middleOfScale = 77 - ScaleWidth / 2;
             var tickSpacing = (this.Maximum - this.Minimum) / 10;
-
-            var ticks = new List<double>((int)tickSpacing);
             var values = new List<Tuple<double, double>>((int)tickSpacing);
             for (double v = this.Minimum; v <= this.Maximum; v += tickSpacing)
             {
-                double ang = ValueToAngle(v);
-                ticks.Add(ang);
-                values.Add(new Tuple<double, double>(v, ang));
+                values.Add(new Tuple<double, double>(v, ValueToAngle(v)));
             }
-
-            this.Ticks = ticks;
-            this.Values = values;
+            Values = values;
         }
-
-        //private IEnumerable<double> GetTicks()
-        //{
-        //    var tickSpacing = (this.Maximum - this.Minimum) / 10;
-
-        //    for (double tick = this.Minimum; tick <= this.Maximum; tick += tickSpacing)
-        //    {
-        //        yield return ValueToAngle(tick);
-        //    }
-        //}
     }
 }

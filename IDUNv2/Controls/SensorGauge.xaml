@@ -19,8 +19,6 @@
                     Value="{Binding Value}"
                     ValueStringFormat="{Binding ValueStringFormat}"
                     Unit="{Binding Unit}"
-                    TickBrush="Transparent"
-                    ScaleTickBrush="Transparent"
                     NeedleBrush="White"
                     TrailBrush="DarkSeaGreen"
                     ValueBrush="DarkSeaGreen"

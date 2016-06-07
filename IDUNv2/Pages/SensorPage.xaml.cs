@@ -24,28 +24,6 @@ namespace IDUNv2.Pages
 {
     public class SensorPageViewModel : NotifyBase
     {
-        //private float _temperature;
-        //private float _humidity;
-        //private float _pressure;
-
-        //public float Temperature
-        //{
-        //    get { return _temperature; }
-        //    set { _temperature = value; Notify(); }
-        //}
-
-        //public float Humidity
-        //{
-        //    get { return _humidity; }
-        //    set { _humidity = value; Notify(); }
-        //}
-
-        //public float Pressure
-        //{
-        //    get { return _pressure; }
-        //    set { _pressure = value; Notify(); }
-        //}
-
         public Sensor TemperatureSensor { get { return DAL.SensorWatcher.TemperatureSensor; } }
         public Sensor HumiditySensor { get { return DAL.SensorWatcher.HumiditySensor; } }
         public Sensor PressureSensor { get { return DAL.SensorWatcher.PressureSensor; } }
@@ -91,7 +69,7 @@ namespace IDUNv2.Pages
     {
         private float temp;
         private float humid;
-        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
         private Random rnd = new Random();
         private SensorPageViewModel viewModel = new SensorPageViewModel();
 
