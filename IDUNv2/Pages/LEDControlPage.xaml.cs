@@ -61,6 +61,11 @@ namespace IDUNv2.Pages
             buffer[i + 16] = b;
         }
 
+        //public int GetPixel(int x, int y)
+        //{
+            
+        //}
+
         public void Flush()
         {
             device?.Write(buffer);
@@ -254,7 +259,7 @@ namespace IDUNv2.Pages
         private void CompositionTarget_Rendering(object sender, object e)
         {
             ledBitmap.Clear();
-            ledBitmap.Grid(8, 8, 0x0000CC);
+            ledBitmap.Grid(8, 8, 0x000000);
 
             int rx = (px / 50) * 50;
             int ry = (py / 50) * 50;

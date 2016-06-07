@@ -46,6 +46,7 @@ namespace IDUNv2.Pages
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Removed", "Report Trigger: " + "<SENSOR>" + " that fires when value goes " + CurrentTrigger.Comparer.ToString() + " " + CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Removed.");
                 await DAL.DeleteSensorTrigger(CurrentTrigger);
+                viewModel.SensorTriggerList.Remove(CurrentTrigger);
                 //Doesn't reload list anymore
                 TriggerListView.ItemsSource = viewModel.SensorTriggerList;
                 

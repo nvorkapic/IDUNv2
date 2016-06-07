@@ -13,7 +13,7 @@ namespace IDUNv2.ViewModels
 {
     public class SensorTriggerViewModel : NotifyBase
     {
-        public List<SensorTrigger> SensorTriggerList { get; set; }
+        public ObservableCollection<SensorTrigger> SensorTriggerList { get; set; }
 
         public SensorTriggerComparer[] Comparers { get; set; }
         public List<FaultReportTemplate> Templates { get; set; }
@@ -22,7 +22,8 @@ namespace IDUNv2.ViewModels
         {
             Comparers = Enum.GetValues(typeof(SensorTriggerComparer)).Cast<SensorTriggerComparer>().ToArray();
             Templates = DAL.GetFaultReportTemplates().Result;
-            SensorTriggerList = DAL.GetSensorTriggers().Result;
+            
+            SensorTriggerList =new ObservableCollection<SensorTrigger>(DAL.GetSensorTriggers().Result);
             CurrentTrigger = new SensorTrigger();
         }
 

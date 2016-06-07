@@ -76,7 +76,7 @@ namespace IDUNv2.DataAccess
                     SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
                 };
 
-                //InsightsHelper.Init();
+                InsightsHelper.Init();
                 //InsightsHelper.SetUser(connectionInfo);
             }
             catch (Exception ex)
