@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class SensorPageViewModel : NotifyBase
+    public class SensorOverviewViewModel : NotifyBase
     {
         public Sensor TemperatureSensor { get { return DAL.SensorWatcher.TemperatureSensor; } }
         public Sensor HumiditySensor { get { return DAL.SensorWatcher.HumiditySensor; } }
@@ -47,7 +47,7 @@ namespace IDUNv2.ViewModels
             pi.SetValue(this, 0.0f);
         }
 
-        public SensorPageViewModel()
+        public SensorOverviewViewModel()
         {
             ResetCommand = new ActionCommand<string>(ResetCommand_Execute);
         }

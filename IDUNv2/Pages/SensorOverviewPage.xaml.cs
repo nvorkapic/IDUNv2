@@ -21,15 +21,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public sealed partial class SensorPage : Page
+    public sealed partial class SensorOverviewPage : Page
     {
-        private float temp;
-        private float humid;
         private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
         private Random rnd = new Random();
-        private SensorPageViewModel viewModel = new SensorPageViewModel();
+        private SensorOverviewViewModel viewModel = new SensorOverviewViewModel();
 
-        public SensorPage()
+        public SensorOverviewPage()
         {
             this.InitializeComponent();
 
@@ -89,16 +87,6 @@ namespace IDUNv2.Pages
             DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.TemperatureSensor, readings);
             DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.HumiditySensor, readings);
             DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.PressureSensor, readings);
-        }
-
-        private void OnHumidity(float value)
-        {
-            temp = value;
-        }
-
-        private void OnTemperature(float value)
-        {
-            humid = value;
         }
     }
 }

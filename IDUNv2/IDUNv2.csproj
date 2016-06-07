@@ -169,8 +169,8 @@
     <Compile Include="Pages\FaultReports\FaultReportTemplateFormPage.xaml.cs">
       <DependentUpon>FaultReportTemplateFormPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SensorPage.xaml.cs">
-      <DependentUpon>SensorPage.xaml</DependentUpon>
+    <Compile Include="Pages\SensorOverviewPage.xaml.cs">
+      <DependentUpon>SensorOverviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SensorSettingPage.xaml.cs">
       <DependentUpon>SensorSettingPage.xaml</DependentUpon>
@@ -195,7 +195,7 @@
     <Compile Include="ViewModels\FaultReportListingViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateFormViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateViewModel.cs" />
-    <Compile Include="ViewModels\SensorPageViewModel.cs" />
+    <Compile Include="ViewModels\SensorOverviewViewModel.cs" />
     <Compile Include="ViewModels\SensorTriggerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="DataAccess\DeviceSettings.cs" />
@@ -326,7 +326,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SensorPage.xaml">
+    <Page Include="Pages\SensorOverviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
