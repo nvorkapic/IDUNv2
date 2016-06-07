@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -8,6 +9,7 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,7 +25,8 @@ namespace IDUNv2.Pages
     public class LedMatrix
     {
         private I2cDevice device;
-        private byte[] buffer = new byte[1 + 192];
+        public byte[] buffer = new byte[1 + 192];
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         private async Task<I2cDevice> GetDeviceAsync()
         {
@@ -53,6 +56,24 @@ namespace IDUNv2.Pages
             device?.Write(data);
         }
 
+        public void LoadBuffer()
+        {
+            try
+            {
+                buffer = (byte[])localSettings.Values["LEDBuffer"];
+                Flush();
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void SaveBuffer()
+        {
+            localSettings.Values["LEDBuffer"] = buffer;
+        }
+
         public void SetPixel(int x, int y, byte r, byte g, byte b)
         {
             int i = 1 + y * 24 + x;
@@ -61,6 +82,7 @@ namespace IDUNv2.Pages
             buffer[i + 16] = b;
         }
 
+        
         //public int GetPixel(int x, int y)
         //{
             
@@ -238,6 +260,24 @@ namespace IDUNv2.Pages
             ledMatrix.Flush();
         }
 
+        private void UpdateLedStatus()
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x=0; x < 8; x++)
+                {
+                    int i = 1 + y * 24 + x;
+                    var q1 = ledMatrix.buffer[i + 0];
+                    var q2 = ledMatrix.buffer[i + 8];
+                    var q3 = ledMatrix.buffer[i + 16];
+
+                    if (q1 != 0 || q2 != 0 || q3 != 0)
+                    {
+                        ledStatus[y * 8 + x] = true;
+                    }
+                }
+            }
+        }
         private void LedImage_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             var pt = e.GetCurrentPoint(sender as UIElement);
@@ -337,6 +377,30 @@ namespace IDUNv2.Pages
         private void toSpeech_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(SpeechSynthesisPage), null);
+        }
+
+        private void SaveCurrent_Click(object sender, RoutedEventArgs e)
+        {
+            //ledMatrix.SaveBuffer();
+
+            SaveLEDToolTip.Visibility = Visibility.Visible;
+
+            //ledImages.Add(new LEDImage { Name = (dialogBox.FindName("TBName") as TextBox).Text, Description = (dialogBox.FindName("TBDesc") as TextBox).Text, Buffer = ledMatrix.buffer });
+        }
+
+        public class LEDImage
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public byte[] Buffer { get; set; }
+        }
+
+        public ObservableCollection<LEDImage> ledImages = new ObservableCollection<LEDImage>();
+
+        private void LoadCurrent_Click(object sender, RoutedEventArgs e)
+        {
+            ledMatrix.LoadBuffer();
+            UpdateLedStatus();
         }
 
         private void sliderRed_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
