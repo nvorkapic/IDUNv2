@@ -329,6 +329,11 @@ namespace IDUNv2.Pages
             fillToggle.Background = new SolidColorBrush(new Windows.UI.Color { R = 0, G = 0, B = 0, A = 255 });
         }
 
+        private void toSpeech_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SpeechSynthesisPage), null);
+        }
+
         private void sliderRed_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             r5 = (byte)e.NewValue;

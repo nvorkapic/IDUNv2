@@ -84,5 +84,10 @@ namespace IDUNv2.Pages
         {
             keyboard.Visibility = Visibility.Collapsed;
         }
+
+        private void toLEDClick(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(LEDControlPage), null);
+        }
     }
 }

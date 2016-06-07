@@ -17,6 +17,7 @@
                     <RowDefinition Height="150"/>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -40,7 +41,9 @@
                 <StackPanel VerticalAlignment="Bottom" Grid.Row="3" >
                     <Rectangle x:Name="colorPreview" HorizontalAlignment="Center" Height="100" Stroke="White" VerticalAlignment="Bottom" Width="110" Fill="White"/>
                 </StackPanel>
+               
             </Grid>
         </StackPanel>
+        <Button Content="Try Speech Synthesis" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="toSpeech_Click"></Button>
     </Grid>
 </Page>
