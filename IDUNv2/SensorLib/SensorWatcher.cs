@@ -27,10 +27,17 @@ namespace IDUNv2.SensorLib
             await hts221.Init().ConfigureAwait(false);
             await lps25h.Init().ConfigureAwait(false);
 
-            if (hts221.IsValid && lps25h.IsValid)
+            if (hts221.IsValid)
             {
-                IsValid = true;
+                TemperatureSensor.State = SensorState.Online;
+                HumiditySensor.State = SensorState.Online;
             }
+            if (lps25h.IsValid)
+            {
+                PressureSensor.State = SensorState.Online;
+            }
+
+            IsValid = hts221.IsValid && lps25h.IsValid;
         }
 
         public void UpdateSensor(Sensor s, SensorReadings readings = null)
@@ -43,6 +50,7 @@ namespace IDUNv2.SensorLib
 
         public SensorWatcher(int period)
         {
+
             Init().ContinueWith(task =>
             {
                 pollTimer = ThreadPoolTimer.CreatePeriodicTimer(timer =>

@@ -78,6 +78,10 @@ namespace IDUNv2.SensorLib
             {
                 IsValid = true;
             }
+            else
+            {
+                throw new Exception("failed to get device");
+            }
 
             // PD RESERVED BDU ODR1-0
             //  1     0000   1     11

@@ -5,7 +5,8 @@ namespace IDUNv2.SensorLib
 {
     public enum SensorState
     {
-        Normal,
+        Offline,
+        Online,
         Faulted
     }
 
@@ -126,6 +127,9 @@ namespace IDUNv2.SensorLib
                 Value = val.Value;
                 valueBuffer[valueBufferIdx] = Value;
                 valueBufferIdx = (valueBufferIdx + 1) & (BUFFER_SIZE - 1);
+
+                if (Value > DangerHi || Value < DangerLo)
+                    State = SensorState.Faulted;
             }
         }
 
