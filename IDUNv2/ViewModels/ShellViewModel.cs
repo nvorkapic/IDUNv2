@@ -22,7 +22,7 @@ namespace IDUNv2.ViewModels
             new NavMenuItem { Label = "Fault Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
             new NavMenuItem { Label = "Templates", Symbol = Symbol.Document, PageType = typeof(Pages.FaultReportTemplateFormPage) },
             new NavMenuItem { Label = "Additional Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.LEDControlPage) },            
-            new NavMenuItem { Label = "Sensor Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorTriggerSettingPage) },
+            new NavMenuItem { Label = "Sensor Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorTriggerSettingsPage) },
             new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) },
         };
