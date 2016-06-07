@@ -3,7 +3,7 @@ using Addovation.Common.Extensions;
 using Addovation.Common.Models;
 using IDUNv2.Models;
 using IDUNv2.Pages;
-using SenseHat;
+using IDUNv2.SensorLib;
 using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
 using System;
@@ -156,7 +156,7 @@ namespace IDUNv2.DataAccess
 
         #endregion
 
-        #region SensorTrigger
+        #region SensorTriggers
 
         public static Task<List<SensorTrigger>> GetSensorTriggers()
         {
@@ -196,6 +196,10 @@ namespace IDUNv2.DataAccess
         //    return Task.FromResult(trigger);
 
         //}
+
+        #endregion
+
+        #region Sensors
 
         #endregion
     }

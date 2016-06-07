@@ -99,7 +99,8 @@ namespace IDUNv2.Pages
 
                 var templates = await DAL.GetFaultReportTemplates();
                 var template = templates.Where(x => x.Id == viewModel.CurrentTrigger.TemplateId).FirstOrDefault().Name;
-                Sensors.SensorId sensor = (Sensors.SensorId)(viewModel.CurrentTrigger.Id);
+                //Sensors.SensorId sensor = (Sensors.SensorId)(viewModel.CurrentTrigger.Id);
+                var sensor = "FIXME";
 
                 var Header = "Trigger Added";
                 var Content = "Report Trigger: " + sensor + " that fires when value goes " + viewModel.CurrentTrigger.Comparer.ToString() + " " + viewModel.CurrentTrigger.Value.ToString() + " and uses Template " + template + ", has been Added.";
@@ -112,13 +113,14 @@ namespace IDUNv2.Pages
         public void ElementCount()
         {
             TriggerCount.Text = viewModel.SensorTriggerList.Count().ToString();
-            UsageNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Usage).Count().ToString();
-            TemperatureNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Temperature).Count().ToString();
-            PressureNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Pressure).Count().ToString();
-            HumidityNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Humidity).Count().ToString();
-            AccelerometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Accelerometer).Count().ToString();
-            MagnetometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Magnetometer).Count().ToString();
-            GyroscopeNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Gyroscope).Count().ToString();
+            // FIXME
+            //UsageNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Usage).Count().ToString();
+            //TemperatureNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Temperature).Count().ToString();
+            //PressureNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Pressure).Count().ToString();
+            //HumidityNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Humidity).Count().ToString();
+            //AccelerometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Accelerometer).Count().ToString();
+            //MagnetometerNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Magnetometer).Count().ToString();
+            //GyroscopeNumber.Text = viewModel.SensorTriggerList.Where(x => x.Id == (int)Sensors.SensorId.Gyroscope).Count().ToString();
         }
 
         private void ViewTriggerList(object sender, RoutedEventArgs e)

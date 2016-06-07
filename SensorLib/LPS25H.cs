@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Devices.I2c;
 
-namespace SenseHat
+namespace SensorLib
 {
     public class LPS25H : Device
     {

@@ -8,33 +8,6 @@
                 <ControlTemplate TargetType="local:Gauge">
                     <Viewbox>
                         <Grid Height="200" Width="200">
-                            <!-- Ticks -->
-                            <Line x:Name="TicksProxy"
-                                  Visibility="Collapsed"
-                                  Fill="{TemplateBinding TickBrush}" />
-                            <ItemsControl ItemsSource="{TemplateBinding Ticks}"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Rectangle Height="18"
-                                                   Width="5"
-                                                   Fill="{Binding Fill, ElementName=TicksProxy}">
-                                            <Rectangle.RenderTransform>
-                                                <TransformGroup>
-                                                    <TranslateTransform X="-2.5" Y="-100" />
-                                                    <RotateTransform Angle="{Binding}" />
-                                                </TransformGroup>
-                                            </Rectangle.RenderTransform>
-                                        </Rectangle>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
                             <!-- Scale -->
                             <Path Name="PART_Scale"
                                   Stroke="{TemplateBinding ScaleBrush}"
@@ -49,35 +22,6 @@
                             <Path Name="PART_DangerHi"
                                   Stroke="{TemplateBinding DangerHiBrush}"
                                   StrokeThickness="{TemplateBinding ScaleWidth}" />
-                            <!-- Scale Ticks -->
-                            <Line x:Name="ScaleTicksProxy"
-                                  Visibility="Collapsed"
-                                  Fill="{TemplateBinding ScaleTickBrush}"
-                                  X1="{TemplateBinding ScaleWidth}" />
-                            <ItemsControl ItemsSource="{TemplateBinding Ticks}"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Rectangle Height="{Binding X1, ElementName=ScaleTicksProxy}"
-                                                   Width="2"
-                                                   Fill="{Binding Fill, ElementName=ScaleTicksProxy}">
-                                            <Rectangle.RenderTransform>
-                                                <TransformGroup>
-                                                    <TranslateTransform X="-0.5" Y="-77" />
-                                                    <RotateTransform Angle="{Binding}" />
-                                                </TransformGroup>
-                                            </Rectangle.RenderTransform>
-                                        </Rectangle>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-
                             <!-- Tick labels -->
                             <Line x:Name="LabelProxy"
                                   Visibility="Collapsed"
@@ -107,7 +51,6 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
                             <!-- Value and Unit -->
                             <StackPanel VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center">
