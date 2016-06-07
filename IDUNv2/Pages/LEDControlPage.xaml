@@ -60,9 +60,9 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
                         <TextBlock Text="Enter LED Image Name:"></TextBlock>
-                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB" GotFocus=""></TextBox>
+                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB"/>
                         <TextBlock Text="Image Description:"></TextBlock>
-                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB"></TextBox>
+                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Row="2">
                         <Button Margin="5">Save</Button>
