@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class ReportTemplateViewModel : NotifyBase
+    public class FaultReportTemplateViewModel : NotifyBase
     {
         private FaultReportTemplate model;
 
@@ -70,7 +70,7 @@ namespace IDUNv2.ViewModels
             set { model.PrioCode = value.PriorityId; SetDirty(); }
         }
 
-        public ReportTemplateViewModel(FaultReportTemplate model)
+        public FaultReportTemplateViewModel(FaultReportTemplate model)
         {
             this.model = model;
         }

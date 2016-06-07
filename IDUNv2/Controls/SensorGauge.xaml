@@ -31,16 +31,15 @@
                     DangerHiBrush="Red"
                     ScaleBrush="DarkSlateGray"
                     LabelY="-88"/>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Column="0">
-                    <TextBlock Text="{Binding State}" HorizontalAlignment="Center" Margin="0,10,0,0" ></TextBlock>
-                    <Grid>
-                        <Ellipse Height="45" Width="45" Fill="#FF515151"></Ellipse>
-                        <Ellipse Height="35" Width="35" Fill="{Binding State, Converter={StaticResource StateColorConverter}}"></Ellipse>
-                    </Grid>
-                </StackPanel>
             </StackPanel>
-
         </Button>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Column="0">
+            <TextBlock Text="{Binding State}" HorizontalAlignment="Center" Margin="0,10,0,0" ></TextBlock>
+            <Grid>
+                <Ellipse Height="45" Width="45" Fill="#FF515151"></Ellipse>
+                <Ellipse Height="35" Width="35" Fill="{Binding State, Converter={StaticResource StateColorConverter}}"></Ellipse>
+            </Grid>
+        </StackPanel>
     </StackPanel>
 
 </UserControl>

@@ -17,13 +17,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public sealed partial class FaultReportTemplatesPage : Page
+    public sealed partial class FaultReportTemplateFormPage : Page
     {
-        private ReportsPageViewModel viewModel = new ReportsPageViewModel();
+        private FaultReportTemplateFormViewModel viewModel = new FaultReportTemplateFormViewModel();
 
-        private ReportTemplateViewModel selectedItem;
+        private FaultReportTemplateViewModel selectedItem;
 
-        public FaultReportTemplatesPage()
+        public FaultReportTemplateFormPage()
         {
             this.InitializeComponent();
             this.Loaded += Templates_Loaded;
@@ -104,7 +104,7 @@ namespace IDUNv2.Pages
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var list = (ListBox)sender;
-            selectedItem = (ReportTemplateViewModel)list.SelectedItem;
+            selectedItem = (FaultReportTemplateViewModel)list.SelectedItem;
         }
     }
 }
