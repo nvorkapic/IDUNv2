@@ -42,6 +42,7 @@ namespace IDUNv2.DataAccess
             db.CreateTable<SensorTrigger>();
 
             InitCloud();
+            SensorWatcher.LoadSettings();
         }
 
         public static async Task FillCaches()

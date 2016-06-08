@@ -37,6 +37,7 @@ namespace IDUNv2.SensorLib
         private float _value;
         private string _valueStringFormat;
         private string _unit;
+        private ActionCommand<object> _command;
 
         #endregion
 
@@ -108,6 +109,12 @@ namespace IDUNv2.SensorLib
             set { _unit = value; Notify(); }
         }
 
+        public ActionCommand<object> Command
+        {
+            get { return _command; }
+            set { _command = value; Notify(); }
+        }
+
         #endregion
 
         #region Saved Properties
@@ -128,13 +135,16 @@ namespace IDUNv2.SensorLib
 
         private Func<SensorReadings, float?> readingExtracter;
 
-        public Sensor(Func<SensorReadings, float?> readingExtracter, string name, string unit, string valueStringFormat = "F2")
+        public Sensor(Func<SensorReadings, float?> readingExtracter, string name, float rangeMin, float rangeMax, string unit, string valueStringFormat = "F2")
         {
             this.readingExtracter = readingExtracter;
             Name = name;
+            RangeMin = rangeMin;
+            RangeMax = rangeMax;
+            DangerLo = rangeMin;
+            DangerHi = rangeMax;
             Unit = unit;
             ValueStringFormat = valueStringFormat;
-            SaveToLocalSettings();
         }
 
         public void UpdateValue(DateTime timestamp, SensorReadings readings)

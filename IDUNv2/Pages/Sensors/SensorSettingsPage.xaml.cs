@@ -1,4 +1,5 @@
 ﻿using IDUNv2.Common;
+using IDUNv2.DataAccess;
 using IDUNv2.SensorLib;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,18 @@ namespace IDUNv2.Pages
             get { return _sensor; }
             set { _sensor = value; Notify(); }
         }
+
+        public ActionCommand<object> SaveCommand { get; set; }
+
+        public SensorSettingsViewModel()
+        {
+            SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
+        }
+
+        private void SaveCommand_Execute(object param)
+        {
+            Sensor.SaveToLocalSettings();
+        }
     }
 
     public sealed partial class SensorSettingsPage : Page
@@ -42,6 +55,19 @@ namespace IDUNv2.Pages
         {
             base.OnNavigatedTo(e);
             viewModel.Sensor = e.Parameter as Sensor;
+            //viewModel.Sensor = DAL.SensorWatcher.TemperatureSensor;
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            osk.SetTarget(sender as TextBox);
+            osk.Visibility = Visibility.Visible;
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            osk.SetTarget(null as TextBox);
+            osk.Visibility = Visibility.Collapsed;
         }
     }
 }

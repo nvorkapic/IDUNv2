@@ -41,6 +41,8 @@ namespace IDUNv2.Pages
 
         public static void SetSpinner(LoadingState state)
         {
+            if (Spinner == null)
+                return;
             switch (state)
             {
                 case LoadingState.Loading:
