@@ -1,4 +1,5 @@
-﻿using IDUNv2.DataAccess;
+﻿using IDUNv2.Common;
+using IDUNv2.DataAccess;
 using IDUNv2.SensorLib;
 using IDUNv2.ViewModels;
 using System;
@@ -27,24 +28,33 @@ namespace IDUNv2.Pages
         private Random rnd = new Random();
         private SensorOverviewViewModel viewModel = new SensorOverviewViewModel();
 
+        private Action<object> ShowDetailsFor(Sensor s)
+        {
+            return o => Frame.Navigate(typeof(Pages.SensorSettingsPage), s);
+        }
+
         public SensorOverviewPage()
         {
             this.InitializeComponent();
 
-            viewModel.TemperatureSensor.RangeMin = -100;
-            viewModel.TemperatureSensor.RangeMax = 100;
-            viewModel.TemperatureSensor.DangerLo = -40;
-            viewModel.TemperatureSensor.DangerHi = 80;
+            viewModel.TemperatureSensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.TemperatureSensor));
+            viewModel.HumiditySensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.HumiditySensor));
+            viewModel.PressureSensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.PressureSensor));
 
-            viewModel.HumiditySensor.RangeMin = 0;
-            viewModel.HumiditySensor.RangeMax = 100;
-            viewModel.HumiditySensor.DangerLo = 10;
-            viewModel.HumiditySensor.DangerHi = 95;
+            //viewModel.TemperatureSensor.RangeMin = -100;
+            //viewModel.TemperatureSensor.RangeMax = 100;
+            //viewModel.TemperatureSensor.DangerLo = -40;
+            //viewModel.TemperatureSensor.DangerHi = 80;
 
-            viewModel.PressureSensor.RangeMin = 500;
-            viewModel.PressureSensor.RangeMax = 2000;
-            viewModel.PressureSensor.DangerLo = 800;
-            viewModel.PressureSensor.DangerHi = 1800;
+            //viewModel.HumiditySensor.RangeMin = 0;
+            //viewModel.HumiditySensor.RangeMax = 100;
+            //viewModel.HumiditySensor.DangerLo = 10;
+            //viewModel.HumiditySensor.DangerHi = 95;
+
+            //viewModel.PressureSensor.RangeMin = 500;
+            //viewModel.PressureSensor.RangeMax = 2000;
+            //viewModel.PressureSensor.DangerLo = 800;
+            //viewModel.PressureSensor.DangerHi = 1800;
 
             this.DataContext = viewModel;
         }

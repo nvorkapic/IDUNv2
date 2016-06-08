@@ -353,6 +353,8 @@ namespace IDUNv2.Controls
                 dangerHi.Data = pg;
             }
 
+            InitLabels();
+
             OnValueChanged(this, null);
             base.OnApplyTemplate();
         }
@@ -370,7 +372,7 @@ namespace IDUNv2.Controls
             c.ValueAngle = c.ValueToAngle(c.Value);
 
             // Needle
-            if (needle != null)
+            if (needle != null && !double.IsNaN(c.ValueAngle))
             {
                 needle.RenderTransform = new RotateTransform() { Angle = c.ValueAngle };
             }
@@ -441,6 +443,11 @@ namespace IDUNv2.Controls
         {
             var middleOfScale = 77 - ScaleWidth / 2;
             var tickSpacing = (this.Maximum - this.Minimum) / 10;
+            if (tickSpacing == 0)
+            {
+                Values = new List<Tuple<double, double>>();
+                return;
+            }
             var values = new List<Tuple<double, double>>((int)tickSpacing);
             for (double v = this.Minimum; v <= this.Maximum; v += tickSpacing)
             {

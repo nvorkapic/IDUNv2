@@ -6,7 +6,7 @@
     xmlns:conv="using:IDUNv2.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
+    xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="SensorIdData">
@@ -58,6 +58,6 @@
             <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding SelectedTemplate.Priority, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
             <Button Grid.Row="6" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" Command="{Binding SaveCommand}" Click="Save_Click"/>
         </Grid>
-        <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
+        <osk:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
     </Grid>
 </Page>

@@ -13,7 +13,8 @@
         <conv:SensorStateToColorConverter x:Key="StateColorConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <Button VerticalAlignment="Top" Background="Black">
+        <!--{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MyUserControl}}, Path=MyText}-->
+        <Button VerticalAlignment="Top" Background="Black" Command="{Binding Command}">
             <StackPanel>
                 <TextBlock Text="{Binding Name}" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <local:Gauge
@@ -41,5 +42,4 @@
             </Grid>
         </StackPanel>
     </StackPanel>
-
 </UserControl>

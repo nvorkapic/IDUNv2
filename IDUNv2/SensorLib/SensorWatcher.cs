@@ -15,9 +15,9 @@ namespace IDUNv2.SensorLib
 
         private ThreadPoolTimer pollTimer;
 
-        public readonly Sensor TemperatureSensor = new Sensor(r => r.Temperature, "Temperature", "° C");
-        public readonly Sensor HumiditySensor = new Sensor(r => r.Humidity, "Humidity", "% RH");
-        public readonly Sensor PressureSensor = new Sensor(r => r.Pressure, "Pressure", "hPa", "N0");
+        public readonly Sensor TemperatureSensor = new Sensor(r => r.Temperature, "Temperature", -40, 100, "° C");
+        public readonly Sensor HumiditySensor = new Sensor(r => r.Humidity, "Humidity", 0, 100, "% RH");
+        public readonly Sensor PressureSensor = new Sensor(r => r.Pressure, "Pressure", 500, 2000, "hPa", "N0");
 
         public SensorReadings Readings { get; } = new SensorReadings();
         public bool IsValid { get; private set; }
@@ -46,6 +46,13 @@ namespace IDUNv2.SensorLib
                 readings = Readings;
 
             s.UpdateValue(DateTime.Now, readings);
+        }
+
+        public void LoadSettings()
+        {
+            TemperatureSensor.LoadFromLocalSettings();
+            HumiditySensor.LoadFromLocalSettings();
+            PressureSensor.LoadFromLocalSettings();
         }
 
         public SensorWatcher(int period)
