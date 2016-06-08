@@ -1,8 +1,10 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
+using IDUNv2.Models;
 using IDUNv2.SensorLib;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -18,9 +20,52 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
+    public class SensorTriggerViewModel : NotifyBase
+    {
+        private SensorTriggerComparer _comparer = SensorTriggerComparer.Below;
+
+        public SensorTriggerComparer Comparer
+        {
+            get { return _comparer; }
+            set
+            {
+                _comparer = value;
+                Notify("ComparerBelow");
+                Notify("ComparerAbove");
+            }
+        }
+
+        public bool ComparerBelow
+        {
+            get { return Comparer == SensorTriggerComparer.Below; }
+            set { Comparer = SensorTriggerComparer.Below; }
+        }
+
+        public bool ComparerAbove
+        {
+            get { return Comparer == SensorTriggerComparer.Above; }
+            set { Comparer = SensorTriggerComparer.Above; }
+        }
+
+
+        public SensorTrigger Model { get; set; }
+
+        public SensorTriggerViewModel(SensorTrigger model)
+        {
+            Model = model;
+            Comparer = model.Comparer;
+        }
+
+        public override string ToString()
+        {
+            return $"TriggerId: {Model.Id} ON value {Model.Comparer.ToString().ToUpper()} {Model.Value}";
+        }
+    }
+
     public class SensorSettingsViewModel : NotifyBase
     {
         private Sensor _sensor;
+        private SensorTriggerViewModel _selectedTrigger;
 
         public Sensor Sensor
         {
@@ -28,16 +73,40 @@ namespace IDUNv2.Pages
             set { _sensor = value; Notify(); }
         }
 
+        public SensorTriggerViewModel SelectedTrigger
+        {
+            get { return _selectedTrigger; }
+            set { _selectedTrigger = value; Notify(); }
+        }
+
+        #region Command Bindings
+
         public ActionCommand<object> SaveCommand { get; set; }
+        public ActionCommand<object> AddTriggerCommand { get; set; }
+
+        #endregion
+
+        public ObservableCollection<SensorTriggerViewModel> Triggers { get; set; }
 
         public SensorSettingsViewModel()
         {
             SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
+            AddTriggerCommand = new ActionCommand<object>(AddTriggerCommand_Execute);
+
+            SelectedTrigger = new SensorTriggerViewModel(new SensorTrigger());
+
+            var triggers = DAL.GetSensorTriggers().Result;
+            Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
         }
 
         private void SaveCommand_Execute(object param)
         {
             Sensor.SaveToLocalSettings();
+        }
+
+        private void AddTriggerCommand_Execute(object param)
+        {
+
         }
     }
 

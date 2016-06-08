@@ -57,7 +57,6 @@ namespace IDUNv2.SensorLib
 
         public SensorWatcher(int period)
         {
-
             Init().ContinueWith(task =>
             {
                 pollTimer = ThreadPoolTimer.CreatePeriodicTimer(timer =>
@@ -69,26 +68,6 @@ namespace IDUNv2.SensorLib
 
                 }, TimeSpan.FromMilliseconds(period));
             });
-            //Task.Run(async () =>
-            //{
-            //    await Init().ConfigureAwait(false);
-            //    while (true)
-            //    {
-            //        await Task.Delay(1);
-
-            //        if (hts221.IsValid)
-            //            hts221.Update(Readings);
-            //        if (lps25h.IsValid)
-            //            lps25h.Update(Readings);
-
-            //        //if (hts221.Temperature.HasValue)
-            //        //    TemperatureSensor.UpdateValue(hts221.Temperature.Value);
-            //        //if (hts221.Humidity.HasValue)
-            //        //    HumiditySensor.UpdateValue(hts221.Humidity.Value);
-            //        //if (lps25h.Pressure.HasValue)
-            //        //    PressureSensor.UpdateValue(lps25h.Pressure.Value);
-            //    }
-            //});
         }
     }
 }

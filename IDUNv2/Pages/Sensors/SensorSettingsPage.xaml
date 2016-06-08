@@ -9,48 +9,88 @@
     xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Margin="10" HorizontalAlignment="Left">
-            <StackPanel Orientation="Horizontal">
-                <TextBox Header="Name:"
+        <Pivot Title="{Binding Sensor.Name}">
+            <PivotItem Header="General">
+                <StackPanel HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Header="Name:"
                          Width="400"
                          Text="{Binding Sensor.Name, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus"/>
-                <TextBox Header="Unit:"
+                        <TextBox Header="Unit:"
                          Width="195"
                          Margin="10,0,0,0"
                          Text="{Binding Sensor.Unit, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Header="Range (min):"
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Header="Range (min):"
                          Width="195"
                          Text="{Binding Sensor.RangeMin, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus"/>
-                <TextBox Header="Range (max):"
+                        <TextBox Header="Range (max):"
                          Width="195"
                          Margin="10,0,0,0"
                          Text="{Binding Sensor.RangeMax, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Header="Danger (low):"
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Header="Danger (low):"
                          Width="195"
                          Text="{Binding Sensor.DangerLo, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus"/>
-                <TextBox Header="Danger (high):"
+                        <TextBox Header="Danger (high):"
                          Width="195"
                          Margin="10,0,0,0"
                          Text="{Binding Sensor.DangerHi, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus"/>
-            </StackPanel>
-            <Button Content="Save" Margin="0,10,0,0" Command="{Binding SaveCommand}" />
-        </StackPanel>
+                    </StackPanel>
+                    <Button Content="Save" Margin="0,10,0,0" Command="{Binding SaveCommand}" />
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="Triggers">
+                <StackPanel>
+                    <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}"/>
+                    <!--<ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="TriggerId:"/>
+                                    <TextBlock Margin="10,0,0,0" Text="{Binding Id}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>-->
+                    <ToolTip>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Width="120" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Model.Value, Mode=TwoWay}" />
+                                <RadioButton Margin="10,0,0,0"
+                                             GroupName="TriggerComparer"
+                                             Content="Below"
+                                             IsChecked="{Binding SelectedTrigger.ComparerBelow, Mode=TwoWay}"
+                                             VerticalAlignment="Bottom" />
+                                <RadioButton Margin="-30,0,0,0"
+                                             GroupName="TriggerComparer" Content="Above"
+                                             IsChecked="{Binding SelectedTrigger.ComparerAbove, Mode=TwoWay}"
+                                             VerticalAlignment="Bottom" />
+                            </StackPanel>
+                            <ComboBox Header="Template" Width="300">
+                                <ComboBoxItem>Template 1</ComboBoxItem>
+                                <ComboBoxItem>Template 2</ComboBoxItem>
+                                <ComboBoxItem>Template 3</ComboBoxItem>
+                            </ComboBox>
+                            <Button Margin="0,10,0,0" Content="Add Trigger" Command="{Binding AddTriggerCommand}"/>
+                        </StackPanel>
+                    </ToolTip>
+
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
         <osk:OnScreenKeyBoard x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
     </Grid>
 </Page>
