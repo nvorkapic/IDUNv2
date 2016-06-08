@@ -145,6 +145,9 @@ namespace IDUNv2.SensorLib
             DangerHi = rangeMax;
             Unit = unit;
             ValueStringFormat = valueStringFormat;
+
+            if (!HasSettingsValues())
+                SaveToLocalSettings();
         }
 
         public void UpdateValue(DateTime timestamp, SensorReadings readings)
@@ -171,6 +174,12 @@ namespace IDUNv2.SensorLib
         {
             DangerHi = val;
             TemplateHiId = templateId;
+        }
+
+        private bool HasSettingsValues()
+        {
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            return localSettings.Values[_name + "." + savedPropNames[0]] != null;
         }
 
         private void SavePropertyFromContainer(Windows.Storage.ApplicationDataContainer container, string propName)
