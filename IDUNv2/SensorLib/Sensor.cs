@@ -17,7 +17,7 @@ namespace IDUNv2.SensorLib
         /// <summary>
         /// Size of databuffer. Must be a power of two.
         /// </summary>
-        public const int BUFFER_SIZE = 128;
+        public const int BUFFER_SIZE = 64;
 
         private float[] valueBuffer = new float[BUFFER_SIZE];
         private int valueBufferIdx;

@@ -9,7 +9,7 @@
     xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot>
+        <Pivot Title="{Binding Sensor.Name}">
             <PivotItem Header="General">
                 <StackPanel HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
@@ -56,18 +56,37 @@
             </PivotItem>
             <PivotItem Header="Triggers">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Below" />
-                        <RadioButton Margin="-30,0,0,0" Content="Above" />
-                        <TextBox Header="Threshold" Margin="-20,0,0,0" PlaceholderText="Threshold value" />
-                        <ComboBox Header="Template"
-                                  Margin="10,0,0,0"
-                                  Width="150">
-                            <ComboBoxItem>Template 1</ComboBoxItem>
-                            <ComboBoxItem>Template 2</ComboBoxItem>
-                            <ComboBoxItem>Template 3</ComboBoxItem>
-                        </ComboBox>
-                    </StackPanel>
+                    <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}"/>
+                    <!--<ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="TriggerId:"/>
+                                    <TextBlock Margin="10,0,0,0" Text="{Binding Id}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>-->
+                    <ToolTip>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Width="120" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Model.Value, Mode=TwoWay}" />
+                                <RadioButton Margin="10,0,0,0"
+                                             GroupName="TriggerComparer"
+                                             Content="Below"
+                                             IsChecked="{Binding SelectedTrigger.ComparerBelow, Mode=TwoWay}"
+                                             VerticalAlignment="Bottom" />
+                                <RadioButton Margin="-30,0,0,0"
+                                             GroupName="TriggerComparer" Content="Above"
+                                             IsChecked="{Binding SelectedTrigger.ComparerAbove, Mode=TwoWay}"
+                                             VerticalAlignment="Bottom" />
+                            </StackPanel>
+                            <ComboBox Header="Template" Width="300">
+                                <ComboBoxItem>Template 1</ComboBoxItem>
+                                <ComboBoxItem>Template 2</ComboBoxItem>
+                                <ComboBoxItem>Template 3</ComboBoxItem>
+                            </ComboBox>
+                            <Button Margin="0,10,0,0" Content="Add Trigger" Command="{Binding AddTriggerCommand}"/>
+                        </StackPanel>
+                    </ToolTip>
 
                 </StackPanel>
             </PivotItem>

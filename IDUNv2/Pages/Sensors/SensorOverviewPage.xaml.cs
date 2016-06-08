@@ -41,21 +41,6 @@ namespace IDUNv2.Pages
             viewModel.HumiditySensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.HumiditySensor));
             viewModel.PressureSensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.PressureSensor));
 
-            //viewModel.TemperatureSensor.RangeMin = -100;
-            //viewModel.TemperatureSensor.RangeMax = 100;
-            //viewModel.TemperatureSensor.DangerLo = -40;
-            //viewModel.TemperatureSensor.DangerHi = 80;
-
-            //viewModel.HumiditySensor.RangeMin = 0;
-            //viewModel.HumiditySensor.RangeMax = 100;
-            //viewModel.HumiditySensor.DangerLo = 10;
-            //viewModel.HumiditySensor.DangerHi = 95;
-
-            //viewModel.PressureSensor.RangeMin = 500;
-            //viewModel.PressureSensor.RangeMax = 2000;
-            //viewModel.PressureSensor.DangerLo = 800;
-            //viewModel.PressureSensor.DangerHi = 1800;
-
             this.DataContext = viewModel;
         }
 

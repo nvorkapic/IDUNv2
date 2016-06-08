@@ -32,7 +32,7 @@ namespace IDUNv2.DataAccess
     {
         private static readonly string DbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath);
-        public static readonly SensorWatcher SensorWatcher = new SensorWatcher(1);
+        public static readonly SensorWatcher SensorWatcher = new SensorWatcher(50);
 
         private static CachingCloudClient cloud;
 
