@@ -12,18 +12,18 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class ReportsPageViewModel : NotifyBase
+    public class FaultReportTemplateFormViewModel : NotifyBase
     {
-        private ReportTemplateViewModel _selectedTemplate;
+        private FaultReportTemplateViewModel _selectedTemplate;
 
         public ActionCommand<object> SaveCommand { get; private set; }
 
         public List<WorkOrderDiscCode> DiscoveryList { get { return DAL.GetWorkOrderDiscCodes(); } }
         public List<WorkOrderSymptCode> SymptomList { get { return DAL.GetWorkOrderSymptCodes(); } }
         public List<MaintenancePriority> PriorityList { get { return DAL.GetWorkOrderPrioCodes(); } }
-        public ObservableCollection<ReportTemplateViewModel> Templates { get; set; }
+        public ObservableCollection<FaultReportTemplateViewModel> Templates { get; set; }
 
-        public ReportTemplateViewModel SelectedTemplate
+        public FaultReportTemplateViewModel SelectedTemplate
         {
             get { return _selectedTemplate; }
             set { _selectedTemplate = value;  Notify(); }
@@ -35,7 +35,7 @@ namespace IDUNv2.ViewModels
             SelectedTemplate.Dirty = false;
         }
 
-        public ReportsPageViewModel()
+        public FaultReportTemplateFormViewModel()
         {
             SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
         }
@@ -44,13 +44,13 @@ namespace IDUNv2.ViewModels
         {
             await DAL.FillCaches();
             var temp = await DAL.GetFaultReportTemplates();
-            Templates = new ObservableCollection<ReportTemplateViewModel>(temp.Select(t => new ReportTemplateViewModel(t)));
+            Templates = new ObservableCollection<FaultReportTemplateViewModel>(temp.Select(t => new FaultReportTemplateViewModel(t)));
             SelectedTemplate = Templates.FirstOrDefault();
         }
 
         public void CreateTemplate()
         {
-            SelectedTemplate = new ReportTemplateViewModel(new FaultReportTemplate { Name = "#New Template" });
+            SelectedTemplate = new FaultReportTemplateViewModel(new FaultReportTemplate { Name = "#New Template" });
             SelectedTemplate.Dirty = true;
             Templates.Add(SelectedTemplate);
         }

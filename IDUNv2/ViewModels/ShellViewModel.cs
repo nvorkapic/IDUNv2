@@ -18,12 +18,12 @@ namespace IDUNv2.ViewModels
 
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
-            new NavMenuItem { Label = "Sensors", Symbol = Symbol.ViewAll, PageType = typeof(Pages.SensorPage) },
+            new NavMenuItem { Label = "Sensor Overview", Symbol = Symbol.ViewAll, PageType = typeof(Pages.SensorOverviewPage) },
             new NavMenuItem { Label = "Fault Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
-            new NavMenuItem { Label = "Templates", Symbol = Symbol.Document, PageType = typeof(Pages.FaultReportTemplatesPage) },
+            new NavMenuItem { Label = "Templates", Symbol = Symbol.Document, PageType = typeof(Pages.FaultReportTemplateFormPage) },
             new NavMenuItem { Label = "Additional Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.LEDControlPage) },            
-            new NavMenuItem { Label = "Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorSettingPage) },
-            new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.ServerSettingPage) },
+            new NavMenuItem { Label = "Sensor Settings", Symbol = Symbol.Setting, PageType = typeof(Pages.SensorTriggerSettingsPage) },
+            new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) },
         };
 

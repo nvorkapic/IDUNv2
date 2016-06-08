@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class ReportListViewModel : NotifyBase
+    public class FaultReportListingViewModel : NotifyBase
     {
         public List<FaultReport> Reports { get; set; }
 

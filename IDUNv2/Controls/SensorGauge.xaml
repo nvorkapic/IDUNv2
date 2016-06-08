@@ -12,8 +12,8 @@
     <UserControl.Resources>
         <conv:SensorStateToColorConverter x:Key="StateColorConverter" />
     </UserControl.Resources>
-    <StackPanel Background="Black">
-        <Button VerticalAlignment="Top">
+    <StackPanel>
+        <Button VerticalAlignment="Top" Background="Black">
             <StackPanel>
                 <TextBlock Text="{Binding Name}" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <local:Gauge

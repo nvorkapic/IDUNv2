@@ -1,15 +1,12 @@
-﻿using IDUNv2.Models;
-using IDUNv2.ViewModels;
-using Newtonsoft.Json;
+﻿using IDUNv2.Common;
+using IDUNv2.SensorLib;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -20,19 +17,31 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public sealed partial class MeasurementPage : Page
+    public class SensorSettingsViewModel : NotifyBase
     {
-        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        private Sensor _sensor;
 
-        public MeasurementPage()
+        public Sensor Sensor
+        {
+            get { return _sensor; }
+            set { _sensor = value; Notify(); }
+        }
+    }
+
+    public sealed partial class SensorSettingsPage : Page
+    {
+        private SensorSettingsViewModel viewModel = new SensorSettingsViewModel();
+
+        public SensorSettingsPage()
         {
             this.InitializeComponent();
+            this.DataContext = viewModel;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            viewModel.Sensor = e.Parameter as Sensor;
         }
     }
 }

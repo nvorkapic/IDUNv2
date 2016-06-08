@@ -20,13 +20,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public sealed partial class ServerSettingPage : Page
+    public sealed partial class DeviceSettingsPage : Page
     {
         //Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel();
 
-        public ServerSettingPage()
+        public DeviceSettingsPage()
         {
             this.InitializeComponent();
             this.DataContext = viewModel;

@@ -1,5 +1,5 @@
 ﻿<Page RequestedTheme="Dark"
-    x:Class="IDUNv2.Pages.ServerSettingPage"
+    x:Class="IDUNv2.Pages.DeviceSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IDUNv2.Pages"

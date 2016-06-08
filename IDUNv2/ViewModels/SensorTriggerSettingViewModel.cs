@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class SensorTriggerViewModel : NotifyBase
+    public class SensorTriggerSettingViewModel : NotifyBase
     {
         public ObservableCollection<SensorTrigger> SensorTriggerList { get; set; }
 
         public SensorTriggerComparer[] Comparers { get; set; }
         public List<FaultReportTemplate> Templates { get; set; }
 
-        public SensorTriggerViewModel()
+        public SensorTriggerSettingViewModel()
         {
             Comparers = Enum.GetValues(typeof(SensorTriggerComparer)).Cast<SensorTriggerComparer>().ToArray();
             Templates = DAL.GetFaultReportTemplates().Result;

@@ -20,7 +20,7 @@ namespace IDUNv2.Pages
 {
     public sealed partial class FaultReportListingPage : Page
     {
-        private ReportListViewModel viewModel = new ReportListViewModel();
+        private FaultReportListingViewModel viewModel = new FaultReportListingViewModel();
 
         public FaultReportListingPage()
         {
