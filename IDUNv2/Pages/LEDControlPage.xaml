@@ -78,12 +78,12 @@
             <ToolTip.Content>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0">Saved LED Images</TextBlock>
-                    <ListView Grid.Row="1" x:Name="LoadLedList" SelectionMode="Single" SelectionChanged="LoadLedList_SelectionChanged" VerticalAlignment="Top" Height="300" ScrollViewer.VerticalScrollMode="Auto"/>
+                    <ListView Grid.Row="1" x:Name="LoadLedList" SelectionMode="Single" SelectionChanged="LoadLedList_SelectionChanged" VerticalAlignment="Top" Height="300" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="2">
                         <Button Margin="5" Click="DeleteLoad_Click">Delete Selected</Button>
                         <Button Margin="5" Click="Load_Click">Load</Button>

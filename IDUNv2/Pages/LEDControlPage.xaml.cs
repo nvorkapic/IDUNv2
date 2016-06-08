@@ -303,6 +303,13 @@ namespace IDUNv2.Pages
             }
         }
 
+        private void EmptyBuffer()
+        {
+            for (int i=0; i < ledMatrix.buffer.Length; i++)
+            {
+                ledMatrix.buffer[i] = 0;
+            }
+        }
         private void ClearLEDStatus()
         {
             int x = 0;
@@ -457,6 +464,7 @@ namespace IDUNv2.Pages
         {
             try
             {
+                EmptyBuffer();
                 ClearLEDStatus();
 
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
@@ -536,7 +544,8 @@ namespace IDUNv2.Pages
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "LED Image Saved", "LED Image " + LED.Name + " saved.\nDescription: "+ LED.Description);
 
-
+                ClearLEDStatus();
+                EmptyBuffer();
             }
             catch
             {
@@ -561,6 +570,7 @@ namespace IDUNv2.Pages
 
         private void ClearLED_Click(object sender, RoutedEventArgs e)
         {
+            EmptyBuffer();
             ClearLEDStatus();
         }
 
