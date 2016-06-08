@@ -156,5 +156,10 @@ namespace IDUNv2.Pages
             var list = (ListView)sender;
             list.SelectedItem = list.Items.FirstOrDefault();
         }
+
+        private void NotificationALLViewed_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.NotificationList.Clear();
+        }
     }
 }
