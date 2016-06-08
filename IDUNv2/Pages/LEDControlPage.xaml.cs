@@ -1,4 +1,5 @@
 ﻿using System;
+using IDUNv2.Common;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -19,14 +20,19 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using IDUNv2.ViewModels;
+using Newtonsoft.Json;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace IDUNv2.Pages
 {
-    public class LedMatrix
+    public class LedMatrix : IDisposable
     {
         private I2cDevice device;
         public byte[] buffer = new byte[1 + 192];
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        
 
         private async Task<I2cDevice> GetDeviceAsync()
         {
@@ -54,13 +60,15 @@ namespace IDUNv2.Pages
             }
             var data = new byte[1 + 192];
             device?.Write(data);
+
+            
         }
 
-        public void LoadBuffer()
+        public void LoadBuffer(byte[] buff)
         {
             try
             {
-                buffer = (byte[])localSettings.Values["LEDBuffer"];
+                buffer = buff;
                 Flush();
             }
             catch
@@ -68,6 +76,7 @@ namespace IDUNv2.Pages
 
             }
         }
+
 
         public void SaveBuffer()
         {
@@ -82,15 +91,19 @@ namespace IDUNv2.Pages
             buffer[i + 16] = b;
         }
 
-        
-        //public int GetPixel(int x, int y)
-        //{
-            
-        //}
 
         public void Flush()
         {
             device?.Write(buffer);
+        }
+
+        public void Dispose()
+        {
+            if (device != null)
+            {
+                device.Dispose();
+                device = null;
+            }
         }
     }
 
@@ -221,13 +234,23 @@ namespace IDUNv2.Pages
         private byte r5 = 31, g6 = 63, b5 = 31;
         Bitmap ledBitmap;
         private int px, py;
+        public string SavedLEDImageName = string.Empty;
 
         public LEDControlPage()
         {
             this.InitializeComponent();
             this.Loaded += LEDControlPage_Loaded;
+
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
             ledMatrix = new LedMatrix();
             ledMatrix.Init();
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            ledMatrix.Dispose();
         }
 
         private void LEDControlPage_Loaded(object sender, RoutedEventArgs e)
@@ -260,6 +283,7 @@ namespace IDUNv2.Pages
             ledMatrix.Flush();
         }
 
+  
         private void UpdateLedStatus()
         {
             for (int y = 0; y < 8; y++)
@@ -276,6 +300,16 @@ namespace IDUNv2.Pages
                         ledStatus[y * 8 + x] = true;
                     }
                 }
+            }
+        }
+
+        private void ClearLEDStatus()
+        {
+            int x = 0;
+            foreach (var i in ledStatus)
+            {
+                ledStatus[x] = false;
+                x++;
             }
         }
         private void LedImage_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -379,15 +413,18 @@ namespace IDUNv2.Pages
             this.Frame.Navigate(typeof(SpeechSynthesisPage), null);
         }
 
-        private void SaveCurrent_Click(object sender, RoutedEventArgs e)
+        private  void SaveCurrent_Click(object sender, RoutedEventArgs e)
         {
-            //ledMatrix.SaveBuffer();
-
+            LEDImageNameTB.Text = string.Empty;
+            LEDImageDescriptionTB.Text = string.Empty;
             SaveLEDToolTip.Visibility = Visibility.Visible;
-
-            //ledImages.Add(new LEDImage { Name = (dialogBox.FindName("TBName") as TextBox).Text, Description = (dialogBox.FindName("TBDesc") as TextBox).Text, Buffer = ledMatrix.buffer });
         }
 
+        public class SavedLEDImages
+        {
+            public string Name { get; set; }
+            public StorageFile StorageFile { get; set; }
+        }
         public class LEDImage
         {
             public string Name { get; set; }
@@ -395,12 +432,161 @@ namespace IDUNv2.Pages
             public byte[] Buffer { get; set; }
         }
 
-        public ObservableCollection<LEDImage> ledImages = new ObservableCollection<LEDImage>();
-
-        private void LoadCurrent_Click(object sender, RoutedEventArgs e)
+        private async void LoadCurrent_Click(object sender, RoutedEventArgs e)
         {
-            ledMatrix.LoadBuffer();
-            UpdateLedStatus();
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            StorageFolder LEDFolder = await localFolder.GetFolderAsync("LEDImages");
+
+            IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
+
+            List<string> LEDImagesList = new List<string>();
+
+            foreach (StorageFile item in LEDFiles)
+            {
+                LEDImagesList.Add(item.Name);
+            }
+
+            LoadLedList.ItemsSource = LEDImagesList;
+
+            LoadLEDToolTip.Visibility = Visibility.Visible;
+        }
+
+
+        private async void Load_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ClearLEDStatus();
+
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+                StorageFolder LEDFolder = await localFolder.GetFolderAsync("LEDImages");
+
+                var file = await LEDFolder.GetFileAsync(SavedLEDImageName);
+
+                var data = await file.OpenReadAsync();
+                
+                StreamReader r = new StreamReader(data.AsStream());
+
+                string text = r.ReadToEnd();
+
+                var Image = JsonConvert.DeserializeObject<LEDImage>(text);
+
+                ledMatrix.LoadBuffer(Image.Buffer);
+
+                UpdateLedStatus();
+
+                LoadLEDToolTip.Visibility = Visibility.Collapsed;
+            }
+            catch
+            {
+
+            }
+            
+        }
+
+        private void LoadCancel_Click(object sender, RoutedEventArgs e)
+        {
+            LoadLEDToolTip.Visibility = Visibility.Collapsed;
+        }
+
+        private void LEDImageNameTB_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = (TextBox)sender;
+            osk.SetTarget(tb);
+            osk.Visibility = Visibility.Visible;
+        }
+
+        private void LEDImageNameTB_LostFocus(object sender, RoutedEventArgs e)
+        {
+            osk.Visibility = Visibility.Collapsed;
+        }
+
+        private void LEDImageDescriptionTB_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = (TextBox)sender;
+            osk.SetTarget(tb);
+            osk.Visibility = Visibility.Visible;
+        }
+
+        private async void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                byte[] TempBuffer = new byte[ledMatrix.buffer.Length];
+
+                Array.Copy(ledMatrix.buffer, TempBuffer, ledMatrix.buffer.Length);
+
+                var LED = new LEDImage { Name = LEDImageNameTB.Text, Description = LEDImageDescriptionTB.Text, Buffer = TempBuffer };
+
+                string json = JsonConvert.SerializeObject(LED);
+
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+                StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
+
+                var LEDFile = await LEDFolder.CreateFileAsync(LEDImageNameTB.Text, CreationCollisionOption.FailIfExists);
+
+                await Windows.Storage.FileIO.WriteTextAsync(LEDFile, json);
+
+                SaveLEDToolTip.Visibility = Visibility.Collapsed;
+
+                LEDSaveSameNameWarning.Visibility = Visibility.Collapsed;
+
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "LED Image Saved", "LED Image " + LED.Name + " saved.\nDescription: "+ LED.Description);
+
+
+            }
+            catch
+            {
+                LEDSaveSameNameWarning.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            LEDImageNameTB.Text = string.Empty;
+            LEDImageDescriptionTB.Text = string.Empty;
+            SaveLEDToolTip.Visibility = Visibility.Collapsed;
+            LEDSaveSameNameWarning.Visibility = Visibility.Collapsed;
+        }
+
+        private void LoadLedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = ((ListView)sender).SelectedItem;
+            SavedLEDImageName = (string)item;
+
+        }
+
+        private void ClearLED_Click(object sender, RoutedEventArgs e)
+        {
+            ClearLEDStatus();
+        }
+
+        private async void DeleteLoad_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+                StorageFolder LEDFolder = await localFolder.GetFolderAsync("LEDImages");
+
+                var file = await LEDFolder.GetFileAsync(SavedLEDImageName);
+
+                await file.DeleteAsync();
+
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "LED Image Deleted", SavedLEDImageName);
+
+                SavedLEDImageName = string.Empty;
+
+                LoadLEDToolTip.Visibility = Visibility.Collapsed;
+            }
+            catch
+            {
+
+            }
+            
         }
 
         private void sliderRed_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)

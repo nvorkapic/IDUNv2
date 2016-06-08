@@ -47,8 +47,9 @@
         </StackPanel>
         <Button Content="Try Speech Synthesis" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="toSpeech_Click"></Button>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button Content="Save Current" Click="SaveCurrent_Click"></Button>
-            <Button Content="Load Saved" Click="LoadCurrent_Click"></Button>
+            <Button Content="Save Current" Click="SaveCurrent_Click" Width="110"/>
+            <Button Content="Load Saved" Click="LoadCurrent_Click" Width="110"/>
+            <Button Content="Clear LED" Click="ClearLED_Click" Width="110"/>
         </StackPanel>
 
         <ToolTip x:Name="SaveLEDToolTip" Visibility="Collapsed">
@@ -56,17 +57,37 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
                         <TextBlock Text="Enter LED Image Name:"></TextBlock>
-                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB" GotFocus=""></TextBox>
+                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB" GotFocus="LEDImageNameTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus"></TextBox>
                         <TextBlock Text="Image Description:"></TextBlock>
-                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB"></TextBox>
+                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB" GotFocus="LEDImageDescriptionTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus"></TextBox>
                     </StackPanel>
+                    <TextBlock FontWeight="Bold" Foreground="Red" Grid.Row="1" Text="File with that name already exists!" Visibility="Collapsed" x:Name="LEDSaveSameNameWarning"></TextBlock>
                     <StackPanel Orientation="Horizontal" Grid.Row="2">
-                        <Button Margin="5">Save</Button>
-                        <Button Margin="5">Cancel</Button>
+                        <Button Margin="5" Click="Save_Click">Save</Button>
+                        <Button Margin="5" Click="Cancel_Click">Cancel</Button>
+                    </StackPanel>
+                </Grid>
+            </ToolTip.Content>
+        </ToolTip>
+        <ToolTip x:Name="LoadLEDToolTip" Visibility="Collapsed">
+            <ToolTip.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0">Saved LED Images</TextBlock>
+                    <ListView Grid.Row="1" x:Name="LoadLedList" SelectionMode="Single" SelectionChanged="LoadLedList_SelectionChanged" VerticalAlignment="Top" Height="300" ScrollViewer.VerticalScrollMode="Auto"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2">
+                        <Button Margin="5" Click="DeleteLoad_Click">Delete Selected</Button>
+                        <Button Margin="5" Click="Load_Click">Load</Button>
+                        <Button Margin="5" Click="LoadCancel_Click">Cancel</Button>
                     </StackPanel>
                 </Grid>
             </ToolTip.Content>
