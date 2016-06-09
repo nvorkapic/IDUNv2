@@ -26,13 +26,13 @@ namespace IDUNv2.Pages
         public FaultReportTemplateFormPage()
         {
             this.InitializeComponent();
+            this.DataContext = viewModel;
             this.Loaded += Templates_Loaded;
         }
 
         private async void Templates_Loaded(object sender, RoutedEventArgs e)
         {
             await viewModel.InitAsync();
-            this.DataContext = viewModel;
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
