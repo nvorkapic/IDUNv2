@@ -447,7 +447,7 @@ namespace IDUNv2.Pages
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
-            StorageFolder LEDFolder = await localFolder.GetFolderAsync("LEDImages");
+            StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
 
             IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
 
