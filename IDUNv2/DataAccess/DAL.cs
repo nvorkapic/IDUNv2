@@ -68,6 +68,14 @@ namespace IDUNv2.DataAccess
                 username = username ?? "alex";
                 password = password ?? "alex";
 
+                if (!DeviceSettings.HasSettings())
+                {
+                    DeviceSettings.URL = url;
+                    DeviceSettings.SystemID = systemid;
+                    DeviceSettings.Username = username;
+                    DeviceSettings.Password = password;
+                }
+
                 var cloudUrl = CommonDictionary.CloudUrls[url];
                 var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
 

@@ -12,9 +12,9 @@ namespace IDUNv2.ViewModels
 {
     public class SensorOverviewViewModel : NotifyBase
     {
-        public Sensor TemperatureSensor { get { return DAL.SensorWatcher.TemperatureSensor; } }
-        public Sensor HumiditySensor { get { return DAL.SensorWatcher.HumiditySensor; } }
-        public Sensor PressureSensor { get { return DAL.SensorWatcher.PressureSensor; } }
+        public Sensor TemperatureSensor { get; private set; }
+        public Sensor HumiditySensor { get; private set; }
+        public Sensor PressureSensor { get; private set; }
 
         #region Bias Values
 
@@ -50,6 +50,9 @@ namespace IDUNv2.ViewModels
         public SensorOverviewViewModel()
         {
             ResetCommand = new ActionCommand<string>(ResetCommand_Execute);
+            TemperatureSensor = DAL.SensorWatcher.GetSensor(SensorId.Temperature);
+            HumiditySensor = DAL.SensorWatcher.GetSensor(SensorId.Humidity);
+            PressureSensor = DAL.SensorWatcher.GetSensor(SensorId.Pressure);
         }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.SensorLib
 {
-    public class SensorReadings
+    public struct SensorReadings
     {
-        public float? Temperature { get; set; }
-        public float? Humidity { get; set; }
-        public float? Pressure { get; set; }
+        public float? Temperature;
+        public float? Humidity;
+        public float? Pressure;
     }
 }

@@ -60,7 +60,7 @@ namespace IDUNv2.Pages
 
         private void Timer_Tick(object sender, object e)
         {
-            SensorReadings readings = new SensorReadings();
+            SensorReadings readings;
 
             if (DAL.SensorWatcher.IsValid)
             {
@@ -79,9 +79,7 @@ namespace IDUNv2.Pages
             readings.Humidity += viewModel.BiasHumid;
             readings.Pressure += viewModel.BiasPress;
 
-            DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.TemperatureSensor, readings);
-            DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.HumiditySensor, readings);
-            DAL.SensorWatcher.UpdateSensor(DAL.SensorWatcher.PressureSensor, readings);
+            DAL.SensorWatcher.UpdateSensors(readings);
         }
     }
 }

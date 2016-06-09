@@ -39,5 +39,10 @@ namespace IDUNv2.DataAccess
             get { return localSettings.Values["Password"] as string; }
             set { localSettings.Values["Password"] = value; }
         }
+
+        public static bool HasSettings()
+        {
+            return SystemID != null && URL != null && Username != null && Password != null;
+        }
     }
 }

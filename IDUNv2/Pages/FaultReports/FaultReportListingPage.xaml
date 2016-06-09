@@ -47,7 +47,6 @@
                  Grid.ColumnSpan="5"
                  ItemsSource="{Binding Reports}"
                  ItemTemplate="{StaticResource FaultReportData}"
-                 SelectedItem="{Binding SelectedReport, Mode=TwoWay}"
                  Tapped="ListBox_Tapped"
                  />
     </Grid>
