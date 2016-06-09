@@ -21,7 +21,7 @@ namespace IDUNv2.SensorLib
         }
 
         public abstract Task Init();
-        public abstract void Update(SensorReadings readings);
+        public abstract void GetReadings(ref SensorReadings readings);
 
         protected async Task GetDevice(int addr, I2cBusSpeed speed = I2cBusSpeed.StandardMode, I2cSharingMode sharing = I2cSharingMode.Exclusive)
         {

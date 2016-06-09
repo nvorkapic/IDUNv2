@@ -76,9 +76,9 @@ namespace IDUNv2.SensorLib
                 pollTimer = ThreadPoolTimer.CreatePeriodicTimer(timer =>
                 {
                     if (hts221.IsValid)
-                        hts221.Update(Readings);
+                        hts221.GetReadings(ref Readings);
                     if (lps25h.IsValid)
-                        lps25h.Update(Readings);
+                        lps25h.GetReadings(ref Readings);
 
                 }, TimeSpan.FromMilliseconds(period));
             });

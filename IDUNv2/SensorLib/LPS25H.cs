@@ -49,7 +49,7 @@ namespace IDUNv2.SensorLib
             WriteByte(C_Ctrl2, 0x40);
         }
 
-        public override void Update(SensorReadings readings)
+        public override void GetReadings(ref SensorReadings readings)
         {
             var status = Read8(C_Status);
             if ((status & 2) == 2)
