@@ -85,7 +85,7 @@ namespace IDUNv2.Pages
             viewModel.IsPaneOpen = !viewModel.IsPaneOpen;
         }
 
-        private void NavMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        private void NavMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lv = sender as ListView;
             var item = lv.SelectedItem as NavMenuItem;
