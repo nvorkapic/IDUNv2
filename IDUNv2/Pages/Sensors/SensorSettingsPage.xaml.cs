@@ -76,8 +76,10 @@ namespace IDUNv2.Pages
 
         public override string ToString()
         {
-  
-            return $"TriggerId: {Model.Id} ON value {Model.Comparer.ToString().ToUpper()} {Model.Value} with TemplateID {Model.TemplateId}";
+            if (Model.TemplateId == 0)
+                return $"Existing Trigger Not Configured: Enter and Save Changes!";
+            else
+                return $"TriggerId: {Model.Id} ON value {Model.Comparer.ToString().ToUpper()} {Model.Value} with TemplateID {Model.TemplateId}";
         }
     }
 
@@ -231,6 +233,24 @@ namespace IDUNv2.Pages
             var selectedItem = (FaultReportTemplate)cb.SelectedItem;
             viewModel.SelectedTrigger.TemplateId = selectedItem.Id;
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var lb = (ListBox)sender;
+            if (lb.SelectedIndex != -1)
+            {
+                CreateTriggerButton.Visibility = Visibility.Collapsed;
+                EditTriggerPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                CreateTriggerButton.Visibility = Visibility.Visible;
+                EditTriggerPanel.Visibility = Visibility.Collapsed;
+            }
+            
+        }
+
+
 
 
         //private void TemplateSelectionChange(object sender, SelectionChangedEventArgs e)
