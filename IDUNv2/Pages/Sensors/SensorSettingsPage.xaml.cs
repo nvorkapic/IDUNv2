@@ -134,6 +134,8 @@ namespace IDUNv2.Pages
         private void SaveCommand_Execute(object param)
         {
             Sensor.SaveToLocalSettings();
+            
+            
         }
 
         private async void CreateTriggerCommand_Execute(object param)
@@ -156,7 +158,10 @@ namespace IDUNv2.Pages
         }
         private async void SaveChangesTriggerCommand_Execute(object param)
         {
-                SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
+            SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
+
+            var triggers = DAL.GetSensorTriggers().Result;
+            Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
         }
 
         private async void RemoveTriggerCommand_Execute(object param)
