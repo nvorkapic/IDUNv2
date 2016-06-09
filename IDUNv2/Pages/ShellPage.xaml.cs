@@ -54,6 +54,11 @@ namespace IDUNv2.Pages
             }
         }
 
+        public void SetPageTitle(string title)
+        {
+            viewModel.PageTitle = title;
+        }
+
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -85,7 +90,7 @@ namespace IDUNv2.Pages
             viewModel.IsPaneOpen = !viewModel.IsPaneOpen;
         }
 
-        private void NavMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        private void NavMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lv = sender as ListView;
             var item = lv.SelectedItem as NavMenuItem;

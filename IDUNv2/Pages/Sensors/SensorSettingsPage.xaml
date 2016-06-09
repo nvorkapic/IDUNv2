@@ -9,47 +9,46 @@
     xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot Title="{Binding Sensor.Name}">
+        <Pivot>
             <PivotItem Header="General">
                 <StackPanel HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Header="Name:"
-                         Width="400"
-                         Text="{Binding Sensor.Name, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TextBox_LostFocus"/>
-                        <TextBox Header="Unit:"
-                         Width="195"
-                         Margin="10,0,0,0"
-                         Text="{Binding Sensor.Unit, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TextBox_LostFocus"/>
+                        <TextBox
+                            Header="Unit:"
+                            Width="195"
+                            Text="{Binding Sensor.Unit, Mode=TwoWay}"
+                            GotFocus="TextBox_GotFocus"
+                            LostFocus="TextBox_LostFocus"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Header="Range (min):"
-                         Width="195"
-                         Text="{Binding Sensor.RangeMin, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TextBox_LostFocus"/>
-                        <TextBox Header="Range (max):"
-                         Width="195"
-                         Margin="10,0,0,0"
-                         Text="{Binding Sensor.RangeMax, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TextBox_LostFocus"/>
+                        <TextBox
+                            Header="Range (min):"
+                            Width="195"
+                            Text="{Binding Sensor.RangeMin, Mode=TwoWay}"
+                            GotFocus="TextBox_GotFocus"
+                            LostFocus="TextBox_LostFocus"/>
+                        <TextBox
+                            Header="Range (max):"
+                            Width="195"
+                            Margin="10,0,0,0"
+                            Text="{Binding Sensor.RangeMax, Mode=TwoWay}"
+                            GotFocus="TextBox_GotFocus"
+                            LostFocus="TextBox_LostFocus"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Header="Danger (low):"
-                         Width="195"
-                         Text="{Binding Sensor.DangerLo, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TextBox_LostFocus"/>
-                        <TextBox Header="Danger (high):"
-                         Width="195"
-                         Margin="10,0,0,0"
-                         Text="{Binding Sensor.DangerHi, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TextBox_LostFocus"/>
+                        <TextBox
+                            Header="Danger (low):"
+                            Width="195"
+                            Text="{Binding Sensor.DangerLo, Mode=TwoWay}"
+                            GotFocus="TextBox_GotFocus"
+                            LostFocus="TextBox_LostFocus"/>
+                        <TextBox
+                            Header="Danger (high):"
+                            Width="195"
+                            Margin="10,0,0,0"
+                            Text="{Binding Sensor.DangerHi, Mode=TwoWay}"
+                            GotFocus="TextBox_GotFocus"
+                            LostFocus="TextBox_LostFocus"/>
                     </StackPanel>
                     <Button Content="Save" Margin="0,10,0,0" Command="{Binding SaveCommand}" />
                 </StackPanel>

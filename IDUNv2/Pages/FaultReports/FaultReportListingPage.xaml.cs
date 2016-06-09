@@ -1,4 +1,5 @@
-﻿using IDUNv2.DataAccess;
+﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.DataAccess;
 using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,26 +21,29 @@ namespace IDUNv2.Pages
 {
     public sealed partial class FaultReportListingPage : Page
     {
-        private FaultReportListingViewModel viewModel = new FaultReportListingViewModel();
+        public List<FaultReport> Reports { get; private set; } = new List<FaultReport>();
 
         public FaultReportListingPage()
         {
             this.InitializeComponent();
+            this.DataContext = this;
             Loaded += ReportListPage_Loaded;
         }
 
         private async void ReportListPage_Loaded(object sender, RoutedEventArgs e)
         {
+            this.DataContext = null;
             ShellPage.SetSpinner(LoadingState.Loading);
             var reports = await DAL.GetFaultReports();
             ShellPage.SetSpinner(LoadingState.Finished);
-            viewModel.Reports = reports.OrderByDescending(r => r.RegDate).ToList();
-            this.DataContext = viewModel;
+            Reports = reports.OrderByDescending(r => r.RegDate).ToList();
+            this.DataContext = this;
         }
 
         private void ListBox_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Pages.FaultReportDetailsPage), viewModel.SelectedReport, new DrillInNavigationTransitionInfo());
+            var lb = sender as ListBox;
+            Frame.Navigate(typeof(Pages.FaultReportDetailsPage), lb.SelectedItem, new DrillInNavigationTransitionInfo());
         }
     }
 }

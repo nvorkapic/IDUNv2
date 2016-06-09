@@ -97,7 +97,7 @@ namespace IDUNv2.SensorLib
             convertHumidity = GetHumidityConverter();
         }
 
-        public override void Update(SensorReadings readings)
+        public override void GetReadings(ref SensorReadings readings)
         {
             var status = Read8(C_Status);
 

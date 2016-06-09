@@ -27,9 +27,6 @@
             <TextBlock Text="{Binding Label}" Margin="15,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
-    <DataTemplate x:Key="SubMenuData">
-        <TextBlock Text="{Binding Label}" TextAlignment="Center"/>
-    </DataTemplate>
 
     <!--ReportPage-->
     <con:DirtyFlagConverter x:Key="DirtyFlag" />

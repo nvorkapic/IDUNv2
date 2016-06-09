@@ -1,9 +1,17 @@
 ﻿using IDUNv2.Common;
+using Newtonsoft.Json;
 using System;
 using System.Reflection;
 
 namespace IDUNv2.SensorLib
 {
+    public enum SensorId
+    {
+        Temperature,
+        Humidity,
+        Pressure
+    }
+
     public enum SensorState
     {
         Offline,
@@ -13,6 +21,26 @@ namespace IDUNv2.SensorLib
 
     public class Sensor : NotifyBase
     {
+        private class SensorSettings
+        {
+            public float RangeMin;
+            public float RangeMax;
+            public float DangerLo;
+            public float DangerHi;
+            public string ValueStringFormat;
+            public string Unit;
+
+            public string ToJson()
+            {
+                return JsonConvert.SerializeObject(this);
+            }
+
+            public static SensorSettings CreateFromJson(string json)
+            {
+                return JsonConvert.DeserializeObject<SensorSettings>(json);
+            }
+        }
+
         #region Value Ring Buffer
         /// <summary>
         /// Size of databuffer. Must be a power of two.
@@ -26,13 +54,10 @@ namespace IDUNv2.SensorLib
 
         #region Notify Fields
 
-        private string _name;
         private float _rangeMin;
         private float _rangeMax;
         private float _dangerLo;
         private float _dangerHi;
-        private int? _templateLoId;
-        private int? _templateHiId;
         private SensorState _state;
         private float _value;
         private string _valueStringFormat;
@@ -42,12 +67,6 @@ namespace IDUNv2.SensorLib
         #endregion
 
         #region Notify Properties
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; Notify(); }
-        }
 
         public float RangeMin
         {
@@ -71,18 +90,6 @@ namespace IDUNv2.SensorLib
         {
             get { return _dangerHi; }
             set { _dangerHi = value; Notify(); }
-        }
-
-        public int? TemplateLoId
-        {
-            get { return _templateLoId; }
-            set { _templateLoId = value; Notify(); }
-        }
-
-        public int? TemplateHiId
-        {
-            get { return _templateHiId; }
-            set { _templateHiId = value; Notify(); }
         }
 
         public SensorState State
@@ -117,28 +124,16 @@ namespace IDUNv2.SensorLib
 
         #endregion
 
-        #region Saved Properties
-
-        private static readonly string[] savedPropNames =
-        {
-            "RangeMin",
-            "RangeMax",
-            "DangerHi",
-            "DangerLo",
-            "TemplateLoId",
-            "TemplateHiId",
-            "ValueStringFormat",
-            "Unit"
-        };
-
-        #endregion
+        public SensorId Id { get; private set; }
 
         private Func<SensorReadings, float?> readingExtracter;
+        private readonly string settingsKey;
 
-        public Sensor(Func<SensorReadings, float?> readingExtracter, string name, float rangeMin, float rangeMax, string unit, string valueStringFormat = "F2")
+        public Sensor(SensorId id, Func<SensorReadings, float?> readingExtracter, float rangeMin, float rangeMax, string unit, string valueStringFormat = "F2")
         {
             this.readingExtracter = readingExtracter;
-            Name = name;
+            settingsKey = "sensor." + (int)id;
+            Id = id;
             RangeMin = rangeMin;
             RangeMax = rangeMax;
             DangerLo = rangeMin;
@@ -164,52 +159,41 @@ namespace IDUNv2.SensorLib
             }
         }
 
-        public void SetDangerLo(float val, int templateId)
-        {
-            DangerLo = val;
-            TemplateLoId = templateId;
-        }
-
-        public void SetDangerHi(float val, int templateId)
-        {
-            DangerHi = val;
-            TemplateHiId = templateId;
-        }
-
         private bool HasSettingsValues()
         {
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            return localSettings.Values[_name + "." + savedPropNames[0]] != null;
-        }
-
-        private void SavePropertyFromContainer(Windows.Storage.ApplicationDataContainer container, string propName)
-        {
-            var pi = GetType().GetProperty(propName);
-            container.Values[_name + "." + propName] = pi.GetValue(this);
-        }
-
-        private void LoadPropertyFromContainer(Windows.Storage.ApplicationDataContainer container, string propName)
-        {
-            var pi = GetType().GetProperty(propName);
-            var val = container.Values[_name + "." + propName];
-            pi.SetValue(this, val);
+            return localSettings.Values[settingsKey] != null;
         }
 
         public void SaveToLocalSettings()
         {
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            foreach (var name in savedPropNames)
+            var ss = new SensorSettings
             {
-                SavePropertyFromContainer(localSettings, name);
-            }
+                RangeMin = RangeMin,
+                RangeMax = RangeMax,
+                DangerLo = DangerLo,
+                DangerHi = DangerHi,
+                ValueStringFormat = ValueStringFormat,
+                Unit = Unit
+            };
+
+            localSettings.Values[settingsKey] = ss.ToJson();
         }
 
         public void LoadFromLocalSettings()
         {
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            foreach (var name in savedPropNames)
+            var json = localSettings.Values[settingsKey] as string;
+            var ss = SensorSettings.CreateFromJson(json);
+            if (ss != null)
             {
-                LoadPropertyFromContainer(localSettings, name);
+                RangeMin = ss.RangeMin;
+                RangeMax = ss.RangeMax;
+                DangerLo = ss.DangerLo;
+                DangerHi = ss.DangerHi;
+                ValueStringFormat = ss.ValueStringFormat;
+                Unit = ss.Unit;
             }
         }
     }

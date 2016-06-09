@@ -19,7 +19,7 @@
         <RelativePanel Height="50"  Background="{StaticResource StandardBackground}">
             <StackPanel Orientation="Horizontal">
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="{StaticResource ButtonBrush}" Click="NavMenuExpand_Click"/>
-                <TextBlock Text="{Binding SelectedNavMenuItem.Label}" VerticalAlignment="Center" FontSize="25" Margin="10" Foreground="{StaticResource StandardForeground}"></TextBlock>
+                <TextBlock Text="{Binding PageTitle}" FontWeight="Bold" VerticalAlignment="Center" Margin="10" Foreground="{StaticResource StandardForeground}"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
                 <Image Source="/Assets/CloudIcon.png" Margin="15,0,10,0"></Image>
@@ -36,11 +36,13 @@
                    IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}">
             <SplitView.Pane>
                 <Grid>
-                    <ListView ItemsSource="{Binding NavList}"
-                          SelectedItem="{Binding SelectedNavMenuItem}"
-                          ItemTemplate="{StaticResource NavMenuData}"
-                          Background="{StaticResource MainMenuBrush}"
-                          Tapped="NavMenu_Tapped" />
+                    <ListView
+                        ItemsSource="{Binding NavList}"
+                        SelectedItem="{Binding SelectedNavMenuItem}"
+                        ItemTemplate="{StaticResource NavMenuData}"
+                        Background="{StaticResource MainMenuBrush}"
+                        SelectionChanged="NavMenu_SelectionChanged"
+                        />
                     <Button  VerticalAlignment="Bottom" Click="NotificationIconTap" Background="{StaticResource MainMenuBrush}" Width="175"  Canvas.ZIndex="10">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="-70,0,-87,0">
@@ -109,9 +111,9 @@
         </StackPanel>
         <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="50" x:Name="SpinnerPanel" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" Orientation="Horizontal">
-            <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="40" Margin="5,0,0,0"></Image>
-            <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
-        </StackPanel>
+                <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="40" Margin="5,0,0,0"></Image>
+                <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
+            </StackPanel>
         </Grid>
         <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="50" x:Name="NotificationButton" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
             <Button Width="auto" Background="{x:Null}" Click="NotificationButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">

@@ -14,6 +14,7 @@ namespace IDUNv2.ViewModels
 {
     public class FaultReportTemplateFormViewModel : NotifyBase
     {
+        private ObservableCollection<FaultReportTemplateViewModel> _templates;
         private FaultReportTemplateViewModel _selectedTemplate;
 
         public ActionCommand<object> SaveCommand { get; private set; }
@@ -21,7 +22,13 @@ namespace IDUNv2.ViewModels
         public List<WorkOrderDiscCode> DiscoveryList { get { return DAL.GetWorkOrderDiscCodes(); } }
         public List<WorkOrderSymptCode> SymptomList { get { return DAL.GetWorkOrderSymptCodes(); } }
         public List<MaintenancePriority> PriorityList { get { return DAL.GetWorkOrderPrioCodes(); } }
-        public ObservableCollection<FaultReportTemplateViewModel> Templates { get; set; }
+
+
+        public ObservableCollection<FaultReportTemplateViewModel> Templates
+        {
+            get { return _templates; }
+            set { _templates = value; Notify(); }
+        }
 
         public FaultReportTemplateViewModel SelectedTemplate
         {

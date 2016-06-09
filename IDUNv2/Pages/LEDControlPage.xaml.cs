@@ -247,19 +247,23 @@ namespace IDUNv2.Pages
         {
             ledMatrix = new LedMatrix();
             ledMatrix.Init();
+            ledImage.PointerMoved += LedImage_PointerMoved;
+            ledImage.PointerPressed += LedImage_PointerPressed;
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            ledImage.PointerMoved -= LedImage_PointerMoved;
+            ledImage.PointerPressed -= LedImage_PointerPressed;
+            CompositionTarget.Rendering -= CompositionTarget_Rendering;
             ledMatrix.Dispose();
         }
 
         private void LEDControlPage_Loaded(object sender, RoutedEventArgs e)
         {
-            ledImage.PointerMoved += LedImage_PointerMoved;
-            ledImage.PointerPressed += LedImage_PointerPressed;
             ledBitmap = new Bitmap((int)ledImage.Width, (int)ledImage.Height);
             ledImage.Source = ledBitmap.Sink;
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
 
         private void SetLed(int px, int py)

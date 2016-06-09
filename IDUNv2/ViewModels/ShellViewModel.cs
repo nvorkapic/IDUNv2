@@ -51,9 +51,17 @@ namespace IDUNv2.ViewModels
             set { _isPaneOpen = value; Notify(); }
         }
 
+        private string _pageTitle;
+        public string PageTitle
+        {
+            get { return _pageTitle; }
+            set { _pageTitle = value; Notify(); }
+        }
+
         public void SelectMainMenu(Frame target, NavMenuItem item)
         {
             SelectedNavMenuItem = item;
+            PageTitle = item.Label;
             target.Navigate(item.PageType);
         }
     }
