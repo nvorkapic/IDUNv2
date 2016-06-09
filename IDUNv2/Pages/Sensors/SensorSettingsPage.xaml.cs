@@ -2,6 +2,7 @@
 using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using IDUNv2.SensorLib;
+using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -212,7 +213,7 @@ namespace IDUNv2.Pages
         {
             base.OnNavigatedTo(e);
             viewModel.Sensor = e.Parameter as Sensor;
-            ShellPage.Current.SetPageTitle("Sensor Overview / " + viewModel.Sensor.Id.ToString());
+            DAL.PushNavLink(new NavLinkItem { Title = "Settings", PageType = GetType() });
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)

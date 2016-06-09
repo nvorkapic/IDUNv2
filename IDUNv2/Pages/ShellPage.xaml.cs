@@ -39,6 +39,27 @@ namespace IDUNv2.Pages
             Spinner = SpinnerPanel;
         }
 
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var first = viewModel.NavList.First();
+            viewModel.SelectMainMenu(ContentFrame, first);
+        }
+
+        private void Image_Loaded(object sender, RoutedEventArgs e)
+        {
+            var image = (Image)sender;
+            image.Source = new BitmapImage(new Uri(BaseUri, "Assets/loadinggif.gif"));
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            NotificationButton.Visibility = Visibility.Collapsed;
+            var timer = (DispatcherTimer)sender;
+            timer.Stop();
+        }
+
+        #region Spinner
+
         public static void SetSpinner(LoadingState state)
         {
             if (Spinner == null)
@@ -54,36 +75,9 @@ namespace IDUNv2.Pages
             }
         }
 
-        public void SetPageTitle(string title)
-        {
-            viewModel.PageTitle = title;
-        }
+        #endregion
 
-        private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
-            {
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromMilliseconds(2500);
-                timer.Tick += Timer_Tick;
-                timer.Start();
-                NotificationButton.Visibility = Visibility.Visible;
-
-            }
-                   
-        }
-        private void Timer_Tick(object sender, object e)
-        {
-            NotificationButton.Visibility = Visibility.Collapsed;
-            var timer = (DispatcherTimer)sender;
-            timer.Stop();
-        }
-
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            var first = viewModel.NavList.First();
-            viewModel.SelectMainMenu(ContentFrame, first);
-        }
+        #region Navigation
 
         private void NavMenuExpand_Click(object sender, RoutedEventArgs e)
         {
@@ -95,6 +89,58 @@ namespace IDUNv2.Pages
             var lv = sender as ListView;
             var item = lv.SelectedItem as NavMenuItem;
             viewModel.SelectMainMenu(ContentFrame, item);
+        }
+
+        public void PushNavLink(NavLinkItem item)
+        {
+            var last = viewModel.NavLinks.LastOrDefault();
+            if (last != null && last.Title == item.Title)
+                return;
+            viewModel.NavLinks.Add(item);
+        }
+
+        public void PopNavLink()
+        {
+            viewModel.NavLinks.RemoveAt(viewModel.NavLinks.Count - 1);
+        }
+
+        private void NavLink_Click(object sender, RoutedEventArgs e)
+        {
+            var hyper = sender as HyperlinkButton;
+            var item = hyper.Tag as NavLinkItem;
+            PopNavLinksTo(item);
+            ContentFrame.Navigate(item.PageType);
+        }
+
+        private void PopNavLinksTo(NavLinkItem item)
+        {
+            var links = viewModel.NavLinks;
+            int i = links.IndexOf(item);
+            if (i != -1)
+            {
+                int n = viewModel.NavLinks.Count - 1 - i;
+                while (n > 0)
+                {
+                    links.RemoveAt(links.Count - 1);
+                    --n;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Notifications
+
+        private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(2500);
+                timer.Tick += Timer_Tick;
+                timer.Start();
+                NotificationButton.Visibility = Visibility.Visible;
+            }
         }
 
         public void AddNotificatoin(NotificationType Type, string ShortDescription, string LongDescription)
@@ -140,12 +186,6 @@ namespace IDUNv2.Pages
             }
         }
 
-        private void Image_Loaded(object sender, RoutedEventArgs e)
-        {
-            var image = (Image)sender;
-            image.Source = new BitmapImage(new Uri(BaseUri, "Assets/loadinggif.gif"));
-        }
-
         private void NotificationIconTap(object sender, RoutedEventArgs e)
         {
             NotificationButton.Visibility = Visibility.Collapsed;
@@ -168,5 +208,7 @@ namespace IDUNv2.Pages
         {
             viewModel.NotificationList.Clear();
         }
+
+        #endregion
     }
 }

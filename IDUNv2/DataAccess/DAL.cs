@@ -4,6 +4,7 @@ using Addovation.Common.Models;
 using IDUNv2.Models;
 using IDUNv2.Pages;
 using IDUNv2.SensorLib;
+using IDUNv2.ViewModels;
 using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
 using System;
@@ -208,7 +209,17 @@ namespace IDUNv2.DataAccess
 
         #endregion
 
-        #region Sensors
+        #region Navigation
+
+        public static void PushNavLink(NavLinkItem item)
+        {
+            ShellPage.Current.PushNavLink(item);
+        }
+
+        public static void PopNavLink()
+        {
+            ShellPage.Current.PopNavLink();
+        }
 
         #endregion
     }

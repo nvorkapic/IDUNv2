@@ -10,6 +10,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace IDUNv2.ViewModels
 {
+    public class NavLinkItem
+    {
+        public string Title { get; set; }
+        public Type PageType { get; set; }
+    }
+
     public class ShellViewModel : NotifyBase
     {
         public ObservableCollection<Notification> NotificationList { get; set; } = new ObservableCollection<Notification>();
@@ -26,6 +32,8 @@ namespace IDUNv2.ViewModels
             new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) },
         };
+
+        public ObservableCollection<NavLinkItem> NavLinks { get; set; } = new ObservableCollection<NavLinkItem>();
 
         public ShellViewModel()
         {
@@ -51,17 +59,19 @@ namespace IDUNv2.ViewModels
             set { _isPaneOpen = value; Notify(); }
         }
 
-        private string _pageTitle;
-        public string PageTitle
-        {
-            get { return _pageTitle; }
-            set { _pageTitle = value; Notify(); }
-        }
+        //private string _pageTitle;
+        //public string PageTitle
+        //{
+        //    get { return _pageTitle; }
+        //    set { _pageTitle = value; Notify(); }
+        //}
 
         public void SelectMainMenu(Frame target, NavMenuItem item)
         {
             SelectedNavMenuItem = item;
-            PageTitle = item.Label;
+            if (NavLinks.Count > 0)
+                NavLinks.Clear();
+            NavLinks.Add(new NavLinkItem { Title = item.Label, PageType = item.PageType });
             target.Navigate(item.PageType);
         }
     }
