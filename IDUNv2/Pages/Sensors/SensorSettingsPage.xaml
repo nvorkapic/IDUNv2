@@ -55,8 +55,41 @@
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Triggers">
-                <StackPanel>
-                    <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal">
+                    <ToolTip HorizontalAlignment="Right" Height="300" VerticalAlignment="Top">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Model.Value, Mode=TwoWay}" />
+                                <StackPanel Margin="10,25,0,0" VerticalAlignment="Center">
+                                    <RadioButton Margin="0,0,0,0"
+                            			GroupName="TriggerComparer"
+                            			Content="Below"
+                            			IsChecked="{Binding SelectedTrigger.ComparerBelow, Mode=TwoWay}"
+                            			VerticalAlignment="Bottom" />
+                                    <RadioButton Margin="0,0,0,0"
+                            			GroupName="TriggerComparer" Content="Above"
+                            			IsChecked="{Binding SelectedTrigger.ComparerAbove, Mode=TwoWay}"
+                            			VerticalAlignment="Bottom" />
+                                </StackPanel>
+                            </StackPanel>
+                            <ComboBox Header="Template" Width="200" Margin="0,10,0,0" ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Margin="10" Content="Create Trigger" Command="{Binding CreateTriggerCommand}"/>
+                                <Button Margin="10" Content="Save Changes" Command="{Binding SaveChangesTriggerCommand}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Margin="10" Content="Remove Trigger"/>
+                                <Button Margin="10" Content="Remove All"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ToolTip>
+                    <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top"/>
                     <!--<ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -65,29 +98,6 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>-->
-                    <ToolTip>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox Width="120" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Model.Value, Mode=TwoWay}" />
-                                <RadioButton Margin="10,0,0,0"
-                                             GroupName="TriggerComparer"
-                                             Content="Below"
-                                             IsChecked="{Binding SelectedTrigger.ComparerBelow, Mode=TwoWay}"
-                                             VerticalAlignment="Bottom" />
-                                <RadioButton Margin="-30,0,0,0"
-                                             GroupName="TriggerComparer" Content="Above"
-                                             IsChecked="{Binding SelectedTrigger.ComparerAbove, Mode=TwoWay}"
-                                             VerticalAlignment="Bottom" />
-                            </StackPanel>
-                            <ComboBox Header="Template" Width="300">
-                                <ComboBoxItem>Template 1</ComboBoxItem>
-                                <ComboBoxItem>Template 2</ComboBoxItem>
-                                <ComboBoxItem>Template 3</ComboBoxItem>
-                            </ComboBox>
-                            <Button Margin="0,10,0,0" Content="Add Trigger" Command="{Binding AddTriggerCommand}"/>
-                        </StackPanel>
-                    </ToolTip>
-
                 </StackPanel>
             </PivotItem>
         </Pivot>

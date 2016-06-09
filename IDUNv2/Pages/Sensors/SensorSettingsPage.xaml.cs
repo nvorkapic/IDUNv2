@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -47,18 +48,19 @@ namespace IDUNv2.Pages
             set { Comparer = SensorTriggerComparer.Above; }
         }
 
-
-        public SensorTrigger Model { get; set; }
+        private SensorTrigger _model;
+        public SensorTrigger Model { get {return _model;} set {_model = value; Notify(); }  }
 
         public SensorTriggerViewModel(SensorTrigger model)
         {
             Model = model;
             Comparer = model.Comparer;
+            
         }
 
         public override string ToString()
         {
-            return $"TriggerId: {Model.Id} ON value {Model.Comparer.ToString().ToUpper()} {Model.Value}";
+            return $"TriggerId: {Model.Id} ON value {Model.Comparer.ToString().ToUpper()} {Model.Value} with TemplateID {Model.TemplateId}";
         }
     }
 
@@ -79,10 +81,20 @@ namespace IDUNv2.Pages
             set { _selectedTrigger = value; Notify(); }
         }
 
+        public List<FaultReportTemplate> Templates { get; set; }
+
+        private FaultReportTemplate _selectedTemplate;
+        public FaultReportTemplate SelectedTemplate
+        {
+            get { return _selectedTemplate; }
+            set { _selectedTemplate = value; Notify(); }
+        }
+
         #region Command Bindings
 
         public ActionCommand<object> SaveCommand { get; set; }
-        public ActionCommand<object> AddTriggerCommand { get; set; }
+        public ActionCommand<object> CreateTriggerCommand { get; set; }
+        public ActionCommand<object> SaveChangesTriggerCommand { get; set; }
 
         #endregion
 
@@ -91,22 +103,46 @@ namespace IDUNv2.Pages
         public SensorSettingsViewModel()
         {
             SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
-            AddTriggerCommand = new ActionCommand<object>(AddTriggerCommand_Execute);
-
+            CreateTriggerCommand = new ActionCommand<object>(CreateTriggerCommand_Execute);
+            SaveChangesTriggerCommand = new ActionCommand<object>(SaveChangesTriggerCommand_Execute);
             SelectedTrigger = new SensorTriggerViewModel(new SensorTrigger());
-
+            Templates = new List<FaultReportTemplate>();
             var triggers = DAL.GetSensorTriggers().Result;
             Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
         }
+
 
         private void SaveCommand_Execute(object param)
         {
             Sensor.SaveToLocalSettings();
         }
 
-        private void AddTriggerCommand_Execute(object param)
+        private async void CreateTriggerCommand_Execute(object param)
         {
+           
+            var Filling = new SensorTrigger { Comparer = SelectedTrigger.Comparer, Value = SelectedTrigger.Model.Value, TemplateId = SelectedTemplate.Id };
+            if (await CheckIfTriggerExists(Filling) == false)
+            {
+                Filling = await DAL.SetSensorTrigger(Filling);
+                Triggers.Add(new SensorTriggerViewModel(Filling));
+            }
+            
+        }
+        private async void SaveChangesTriggerCommand_Execute(object param)
+        {
+            if (SelectedTrigger != null)
+                SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
+        }
 
+        public async Task<bool> CheckIfTriggerExists(SensorTrigger Trigger)
+        {
+            var SensorTriggerList = await DAL.GetSensorTriggers();
+            foreach (var item in SensorTriggerList)
+            {
+                if (item.Comparer == Trigger.Comparer && item.Value == Trigger.Value && item.TemplateId == Trigger.TemplateId)
+                    return true;
+            }
+            return false;
         }
     }
 
@@ -118,6 +154,13 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
+            this.Loaded += SensorSettingsPage_Loaded;
+            
+        }
+
+        private async void SensorSettingsPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            viewModel.Templates = await DAL.GetFaultReportTemplates();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -138,5 +181,13 @@ namespace IDUNv2.Pages
             osk.SetTarget(null as TextBox);
             osk.Visibility = Visibility.Collapsed;
         }
+
+        //private void TemplateSelectionChange(object sender, SelectionChangedEventArgs e)
+        //{
+        //    var cb = (ComboBox)sender;
+        //    selectedItem = (ViewModels.FaultReportTemplateViewModel)cb.SelectedItem;
+            
+        //}
+
     }
 }
