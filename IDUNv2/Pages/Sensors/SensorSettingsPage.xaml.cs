@@ -155,7 +155,6 @@ namespace IDUNv2.Pages
             this.InitializeComponent();
             this.DataContext = viewModel;
             this.Loaded += SensorSettingsPage_Loaded;
-            
         }
 
         private async void SensorSettingsPage_Loaded(object sender, RoutedEventArgs e)
@@ -167,7 +166,7 @@ namespace IDUNv2.Pages
         {
             base.OnNavigatedTo(e);
             viewModel.Sensor = e.Parameter as Sensor;
-            //viewModel.Sensor = DAL.SensorWatcher.TemperatureSensor;
+            ShellPage.Current.SetPageTitle("Sensor Overview / " + viewModel.Sensor.Id.ToString());
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)

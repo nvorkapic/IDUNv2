@@ -9,7 +9,7 @@
     xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot Title="{Binding Sensor.Id}">
+        <Pivot>
             <PivotItem Header="General">
                 <StackPanel HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">

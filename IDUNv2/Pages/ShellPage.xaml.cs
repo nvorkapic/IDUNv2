@@ -54,6 +54,11 @@ namespace IDUNv2.Pages
             }
         }
 
+        public void SetPageTitle(string title)
+        {
+            viewModel.PageTitle = title;
+        }
+
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
