@@ -51,7 +51,7 @@ namespace IDUNv2.ViewModels
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             LatestNotification = NotificationList.FirstOrDefault();
-            NotificationNumber = "Messages: " + NotificationList.Count.ToString();
+            NotificationNumber = NotificationList.Count.ToString();
         }
 
         private NavMenuItem _selectedNavMenuItem;

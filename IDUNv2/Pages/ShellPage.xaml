@@ -17,16 +17,38 @@
                     IsOpen="False"
                     IsSticky="True"
                     FlowDirection="RightToLeft"
-                    VerticalAlignment="Center">
+                    >
             <CommandBar.Content>
-                <Button Background="{x:Null}" MinWidth="50" Height="45" Click="NotificationButton_Click">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding NotificationNumber}" Margin="5"></TextBlock>
-                            <FontIcon Glyph="&#59658;" FontFamily="Segoe MDL2 Assets" Margin="5"></FontIcon>
+                <StackPanel Orientation="Horizontal">
+                    <Button Background="{x:Null}" Width="110" Height="45" Click="NotificationButton_Click">
+                        <Button.Content>
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding NotificationNumber}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                <FontIcon Glyph="&#59658;" FontFamily="Segoe MDL2 Assets" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></FontIcon>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                    <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" x:Name="SpinnerPanel" Visibility="Collapsed" Height="45" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" Orientation="Horizontal">
+                            <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
+                            <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="35" Margin="5,0,0,0"></Image>
                         </StackPanel>
-                    </Button.Content>
-                </Button>
+                    </Grid>
+                    <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="45" x:Name="NotificationButton" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
+                        <Button Width="auto" Background="{x:Null}" Click="NotificationButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding LatestNotification, Converter={StaticResource NotifyIcon}}" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{Binding LatestNotification.ShortDescription}" VerticalAlignment="Center"></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </StackPanel>
             </CommandBar.Content>
         </CommandBar>
     </Page.BottomAppBar>
@@ -140,13 +162,13 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="50" x:Name="SpinnerPanel" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
+        <!--<Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" x:Name="SpinnerPanel" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" Orientation="Horizontal">
-                <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="40" Margin="5,0,0,0"></Image>
+                <Image  gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif" Height="35" Margin="5,0,0,0"></Image>
                 <TextBlock Text="Loading..." FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
             </StackPanel>
-        </Grid>
-        <Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="50" x:Name="NotificationButton" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
+        </Grid>-->
+        <!--<Grid VerticalAlignment="Bottom" Grid.RowSpan="2" Background="{StaticResource MainMenuBrush}" Height="50" x:Name="NotificationButton" Visibility="Collapsed" HorizontalAlignment="Right" Width="250" Margin="0,0,0,5">
             <Button Width="auto" Background="{x:Null}" Click="NotificationButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -155,7 +177,7 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-        </Grid>
+        </Grid>-->
         <osk:OnScreenKeyBoard x:Name="osk"
                               Grid.Row="1"
                               Margin="50,0,0,-45"
