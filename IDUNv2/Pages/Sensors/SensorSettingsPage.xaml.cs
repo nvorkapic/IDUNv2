@@ -22,175 +22,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public class SensorTriggerViewModel : NotifyBase
-    {
-        private SensorTriggerComparer _comparer = SensorTriggerComparer.Below;
-
-        public SensorTriggerComparer Comparer
-        {
-            get { return _comparer; }
-            set
-            {
-                _comparer = value;
-                Model.Comparer = value;
-                Notify("ComparerBelow");
-                Notify("ComparerAbove");
-            }
-        }
-
-        public bool ComparerBelow
-        {
-            get { return Comparer == SensorTriggerComparer.Below; }
-            set { Comparer = SensorTriggerComparer.Below;}
-        }
-
-        public bool ComparerAbove
-        {
-            get { return Comparer == SensorTriggerComparer.Above; }
-            set { Comparer = SensorTriggerComparer.Above; }
-        }
-
-        private SensorTrigger _model;
-        public SensorTrigger Model { get {return _model;} set {_model = value; Notify(); }  }
-
-        public SensorTriggerViewModel(SensorTrigger model)
-        {
-            Model = model;
-            Comparer = model.Comparer;
-            
-        }
-        public int Id
-        {
-            get { return Model.Id; }
-            set { Model.Id = value; Notify(); }
-        }
-        public int TemplateId
-        {
-            get { return Model.TemplateId; }
-            set { Model.TemplateId = value; Notify(); }
-        }
-        public float Value
-        {
-            get { return Model.Value; }
-            set { Model.Value = value; Notify(); }
-        }
-
-        public override string ToString()
-        {
-            if (Model.TemplateId == 0)
-                return $"Existing Trigger Not Configured: Enter and Save Changes!";
-            else
-                return $"TriggerId: {Model.Id} ON value {Model.Comparer.ToString().ToUpper()} {Model.Value} with TemplateID {Model.TemplateId}";
-        }
-    }
-
-    public class SensorSettingsViewModel : NotifyBase
-    {
-        private Sensor _sensor;
-        private SensorTriggerViewModel _selectedTrigger;
-
-        public Sensor Sensor
-        {
-            get { return _sensor; }
-            set { _sensor = value; Notify(); }
-        }
-
-        public SensorTriggerViewModel SelectedTrigger
-        {
-            get { return _selectedTrigger; }
-            set { _selectedTrigger = value; Notify(); }
-        }
-
-        public List<FaultReportTemplate> Templates { get; set; }
-
-        private FaultReportTemplate _selectedTemplate;
-        public FaultReportTemplate SelectedTemplate
-        {
-            get { return _selectedTemplate; }
-            set { _selectedTemplate = value; Notify(); }
-        }
-
-        private ObservableCollection<SensorTriggerViewModel> _triggers;
-        public ObservableCollection<SensorTriggerViewModel> Triggers { get {return _triggers; } set {_triggers = value; Notify(); } }
-
-        public SensorSettingsViewModel()
-        {
-            NavigationItems();
-            SelectedTrigger = new SensorTriggerViewModel(new SensorTrigger());
-            Templates = new List<FaultReportTemplate>();
-            var triggers = DAL.GetSensorTriggers().Result;
-            Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
-        }
-
-
-        private void SaveCommand_Execute(object param)
-        {
-            Sensor.SaveToLocalSettings();
-            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Sensor Saved", "Sensor Settings Changes Saved!");
-        }
-
-        private async void CreateTriggerCommand_Execute(object param)
-        {
-           try
-            {
-                SelectedTrigger = new SensorTriggerViewModel( new SensorTrigger {});
-                SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
-                Triggers.Add(new SensorTriggerViewModel(SelectedTrigger.Model));
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Created", "Empty Trigger Created.");
-            }
-            catch
-            {
-            }         
-        }
-
-        private async void SaveChangesTriggerCommand_Execute(object param)
-        {
-            string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has had its' changes saved.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
-            SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
-            var triggers = DAL.GetSensorTriggers().Result;
-            Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
-            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Changes Saved", NotificationDescription);
-        }
-
-        private async void RemoveTriggerCommand_Execute(object param)
-        {
-            try
-            {
-                string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has been deleted.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value+"\nTemplate Id: "+ SelectedTrigger.Model.TemplateId;
-                SelectedTrigger.Model = await DAL.DeleteSensorTrigger(SelectedTrigger.Model);
-                Triggers.Remove(SelectedTrigger);
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Deleted", NotificationDescription);
-
-            }
-            catch
-            {
-            }
-        }
-
-        public ICollection<CmdBarItem> GeneralItems { get; private set; }
-        public ICollection<CmdBarItem> TriggerStandard { get; private set; }
-        public ICollection<CmdBarItem> TriggerSelected { get; private set; }
-
-        private void NavigationItems()
-        {
-
-            GeneralItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Save, "Save Sensor", SaveCommand_Execute)
-            };
-            TriggerSelected = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Delete, "Remove Trigger",RemoveTriggerCommand_Execute),
-                new CmdBarItem(Symbol.Save, "Save Trigger", SaveChangesTriggerCommand_Execute),
-                new CmdBarItem(Symbol.Add, "Create Trigger", CreateTriggerCommand_Execute)
-            };
-            TriggerStandard = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Add, "Create Trigger", CreateTriggerCommand_Execute)
-            };
-        }
-    }
-
     public sealed partial class SensorSettingsPage : Page
     {
         private SensorSettingsViewModel viewModel = new SensorSettingsViewModel();
@@ -199,13 +30,7 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
-            this.Loaded += SensorSettingsPage_Loaded;
-        }
-
-        private async void SensorSettingsPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-            viewModel.Templates = await DAL.GetFaultReportTemplates();
+            this.Loaded += async (s, e) => await viewModel.InitAsync();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -222,7 +47,7 @@ namespace IDUNv2.Pages
         }
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            DAL.ShowOSK(sender as TextBox);      
+            DAL.ShowOSK(sender as TextBox);
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -230,42 +55,29 @@ namespace IDUNv2.Pages
             DAL.ShowOSK(null);
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Templates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lb = (ListView)sender;
-            if (lb.SelectedIndex != -1)
+            var cb = (ComboBox)sender;
+            var item = (FaultReportTemplate)cb.SelectedItem;
+            if (item != null)
             {
-                DAL.SetCmdBarItems(null);
-                DAL.SetCmdBarItems(viewModel.TriggerSelected);
-                EditTriggerPanel.Visibility = Visibility.Visible;
+                viewModel.SelectedTrigger.TemplateId = item.Id;
             }
-            else
-            {
-                DAL.SetCmdBarItems(null);
-                DAL.SetCmdBarItems(viewModel.TriggerStandard);
-                EditTriggerPanel.Visibility = Visibility.Collapsed;
-            }
-            
+        }
+
+        private void Triggers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            viewModel.UpdateSelectedTemplate();
         }
 
         private void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
         {
-            DAL.SetCmdBarItems(null);
             if (args.Item.Header.ToString() == "General")
-                DAL.SetCmdBarItems(viewModel.GeneralItems);
+                DAL.SetCmdBarItems(viewModel.GeneralCmdBarItems);
             else
             {
-                if (TriggerListBox.SelectedItem != null)
-                    DAL.SetCmdBarItems(viewModel.TriggerSelected);
-                else
-                    DAL.SetCmdBarItems(viewModel.TriggerStandard);
-            }              
-        }
-
-        private void TriggerListBox_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-        {
-            var lv = (ListView)sender;
-            lv.SelectedItem = lv.Items.LastOrDefault();
+                DAL.SetCmdBarItems(viewModel.TriggerCmdBarItems);
+            }
         }
     }
 }

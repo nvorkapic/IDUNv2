@@ -14,29 +14,29 @@
             <StackPanel>
                 <TextBox Width="350"
                          Header="ObjectId"
-                         Text="{Binding ObjectID}"
+                         Text="{Binding ObjectID, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TBLostFocus"/>
                 <TextBox Width="350"
                          Header="CloudUrl"
-                         Text="{Binding URL}"
+                         Text="{Binding URL, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TBLostFocus"/>
                 <TextBox Width="350"
                          Header="SystemID"
-                         Text="{Binding SystemID}"
+                         Text="{Binding SystemID, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TBLostFocus"/>
             </StackPanel>
             <StackPanel Margin="10,0,0,0">
                 <TextBox Width="350"
                          Header="Username"
-                         Text="{Binding Username}"
+                         Text="{Binding Username, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TBLostFocus"/>
                 <PasswordBox Width="350"
                              Header="Username"
-                             Password="{Binding Password}"
+                             Password="{Binding Password, Mode=TwoWay}"
                              GotFocus="PasswordBox_GotFocus"
                              LostFocus="TBLostFocus"/>
             </StackPanel>

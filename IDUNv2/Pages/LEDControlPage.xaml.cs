@@ -190,23 +190,25 @@ namespace IDUNv2.Pages
             }
         }
 
-        public unsafe void Grid(int rows, int cols, uint color)
+        public unsafe void Grid(int rows, int cols, int pad, uint color)
         {
-            int dx = (Width - 14) / cols;
-            int dy = (Height - 14) / rows;
+            int dx = (Width - (cols-1)*pad) / cols;
+            int dy = (Height - (rows-1)*pad) / rows;
             int x = dx;
             int y = dy;
+            dx += pad;
+            dy += pad;
             for (int i = 0; i < cols - 1; ++i)
             {
                 _vline(x + 0, 0, Height - 1, color);
                 _vline(x + 1, 0, Height - 1, color);
-                x += dx + 2;
+                x += dx;
             }
             for (int i = 0; i < rows - 1; ++i)
             {
                 _hline(y + 0, 0, Width - 1, color);
                 _hline(y + 1, 0, Width - 1, color);
-                y += dy + 2;
+                y += dy;
             }
         }
 
@@ -230,6 +232,10 @@ namespace IDUNv2.Pages
 
     public sealed partial class LEDControlPage : Page
     {
+        const int LedSize = 40;
+        const int LedPad = 2;
+        const int LedSizeNoPad = LedSize - LedPad;
+
         private LedMatrix ledMatrix;
         private bool[] ledStatus = new bool[8 * 8];
         private byte r5 = 31, g6 = 63, b5 = 31;
@@ -272,10 +278,10 @@ namespace IDUNv2.Pages
 
         private void SetLed(int px, int py)
         {
-            int xpad = (px / 50) * 2;
-            int ypad = (py / 50) * 2;
-            int x = (px - xpad) / 48;
-            int y = (py - ypad) / 48;
+            int xpad = (px / LedSize) * LedPad;
+            int ypad = (py / LedSize) * LedPad;
+            int x = (px - xpad) / (LedSize - LedPad);
+            int y = (py - ypad) / (LedSize - LedPad);
             int i = y * 8 + x;
 
             //Debug.WriteLine("set led: {0}, {1} [{2}]", x, y, i);
@@ -348,24 +354,24 @@ namespace IDUNv2.Pages
         private void CompositionTarget_Rendering(object sender, object e)
         {
             ledBitmap.Clear();
-            ledBitmap.Grid(8, 8, 0x000000);
+            ledBitmap.Grid(8, 8, LedPad, 0x000000);
 
-            int rx = (px / 50) * 50;
-            int ry = (py / 50) * 50;
+            int rx = (px / LedSize) * LedSize;
+            int ry = (py / LedSize) * LedSize;
 
-            ledBitmap.Rect(rx, ry, 48, 48, 0xCCCCCC);
+            ledBitmap.Rect(rx, ry, LedSizeNoPad, LedSizeNoPad, 0xCCCCCC);
 
             for (int i = 0; i < 64; ++i)
             {
                 int x = (i & 7);
                 int y = (i >> 3);
-                int px = x * 48;
-                int py = y * 48;
+                int px = x * LedSizeNoPad;
+                int py = y * LedSizeNoPad;
                 if (ledStatus[i])
                 {
-                    if (x > 0) px += x * 2;
-                    if (y > 0) py += y * 2;
-                    ledBitmap.Rect(px, py, 48, 48, 0x006633);
+                    if (x > 0) px += x * LedPad;
+                    if (y > 0) py += y * LedPad;
+                    ledBitmap.Rect(px, py, LedSizeNoPad, LedSizeNoPad, 0x006633);
                 }
             }
 
@@ -395,7 +401,6 @@ namespace IDUNv2.Pages
 
         private void UpdateColorPreview()
         {
-            var colorPreview = FindName("colorPreview") as Rectangle;
             if (colorPreview != null)
             {
                 byte r = (byte)((r5 * 255) >> 5);
@@ -632,12 +637,12 @@ namespace IDUNv2.Pages
             CmdBarItems = new CmdBarItem[]
                 {
                 // first item added will be to the right
-                new CmdBarItem(Symbol.Microphone, "Speech\nSynthesis",NavigateToSpeech),
-                new CmdBarItem(Symbol.Delete, "Clear LED", ClearLED),
-                new CmdBarItem(Symbol.OpenFile, "Load LED", LoadLED),
+                new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
+                new CmdBarItem(Symbol.Delete, "Clear", ClearLED),
+                new CmdBarItem(Symbol.OpenFile, "Load", LoadLED),
 
                 // last item added will be the left most one
-                new CmdBarItem(Symbol.Save, "Save LED", SaveLED),
+                new CmdBarItem(Symbol.Save, "Save", SaveLED),
                 };
         }
 

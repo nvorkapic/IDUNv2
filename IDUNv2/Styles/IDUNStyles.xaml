@@ -33,12 +33,7 @@
     <DataTemplate x:Key="FaultCodeData">
         <TextBlock Text="{Binding Description}"/>
     </DataTemplate>
-    <DataTemplate x:Key="TemplateListData">
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Name}" />
-            <TextBlock Text="{Binding Dirty, Converter={StaticResource DirtyFlag}}" Margin="5,0,0,0" Foreground="Red" />
-        </StackPanel>
-    </DataTemplate>
+
     <Style x:Key="LabelStyle" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />

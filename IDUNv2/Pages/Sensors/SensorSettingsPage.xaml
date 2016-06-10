@@ -8,6 +8,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="TriggerListData">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Id}"/>
+                <TextBlock Grid.Column="1" Text="{Binding Comparer}"/>
+                <TextBlock Grid.Column="2" Text="{Binding Value}"/>
+                <TextBlock Grid.Column="3" Text="{Binding TemplateId}"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot PivotItemLoaded="Pivot_PivotItemLoaded">
             <PivotItem Header="General">
@@ -54,8 +70,39 @@
             </PivotItem>
             <PivotItem Header="Triggers">
                 <Grid>
-                    <ListView ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" x:Name="TriggerListBox" ContainerContentChanging="TriggerListBox_ContainerContentChanging"/>
-                    <ToolTip HorizontalAlignment="Right" MaxHeight="330" VerticalAlignment="Center" x:Name="EditTriggerPanel" Visibility="Collapsed" Margin="0,0,0,50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="0" FontWeight="Bold" Text="Id" VerticalAlignment="Top"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="1" FontWeight="Bold" Text="Comparer"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="2" FontWeight="Bold" Text="Value"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="3" FontWeight="Bold" Text="Template"/>
+                        <ListBox
+                            Margin="0,0,0,10"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="4"
+                            ItemsSource="{Binding Triggers}"
+                            ItemTemplate="{StaticResource TriggerListData}"
+                            SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}"
+                            SelectionChanged="Triggers_SelectionChanged">
+                        </ListBox>
+                    </Grid>
+                    <ToolTip Grid.Column="1"
+                             MaxHeight="330"
+                             VerticalAlignment="Top"
+                             Visibility="Visible" Margin="10,0,0,0">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
@@ -71,7 +118,12 @@
                             			VerticalAlignment="Bottom" />
                                 </StackPanel>
                             </StackPanel>
-                            <ComboBox Header="Template" Width="200" Margin="0,10,0,0" ItemsSource="{Binding Templates}" SelectedValue="{Binding SelectedTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id">
+                            <ComboBox Header="Template"
+                                      Width="200"
+                                      Margin="0,10,0,0"
+                                      ItemsSource="{Binding Templates}"
+                                      SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"
+                                      SelectionChanged="Templates_SelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Name}"/>
