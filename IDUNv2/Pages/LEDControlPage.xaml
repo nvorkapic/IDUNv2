@@ -10,7 +10,7 @@
     <Grid Background="{StaticResource StandardBackground}">
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Horizontal">
-                <Image x:Name="ledImage" HorizontalAlignment="Left" Height="398" VerticalAlignment="Center" Width="398" Margin="5"/>
+                <Image x:Name="ledImage" HorizontalAlignment="Left" Height="318" VerticalAlignment="Center" Width="318" Margin="5"/>
             </StackPanel>
             <Grid HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5">
                 <Grid.RowDefinitions>

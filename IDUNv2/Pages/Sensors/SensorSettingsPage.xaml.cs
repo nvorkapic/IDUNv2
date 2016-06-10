@@ -170,7 +170,7 @@ namespace IDUNv2.Pages
 
             GeneralItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Save, "Save Sensor", SaveCommand_Execute)
+                new CmdBarItem(Symbol.Save, "Save", SaveCommand_Execute)
             };
             TriggerSelected = new CmdBarItem[]
             {
