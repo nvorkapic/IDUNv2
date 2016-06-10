@@ -54,7 +54,7 @@
             </PivotItem>
             <PivotItem Header="Triggers">
                 <Grid>
-                    <ListView ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" x:Name="TriggerListBox" ContainerContentChanging="TriggerListBox_ContainerContentChanging"/>
+                    <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged"/>
                     <ToolTip HorizontalAlignment="Right" MaxHeight="330" VerticalAlignment="Center" x:Name="EditTriggerPanel" Visibility="Collapsed" Margin="0,0,0,50">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >

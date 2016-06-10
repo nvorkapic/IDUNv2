@@ -154,7 +154,7 @@ namespace IDUNv2.Pages
             {
                 SelectedTrigger.Model = await DAL.DeleteSensorTrigger(SelectedTrigger.Model);
                 Triggers.Remove(SelectedTrigger);
-                
+                SelectedTrigger = Triggers.LastOrDefault();
             }
             catch
             {
@@ -226,7 +226,7 @@ namespace IDUNv2.Pages
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lb = (ListView)sender;
+            var lb = (ListBox)sender;
             if (lb.SelectedIndex != -1)
             {
                 DAL.SetCmdBarItems(null);
@@ -249,17 +249,11 @@ namespace IDUNv2.Pages
                 DAL.SetCmdBarItems(viewModel.GeneralItems);
             else
             {
-                if (TriggerListBox.SelectedItem != null)
+                if (viewModel.SelectedTrigger != null)
                     DAL.SetCmdBarItems(viewModel.TriggerSelected);
                 else
                     DAL.SetCmdBarItems(viewModel.TriggerStandard);
             }              
-        }
-
-        private void TriggerListBox_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-        {
-            var lv = (ListView)sender;
-            lv.SelectedItem = lv.Items.LastOrDefault();
         }
     }
 }
