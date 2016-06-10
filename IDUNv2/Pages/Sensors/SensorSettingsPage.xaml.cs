@@ -24,7 +24,14 @@ namespace IDUNv2.Pages
 {
     public class SensorTriggerViewModel : NotifyBase
     {
+        #region Notify Fields
+
         private SensorTriggerComparer _comparer = SensorTriggerComparer.Below;
+        private SensorTrigger _model;
+
+        #endregion
+
+        #region Notify Properties
 
         public SensorTriggerComparer Comparer
         {
@@ -50,29 +57,37 @@ namespace IDUNv2.Pages
             set { Comparer = SensorTriggerComparer.Above; }
         }
 
-        private SensorTrigger _model;
-        public SensorTrigger Model { get {return _model;} set {_model = value; Notify(); }  }
-
-        public SensorTriggerViewModel(SensorTrigger model)
+        public SensorTrigger Model
         {
-            Model = model;
-            Comparer = model.Comparer;
-            
+            get { return _model; }
+            set { _model = value; Notify(); }
         }
+
         public int Id
         {
             get { return Model.Id; }
             set { Model.Id = value; Notify(); }
         }
+
         public int TemplateId
         {
             get { return Model.TemplateId; }
             set { Model.TemplateId = value; Notify(); }
         }
+
         public float Value
         {
             get { return Model.Value; }
             set { Model.Value = value; Notify(); }
+        }
+
+        #endregion
+
+        public SensorTriggerViewModel(SensorTrigger model)
+        {
+            Model = model;
+            Comparer = model.Comparer;
+
         }
 
         public override string ToString()
@@ -86,8 +101,16 @@ namespace IDUNv2.Pages
 
     public class SensorSettingsViewModel : NotifyBase
     {
+        #region Notify Fields
+
         private Sensor _sensor;
         private SensorTriggerViewModel _selectedTrigger;
+        private FaultReportTemplate _selectedTemplate;
+        private ObservableCollection<SensorTriggerViewModel> _triggers;
+
+        #endregion
+
+        #region Notify Properties
 
         public Sensor Sensor
         {
@@ -101,18 +124,22 @@ namespace IDUNv2.Pages
             set { _selectedTrigger = value; Notify(); }
         }
 
-        public List<FaultReportTemplate> Templates { get; set; }
-
-        private FaultReportTemplate _selectedTemplate;
         public FaultReportTemplate SelectedTemplate
         {
             get { return _selectedTemplate; }
             set { _selectedTemplate = value; Notify(); }
         }
 
-        private ObservableCollection<SensorTriggerViewModel> _triggers;
-        public ObservableCollection<SensorTriggerViewModel> Triggers { get {return _triggers; } set {_triggers = value; Notify(); } }
+        public ObservableCollection<SensorTriggerViewModel> Triggers
+        {
+            get { return _triggers; }
+            set { _triggers = value; Notify(); }
+        }
 
+        #endregion
+
+        public List<FaultReportTemplate> Templates { get; set; }
+        
         public SensorSettingsViewModel()
         {
             NavigationItems();
@@ -122,10 +149,9 @@ namespace IDUNv2.Pages
             Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
         }
 
-
         private void SaveCommand_Execute(object param)
         {
-            Sensor.SaveToLocalSettings();           
+            Sensor.SaveToLocalSettings();
         }
 
         private async void CreateTriggerCommand_Execute(object param)
@@ -138,11 +164,17 @@ namespace IDUNv2.Pages
             }
             catch
             {
-            }         
+
+            }
         }
 
         private async void SaveChangesTriggerCommand_Execute(object param)
         {
+            if (SelectedTemplate == null)
+            {
+                return;
+            }
+            SelectedTrigger.TemplateId = SelectedTemplate.Id;
             SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
             var triggers = DAL.GetSensorTriggers().Result;
             Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
@@ -198,8 +230,7 @@ namespace IDUNv2.Pages
 
         private async void SensorSettingsPage_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            viewModel.Templates = await DAL.GetFaultReportTemplates();
+            viewModel.Templates = await DAL.GetFaultReportTemplates(); ;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -224,9 +255,22 @@ namespace IDUNv2.Pages
             DAL.ShowOSK(null);
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Templates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cb = (ComboBox)sender;
+            var selectedItem = (FaultReportTemplate)cb.SelectedItem;
+            viewModel.SelectedTrigger.TemplateId = selectedItem.Id;
+        }
+
+        private void Triggers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lb = (ListBox)sender;
+
+            if (viewModel.SelectedTrigger != null)
+            {
+                viewModel.SelectedTemplate = viewModel.Templates.SingleOrDefault(p => p.Id == viewModel.SelectedTrigger.TemplateId);
+            }
+
             if (lb.SelectedIndex != -1)
             {
                 DAL.SetCmdBarItems(null);

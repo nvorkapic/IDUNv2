@@ -155,6 +155,18 @@ namespace IDUNv2.DataAccess
             return Task.FromResult(template);
         }
 
+        public static Task<bool> DeleteFaultReportTemplate(FaultReportTemplate template)
+        {
+            //string sql = "SELECT id 
+            var q = db.Table<SensorTrigger>().Where(sr => sr.TemplateId == template.Id);
+            if (q.Count() != 0)
+            {
+                return Task.FromResult(false);
+            }
+            db.Delete(template);
+            return Task.FromResult(true);
+        }
+
         public static Task<List<FaultReport>> GetFaultReports()
         {
             return cloud.GetFaultReports();

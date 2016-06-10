@@ -58,15 +58,31 @@ namespace IDUNv2.ViewModels
                 "Template is configured and saved and ready for use!");
         }
 
+        private async void DeleteTemplate(object param)
+        {
+            bool success = await DAL.DeleteFaultReportTemplate(SelectedTemplate.Model);
+            if (success)
+            {
+                ShellPage.Current.AddNotificatoin(NotificationType.Information,
+                    "Template Deleted", $"Successfully deleted template with id: {SelectedTemplate.Model.Id}");
+                if (Templates.Remove(SelectedTemplate))
+                {
+                    SelectedTemplate = Templates.LastOrDefault();
+                }
+            }
+            else
+            {
+                ShellPage.Current.AddNotificatoin(NotificationType.Error,
+                    "Template Delete Error", $"Could not delete template with id: {SelectedTemplate.Model.Id} because it's in use.");
+            }
+        }
+
         public FaultReportTemplateFormViewModel()
         {
             CmdBarItems = new CmdBarItem[]
             {
-                // first item added will be to the right
-                new CmdBarItem(Symbol.Delete, "Delete", o => { return; }),
+                new CmdBarItem(Symbol.Delete, "Delete", DeleteTemplate),
                 new CmdBarItem(Symbol.Save, "Save", SaveTemplate),
-
-                // last item added will be the left most one
                 new CmdBarItem(Symbol.Add, "Create", CreateTemplate),
             };
         }
