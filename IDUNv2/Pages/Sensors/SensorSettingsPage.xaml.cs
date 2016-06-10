@@ -125,7 +125,8 @@ namespace IDUNv2.Pages
 
         private void SaveCommand_Execute(object param)
         {
-            Sensor.SaveToLocalSettings();           
+            Sensor.SaveToLocalSettings();
+            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Sensor Saved", "Sensor Settings Changes Saved!");
         }
 
         private async void CreateTriggerCommand_Execute(object param)
@@ -135,6 +136,7 @@ namespace IDUNv2.Pages
                 SelectedTrigger = new SensorTriggerViewModel( new SensorTrigger {});
                 SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
                 Triggers.Add(new SensorTriggerViewModel(SelectedTrigger.Model));
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Created", "Empty Trigger Created.");
             }
             catch
             {
@@ -143,18 +145,22 @@ namespace IDUNv2.Pages
 
         private async void SaveChangesTriggerCommand_Execute(object param)
         {
+            string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has had its' changes saved.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
             SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
             var triggers = DAL.GetSensorTriggers().Result;
             Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
+            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Changes Saved", NotificationDescription);
         }
 
         private async void RemoveTriggerCommand_Execute(object param)
         {
             try
             {
+                string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has been deleted.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value+"\nTemplate Id: "+ SelectedTrigger.Model.TemplateId;
                 SelectedTrigger.Model = await DAL.DeleteSensorTrigger(SelectedTrigger.Model);
                 Triggers.Remove(SelectedTrigger);
-                
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Deleted", NotificationDescription);
+
             }
             catch
             {
