@@ -41,6 +41,8 @@ namespace IDUNv2.Pages
             Current = this;
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
 
+            //Window.Current.Content.
+
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Delete), Label = "Delete" });
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Save), Label = "Save" });
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Add), Label = "Create New" });
@@ -216,6 +218,25 @@ namespace IDUNv2.Pages
         private void NotificationALLViewed_Click(object sender, RoutedEventArgs e)
         {
             viewModel.NotificationList.Clear();
+        }
+
+        #endregion
+
+        #region OSK
+
+        public void ShowOSK(Control target)
+        {
+            if (target != null)
+            {
+                osk.SetTarget(target);
+                osk.Visibility = Visibility.Visible;
+                CmdBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                osk.Visibility = Visibility.Collapsed;
+                CmdBar.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion

@@ -23,8 +23,6 @@ namespace IDUNv2.Pages
     {
         private FaultReportTemplateFormViewModel viewModel = new FaultReportTemplateFormViewModel();
 
-        private FaultReportTemplateViewModel selectedItem;
-
         public FaultReportTemplateFormPage()
         {
             this.InitializeComponent();
@@ -39,18 +37,16 @@ namespace IDUNv2.Pages
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(sender as TextBox);
-            osk.Visibility = Visibility.Visible;
+            DAL.ShowOSK(sender as TextBox);
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            osk.Visibility = Visibility.Collapsed;
+            DAL.ShowOSK(null);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // set the list of buttons
             DAL.SetCmdBarItems(viewModel.CmdBarItems);
         }
 
@@ -74,12 +70,6 @@ namespace IDUNv2.Pages
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
 
             }
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var list = (ListBox)sender;
-            selectedItem = (FaultReportTemplateViewModel)list.SelectedItem;
         }
     }
 }

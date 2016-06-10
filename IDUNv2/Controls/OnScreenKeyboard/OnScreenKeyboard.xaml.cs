@@ -31,13 +31,9 @@ namespace OnScreenKeyboard
         
         public Control TargetBox { get; private set; }
         
-        public void SetTarget(TextBox control)
+        public void SetTarget(Control control)
         {
             TargetBox = control;   
-        }
-        public void SetTarget(PasswordBox control)
-        {
-            TargetBox = control;
         }
 
         public void RegisterTarget(TextBox control)

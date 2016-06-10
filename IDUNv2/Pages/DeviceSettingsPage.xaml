@@ -5,57 +5,42 @@
     xmlns:local="using:IDUNv2.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
+    xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
-    <Grid>
-        <StackPanel x:Name="MainStackPanel" Background="{StaticResource StandardBackground}">
+    <Grid Background="{StaticResource StandardBackground}">
+        <StackPanel HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Margin="10">
             <StackPanel>
-                <StackPanel x:Name="ServerInputContentPanel"  Orientation="Horizontal" Margin="0,25,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
-            				<Run Text="Object ID"/>
-                                </TextBlock>
-                                <TextBox Text="{Binding ObjectID}" PlaceholderText="Enter ObjectID here"  Margin="10" Width="200" Height="30" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="OIDTB"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
-            				<Run Text="System ID"/>
-                                </TextBlock>
-                                <TextBox Text="{Binding SystemID}" PlaceholderText="Enter SystemID here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="SIDTB"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Width="75">
-            				<Run Text="Cloud URL"/>
-                                </TextBlock>
-                                <TextBox Text="{Binding URL}" PlaceholderText="Enter Cloud URL here" Width="200" Height="30" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="CURLTB"/>
-                            </StackPanel>
-
-                        </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="User Authorisation" VerticalAlignment="Center" Width="130" Margin="10,0,0,0"></TextBlock>
-                                <TextBox Text="{Binding Username}" PlaceholderText="Username" Width="200" HorizontalAlignment="Left" Margin="10" GotFocus="TBGotFocus" LostFocus="TBLostFocus" x:Name="UNTB"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Width="130" Margin="10,0,0,0"></TextBlock>
-                                <PasswordBox Password="{Binding Password}" PlaceholderText="Password" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" LostFocus="TBLostFocus" GotFocus="PBGotFocus" x:Name="PASSTB"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <Button x:Name="SaveButton" Content="Save Device Server Settings"  Click="Save" HorizontalAlignment="Center" Margin="0,10,0,0"></Button>
-                    </StackPanel>
-                </StackPanel>
-
+                <TextBox Width="350"
+                         Header="ObjectId"
+                         Text="{Binding ObjectID}"
+                         GotFocus="TextBox_GotFocus"
+                         LostFocus="TBLostFocus"/>
+                <TextBox Width="350"
+                         Header="CloudUrl"
+                         Text="{Binding URL}"
+                         GotFocus="TextBox_GotFocus"
+                         LostFocus="TBLostFocus"/>
+                <TextBox Width="350"
+                         Header="SystemID"
+                         Text="{Binding SystemID}"
+                         GotFocus="TextBox_GotFocus"
+                         LostFocus="TBLostFocus"/>
             </StackPanel>
-
-
-
+            <StackPanel Margin="10,0,0,0">
+                <TextBox Width="350"
+                         Header="Username"
+                         Text="{Binding Username}"
+                         GotFocus="TextBox_GotFocus"
+                         LostFocus="TBLostFocus"/>
+                <PasswordBox Width="350"
+                             Header="Username"
+                             Password="{Binding Password}"
+                             GotFocus="PasswordBox_GotFocus"
+                             LostFocus="TBLostFocus"/>
+            </StackPanel>
         </StackPanel>
-
-        <OnScreenKeyboard:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="250"  Width="750"  Visibility="Collapsed"  HorizontalAlignment="Left"/>
+        <osk:OnScreenKeyBoard x:Name="osk" Margin="0" VerticalAlignment="Bottom" Height="250"  Width="750"  Visibility="Visible"  HorizontalAlignment="Left"/>
     </Grid>
 </Page>

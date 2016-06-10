@@ -7,12 +7,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gif ="using:XamlAnimatedGif"
+    xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Page.Resources>
         <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar IsOpen="True" IsSticky="True" x:Name="CmdBar" FlowDirection="RightToLeft" VerticalContentAlignment="Center">
+        <CommandBar x:Name="CmdBar"
+                    IsOpen="True"
+                    IsSticky="True"
+                    FlowDirection="RightToLeft">
             <CommandBar.Content>
                 <Button Content="Notifications" Click="NotificationButton_Click"/>
             </CommandBar.Content>
@@ -143,5 +147,13 @@
                 </Button.Content>
             </Button>
         </Grid>
+        <osk:OnScreenKeyBoard x:Name="osk"
+                              Grid.Row="1"
+                              Margin="50,0,0,-45"
+                              VerticalAlignment="Bottom"
+                              Width="750"
+                              Height="250"
+                              Visibility="Collapsed"
+                              />
     </Grid>
 </Page>

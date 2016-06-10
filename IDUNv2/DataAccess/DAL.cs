@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 using Xamarin;
 
 namespace IDUNv2.DataAccess
@@ -232,6 +233,15 @@ namespace IDUNv2.DataAccess
                     cmdBarItems.Add(item.Btn);
                 }
             }
+        }
+
+        #endregion
+
+        #region OSK
+
+        public static void ShowOSK(Control target)
+        {
+            ShellPage.Current.ShowOSK(target);
         }
 
         #endregion

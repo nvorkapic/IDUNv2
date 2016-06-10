@@ -22,8 +22,6 @@ namespace IDUNv2.Pages
 {
     public sealed partial class DeviceSettingsPage : Page
     {
-        //Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
         private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel();
 
         public DeviceSettingsPage()
@@ -32,15 +30,14 @@ namespace IDUNv2.Pages
             this.DataContext = viewModel;
         }
 
-        private void TBGotFocus(object sender, RoutedEventArgs e)
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             osk.SetTarget(sender as TextBox);
             osk.Visibility = Visibility.Visible;
         }
 
-        private void PBGotFocus(object sender, RoutedEventArgs e)
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
-
             osk.SetTarget(sender as PasswordBox);
             osk.Visibility = Visibility.Visible;
         }
@@ -52,17 +49,16 @@ namespace IDUNv2.Pages
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            if (OIDTB.Text.Length == 0 || CURLTB.Text.Length == 0 || UNTB.Text.Length == 0 || PASSTB.Password.Length <= 3 || SIDTB.Text.Length == 0)
+            if (viewModel.ObjectID.Length == 0 ||
+                viewModel.SystemID.Length == 0 ||
+                viewModel.Username.Length == 0 ||
+                viewModel.Password.Length <= 3 ||
+                viewModel.URL.Length == 0)
             {
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Server Settings Error", "Please check that all information is entered correctly and try again!");
             }
             else
             {
-                viewModel.ObjectID = OIDTB.Text;
-                viewModel.SystemID = SIDTB.Text;
-                viewModel.URL = CURLTB.Text;
-                viewModel.Username = UNTB.Text;
-                viewModel.Password = PASSTB.Password;
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Server settings have been saved locally.");
             }
         }
