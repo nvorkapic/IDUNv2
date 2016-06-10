@@ -209,6 +209,11 @@ namespace IDUNv2.Pages
             DAL.PushNavLink(new NavLinkItem { Title = "Settings", PageType = GetType() });
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            DAL.SetCmdBarItems(null);
+        }
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             DAL.ShowOSK(sender as TextBox);      
