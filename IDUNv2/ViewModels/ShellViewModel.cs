@@ -1,4 +1,5 @@
 ﻿using IDUNv2.Common;
+using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using System;
 using System.Collections.Generic;
@@ -33,10 +34,15 @@ namespace IDUNv2.ViewModels
         };
 
         public ObservableCollection<NavLinkItem> NavLinks { get; set; } = new ObservableCollection<NavLinkItem>();
+        public ObservableCollection<AppBarButton> CmdBarButtons { get; set; } = new ObservableCollection<AppBarButton>();
 
         public ShellViewModel()
         {
             NotificationList.CollectionChanged += NotificationList_CollectionChanged;
+
+            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Delete), Label = "Delete" });
+            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Save), Label = "Save" });
+            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Add), Label = "Create New" });
         }
 
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

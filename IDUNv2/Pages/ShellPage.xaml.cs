@@ -28,6 +28,11 @@ namespace IDUNv2.Pages
         public Notification SelectedNotificationItem = new Notification();
         public static Grid Spinner;
 
+        public IObservableVector<ICommandBarElement> CmdBarPrimaryCommands
+        {
+            get { return CmdBar.PrimaryCommands; }
+        }
+
         public ShellPage()
         {
             this.InitializeComponent();
@@ -35,6 +40,10 @@ namespace IDUNv2.Pages
             this.Loaded += MainPage_Loaded;
             Current = this;
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
+
+            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Delete), Label = "Delete" });
+            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Save), Label = "Save" });
+            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Add), Label = "Create New" });
 
             Spinner = SpinnerPanel;
         }

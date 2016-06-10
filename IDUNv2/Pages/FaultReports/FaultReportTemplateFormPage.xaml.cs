@@ -1,4 +1,6 @@
-﻿using IDUNv2.ViewModels;
+﻿using IDUNv2.DataAccess;
+using IDUNv2.Models;
+using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,60 +48,33 @@ namespace IDUNv2.Pages
             osk.Visibility = Visibility.Collapsed;
         }
 
-        private  void Save_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Saved", "Template is configured and saved and ready for use!");
-
+            // set the list of buttons
+            DAL.SetCmdBarItems(viewModel.CmdBarItems);
         }
-
-        private  void Create_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                viewModel.CreateTemplate();
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Created", "New Template has been added. Please configure and save to ensure proper functionality!");
-            }
-            catch(Exception x)
-            {
-                var ex = x.Message;
-            }
-
-        }
-
-        //private async void Remove_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        viewModel.RemoveTemplate(selectedItem);
-        //        ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Template Removed", "Template has been Removed.");
-        //        var dialog = new ContentDialog { Title = "Template Removed", Content = "New Template has been Removed.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, RequestedTheme = ElementTheme.Dark, PrimaryButtonText = "OK" };
-        //        var showdialog = await dialog.ShowAsync();
-        //    }
-        //    catch
-        //    {
-
-        //    }
-            
-        //}
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+
+            // use null to clear the list
+            DAL.SetCmdBarItems(null);
+
             int dirtyTemplatesNr = 0;
             if (viewModel.Templates == null)
                 return;
             foreach (var item in viewModel.Templates)
-                {
-                    if (item.Dirty)
+            {
+                if (item.Dirty)
                     ++dirtyTemplatesNr;
-                }
+            }
             if (dirtyTemplatesNr >= 1)
-                {
+            {
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Unsaved Templates", "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded! ");
 
             }
-
-         }
+        }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
