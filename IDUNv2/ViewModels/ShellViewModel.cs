@@ -23,6 +23,9 @@ namespace IDUNv2.ViewModels
         private Notification _latestNotification;
         public Notification LatestNotification { get { return _latestNotification; } set { _latestNotification = value; Notify(); } }
 
+        private string _notificationNumber;
+        public string NotificationNumber { get { return _notificationNumber; } set { _notificationNumber = value; Notify(); } }
+
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
             new NavMenuItem { Label = "Sensor Overview", Symbol = Symbol.ViewAll, PageType = typeof(Pages.SensorOverviewPage) },
@@ -48,6 +51,7 @@ namespace IDUNv2.ViewModels
         private void NotificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             LatestNotification = NotificationList.FirstOrDefault();
+            NotificationNumber = "Messages: " + NotificationList.Count.ToString();
         }
 
         private NavMenuItem _selectedNavMenuItem;

@@ -1,6 +1,7 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
 using IDUNv2.Models;
+using IDUNv2.Pages;
 using IDUNv2.SensorLib;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,7 @@ namespace IDUNv2.ViewModels
         private void SaveSensor(object param)
         {
             Sensor.SaveToLocalSettings();
+            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Sensor Saved", "Sensor "+Sensor.Id+" Settings Changes Saved!");
         }
 
         private void CreateTrigger(object param)
@@ -69,6 +71,7 @@ namespace IDUNv2.ViewModels
             var trigger = new SensorTriggerViewModel(new SensorTrigger());
             Triggers.Add(trigger);
             SelectedTrigger = trigger;
+            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Created", "Empty Trigger Created.");
         }
 
         private async void SaveTrigger(object param)
@@ -77,6 +80,10 @@ namespace IDUNv2.ViewModels
             {
                 SelectedTrigger.TemplateId = SelectedTemplate.Id;
                 SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
+
+                string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has had its' changes saved.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Saved", NotificationDescription);
+
             }
         }
 
@@ -84,7 +91,12 @@ namespace IDUNv2.ViewModels
         {
             if (SelectedTrigger != null)
             {
+
                 SelectedTrigger.Model = await DAL.DeleteSensorTrigger(SelectedTrigger.Model);
+
+                string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has been deleted.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Deleted", NotificationDescription);
+
                 Triggers.Remove(SelectedTrigger);
                 SelectedTrigger = Triggers.LastOrDefault();
             }
@@ -92,10 +104,12 @@ namespace IDUNv2.ViewModels
 
         public async Task InitAsync()
         {
+            ShellPage.SetSpinner(LoadingState.Loading);
             Templates = await DAL.GetFaultReportTemplates();
             var triggers = await DAL.GetSensorTriggers();
             Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
             SelectedTrigger = Triggers.FirstOrDefault();
+            ShellPage.SetSpinner(LoadingState.Finished);
         }
 
         public SensorSettingsViewModel()
