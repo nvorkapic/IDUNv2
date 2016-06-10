@@ -189,7 +189,7 @@ namespace IDUNv2.Pages
             EditTriggerItems = new CmdBarItem[]
             {
                 new CmdBarItem(Symbol.Delete, "Remove Trigger",RemoveTriggerCommand_Execute),
-                new CmdBarItem(Symbol.Save, "Save Trigger", CreateTriggerCommand_Execute)
+                new CmdBarItem(Symbol.Save, "Save Trigger", SaveChangesTriggerCommand_Execute)
             };
         }
     }
