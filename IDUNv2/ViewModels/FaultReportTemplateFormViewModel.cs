@@ -16,14 +16,14 @@ namespace IDUNv2.ViewModels
 {
     public class FaultReportTemplateFormViewModel : NotifyBase
     {
+        #region Notify Fields
+
         private ObservableCollection<FaultReportTemplateViewModel> _templates;
         private FaultReportTemplateViewModel _selectedTemplate;
 
-        public List<WorkOrderDiscCode> DiscoveryList { get { return DAL.GetWorkOrderDiscCodes(); } }
-        public List<WorkOrderSymptCode> SymptomList { get { return DAL.GetWorkOrderSymptCodes(); } }
-        public List<MaintenancePriority> PriorityList { get { return DAL.GetWorkOrderPrioCodes(); } }
+        #endregion
 
-        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
+        #region Notify Properties
 
         public ObservableCollection<FaultReportTemplateViewModel> Templates
         {
@@ -36,6 +36,19 @@ namespace IDUNv2.ViewModels
             get { return _selectedTemplate; }
             set { _selectedTemplate = value; Notify(); }
         }
+
+        #endregion
+
+        #region Properties
+
+        public List<WorkOrderDiscCode> DiscoveryList { get { return DAL.GetWorkOrderDiscCodes(); } }
+        public List<WorkOrderSymptCode> SymptomList { get { return DAL.GetWorkOrderSymptCodes(); } }
+        public List<MaintenancePriority> PriorityList { get { return DAL.GetWorkOrderPrioCodes(); } }
+        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
+
+        #endregion
+
+        #region CmdBar Actions
 
         private void CreateTemplate(object param)
         {
@@ -77,6 +90,10 @@ namespace IDUNv2.ViewModels
             }
         }
 
+        #endregion
+
+        #region Constructors
+
         public FaultReportTemplateFormViewModel()
         {
             CmdBarItems = new CmdBarItem[]
@@ -87,6 +104,10 @@ namespace IDUNv2.ViewModels
             };
         }
 
+        #endregion
+
+        #region Lazy Init
+
         public async Task InitAsync()
         {
             await DAL.FillCaches();
@@ -94,5 +115,7 @@ namespace IDUNv2.ViewModels
             Templates = new ObservableCollection<FaultReportTemplateViewModel>(temp.Select(t => new FaultReportTemplateViewModel(t)));
             SelectedTemplate = Templates.FirstOrDefault();
         }
+
+        #endregion
     }
 }

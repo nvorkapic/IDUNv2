@@ -13,15 +13,20 @@ namespace IDUNv2.ViewModels
 {
     public class FaultReportTemplateViewModel : NotifyBase
     {
+        #region Fields
+
         private FaultReportTemplate model;
 
-        private void SetDirty([CallerMemberName] string caller = "")
-        {
-            Dirty = true;
-            Notify(caller);
-        }
+        #endregion
+
+        #region Notify Fields
 
         private bool dirty;
+
+        #endregion
+
+        #region Notify Properties
+
         public bool Dirty
         {
             get { return dirty; }
@@ -70,9 +75,21 @@ namespace IDUNv2.ViewModels
             set { model.PrioCode = value.PriorityId; SetDirty(); }
         }
 
+        #endregion
+
+        private void SetDirty([CallerMemberName] string caller = "")
+        {
+            Dirty = true;
+            Notify(caller);
+        }
+
+        #region Constructor
+
         public FaultReportTemplateViewModel(FaultReportTemplate model)
         {
             this.model = model;
         }
+
+        #endregion
     }
 }

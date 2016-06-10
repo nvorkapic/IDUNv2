@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,9 +33,9 @@ namespace IDUNv2.DataAccess
 
     public static class DAL
     {
-        private static readonly string DbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
-        private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath);
-        public static readonly SensorWatcher SensorWatcher = new SensorWatcher(50);
+        private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
+        private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
+        private static readonly SensorWatcher sensorWatcher = new SensorWatcher(50);
 
         private static CachingCloudClient cloud;
 
@@ -44,7 +45,7 @@ namespace IDUNv2.DataAccess
             db.CreateTable<SensorTrigger>();
 
             InitCloud();
-            SensorWatcher.LoadSettings();
+            sensorWatcher.LoadSettings();
         }
 
         public static async Task FillCaches()
@@ -53,6 +54,34 @@ namespace IDUNv2.DataAccess
             await cloud.FillCaches();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
+
+        #region Sensors
+
+        public static bool HasSensors()
+        {
+            return sensorWatcher.IsValid;
+        }
+
+        public static Sensor GetSensor(SensorId id)
+        {
+            return sensorWatcher.GetSensor(id);
+        }
+
+        public static SensorReadings GetSensorReadings()
+        {
+            SensorReadings sr;
+            sr.Temperature = sensorWatcher.Readings.Temperature;
+            sr.Humidity = sensorWatcher.Readings.Humidity;
+            sr.Pressure = sensorWatcher.Readings.Pressure;
+            return sensorWatcher.Readings;
+        }
+
+        public static void UpdateSensors(SensorReadings readings)
+        {
+            sensorWatcher.UpdateSensors(readings);
+        }
+
+        #endregion
 
         #region Cloud
 

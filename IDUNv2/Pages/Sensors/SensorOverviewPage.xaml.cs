@@ -62,11 +62,9 @@ namespace IDUNv2.Pages
         {
             SensorReadings readings;
 
-            if (DAL.SensorWatcher.IsValid)
+            if (DAL.HasSensors())
             {
-                readings.Temperature = DAL.SensorWatcher.Readings.Temperature;
-                readings.Humidity = DAL.SensorWatcher.Readings.Humidity;
-                readings.Pressure = DAL.SensorWatcher.Readings.Pressure;
+                readings = DAL.GetSensorReadings();
             }
             else
             {
@@ -79,7 +77,7 @@ namespace IDUNv2.Pages
             readings.Humidity += viewModel.BiasHumid;
             readings.Pressure += viewModel.BiasPress;
 
-            DAL.SensorWatcher.UpdateSensors(readings);
+            DAL.UpdateSensors(readings);
         }
     }
 }
