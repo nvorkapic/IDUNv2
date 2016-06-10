@@ -172,9 +172,6 @@
     <Compile Include="Pages\Sensors\SensorOverviewPage.xaml.cs">
       <DependentUpon>SensorOverviewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Sensors\SensorTriggerSettingsPage.xaml.cs">
-      <DependentUpon>SensorTriggerSettingsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\DeviceSettingsPage.xaml.cs">
       <DependentUpon>DeviceSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -326,10 +323,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Sensors\SensorOverviewPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Sensors\SensorTriggerSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -54,25 +54,26 @@
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Triggers">
-                <StackPanel Orientation="Horizontal">
-                    <ToolTip HorizontalAlignment="Right" MaxHeight="330" VerticalAlignment="Top">
+                <Grid>
+                    <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" x:Name="TriggerListBox"/>
+                    <ToolTip HorizontalAlignment="Center" MaxHeight="330" VerticalAlignment="Center">
                         <StackPanel>
                             <Button Margin="10" Content="Create Trigger" Command="{Binding CreateTriggerCommand}" x:Name="CreateTriggerButton"/>
                             <StackPanel x:Name="EditTriggerPanel" Visibility="Collapsed">
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" />
-                                <StackPanel Margin="10,25,0,0" VerticalAlignment="Center">
-                                    <RadioButton Margin="0,0,0,0"
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" />
+                                    <StackPanel Margin="10,25,0,0" VerticalAlignment="Center">
+                                        <RadioButton Margin="0,0,0,0"
                             			GroupName="TriggerComparer"
                             			Content="Below"
                             			IsChecked="{Binding SelectedTrigger.ComparerBelow, Mode=TwoWay}"
                             			VerticalAlignment="Bottom" />
-                                    <RadioButton Margin="0,0,0,0"
+                                        <RadioButton Margin="0,0,0,0"
                             			GroupName="TriggerComparer" Content="Above"
                             			IsChecked="{Binding SelectedTrigger.ComparerAbove, Mode=TwoWay}"
                             			VerticalAlignment="Bottom" />
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
                                 <ComboBox Header="Template" Width="200" Margin="0,10,0,0" ItemsSource="{Binding Templates}" SelectedValue="{Binding SelectedTrigger.TemplateId, Mode=TwoWay}" SelectedValuePath="Id" SelectionChanged="ComboBox_SelectionChanged">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
@@ -85,16 +86,7 @@
                             </StackPanel>
                         </StackPanel>
                     </ToolTip>
-                    <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" x:Name="TriggerListBox"/>
-                    <!--<ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="TriggerId:"/>
-                                    <TextBlock Margin="10,0,0,0" Text="{Binding Id}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>-->
-                </StackPanel>
+                </Grid>
             </PivotItem>
         </Pivot>
         <osk:OnScreenKeyBoard x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
