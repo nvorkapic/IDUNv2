@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IDUNv2.DataAccess;
+using IDUNv2.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,19 +37,29 @@ namespace IDUNv2.Pages
             InitializeListboxVoiceChooser();
         }
 
-
-        private void btnClear_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            textBoxRead.Text = string.Empty;
+            NavigationItems();
+            DAL.SetCmdBarItems(CmdBarItems);
         }
 
-        private async void btnRead_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            MediaElement mediaElement = new MediaElement();
-            SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(textBoxRead.Text);
-            mediaElement.SetSource(stream, stream.ContentType);
-            mediaElement.Play();
+            DAL.SetCmdBarItems(null);
         }
+
+        //private void btnClear_Click(object sender, RoutedEventArgs e)
+        //{
+        //    textBoxRead.Text = string.Empty;
+        //}
+
+            //private async void btnRead_Click(object sender, RoutedEventArgs e)
+            //{
+            //    MediaElement mediaElement = new MediaElement();
+            //    SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(textBoxRead.Text);
+            //    mediaElement.SetSource(stream, stream.ContentType);
+            //    mediaElement.Play();
+            //}
 
         private void InitializeListboxVoiceChooser()
         {
@@ -85,9 +97,32 @@ namespace IDUNv2.Pages
             keyboard.Visibility = Visibility.Collapsed;
         }
 
-        private void toLEDClick(object sender, RoutedEventArgs e)
+        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
+
+        private void NavigationItems()
         {
-            this.Frame.Navigate(typeof(LEDControlPage), null);
+            CmdBarItems = new CmdBarItem[]
+                {
+                new CmdBarItem(Symbol.Pin, "LED Control",NavigateToLED),
+                new CmdBarItem(Symbol.Delete, "Clear Text", ClearText),
+                new CmdBarItem(Symbol.Microphone, "Read Text", ReadText),
+                };
+        }
+
+        private void ClearText(object param)
+        {
+            textBoxRead.Text = string.Empty;
+        }
+        private async void ReadText(object param)
+        {
+            MediaElement mediaElement = new MediaElement();
+            SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(textBoxRead.Text);
+            mediaElement.SetSource(stream, stream.ContentType);
+            mediaElement.Play();
+        }
+        private void NavigateToLED(object param)
+        {
+            Frame.Navigate(typeof(LEDControlPage), null);
         }
     }
 }

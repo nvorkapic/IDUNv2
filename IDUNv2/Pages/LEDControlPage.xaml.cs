@@ -24,6 +24,8 @@ using IDUNv2.ViewModels;
 using Newtonsoft.Json;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using IDUNv2.Models;
+using IDUNv2.DataAccess;
 
 namespace IDUNv2.Pages
 {
@@ -76,7 +78,6 @@ namespace IDUNv2.Pages
 
             }
         }
-
 
         public void SaveBuffer()
         {
@@ -240,7 +241,6 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
             this.Loaded += LEDControlPage_Loaded;
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -250,6 +250,8 @@ namespace IDUNv2.Pages
             ledImage.PointerMoved += LedImage_PointerMoved;
             ledImage.PointerPressed += LedImage_PointerPressed;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
+            NavigationItems();
+            DAL.SetCmdBarItems(CmdBarItems);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -258,6 +260,8 @@ namespace IDUNv2.Pages
             ledImage.PointerPressed -= LedImage_PointerPressed;
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
             ledMatrix.Dispose();
+
+            DAL.SetCmdBarItems(null);
         }
 
         private void LEDControlPage_Loaded(object sender, RoutedEventArgs e)
@@ -419,17 +423,17 @@ namespace IDUNv2.Pages
             fillToggle.Background = new SolidColorBrush(new Windows.UI.Color { R = 0, G = 0, B = 0, A = 255 });
         }
 
-        private void toSpeech_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(SpeechSynthesisPage), null);
-        }
-
-        private  void SaveCurrent_Click(object sender, RoutedEventArgs e)
-        {
-            LEDImageNameTB.Text = string.Empty;
-            LEDImageDescriptionTB.Text = string.Empty;
-            SaveLEDToolTip.Visibility = Visibility.Visible;
-        }
+        //private void toSpeech_Click(object sender, RoutedEventArgs e)
+        //{
+        //    this.Frame.Navigate(typeof(SpeechSynthesisPage), null);
+        //}
+        //FirstSaveButton
+        //private  void SaveCurrent_Click(object sender, RoutedEventArgs e)
+        //{
+        //    LEDImageNameTB.Text = string.Empty;
+        //    LEDImageDescriptionTB.Text = string.Empty;
+        //    SaveLEDToolTip.Visibility = Visibility.Visible;
+        //}
 
         public class SavedLEDImages
         {
@@ -442,26 +446,26 @@ namespace IDUNv2.Pages
             public string Description { get; set; }
             public byte[] Buffer { get; set; }
         }
+        //FirstLoadButton
+        //private async void LoadCurrent_Click(object sender, RoutedEventArgs e)
+        //{
+        //    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
-        private async void LoadCurrent_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+        //    StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
 
-            StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
+        //    IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
 
-            IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
+        //    List<string> LEDImagesList = new List<string>();
 
-            List<string> LEDImagesList = new List<string>();
+        //    foreach (StorageFile item in LEDFiles)
+        //    {
+        //        LEDImagesList.Add(item.Name);
+        //    }
 
-            foreach (StorageFile item in LEDFiles)
-            {
-                LEDImagesList.Add(item.Name);
-            }
+        //    LoadLedList.ItemsSource = LEDImagesList;
 
-            LoadLedList.ItemsSource = LEDImagesList;
-
-            LoadLEDToolTip.Visibility = Visibility.Visible;
-        }
+        //    LoadLEDToolTip.Visibility = Visibility.Visible;
+        //}
 
 
         private async void Load_Click(object sender, RoutedEventArgs e)
@@ -600,7 +604,7 @@ namespace IDUNv2.Pages
             {
 
             }
-            
+
         }
 
         private void sliderRed_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -620,5 +624,57 @@ namespace IDUNv2.Pages
             b5 = (byte)e.NewValue;
             UpdateColorPreview();
         }
+
+        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
+
+        private void NavigationItems()
+        {
+            CmdBarItems = new CmdBarItem[]
+                {
+                // first item added will be to the right
+                new CmdBarItem(Symbol.Microphone, "Speech\nSynthesis",NavigateToSpeech),
+                new CmdBarItem(Symbol.Delete, "Clear LED", ClearLED),
+                new CmdBarItem(Symbol.OpenFile, "Load LED", LoadLED),
+
+                // last item added will be the left most one
+                new CmdBarItem(Symbol.Save, "Save LED", SaveLED),
+                };
+        }
+
+        private void ClearLED(object param)
+        {
+            EmptyBuffer();
+            ClearLEDStatus();
+        }
+        private async void LoadLED(object param)
+        {
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
+
+            IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
+
+            List<string> LEDImagesList = new List<string>();
+
+            foreach (StorageFile item in LEDFiles)
+            {
+                LEDImagesList.Add(item.Name);
+            }
+
+            LoadLedList.ItemsSource = LEDImagesList;
+
+            LoadLEDToolTip.Visibility = Visibility.Visible;
+        }
+        private void SaveLED(object param)
+        {
+            LEDImageNameTB.Text = string.Empty;
+            LEDImageDescriptionTB.Text = string.Empty;
+            SaveLEDToolTip.Visibility = Visibility.Visible;
+        }
+        private void NavigateToSpeech(object param)
+        {
+            Frame.Navigate(typeof(SpeechSynthesisPage), null);
+        }
     }
+
 }

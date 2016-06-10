@@ -12,7 +12,7 @@
         <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar IsOpen="True" IsSticky="True" x:Name="CmdBar" FlowDirection="RightToLeft">
+        <CommandBar IsOpen="True" IsSticky="True" x:Name="CmdBar" FlowDirection="RightToLeft" VerticalContentAlignment="Center">
             <CommandBar.Content>
                 <Button Content="Notifications" Click="NotificationButton_Click"/>
             </CommandBar.Content>

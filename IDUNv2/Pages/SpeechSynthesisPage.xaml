@@ -19,12 +19,8 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="btnRead" Content="Read Text" VerticalAlignment="Stretch" Width="150" FontWeight="Bold" BorderBrush="{x:Null}" Click="btnRead_Click" Height="45"/>
-                <Button x:Name="btnClear" Content="Clear Text" VerticalAlignment="Stretch" Width="150"  FontWeight="Bold" BorderBrush="{x:Null}" Click="btnClear_Click" Height="45"/>
-            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
         </StackPanel>
         <oks:OnScreenKeyBoard x:Name="keyboard" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="225" Width="750" Margin="0,0,0,-40" Visibility="Collapsed" />
-        <Button Content="Try LED Control" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="toLEDClick"></Button>
     </Grid>
 </Page>

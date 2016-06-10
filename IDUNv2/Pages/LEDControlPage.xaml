@@ -45,12 +45,12 @@
                
             </Grid>
         </StackPanel>
-        <Button Content="Try Speech Synthesis" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="toSpeech_Click"></Button>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+        <!--<Button Content="Try Speech Synthesis" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="toSpeech_Click"></Button>-->
+        <!--<StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
             <Button Content="Save Current" Click="SaveCurrent_Click" Width="110"/>
             <Button Content="Load Saved" Click="LoadCurrent_Click" Width="110"/>
             <Button Content="Clear LED" Click="ClearLED_Click" Width="110"/>
-        </StackPanel>
+        </StackPanel>-->
 
         <ToolTip x:Name="SaveLEDToolTip" Visibility="Collapsed">
             <ToolTip.Content>

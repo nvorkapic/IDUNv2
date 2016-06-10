@@ -110,23 +110,17 @@ namespace IDUNv2.Pages
             set { _selectedTemplate = value; Notify(); }
         }
 
-        #region Command Bindings
-
-        public ActionCommand<object> SaveCommand { get; set; }
-        public ActionCommand<object> CreateTriggerCommand { get; set; }
-        public ActionCommand<object> SaveChangesTriggerCommand { get; set; }
-        public ActionCommand<object> RemoveTriggerCommand { get; set; }
-        #endregion
 
         private ObservableCollection<SensorTriggerViewModel> _triggers;
         public ObservableCollection<SensorTriggerViewModel> Triggers { get {return _triggers; } set {_triggers = value; Notify(); } }
 
         public SensorSettingsViewModel()
         {
-            SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
-            CreateTriggerCommand = new ActionCommand<object>(CreateTriggerCommand_Execute);
-            SaveChangesTriggerCommand = new ActionCommand<object>(SaveChangesTriggerCommand_Execute);
-            RemoveTriggerCommand = new ActionCommand<object>(RemoveTriggerCommand_Execute);
+            //SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
+            //CreateTriggerCommand = new ActionCommand<object>(CreateTriggerCommand_Execute);
+            //SaveChangesTriggerCommand = new ActionCommand<object>(SaveChangesTriggerCommand_Execute);
+            //RemoveTriggerCommand = new ActionCommand<object>(RemoveTriggerCommand_Execute);
+            NavigationItems();
             SelectedTrigger = new SensorTriggerViewModel(new SensorTrigger());
             Templates = new List<FaultReportTemplate>();
             var triggers = DAL.GetSensorTriggers().Result;
@@ -146,11 +140,8 @@ namespace IDUNv2.Pages
            try
             {
                 SelectedTrigger = new SensorTriggerViewModel( new SensorTrigger {});
-                //if (await CheckIfTriggerExists(SelectedTrigger.Model) == false)
-                //{
                 SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
                 Triggers.Add(new SensorTriggerViewModel(SelectedTrigger.Model));
-                //}
             }
             catch
             {
@@ -180,16 +171,27 @@ namespace IDUNv2.Pages
             }
         }
 
-        //public async Task<bool> CheckIfTriggerExists(SensorTrigger Trigger)
-        //{
-        //        var SensorTriggerList = await DAL.GetSensorTriggers();
-        //        foreach (var item in SensorTriggerList)
-        //        {
-        //            if (item.Comparer == Trigger.Comparer && item.Value == Trigger.Value && item.TemplateId == Trigger.TemplateId)
-        //                return true;
-        //        }
-        //        return false;
-        //}
+        public ICollection<CmdBarItem> GeneralItems { get; private set; }
+        public ICollection<CmdBarItem> TriggerItems { get; private set; }
+        public ICollection<CmdBarItem> EditTriggerItems { get; private set; }
+
+        private void NavigationItems()
+        {
+
+            GeneralItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Save, "Save Sensor", SaveCommand_Execute)
+            };
+            TriggerItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Add, "Create Trigger", CreateTriggerCommand_Execute)
+            };
+            EditTriggerItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Delete, "Remove Trigger",RemoveTriggerCommand_Execute),
+                new CmdBarItem(Symbol.Save, "Save Trigger", CreateTriggerCommand_Execute)
+            };
+        }
     }
 
     public sealed partial class SensorSettingsPage : Page
@@ -240,15 +242,27 @@ namespace IDUNv2.Pages
             var lb = (ListBox)sender;
             if (lb.SelectedIndex != -1)
             {
-                CreateTriggerButton.Visibility = Visibility.Collapsed;
+                DAL.SetCmdBarItems(null);
+                DAL.SetCmdBarItems(viewModel.EditTriggerItems);
                 EditTriggerPanel.Visibility = Visibility.Visible;
             }
             else
             {
-                CreateTriggerButton.Visibility = Visibility.Visible;
+                DAL.SetCmdBarItems(null);
+                DAL.SetCmdBarItems(viewModel.TriggerItems);
                 EditTriggerPanel.Visibility = Visibility.Collapsed;
             }
             
+        }
+
+
+        private void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
+        {
+            DAL.SetCmdBarItems(null);
+            if (args.Item.Header.ToString() == "General")
+                DAL.SetCmdBarItems(viewModel.GeneralItems);
+            else
+                DAL.SetCmdBarItems(viewModel.TriggerItems);              
         }
 
 
