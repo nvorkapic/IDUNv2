@@ -221,6 +221,19 @@ namespace IDUNv2.DataAccess
             ShellPage.Current.PopNavLink();
         }
 
+        public static void SetCmdBarItems(ICollection<CmdBarItem> items)
+        {
+            var cmdBarItems = ShellPage.Current.CmdBarPrimaryCommands;
+            cmdBarItems.Clear();
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    cmdBarItems.Add(item.Btn);
+                }
+            }
+        }
+
         #endregion
     }
 }

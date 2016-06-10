@@ -23,10 +23,6 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Button Margin="0,0,10,0" Content="Create" Click="Create_Click"/>
-                <Button Content="Remove" HorizontalAlignment="Right"/>
-            </StackPanel>
             <ListBox Grid.Row="1" MinWidth="200" ItemTemplate="{StaticResource TemplateListData}" ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
         </Grid>
         <Grid Grid.Column="1" Margin="0" Padding="10">
@@ -35,7 +31,6 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
@@ -56,7 +51,6 @@
             <ComboBox Grid.Row="3" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" SelectedItem="{Binding SelectedTemplate.Discovery, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
             <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" SelectedItem="{Binding SelectedTemplate.Symptom, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
             <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding SelectedTemplate.Priority, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
-            <Button Grid.Row="6" Grid.Column="1" Content="Save" Margin="10,10,0,0" Width="75" Command="{Binding SaveCommand}" Click="Save_Click"/>
         </Grid>
         <osk:OnScreenKeyBoard Grid.ColumnSpan="2" x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
     </Grid>

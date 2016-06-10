@@ -12,13 +12,10 @@
         <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar IsOpen="True" IsSticky="True">
+        <CommandBar IsOpen="True" IsSticky="True" x:Name="CmdBar" FlowDirection="RightToLeft">
             <CommandBar.Content>
-                <StackPanel Orientation="Horizontal">
-                    <AppBarButton Icon="Back" Label="Back"/>
-                </StackPanel>
+                <Button Content="Notifications" Click="NotificationButton_Click"/>
             </CommandBar.Content>
-            <AppBarButton Icon="Import"/>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid Background="Black">
