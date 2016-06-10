@@ -110,16 +110,11 @@ namespace IDUNv2.Pages
             set { _selectedTemplate = value; Notify(); }
         }
 
-
         private ObservableCollection<SensorTriggerViewModel> _triggers;
         public ObservableCollection<SensorTriggerViewModel> Triggers { get {return _triggers; } set {_triggers = value; Notify(); } }
 
         public SensorSettingsViewModel()
         {
-            //SaveCommand = new ActionCommand<object>(SaveCommand_Execute);
-            //CreateTriggerCommand = new ActionCommand<object>(CreateTriggerCommand_Execute);
-            //SaveChangesTriggerCommand = new ActionCommand<object>(SaveChangesTriggerCommand_Execute);
-            //RemoveTriggerCommand = new ActionCommand<object>(RemoveTriggerCommand_Execute);
             NavigationItems();
             SelectedTrigger = new SensorTriggerViewModel(new SensorTrigger());
             Templates = new List<FaultReportTemplate>();
@@ -130,9 +125,7 @@ namespace IDUNv2.Pages
 
         private void SaveCommand_Execute(object param)
         {
-            Sensor.SaveToLocalSettings();
-            
-            
+            Sensor.SaveToLocalSettings();           
         }
 
         private async void CreateTriggerCommand_Execute(object param)
@@ -145,15 +138,12 @@ namespace IDUNv2.Pages
             }
             catch
             {
-
-            }
-            
-            
+            }         
         }
+
         private async void SaveChangesTriggerCommand_Execute(object param)
         {
             SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
-
             var triggers = DAL.GetSensorTriggers().Result;
             Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
         }
@@ -164,16 +154,16 @@ namespace IDUNv2.Pages
             {
                 SelectedTrigger.Model = await DAL.DeleteSensorTrigger(SelectedTrigger.Model);
                 Triggers.Remove(SelectedTrigger);
+                
             }
             catch
             {
-
             }
         }
 
         public ICollection<CmdBarItem> GeneralItems { get; private set; }
-        public ICollection<CmdBarItem> TriggerItems { get; private set; }
-        public ICollection<CmdBarItem> EditTriggerItems { get; private set; }
+        public ICollection<CmdBarItem> TriggerStandard { get; private set; }
+        public ICollection<CmdBarItem> TriggerSelected { get; private set; }
 
         private void NavigationItems()
         {
@@ -182,14 +172,15 @@ namespace IDUNv2.Pages
             {
                 new CmdBarItem(Symbol.Save, "Save Sensor", SaveCommand_Execute)
             };
-            TriggerItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Add, "Create Trigger", CreateTriggerCommand_Execute)
-            };
-            EditTriggerItems = new CmdBarItem[]
+            TriggerSelected = new CmdBarItem[]
             {
                 new CmdBarItem(Symbol.Delete, "Remove Trigger",RemoveTriggerCommand_Execute),
-                new CmdBarItem(Symbol.Save, "Save Trigger", SaveChangesTriggerCommand_Execute)
+                new CmdBarItem(Symbol.Save, "Save Trigger", SaveChangesTriggerCommand_Execute),
+                new CmdBarItem(Symbol.Add, "Create Trigger", CreateTriggerCommand_Execute)
+            };
+            TriggerStandard = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Add, "Create Trigger", CreateTriggerCommand_Execute)
             };
         }
     }
@@ -220,8 +211,7 @@ namespace IDUNv2.Pages
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            DAL.ShowOSK(sender as TextBox);
-            
+            DAL.ShowOSK(sender as TextBox);      
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -229,31 +219,23 @@ namespace IDUNv2.Pages
             DAL.ShowOSK(null);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var cb = (ComboBox)sender;
-            var selectedItem = (FaultReportTemplate)cb.SelectedItem;
-            viewModel.SelectedTrigger.TemplateId = selectedItem.Id;
-        }
-
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lb = (ListBox)sender;
+            var lb = (ListView)sender;
             if (lb.SelectedIndex != -1)
             {
                 DAL.SetCmdBarItems(null);
-                DAL.SetCmdBarItems(viewModel.EditTriggerItems);
+                DAL.SetCmdBarItems(viewModel.TriggerSelected);
                 EditTriggerPanel.Visibility = Visibility.Visible;
             }
             else
             {
                 DAL.SetCmdBarItems(null);
-                DAL.SetCmdBarItems(viewModel.TriggerItems);
+                DAL.SetCmdBarItems(viewModel.TriggerStandard);
                 EditTriggerPanel.Visibility = Visibility.Collapsed;
             }
             
         }
-
 
         private void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
         {
@@ -261,18 +243,18 @@ namespace IDUNv2.Pages
             if (args.Item.Header.ToString() == "General")
                 DAL.SetCmdBarItems(viewModel.GeneralItems);
             else
-                DAL.SetCmdBarItems(viewModel.TriggerItems);              
+            {
+                if (TriggerListBox.SelectedItem != null)
+                    DAL.SetCmdBarItems(viewModel.TriggerSelected);
+                else
+                    DAL.SetCmdBarItems(viewModel.TriggerStandard);
+            }              
         }
 
-
-
-
-        //private void TemplateSelectionChange(object sender, SelectionChangedEventArgs e)
-        //{
-        //    var cb = (ComboBox)sender;
-        //    selectedItem = (ViewModels.FaultReportTemplateViewModel)cb.SelectedItem;
-
-        //}
-
+        private void TriggerListBox_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            var lv = (ListView)sender;
+            lv.SelectedItem = lv.Items.LastOrDefault();
+        }
     }
 }
