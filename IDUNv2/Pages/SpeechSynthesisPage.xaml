@@ -21,6 +21,5 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
         </StackPanel>
-        <oks:OnScreenKeyBoard x:Name="keyboard" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="225" Width="750" Margin="0,0,0,-40" Visibility="Collapsed" />
     </Grid>
 </Page>

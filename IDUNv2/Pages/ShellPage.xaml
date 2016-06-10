@@ -16,7 +16,8 @@
         <CommandBar x:Name="CmdBar"
                     IsOpen="True"
                     IsSticky="True"
-                    FlowDirection="RightToLeft">
+                    FlowDirection="RightToLeft"
+                    VerticalContentAlignment="Center">
             <CommandBar.Content>
                 <Button Content="Notifications" Click="NotificationButton_Click"/>
             </CommandBar.Content>

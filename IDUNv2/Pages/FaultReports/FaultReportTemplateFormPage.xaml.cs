@@ -34,12 +34,12 @@ namespace IDUNv2.Pages
         {
             await viewModel.InitAsync();
         }
-
+        //KEYBOARD
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             DAL.ShowOSK(sender as TextBox);
         }
-
+        //KEYBOARD
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             DAL.ShowOSK(null);

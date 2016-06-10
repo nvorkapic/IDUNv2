@@ -41,6 +41,5 @@
                              LostFocus="TBLostFocus"/>
             </StackPanel>
         </StackPanel>
-        <osk:OnScreenKeyBoard x:Name="osk" Margin="0" VerticalAlignment="Bottom" Height="250"  Width="750"  Visibility="Visible"  HorizontalAlignment="Left"/>
     </Grid>
 </Page>

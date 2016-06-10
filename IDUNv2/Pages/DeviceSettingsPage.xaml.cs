@@ -1,4 +1,5 @@
-﻿using IDUNv2.Models;
+﻿using IDUNv2.DataAccess;
+using IDUNv2.Models;
 using IDUNv2.ViewModels;
 using Newtonsoft.Json;
 using System;
@@ -32,19 +33,17 @@ namespace IDUNv2.Pages
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(sender as TextBox);
-            osk.Visibility = Visibility.Visible;
+            DAL.ShowOSK(sender as TextBox);
         }
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(sender as PasswordBox);
-            osk.Visibility = Visibility.Visible;
+            DAL.ShowOSK(sender as PasswordBox);
         }
 
         private void TBLostFocus(object sender, RoutedEventArgs e)
         {
-            osk.Visibility = Visibility.Collapsed;
+            DAL.ShowOSK(null);
         }
 
         private void Save(object sender, RoutedEventArgs e)

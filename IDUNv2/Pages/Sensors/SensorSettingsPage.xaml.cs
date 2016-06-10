@@ -220,14 +220,13 @@ namespace IDUNv2.Pages
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(sender as TextBox);
-            osk.Visibility = Visibility.Visible;
+            DAL.ShowOSK(sender as TextBox);
+            
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            osk.SetTarget(null as TextBox);
-            osk.Visibility = Visibility.Collapsed;
+            DAL.ShowOSK(null);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

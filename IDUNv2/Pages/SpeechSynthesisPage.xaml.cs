@@ -30,7 +30,6 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
             synthesizer = new SpeechSynthesizer();
-            keyboard.RegisterTarget(textBoxRead);
             speechContext = ResourceContext.GetForCurrentView();
             speechContext.Languages = new string[] { SpeechSynthesizer.DefaultVoice.Language };
             speechResourceMap = ResourceManager.Current.MainResourceMap.GetSubtree("LocalizationTTSResources");
@@ -89,12 +88,12 @@ namespace IDUNv2.Pages
 
         private void TextForSpeech_GotFocus(object sender, RoutedEventArgs e)
         {
-            keyboard.Visibility = Visibility.Visible;
+            DAL.ShowOSK(sender as TextBox);
         }
 
         private void TextForSpeech_LostFocus(object sender, RoutedEventArgs e)
         {
-            keyboard.Visibility = Visibility.Collapsed;
+            DAL.ShowOSK(null);
         }
 
         public ICollection<CmdBarItem> CmdBarItems { get; private set; }

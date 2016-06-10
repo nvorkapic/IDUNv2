@@ -55,10 +55,10 @@
             <PivotItem Header="Triggers">
                 <Grid>
                     <ListBox ItemsSource="{Binding Triggers}" SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" x:Name="TriggerListBox"/>
-                    <ToolTip HorizontalAlignment="Center" MaxHeight="330" VerticalAlignment="Center" x:Name="EditTriggerPanel" Visibility="Collapsed">
+                    <ToolTip HorizontalAlignment="Center" MaxHeight="330" VerticalAlignment="Center" x:Name="EditTriggerPanel" Visibility="Collapsed" Margin="0,0,0,50">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" />
+                                <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
                                 <StackPanel Margin="10,25,0,0" VerticalAlignment="Center">
                                     <RadioButton Margin="0,0,0,0"
                             			GroupName="TriggerComparer"
@@ -83,6 +83,5 @@
                 </Grid>
             </PivotItem>
         </Pivot>
-        <osk:OnScreenKeyBoard x:Name="osk" Margin="0,0,0,-30" VerticalAlignment="Bottom" Height="200" Visibility="Collapsed" Width="Auto"/>
     </Grid>
 </Page>
