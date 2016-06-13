@@ -21,6 +21,8 @@ namespace IDUNv2.SensorLib
 
     public class Sensor : NotifyBase
     {
+        #region Settings
+
         private class SensorSettings
         {
             public float RangeMin;
@@ -41,7 +43,9 @@ namespace IDUNv2.SensorLib
             }
         }
 
-        #region Value Ring Buffer
+        #endregion
+
+        #region Value Buffer
         /// <summary>
         /// Size of databuffer. Must be a power of two.
         /// </summary>
@@ -124,10 +128,19 @@ namespace IDUNv2.SensorLib
 
         #endregion
 
-        public SensorId Id { get; private set; }
+        #region Fields
 
         private Func<SensorReadings, float?> readingExtracter;
         private readonly string settingsKey;
+
+        #endregion
+
+        #region Properties
+
+        public SensorId Id { get; private set; }
+        public float[] Values { get { return valueBuffer; } }
+
+        #endregion
 
         public Sensor(SensorId id, Func<SensorReadings, float?> readingExtracter, float rangeMin, float rangeMax, string unit, string valueStringFormat = "F2")
         {

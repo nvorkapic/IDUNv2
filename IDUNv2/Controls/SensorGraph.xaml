@@ -10,17 +10,24 @@
     d:DesignWidth="200"
     Width="320"
     Height="200">
-    <Grid BorderBrush="Black" BorderThickness="1">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <RelativePanel Background="Black">
-            <TextBlock Foreground="White" Text="Temperature: " />
-            <TextBlock Foreground="White" RelativePanel.AlignRightWithPanel="True" Text="30C" />
-        </RelativePanel>
-        <Grid Grid.Row="1" Background="Gainsboro">
-            <Image x:Name="image" />
-        </Grid>
-    </Grid>
+    <Canvas>
+        <ItemsControl ItemsSource="{Binding Labels}" Width="50">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Text}"
+                                   HorizontalAlignment="Right">
+                        <TextBlock.RenderTransform>
+                            <TranslateTransform Y="{Binding Ty}"/>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Image x:Name="image" Margin="75,0,0,0" />
+    </Canvas>
 </UserControl>

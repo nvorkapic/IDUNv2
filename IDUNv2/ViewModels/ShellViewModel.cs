@@ -28,6 +28,7 @@ namespace IDUNv2.ViewModels
 
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
+            new NavMenuItem { Label = "Sensor Details", Symbol = Symbol.View, PageType = typeof(Pages.SensorDetailsPage) },
             new NavMenuItem { Label = "Sensor Overview", Symbol = Symbol.ViewAll, PageType = typeof(Pages.SensorOverviewPage) },
             new NavMenuItem { Label = "Fault Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
             new NavMenuItem { Label = "Templates", Symbol = Symbol.Document, PageType = typeof(Pages.FaultReportTemplateFormPage) },

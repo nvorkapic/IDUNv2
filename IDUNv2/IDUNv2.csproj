@@ -135,6 +135,9 @@
     <Compile Include="Pages\FaultReports\FaultReportListingPage.xaml.cs">
       <DependentUpon>FaultReportListingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Sensors\SensorDetailsPage.xaml.cs">
+      <DependentUpon>SensorDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Sensors\SensorSettingsPage.xaml.cs">
       <DependentUpon>SensorSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -311,6 +314,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\FaultReports\FaultReportListingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Sensors\SensorDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
