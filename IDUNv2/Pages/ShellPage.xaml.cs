@@ -120,7 +120,7 @@ namespace IDUNv2.Pages
             var hyper = sender as HyperlinkButton;
             var item = hyper.Tag as NavLinkItem;
             PopNavLinksTo(item);
-            ContentFrame.Navigate(item.PageType);
+            ContentFrame.Navigate(item.PageType, item.Param);
         }
 
         private void PopNavLinksTo(NavLinkItem item)

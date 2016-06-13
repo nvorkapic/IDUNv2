@@ -80,6 +80,7 @@ namespace IDUNv2
             }
 
             //await AppData.InitAsync().ConfigureAwait(false);
+            DAL.SetDispatcher(Window.Current.Dispatcher);
             await DAL.FillCaches().ConfigureAwait(false);
         }
 

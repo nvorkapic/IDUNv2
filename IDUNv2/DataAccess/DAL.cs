@@ -21,6 +21,7 @@ using Windows.Security.Credentials;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Xamarin;
+using Windows.UI.Core;
 
 namespace IDUNv2.DataAccess
 {
@@ -35,9 +36,9 @@ namespace IDUNv2.DataAccess
     {
         private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
-        private static readonly SensorWatcher sensorWatcher = new SensorWatcher(50);
 
         private static CachingCloudClient cloud;
+        private static SensorWatcher sensorWatcher;
 
         static DAL()
         {
@@ -45,6 +46,11 @@ namespace IDUNv2.DataAccess
             db.CreateTable<SensorTrigger>();
 
             InitCloud();
+        }
+
+        public static void SetDispatcher(CoreDispatcher dispatcher)
+        {
+            sensorWatcher = new SensorWatcher(dispatcher, 100);
             sensorWatcher.LoadSettings();
         }
 
@@ -59,26 +65,12 @@ namespace IDUNv2.DataAccess
 
         public static bool HasSensors()
         {
-            return sensorWatcher.IsValid;
+            return sensorWatcher.HasSensors;
         }
 
         public static Sensor GetSensor(SensorId id)
         {
             return sensorWatcher.GetSensor(id);
-        }
-
-        public static SensorReadings GetSensorReadings()
-        {
-            SensorReadings sr;
-            sr.Temperature = sensorWatcher.Readings.Temperature;
-            sr.Humidity = sensorWatcher.Readings.Humidity;
-            sr.Pressure = sensorWatcher.Readings.Pressure;
-            return sensorWatcher.Readings;
-        }
-
-        public static void UpdateSensors(SensorReadings readings)
-        {
-            sensorWatcher.UpdateSensors(readings);
         }
 
         #endregion

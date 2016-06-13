@@ -18,71 +18,100 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Controls
 {
-    public class ScaleLabel
-    {
-        public string Text { get; set; }
-        public float Ty { get; set; }
-    }
-
-    public class SensorGraphViewModel : NotifyBase
-    {
-        private List<ScaleLabel> _labels;
-
-        public List<ScaleLabel> Labels
-        {
-            get { return _labels; }
-            set { _labels = value; Notify(); }
-        }
-
-        public void SetLabels(float min, float max, float height, float fontSize, string format="F0")
-        {
-            var labels = new List<ScaleLabel>();
-
-            float stepSize = 10.0f;
-            float range = max - min;
-            float rangeStep = range / stepSize;
-            float yStep = (height / stepSize);
-            float yAdjust = (fontSize+5.0f) * 0.5f;
-            for (float v = max, y=-yAdjust; v >= min; v -= rangeStep, y += yStep)
-            {
-                string text = v.ToString(format);
-                float top = y;
-                labels.Add(new ScaleLabel { Text = text, Ty = top });
-            }
-
-            Labels = labels;
-        }
-    }
-
     public sealed partial class SensorGraph : UserControl
     {
-        private float emitAt;
+        private class ViewModel : NotifyBase
+        {
+            public class ScaleLabel
+            {
+                public string Text { get; set; }
+                public float Ty { get; set; }
+            }
+
+            private List<ScaleLabel> _labels;
+
+            public List<ScaleLabel> Labels
+            {
+                get { return _labels; }
+                set { _labels = value; Notify(); }
+            }
+
+            public void SetLabels(float min, float max, float height, float fontSize, string format = "F0")
+            {
+                var labels = new List<ScaleLabel>();
+
+                float stepSize = 10.0f;
+                float range = max - min;
+                float rangeStep = range / stepSize;
+                float yStep = (height / stepSize);
+                float yAdjust = (fontSize + 5.0f) * 0.5f;
+                for (float v = max, y = -yAdjust; v >= min; v -= rangeStep, y += yStep)
+                {
+                    string text = v.ToString(format);
+                    float top = y;
+                    labels.Add(new ScaleLabel { Text = text, Ty = top });
+                }
+
+                Labels = labels;
+            }
+        }
+
+        #region Fields
 
         private WriteableBitmap wb;
         private Stream wbStream;
         private byte[] wbPixels;
 
-        //private int[] dataPoints = new int[N];
-        //private int dataReadIdx;
-        //private int dataWriteIdx;
-
-        private readonly int dataPointsCap;
+        private int dataPointsCap;
         private List<float> dataPoints;
-
-        private double leftPos;
-
-        private bool firstRender = true;
-        private double lastRenderTime;
 
         private float rangeMin;
         private float rangeMax;
         private float dangerLo;
         private float dangerHi;
         private float range;
-        private float rangeStep = 1.0f;
-        private float yCenter;
+        private float rangeStep;
+        private int centerY;
+        private int dangerLoY;
+        private int dangerHiY;
 
-        private SensorGraphViewModel viewModel = new SensorGraphViewModel();
+        private ViewModel viewModel = new ViewModel();
+
+        #endregion
+
+        #region Properties
+
+        public uint ColorDangerLo { get; set; }
+        public uint ColorDangerHi { get; set; }
+        public uint ColorScaleLines { get; set; }
+        public uint ColorDataLines { get; set; }
+
+        #endregion
+
+        public SensorGraph()
+        {
+            this.InitializeComponent();
+            this.DataContext = viewModel;
+
+            int w = (int)Width;
+            int h = (int)Height;
+            wb = new WriteableBitmap(w, h);
+            wbStream = wb.PixelBuffer.AsStream();
+            wbPixels = new byte[w * h * 4];
+            image.Source = wb;
+
+            centerY = h >> 1;
+
+            dataPointsCap = (int)Width >> 1;
+            dataPoints = new List<float>(dataPointsCap);
+
+            ColorDangerLo = 0xFF00FFFF;
+            ColorDangerHi = 0xFFFF0000;
+            ColorScaleLines = 0xFF808080;
+            ColorDataLines = 0xFFFFFF00;
+        }
+
+        #region Clamp
 
         private static int Clamp(int v, int min, int max)
         {
@@ -94,30 +123,15 @@ namespace IDUNv2.Controls
             return Math.Min(Math.Max(v, min), max);
         }
 
-        public SensorGraph()
-        {
-            this.InitializeComponent();
-            this.DataContext = viewModel;
-
-            leftPos = Width;
-            emitAt = (float)Width;
-            int w = (int)Width;
-            int h = (int)Height;
-            wb = new WriteableBitmap(w, h);
-            wbStream = wb.PixelBuffer.AsStream();
-            wbPixels = new byte[w * h * 4];
-            image.Source = wb;
-
-            dataPointsCap = (int)(Width * 0.5);
-            dataPoints = new List<float>(dataPointsCap);
-
-            yCenter = (float)Height * 0.5f;
-
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
-        }
+        #endregion
 
         public void SetRange(float min, float max)
         {
+            if (min >= max)
+            {
+                throw new Exception("min must be < max");
+            }
+
             rangeMin = min;
             rangeMax = max;
             range = max - min;
@@ -131,6 +145,8 @@ namespace IDUNv2.Controls
             hi = Clamp(hi, rangeMin, rangeMax);
             dangerLo = lo;
             dangerHi = hi;
+            dangerLoY = wb.PixelHeight - (int)((dangerLo - rangeMin) * rangeStep);
+            dangerHiY = (int)((rangeMax - dangerHi) * rangeStep);
         }
 
         public void AddDataPoint(float y)
@@ -142,84 +158,47 @@ namespace IDUNv2.Controls
             dataPoints.Add(y);
         }
 
-        private void CompositionTarget_Rendering(object sender, object e)
+        private void DrawScaleLines()
         {
-            var re = e as RenderingEventArgs;
-            var curRenderTime = re.RenderingTime.TotalSeconds;
+            DrawLine(0, 0, wb.PixelWidth, 0, ColorScaleLines);
+            DrawLine(0, wb.PixelHeight - 1, wb.PixelWidth, wb.PixelHeight - 1, ColorScaleLines);
 
-            if (firstRender)
-            {
-                firstRender = false;
-                lastRenderTime = curRenderTime;
-            }
+            DrawLine(0, centerY, wb.PixelWidth, centerY, ColorScaleLines);
+            DrawLine(0, dangerLoY, wb.PixelWidth, dangerLoY, ColorDangerLo);
+            DrawLine(0, dangerHiY, wb.PixelWidth, dangerHiY, ColorDangerHi);
+        }
 
-            double dt = curRenderTime - lastRenderTime;
-            lastRenderTime = curRenderTime;
-
-            Clear();
-
-            #region Range Lines
-
-            DrawLine(0, 0, wb.PixelWidth, 0, 0xFF808080);
-            DrawLine(0, wb.PixelHeight - 1, wb.PixelWidth, wb.PixelHeight - 1, 0xFF808080);
-
-
-            // rangeMin + d
-
-            int y = wb.PixelHeight >> 1;
-            DrawLine(0, y, wb.PixelWidth, y, 0xFF808080);
-
-            y = wb.PixelHeight - (int)((dangerLo-rangeMin) * rangeStep);
-            DrawLine(0, y, wb.PixelWidth, y, 0xFF0000FF);
-
-            y = (int)((rangeMax - dangerHi) * rangeStep);
-            DrawLine(0, y, wb.PixelWidth, y, 0xFFFF0000);
-
-            #endregion
-
+        private void DrawDataLines()
+        {
+            int centerY = wb.PixelHeight >> 1;
             int x = 0;
             int dx = 2;
+            int h = wb.PixelHeight;
             for (int i = 1; i < dataPoints.Count; ++i)
             {
                 float y0 = dataPoints[i - 1];
                 float y1 = dataPoints[i];
-
-                int py0 = (int)(yCenter - y0 * rangeStep);
-                int py1 = (int)(yCenter - y1 * rangeStep);
-                int px0 = (int)x;
-                int px1 = (int)(x + dx);
-                DrawLine(px0, py0, px1, py1, 0xFFFFFF00);
+                int py0 = h - (int)((y0 - rangeMin) * rangeStep);
+                int py1 = h - (int)((y1 - rangeMin) * rangeStep);
+                DrawLine(x, py0, x + dx, py1, 0xFFFFFF00);
                 x += dx;
             }
+        }
 
-            //double xstep = 4.0;
-            //double x = 0.0;
-            //float halhf = wb.PixelHeight * 0.5f;
-            //float ystep = halhf / 140.0f; // -40 to +100
-            //float fh = wb.PixelHeight;
-            //float rfh = 1.0f / wb.PixelHeight;
-            //for (int i = 1; i < dataPoints.Count; ++i)
-            //{
-            //    float y0 = dataPoints[i-1];
-            //    float y1 = dataPoints[i];
+        public void Render()
+        {
+            Clear();
 
-            //    int py0 = (int)(halhf - y0 * ystep*10);
-            //    int py1 = (int)(halhf - y1 * ystep*10);
-
-            //    int x0 = (int)x;
-            //    int x1 = (int)(x + xstep);
-            //    DrawLine(x0, py0, x1, py1, 0xFF000000);
-            //    x += xstep;
-            //}
+            DrawScaleLines();
+            DrawDataLines();
 
             wbStream.Seek(0, SeekOrigin.Begin);
             wbStream.Write(wbPixels, 0, wbPixels.Length);
             wb.Invalidate();
-
-            //leftPos -= 30.0 * dt;
         }
 
-        #region Drawing
+        #region Custom Drawing
+
         private unsafe void Clear()
         {
             fixed (byte* pixels = &wbPixels[0])
@@ -285,6 +264,7 @@ namespace IDUNv2.Controls
                 } while (n-- > 0);
             }
         }
+
         #endregion
     }
 }

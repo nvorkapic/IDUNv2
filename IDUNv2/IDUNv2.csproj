@@ -126,7 +126,7 @@
     <Compile Include="DataAccess\CachingCloudClient.cs" />
     <Compile Include="DataAccess\InsightsHelper.cs" />
     <Compile Include="Models\CmdBarItem.cs" />
-    <Compile Include="Models\NavMenuItem.cs" />
+    <Compile Include="Models\NavModels.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\SelectedTrigger.cs" />
     <Compile Include="Pages\FaultReports\FaultReportDetailsPage.xaml.cs">

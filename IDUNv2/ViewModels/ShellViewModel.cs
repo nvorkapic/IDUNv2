@@ -11,12 +11,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace IDUNv2.ViewModels
 {
-    public class NavLinkItem
-    {
-        public string Title { get; set; }
-        public Type PageType { get; set; }
-    }
-
     public class ShellViewModel : NotifyBase
     {
         public ObservableCollection<Notification> NotificationList { get; set; } = new ObservableCollection<Notification>();
@@ -28,8 +22,7 @@ namespace IDUNv2.ViewModels
 
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
-            new NavMenuItem { Label = "Sensor Details", Symbol = Symbol.View, PageType = typeof(Pages.SensorDetailsPage) },
-            new NavMenuItem { Label = "Sensor Overview", Symbol = Symbol.ViewAll, PageType = typeof(Pages.SensorOverviewPage) },
+            new NavMenuItem { Label = "Sensors", Symbol = Symbol.View, PageType = typeof(Pages.SensorOverviewPage) },
             new NavMenuItem { Label = "Fault Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
             new NavMenuItem { Label = "Templates", Symbol = Symbol.Document, PageType = typeof(Pages.FaultReportTemplateFormPage) },
             new NavMenuItem { Label = "Additional Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.LEDControlPage) },            
@@ -81,7 +74,7 @@ namespace IDUNv2.ViewModels
             SelectedNavMenuItem = item;
             if (NavLinks.Count > 0)
                 NavLinks.Clear();
-            NavLinks.Add(new NavLinkItem { Title = item.Label, PageType = item.PageType });
+            NavLinks.Add(new NavLinkItem(item.Label, item.PageType));
             target.Navigate(item.PageType);
         }
     }

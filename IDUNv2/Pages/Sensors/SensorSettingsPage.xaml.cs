@@ -35,14 +35,12 @@ namespace IDUNv2.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
             viewModel.Sensor = e.Parameter as Sensor;
-            DAL.PushNavLink(new NavLinkItem { Title = "Settings", PageType = GetType() });
+            DAL.PushNavLink(new NavLinkItem("Settings", GetType(), e.Parameter));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            base.OnNavigatedFrom(e);
             DAL.SetCmdBarItems(null);
         }
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)

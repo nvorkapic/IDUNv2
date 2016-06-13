@@ -6,12 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="100"
-    d:DesignWidth="200"
-    Width="320"
-    Height="200">
+    d:DesignWidth="400"
+    d:DesignHeight="300"
+    Width="400"
+    Height="300">
     <Canvas>
-        <ItemsControl ItemsSource="{Binding Labels}" Width="50">
+        <ItemsControl ItemsSource="{Binding Labels}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid/>
@@ -19,8 +19,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Text}"
-                                   HorizontalAlignment="Right">
+                    <TextBlock Text="{Binding Text}" HorizontalAlignment="Right">
                         <TextBlock.RenderTransform>
                             <TranslateTransform Y="{Binding Ty}"/>
                         </TextBlock.RenderTransform>
@@ -28,6 +27,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Image x:Name="image" Margin="75,0,0,0" />
+        <Image x:Name="image" Canvas.Left="50" />
     </Canvas>
 </UserControl>

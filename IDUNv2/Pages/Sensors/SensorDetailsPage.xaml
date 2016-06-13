@@ -10,14 +10,13 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-        <Controls:SensorGraph
-            x:Name="SG"
-            HorizontalAlignment="Left"
-            Height="311"
-            Margin="9,9,0,0"
-            VerticalAlignment="Top"
-            Width="537"/>
-
+        <Grid Width="400" HorizontalAlignment="Left" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="50,0,0,0" Text="{Binding Sensor.Id}" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <Controls:SensorGraph x:Name="SG" Grid.Row="1" HorizontalAlignment="Center" />
+        </Grid>
     </Grid>
 </Page>

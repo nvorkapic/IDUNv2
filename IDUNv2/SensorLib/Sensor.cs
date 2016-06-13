@@ -45,6 +45,8 @@ namespace IDUNv2.SensorLib
 
         #endregion
 
+        public delegate void SensorReadingsChanged(Sensor sensor, DateTime timestamp);
+
         #region Value Buffer
         /// <summary>
         /// Size of databuffer. Must be a power of two.
@@ -130,7 +132,6 @@ namespace IDUNv2.SensorLib
 
         #region Fields
 
-        private Func<SensorReadings, float?> readingExtracter;
         private readonly string settingsKey;
 
         #endregion
@@ -139,12 +140,12 @@ namespace IDUNv2.SensorLib
 
         public SensorId Id { get; private set; }
         public float[] Values { get { return valueBuffer; } }
+        public SensorReadingsChanged OnReadingsChanged { get; set; }
 
         #endregion
 
-        public Sensor(SensorId id, Func<SensorReadings, float?> readingExtracter, float rangeMin, float rangeMax, string unit, string valueStringFormat = "F2")
+        public Sensor(SensorId id, float rangeMin, float rangeMax, string unit, string valueStringFormat = "F2")
         {
-            this.readingExtracter = readingExtracter;
             settingsKey = "sensor." + (int)id;
             Id = id;
             RangeMin = rangeMin;
@@ -158,9 +159,8 @@ namespace IDUNv2.SensorLib
                 SaveToLocalSettings();
         }
 
-        public void UpdateValue(DateTime timestamp, SensorReadings readings)
+        public void UpdateValue(DateTime timestamp, float? val)
         {
-            var val = readingExtracter(readings);
             if (val.HasValue)
             {
                 Value = val.Value;
@@ -169,6 +169,8 @@ namespace IDUNv2.SensorLib
 
                 if (Value > DangerHi || Value < DangerLo)
                     State = SensorState.Faulted;
+
+                OnReadingsChanged?.Invoke(this, timestamp);
             }
         }
 

@@ -30,16 +30,16 @@ namespace IDUNv2.Pages
 
         private Action<object> ShowDetailsFor(Sensor s)
         {
-            return o => Frame.Navigate(typeof(Pages.SensorSettingsPage), s);
+            return o => Frame.Navigate(typeof(Pages.SensorDetailsPage), s);
         }
 
         public SensorOverviewPage()
         {
             this.InitializeComponent();
 
-            viewModel.TemperatureSensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.TemperatureSensor));
-            viewModel.HumiditySensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.HumiditySensor));
-            viewModel.PressureSensor.Command = new ActionCommand<object>(ShowDetailsFor(viewModel.PressureSensor));
+            viewModel.TemperatureSensor.Command = new ActionCommand<object>(ShowDetailsFor(DAL.GetSensor(SensorId.Temperature)));
+            viewModel.HumiditySensor.Command = new ActionCommand<object>(ShowDetailsFor(DAL.GetSensor(SensorId.Humidity)));
+            viewModel.PressureSensor.Command = new ActionCommand<object>(ShowDetailsFor(DAL.GetSensor(SensorId.Pressure)));
 
             this.DataContext = viewModel;
         }
@@ -60,24 +60,24 @@ namespace IDUNv2.Pages
 
         private void Timer_Tick(object sender, object e)
         {
-            SensorReadings readings;
+            //SensorReadings readings;
 
-            if (DAL.HasSensors())
-            {
-                readings = DAL.GetSensorReadings();
-            }
-            else
-            {
-                readings.Temperature = (float)(30.0 + rnd.NextDouble() * 2.1);
-                readings.Humidity = (float)(30.0 + rnd.NextDouble() * 5.1);
-                readings.Pressure = 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
-            }
+            //if (DAL.HasSensors())
+            //{
+            //    readings = DAL.GetSensorReadings();
+            //}
+            //else
+            //{
+            //    readings.Temperature = (float)(30.0 + rnd.NextDouble() * 2.1);
+            //    readings.Humidity = (float)(30.0 + rnd.NextDouble() * 5.1);
+            //    readings.Pressure = 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
+            //}
 
-            readings.Temperature += viewModel.BiasTemp;
-            readings.Humidity += viewModel.BiasHumid;
-            readings.Pressure += viewModel.BiasPress;
+            //readings.Temperature += viewModel.BiasTemp;
+            //readings.Humidity += viewModel.BiasHumid;
+            //readings.Pressure += viewModel.BiasPress;
 
-            DAL.UpdateSensors(readings);
+            //DAL.UpdateSensors(readings);
         }
     }
 }
