@@ -21,5 +21,27 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
         }
+
+        private void Credentials_Click(object sender, RoutedEventArgs e)
+        {
+            Credentials.Visibility = Visibility.Visible;
+            Documentation.Visibility = Visibility.Collapsed;
+            Tutorial.Visibility = Visibility.Collapsed;
+        }
+
+        private void Documentation_Click(object sender, RoutedEventArgs e)
+        {
+            Credentials.Visibility = Visibility.Collapsed;
+            Documentation.Visibility = Visibility.Visible;
+            Tutorial.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void Tutorial_Click(object sender, RoutedEventArgs e)
+        {
+            Credentials.Visibility = Visibility.Collapsed;
+            Documentation.Visibility = Visibility.Collapsed;
+            Tutorial.Visibility = Visibility.Visible;
+        }
     }
 }
