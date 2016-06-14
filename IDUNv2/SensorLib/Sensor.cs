@@ -45,8 +45,6 @@ namespace IDUNv2.SensorLib
 
         #endregion
 
-        public delegate void SensorReadingsChanged(Sensor sensor, DateTime timestamp);
-
         #region Value Buffer
         /// <summary>
         /// Size of databuffer. Must be a power of two.
@@ -140,7 +138,6 @@ namespace IDUNv2.SensorLib
 
         public SensorId Id { get; private set; }
         public float[] Values { get { return valueBuffer; } }
-        public SensorReadingsChanged OnReadingsChanged { get; set; }
 
         #endregion
 
@@ -169,8 +166,6 @@ namespace IDUNv2.SensorLib
 
                 if (Value > DangerHi || Value < DangerLo)
                     State = SensorState.Faulted;
-
-                OnReadingsChanged?.Invoke(this, timestamp);
             }
         }
 
