@@ -20,6 +20,9 @@ namespace IDUNv2.ViewModels
         private string _notificationNumber;
         public string NotificationNumber { get { return _notificationNumber; } set { _notificationNumber = value; Notify(); } }
 
+        private Uri _localWebPage;
+        public Uri localWebPage { get { return _localWebPage; } set { _localWebPage = value; Notify(); } }
+
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
             new NavMenuItem { Label = "Sensors", Symbol = Symbol.View, PageType = typeof(Pages.SensorOverviewPage) },

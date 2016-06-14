@@ -25,23 +25,20 @@ namespace IDUNv2.Pages
         private void Credentials_Click(object sender, RoutedEventArgs e)
         {
             Credentials.Visibility = Visibility.Visible;
-            Documentation.Visibility = Visibility.Collapsed;
-            Tutorial.Visibility = Visibility.Collapsed;
+
         }
 
         private void Documentation_Click(object sender, RoutedEventArgs e)
         {
-            Credentials.Visibility = Visibility.Collapsed;
-            Documentation.Visibility = Visibility.Visible;
-            Tutorial.Visibility = Visibility.Collapsed;
 
+            ShellPage.Current.ShowWeb(new Uri ("ms-appx-web:///Assets/IDUNDocumentation.html"));
+            
         }
 
         private void Tutorial_Click(object sender, RoutedEventArgs e)
         {
-            Credentials.Visibility = Visibility.Collapsed;
-            Documentation.Visibility = Visibility.Collapsed;
-            Tutorial.Visibility = Visibility.Visible;
+            ShellPage.Current.ShowWeb(new Uri ("ms-appx-web:///Assets/IDUNTutorial.html"));
+
         }
     }
 }

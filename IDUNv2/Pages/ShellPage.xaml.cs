@@ -1,4 +1,5 @@
-﻿using IDUNv2.Models;
+﻿
+using IDUNv2.Models;
 using IDUNv2.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using IDUNv2.DataAccess;
+using System.Collections.ObjectModel;
 
 namespace IDUNv2.Pages
 {
@@ -33,6 +35,30 @@ namespace IDUNv2.Pages
             get { return CmdBar.PrimaryCommands; }
         }
 
+        public void ShowWeb(Uri adress)
+        {
+            viewModel.localWebPage = adress;
+            if (adress.ToString().Contains("IDUNDocumentation"))
+            {
+                DocumentationNavigation.Visibility = Visibility.Visible;
+                TutorialNavigation.Visibility = Visibility.Collapsed;
+            }
+            else if (adress.ToString().Contains("IDUNTutorial"))
+            {
+                DocumentationNavigation.Visibility = Visibility.Collapsed;
+                TutorialNavigation.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                DocumentationNavigation.Visibility = Visibility.Collapsed;
+                TutorialNavigation.Visibility = Visibility.Collapsed;
+            }
+            Current.WebPageContentFrame.Visibility = Visibility.Visible;
+            Current.CmdBar.Visibility = Visibility.Collapsed;
+
+        }
+
+
         public ShellPage()
         {
             this.InitializeComponent();
@@ -40,6 +66,8 @@ namespace IDUNv2.Pages
             this.Loaded += MainPage_Loaded;
             Current = this;
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
+
+            
 
             //Window.Current.Content.
 
@@ -49,6 +77,7 @@ namespace IDUNv2.Pages
 
             Spinner = SpinnerPanel;
         }
+
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -240,5 +269,22 @@ namespace IDUNv2.Pages
         }
 
         #endregion
+
+        private void CloseWeb_Click(object sender, RoutedEventArgs e)
+        {
+            Current.WebPageContentFrame.Visibility = Visibility.Collapsed;
+            Current.CmdBar.Visibility = Visibility.Visible;
+        }
+
+        private void NavDocButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = (Button)sender;
+            Current.ShowWeb(new Uri("ms-appx-web:///Assets/IDUNDocumentation.html#" + btn.Tag.ToString()));
+        }
+        private void NavTutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = (Button)sender;
+            Current.ShowWeb(new Uri("ms-appx-web:///Assets/IDUNTutorial.html#" + btn.Tag.ToString()));
+        }
     }
 }

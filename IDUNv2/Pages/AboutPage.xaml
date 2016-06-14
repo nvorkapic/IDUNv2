@@ -11,24 +11,17 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0">
-            <Button Margin="5" Click="Credentials_Click">Credentials</Button>
-            <Button Margin="5" Click="Documentation_Click">Documentation</Button>
-            <Button Margin="5" Click="Tutorial_Click">Tutorial</Button>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="0" Grid.RowSpan="2">
+            <Button Margin="5" Click="Documentation_Click" Width="140">Documentation</Button>
+            <Button Margin="5" Click="Tutorial_Click" Width="140">Tutorial</Button>
         </StackPanel>
         <Grid Grid.Row="1" Margin="5" x:Name="Credentials" Visibility="Visible">
-        <Image Source="/Assets/1200.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15"></Image>
-        <StackPanel VerticalAlignment="Bottom" Margin="15">
-            <TextBlock HorizontalAlignment="Right">Copyright © 2016</TextBlock>
-            <TextBlock HorizontalAlignment="Right">Mårten Hansson</TextBlock>
-            <TextBlock HorizontalAlignment="Right">Nikola Vorkapic</TextBlock>
-        </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1" Margin="5" x:Name="Documentation" Visibility="Collapsed">
-            <WebView Source="ms-appx-web:///Assets/IDUNDocumentation.html"></WebView>
-        </Grid>
-        <Grid Grid.Row="1" Margin="5" x:Name="Tutorial" Visibility="Collapsed">
-            <WebView Source="ms-appx-web:///Assets/IDUNTutorial.html"></WebView>
+            <Image Source="/Assets/1200.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15"></Image>
+            <StackPanel VerticalAlignment="Bottom" Margin="15">
+                <TextBlock HorizontalAlignment="Right">Copyright © 2016</TextBlock>
+                <TextBlock HorizontalAlignment="Right">Mårten Hansson</TextBlock>
+                <TextBlock HorizontalAlignment="Right">Nikola Vorkapic</TextBlock>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

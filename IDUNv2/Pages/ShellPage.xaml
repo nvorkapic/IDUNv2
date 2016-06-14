@@ -186,5 +186,30 @@
                               Height="250"
                               Visibility="Collapsed"
                               />
+        <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" Width="800" Height="480" x:Name="WebPageContentFrame" Visibility="Collapsed" Background="Black">
+            <Grid>
+                <WebView Source="{Binding localWebPage}" Height="450"/>
+                <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="DocumentationNavigation" Visibility="Collapsed">
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Introduction" Content="Introduction" Margin="0,5,0,5"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Requirements" Content="Requirements" Margin="0,5,0,5"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="TechnicalDetails" Margin="0,5,0,5" Content="Details"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Version" Content="Version" Margin="0,5,0,5"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Copyright" Content="Copyright" Margin="0,5,0,5"></Button>
+                </StackPanel>
+                <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="TutorialNavigation" Visibility="Collapsed">
+                    <Button Click="NavTutButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="MainPage" Content="Main Page" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="BottomBar" Content="Bottom Bar" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="SensorOverview" Content="Sensor" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="SensorSetting" Content="Settings" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="Templates" Content="Templates" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="FaultReport" Content="Reports" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="AdditionalApps" Content="Additional Apps" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="DeviceSettings" Content="Device" Margin="0,5,0,5"></Button>
+                </StackPanel>
+                <Button Content="Close" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="CloseWeb_Click" Width="120" Margin="0,5,0,5"></Button>
+            </Grid>
+        </Frame>
     </Grid>
 </Page>
