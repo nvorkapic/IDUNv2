@@ -76,26 +76,22 @@ namespace IDUNv2.DataAccess
         public static void ClearSensorFaultState(SensorId id)
         {
             var s = GetSensor(id);
-            if (HasSensors())
-                s.State = SensorState.Online;
-            else
-                s.State = SensorState.Simulated;
+            s.Faulted = false;
+        }
+
+        public static float GetSensorBias(SensorId id)
+        {
+            int i = (int)id;
+            if (i >= 0 && i < sensorWatcher.BiasValues.Length)
+                return sensorWatcher.BiasValues[i];
+            return 0.0f;
         }
 
         public static void SetSensorBias(SensorId id, float val)
         {
-            switch (id)
-            {
-                case SensorId.Temperature:
-                    sensorWatcher.BiasReadings.Temperature = val;
-                    break;
-                case SensorId.Humidity:
-                    sensorWatcher.BiasReadings.Humidity = val;
-                    break;
-                case SensorId.Pressure:
-                    sensorWatcher.BiasReadings.Pressure = val;
-                    break;
-            }
+            int i = (int)id;
+            if (i >= 0 && i < sensorWatcher.BiasValues.Length)
+                sensorWatcher.BiasValues[i] = val;
         }
 
         #endregion

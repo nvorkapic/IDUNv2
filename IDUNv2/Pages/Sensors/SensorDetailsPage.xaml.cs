@@ -23,7 +23,6 @@ namespace IDUNv2.Pages
     public class SensorDetailsViewModel : NotifyBase
     {
         private Sensor _sensor;
-        private float _bias;
 
         public Sensor Sensor
         {
@@ -33,8 +32,8 @@ namespace IDUNv2.Pages
 
         public float Bias
         {
-            get { return _bias; }
-            set { _bias = value; Notify(); DAL.SetSensorBias(Sensor.Id, value); }
+            get { return DAL.GetSensorBias(Sensor.Id); }
+            set { DAL.SetSensorBias(Sensor.Id, value); Notify();  }
         }
     }
 
@@ -48,9 +47,6 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
-
-            timer.Tick += Timer_Tick;
-            timer.Start();
         }
 
         private void Timer_Tick(object sender, object e)
@@ -61,12 +57,16 @@ namespace IDUNv2.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
             var sensor = e.Parameter as Sensor;
 
             SG.SetRange(sensor.RangeMin, sensor.RangeMax);
             SG.SetDanger(sensor.DangerLo, sensor.DangerHi);
 
             viewModel.Sensor = sensor;
+            viewModel.Bias = DAL.GetSensorBias(sensor.Id);
 
             var cmdBarItems = new CmdBarItem[]
             {
@@ -84,6 +84,8 @@ namespace IDUNv2.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
+            timer.Tick -= Timer_Tick;
+            timer.Stop();
         }
 
         private void CompositionTarget_Rendering(object sender, object e)

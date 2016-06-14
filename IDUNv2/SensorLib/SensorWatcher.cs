@@ -25,8 +25,8 @@ namespace IDUNv2.SensorLib
         };
 
         public SensorReadings Readings;
-        public SensorReadings BiasReadings;
         public bool HasSensors { get; private set; }
+        public float[] BiasValues { get; private set; }
 
         private async Task Init()
         {
@@ -68,9 +68,7 @@ namespace IDUNv2.SensorLib
             Sensors[1].GetSimValue = () => (float)(30.0 + rnd.NextDouble() * 5.0);
             Sensors[2].GetSimValue = () => 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
 
-            BiasReadings.Temperature = 0;
-            BiasReadings.Humidity = 0;
-            BiasReadings.Pressure = 0;
+            BiasValues = new float[Sensors.Length];
 
             Init().ContinueWith(task =>
             {
@@ -84,9 +82,9 @@ namespace IDUNv2.SensorLib
                     var now = DateTime.Now;
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        Sensors[0].UpdateValue(now, Readings.Temperature, BiasReadings.Temperature);
-                        Sensors[1].UpdateValue(now, Readings.Humidity, BiasReadings.Humidity);
-                        Sensors[2].UpdateValue(now, Readings.Pressure, BiasReadings.Pressure);
+                        Sensors[0].UpdateValue(now, Readings.Temperature, BiasValues[0]);
+                        Sensors[1].UpdateValue(now, Readings.Humidity, BiasValues[1]);
+                        Sensors[2].UpdateValue(now, Readings.Pressure, BiasValues[2]);
                     });
 
                 }, TimeSpan.FromMilliseconds(period));

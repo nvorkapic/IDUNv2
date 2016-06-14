@@ -11,8 +11,8 @@
     mc:Ignorable="d">
     <Page.Resources>
         <conv:SensorStateToColorConverter x:Key="SensorStateColor"/>
+        <conv:RedOrGreenConverter x:Key="RedOrGreenColor"/>
     </Page.Resources>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid HorizontalAlignment="Left" Margin="10">
             <Grid.RowDefinitions>
@@ -23,23 +23,39 @@
                 <ColumnDefinition Width="400"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Controls:SensorGraph x:Name="SG" />
-            <Slider Grid.Row="1"
-                    Margin="50,10,0,0"
-                    Minimum="-100"
-                    Maximum="100"
-                    Value="{Binding Bias, Mode=TwoWay}"
-                    />
-
-            <Grid Grid.Column="1"
-                  Margin="60,0,0,0">
+            <StackPanel>
+                <Controls:SensorGraph x:Name="SG" />
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Status:" FontWeight="Bold"/>
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        Text="{Binding Sensor.State}"
-                        Foreground="{Binding Sensor.State, Converter={StaticResource SensorStateColor}}"
+                    <Slider
+                        Margin="50,10,0,0"
+                        Minimum="-100"
+                        Maximum="100"
+                        Width="300"
+                        Value="{Binding Bias, Mode=TwoWay}"
                         />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding Bias}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+            <Grid Grid.Column="1" Margin="60,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel HorizontalAlignment="Left">
+                    <TextBlock Text="Status:" FontWeight="Bold"/>
+                    <TextBlock Text="Value:" FontWeight="Bold"/>
+                    <TextBlock Text="Faulted:" FontWeight="Bold"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Margin="5,0,0,0"
+                               Text="{Binding Sensor.State}"
+                               Foreground="{Binding Sensor.State, Converter={StaticResource SensorStateColor}}"/>
+                    <TextBlock Margin="5,0,0,0"
+                               Text="{Binding Sensor.Value}"
+                               Foreground="{Binding Sensor.State, Converter={StaticResource SensorStateColor}}"/>
+                    <TextBlock Margin="5,0,0,0"
+                               Text="{Binding Sensor.Faulted}"
+                               Foreground="{Binding Sensor.Faulted, Converter={StaticResource RedOrGreenColor}}"/>
                 </StackPanel>
             </Grid>
         </Grid>

@@ -16,8 +16,7 @@ namespace IDUNv2.SensorLib
     {
         Offline,
         Simulated,
-        Online,
-        Faulted
+        Online
     }
 
     public class Sensor : NotifyBase
@@ -47,17 +46,6 @@ namespace IDUNv2.SensorLib
 
         #endregion
 
-        #region Value Buffer
-        /// <summary>
-        /// Size of databuffer. Must be a power of two.
-        /// </summary>
-        public const int BUFFER_SIZE = 64;
-
-        private float[] valueBuffer = new float[BUFFER_SIZE];
-        private int valueBufferIdx;
-
-        #endregion
-
         #region Notify Fields
 
         private float _rangeMin;
@@ -70,6 +58,7 @@ namespace IDUNv2.SensorLib
         private string _unit;
         private ActionCommand<object> _command;
         private bool _hasHardware;
+        private bool _faulted;
 
         #endregion
 
@@ -135,6 +124,12 @@ namespace IDUNv2.SensorLib
             set { _hasHardware = value; Notify(); }
         }
 
+        public bool Faulted
+        {
+            get { return _faulted; }
+            set { _faulted = value; Notify(); }
+        }
+
         #endregion
 
         #region Fields
@@ -146,7 +141,6 @@ namespace IDUNv2.SensorLib
         #region Properties
 
         public SensorId Id { get; private set; }
-        public float[] Values { get { return valueBuffer; } }
         public Func<float> GetSimValue { get; set; }
 
         #endregion
@@ -172,16 +166,14 @@ namespace IDUNv2.SensorLib
             {
                 val = GetSimValue();
             }
-            if (State != SensorState.Offline && val.HasValue)
+            if (val.HasValue)
             {
                 Value = val.Value;
                 if (bias.HasValue)
                     Value += bias.Value;
-                valueBuffer[valueBufferIdx] = Value;
-                valueBufferIdx = (valueBufferIdx + 1) & (BUFFER_SIZE - 1);
 
                 if (Value > DangerHi || Value < DangerLo)
-                    State = SensorState.Faulted;
+                    Faulted = true;
             }
         }
 

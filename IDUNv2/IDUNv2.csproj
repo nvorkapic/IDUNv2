@@ -110,6 +110,8 @@
     <Compile Include="Controls\SensorGauge.xaml.cs">
       <DependentUpon>SensorGauge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\RedOrGreenConverter.cs" />
+    <Compile Include="Converters\SensorFaultedToColor.cs" />
     <Compile Include="Converters\SensorStateToColorConverter.cs" />
     <Compile Include="DataAccess\DAL.cs" />
     <Compile Include="Common\ActionCommand.cs" />

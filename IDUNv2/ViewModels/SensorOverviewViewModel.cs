@@ -24,24 +24,20 @@ namespace IDUNv2.ViewModels
 
         #region Bias
 
-        private float _biasTemp;
-        private float _biasHumid;
-        private float _biasPress;
-
         public float BiasTemp
         {
-            get { return _biasTemp; }
-            set { _biasTemp = value; Notify(); DAL.SetSensorBias(SensorId.Temperature, value); }
+            get { return DAL.GetSensorBias(SensorId.Temperature); }
+            set { DAL.SetSensorBias(SensorId.Temperature, value); Notify(); }
         }
         public float BiasHumid
         {
-            get { return _biasHumid; }
-            set { _biasHumid = value; Notify(); DAL.SetSensorBias(SensorId.Humidity, value); }
+            get { return DAL.GetSensorBias(SensorId.Humidity); }
+            set { DAL.SetSensorBias(SensorId.Humidity, value); Notify(); }
         }
         public float BiasPress
         {
-            get { return _biasPress; }
-            set { _biasPress = value; Notify(); DAL.SetSensorBias(SensorId.Pressure, value); }
+            get { return DAL.GetSensorBias(SensorId.Pressure); }
+            set { DAL.SetSensorBias(SensorId.Pressure, value); Notify(); }
         }
 
         #endregion

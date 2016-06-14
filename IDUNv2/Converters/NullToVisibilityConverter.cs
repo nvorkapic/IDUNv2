@@ -20,7 +20,7 @@ namespace IDUNv2.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return Visibility.Visible;
         }
     }
 }

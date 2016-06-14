@@ -19,8 +19,6 @@ namespace IDUNv2.Converters
                     return "DarkGray";
                 case SensorState.Online:
                     return "Green";
-                case SensorState.Faulted:
-                    return "Red";
                 case SensorState.Simulated:
                     return "Gold";
             }
@@ -29,7 +27,7 @@ namespace IDUNv2.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return SensorState.Offline;
         }
     }
 }
