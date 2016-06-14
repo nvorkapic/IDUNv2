@@ -14,6 +14,7 @@ namespace IDUNv2.SensorLib
 
     public enum SensorState
     {
+        Offline,
         Simulated,
         Online,
         Faulted
@@ -25,6 +26,7 @@ namespace IDUNv2.SensorLib
 
         private class SensorSettings
         {
+            public SensorState State;
             public float RangeMin;
             public float RangeMax;
             public float DangerLo;
@@ -67,6 +69,7 @@ namespace IDUNv2.SensorLib
         private string _valueStringFormat;
         private string _unit;
         private ActionCommand<object> _command;
+        private bool _hasHardware;
 
         #endregion
 
@@ -126,6 +129,12 @@ namespace IDUNv2.SensorLib
             set { _command = value; Notify(); }
         }
 
+        public bool HasHardware
+        {
+            get { return _hasHardware; }
+            set { _hasHardware = value; Notify(); }
+        }
+
         #endregion
 
         #region Fields
@@ -138,6 +147,7 @@ namespace IDUNv2.SensorLib
 
         public SensorId Id { get; private set; }
         public float[] Values { get { return valueBuffer; } }
+        public Func<float> GetSimValue { get; set; }
 
         #endregion
 
@@ -156,11 +166,17 @@ namespace IDUNv2.SensorLib
                 SaveToLocalSettings();
         }
 
-        public void UpdateValue(DateTime timestamp, float? val)
+        public void UpdateValue(DateTime timestamp, float? val, float? bias)
         {
-            if (val.HasValue)
+            if (State == SensorState.Simulated && GetSimValue != null)
+            {
+                val = GetSimValue();
+            }
+            if (State != SensorState.Offline && val.HasValue)
             {
                 Value = val.Value;
+                if (bias.HasValue)
+                    Value += bias.Value;
                 valueBuffer[valueBufferIdx] = Value;
                 valueBufferIdx = (valueBufferIdx + 1) & (BUFFER_SIZE - 1);
 
@@ -180,6 +196,7 @@ namespace IDUNv2.SensorLib
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             var ss = new SensorSettings
             {
+                State = State,
                 RangeMin = RangeMin,
                 RangeMax = RangeMax,
                 DangerLo = DangerLo,
@@ -198,6 +215,7 @@ namespace IDUNv2.SensorLib
             var ss = SensorSettings.CreateFromJson(json);
             if (ss != null)
             {
+                State = ss.State;
                 RangeMin = ss.RangeMin;
                 RangeMax = ss.RangeMax;
                 DangerLo = ss.DangerLo;

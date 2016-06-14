@@ -36,11 +36,14 @@ namespace IDUNv2.SensorLib
             if (hts221.IsValid)
             {
                 Sensors[(int)SensorId.Temperature].State = SensorState.Online;
+                Sensors[(int)SensorId.Temperature].HasHardware = true;
                 Sensors[(int)SensorId.Humidity].State = SensorState.Online;
+                Sensors[(int)SensorId.Humidity].HasHardware = true;
             }
             if (lps25h.IsValid)
             {
                 Sensors[(int)SensorId.Pressure].State = SensorState.Online;
+                Sensors[(int)SensorId.Pressure].HasHardware = true;
             }
 
             HasSensors = hts221.IsValid && lps25h.IsValid;
@@ -61,6 +64,10 @@ namespace IDUNv2.SensorLib
 
         public SensorWatcher(CoreDispatcher dispatcher, int period)
         {
+            Sensors[0].GetSimValue = () => (float)(30.0 + rnd.NextDouble() * 5.0);
+            Sensors[1].GetSimValue = () => (float)(30.0 + rnd.NextDouble() * 5.0);
+            Sensors[2].GetSimValue = () => 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
+
             BiasReadings.Temperature = 0;
             BiasReadings.Humidity = 0;
             BiasReadings.Pressure = 0;
@@ -74,30 +81,12 @@ namespace IDUNv2.SensorLib
                     if (lps25h.IsValid)
                         lps25h.GetReadings(ref Readings);
 
-                    SensorReadings readings;
-
-                    if (HasSensors)
-                    {
-                        readings = Readings;
-                    }
-                    else
-                    {
-                        readings.Temperature = (float)(30.0 + rnd.NextDouble() * 5.0);
-                        readings.Humidity = (float)(30.0 + rnd.NextDouble() * 5.0);
-                        readings.Pressure = 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);
-                    }
-
-                    readings.Temperature += BiasReadings.Temperature;
-                    readings.Humidity += BiasReadings.Humidity;
-                    readings.Pressure += BiasReadings.Pressure;
-
                     var now = DateTime.Now;
-
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        Sensors[0].UpdateValue(now, readings.Temperature);
-                        Sensors[1].UpdateValue(now, readings.Humidity);
-                        Sensors[2].UpdateValue(now, readings.Pressure);
+                        Sensors[0].UpdateValue(now, Readings.Temperature, BiasReadings.Temperature);
+                        Sensors[1].UpdateValue(now, Readings.Humidity, BiasReadings.Humidity);
+                        Sensors[2].UpdateValue(now, Readings.Pressure, BiasReadings.Pressure);
                     });
 
                 }, TimeSpan.FromMilliseconds(period));

@@ -15,12 +15,14 @@ namespace IDUNv2.Converters
             var state = (SensorState)value;
             switch (state)
             {
+                case SensorState.Offline:
+                    return "DarkGray";
                 case SensorState.Online:
                     return "Green";
-                case SensorState.Simulated:
-                    return "DarkGray";
                 case SensorState.Faulted:
                     return "Red";
+                case SensorState.Simulated:
+                    return "Gold";
             }
             return "";
         }
