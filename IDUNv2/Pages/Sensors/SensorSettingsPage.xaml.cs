@@ -30,11 +30,12 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
-            this.Loaded += async (s, e) => await viewModel.InitAsync();
+            //this.Loaded += async (s, e) => await viewModel.InitAsync();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            await viewModel.InitAsync();
             viewModel.Sensor = e.Parameter as Sensor;
             DAL.PushNavLink(new NavLinkItem("Settings", GetType(), e.Parameter));
         }

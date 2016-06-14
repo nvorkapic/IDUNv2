@@ -28,7 +28,6 @@ namespace IDUNv2.Pages
         public static ShellPage Current;
         private ShellViewModel viewModel = new ShellViewModel();
         public Notification SelectedNotificationItem = new Notification();
-        public static Grid Spinner;
 
         public IObservableVector<ICommandBarElement> CmdBarPrimaryCommands
         {
@@ -74,8 +73,6 @@ namespace IDUNv2.Pages
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Delete), Label = "Delete" });
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Save), Label = "Save" });
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Add), Label = "Create New" });
-
-            Spinner = SpinnerPanel;
         }
 
 
@@ -102,15 +99,15 @@ namespace IDUNv2.Pages
 
         public static void SetSpinner(LoadingState state)
         {
-            if (Spinner == null)
+            if (Current.SpinnerPanel == null)
                 return;
             switch (state)
             {
                 case LoadingState.Loading:
-                    Spinner.Visibility = Visibility.Visible;
+                    Current.SpinnerPanel.Visibility = Visibility.Visible;
                     break;
                 default:
-                    Spinner.Visibility = Visibility.Collapsed;
+                    Current.SpinnerPanel.Visibility = Visibility.Collapsed;
                     break;
             }
         }
@@ -129,6 +126,11 @@ namespace IDUNv2.Pages
             var lv = sender as ListView;
             var item = lv.SelectedItem as NavMenuItem;
             viewModel.SelectMainMenu(ContentFrame, item);
+        }
+
+        public void ContentNavigate(Type pageType, object param = null)
+        {
+            ContentFrame.Navigate(pageType, param);
         }
 
         public void PushNavLink(NavLinkItem item)

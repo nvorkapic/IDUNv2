@@ -5,18 +5,43 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Controls="using:IDUNv2.Controls"
+    xmlns:conv="using:IDUNv2.Converters"
     RequestedTheme="Dark"
     x:Class="IDUNv2.Pages.SensorDetailsPage"
     mc:Ignorable="d">
+    <Page.Resources>
+        <conv:SensorStateToColorConverter x:Key="SensorStateColor"/>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid Width="400" HorizontalAlignment="Left" Margin="10">
+        <Grid HorizontalAlignment="Left" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
                 <RowDefinition/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Margin="50,0,0,0" Text="{Binding Sensor.Id}" FontWeight="Bold" HorizontalAlignment="Center"/>
-            <Controls:SensorGraph x:Name="SG" Grid.Row="1" HorizontalAlignment="Center" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Controls:SensorGraph x:Name="SG" />
+            <Slider Grid.Row="1"
+                    Margin="50,10,0,0"
+                    Minimum="-100"
+                    Maximum="100"
+                    Value="{Binding Bias, Mode=TwoWay}"
+                    />
+
+            <Grid Grid.Column="1"
+                  Margin="60,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Status:" FontWeight="Bold"/>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        Text="{Binding Sensor.State}"
+                        Foreground="{Binding Sensor.State, Converter={StaticResource SensorStateColor}}"
+                        />
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

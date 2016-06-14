@@ -50,6 +50,36 @@ namespace IDUNv2.ViewModels
             set { _triggers = value; Notify(); }
         }
 
+        public SensorState SensorState
+        {
+            get { return Sensor.State; }
+            set
+            {
+                Sensor.State = value;
+                Notify("SensorStateOffline");
+                Notify("SensorStateOnline");
+                Notify("SensorStateSimulated");
+            }
+        }
+
+        public bool SensorStateOffline
+        {
+            get { return SensorState == SensorState.Offline; }
+            set { SensorState = SensorState.Offline; }
+        }
+
+        public bool SensorStateOnline
+        {
+            get { return SensorState == SensorState.Online; }
+            set { SensorState = SensorState.Online; }
+        }
+
+        public bool SensorStateSimulated
+        {
+            get { return SensorState == SensorState.Simulated; }
+            set { SensorState = SensorState.Simulated; }
+        }
+
         #endregion
 
         #region Properties

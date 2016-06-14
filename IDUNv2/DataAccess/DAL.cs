@@ -73,6 +73,31 @@ namespace IDUNv2.DataAccess
             return sensorWatcher.GetSensor(id);
         }
 
+        public static void ClearSensorFaultState(SensorId id)
+        {
+            var s = GetSensor(id);
+            if (HasSensors())
+                s.State = SensorState.Online;
+            else
+                s.State = SensorState.Simulated;
+        }
+
+        public static void SetSensorBias(SensorId id, float val)
+        {
+            switch (id)
+            {
+                case SensorId.Temperature:
+                    sensorWatcher.BiasReadings.Temperature = val;
+                    break;
+                case SensorId.Humidity:
+                    sensorWatcher.BiasReadings.Humidity = val;
+                    break;
+                case SensorId.Pressure:
+                    sensorWatcher.BiasReadings.Pressure = val;
+                    break;
+            }
+        }
+
         #endregion
 
         #region Cloud

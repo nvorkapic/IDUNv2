@@ -23,6 +23,7 @@ namespace IDUNv2.Pages
     public class SensorDetailsViewModel : NotifyBase
     {
         private Sensor _sensor;
+        private float _bias;
 
         public Sensor Sensor
         {
@@ -30,20 +31,10 @@ namespace IDUNv2.Pages
             set { _sensor = value; Notify(); }
         }
 
-        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
-
-        #region CmdBar Actions
-
-        private void ShowSettings(object param)
+        public float Bias
         {
-
-        }
-
-        #endregion
-
-        public SensorDetailsViewModel()
-        {
-
+            get { return _bias; }
+            set { _bias = value; Notify(); DAL.SetSensorBias(Sensor.Id, value); }
         }
     }
 
@@ -64,7 +55,6 @@ namespace IDUNv2.Pages
 
         private void Timer_Tick(object sender, object e)
         {
-            //var v = (rnd.NextDouble() * 20.0) - 10.0;
             float v = viewModel.Sensor.Value;
             SG.AddDataPoint(v);
         }
@@ -77,8 +67,16 @@ namespace IDUNv2.Pages
             SG.SetDanger(sensor.DangerLo, sensor.DangerHi);
 
             viewModel.Sensor = sensor;
-            
+
+            var cmdBarItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Setting, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
+                new CmdBarItem(Symbol.Repair, "Repair", o => DAL.ClearSensorFaultState(viewModel.Sensor.Id)),
+                new CmdBarItem(Symbol.Clear, "Clear Bias", o => viewModel.Bias = 0)
+            };
+
             DAL.PushNavLink(new NavLinkItem(viewModel.Sensor.Id.ToString(), GetType(), e.Parameter));
+            DAL.SetCmdBarItems(cmdBarItems);
 
             CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
