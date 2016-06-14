@@ -37,7 +37,7 @@
                                      IsChecked="{Binding SensorStateOffline, Mode=TwoWay}"/>
                         <RadioButton GroupName="SensorState"
                                      Content="Online"
-                                     Foreground="Green"
+                                     Foreground="LightGreen"
                                      IsChecked="{Binding SensorStateOnline, Mode=TwoWay}"
                                      IsEnabled="{Binding Sensor.HasHardware}"
                                      />
@@ -54,23 +54,24 @@
                             Text="{Binding Sensor.Unit, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
                             LostFocus="TextBox_LostFocus"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox
+                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                            <TextBox
                             Header="Range (min):"
                             Width="195"
                             Text="{Binding Sensor.RangeMin, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
                             LostFocus="TextBox_LostFocus"/>
-                        <TextBox
+                            <TextBox
                             Header="Range (max):"
                             Width="195"
                             Margin="10,0,0,0"
                             Text="{Binding Sensor.RangeMax, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
                             LostFocus="TextBox_LostFocus"/>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    
+                    <StackPanel Orientation="Horizontal" Margin="205,0,0,0">
                         <TextBox
                             Header="Danger (low):"
                             Width="195"
