@@ -29,22 +29,6 @@ namespace IDUNv2.Pages
             get { return _sensor; }
             set { _sensor = value; Notify(); }
         }
-
-        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
-
-        #region CmdBar Actions
-
-        private void ShowSettings(object param)
-        {
-
-        }
-
-        #endregion
-
-        public SensorDetailsViewModel()
-        {
-
-        }
     }
 
     public sealed partial class SensorDetailsPage : Page
@@ -56,7 +40,7 @@ namespace IDUNv2.Pages
         public SensorDetailsPage()
         {
             this.InitializeComponent();
-            this.DataContext = viewModel;
+            this.DataContext = this;
 
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -64,7 +48,6 @@ namespace IDUNv2.Pages
 
         private void Timer_Tick(object sender, object e)
         {
-            //var v = (rnd.NextDouble() * 20.0) - 10.0;
             float v = viewModel.Sensor.Value;
             SG.AddDataPoint(v);
         }
@@ -77,8 +60,15 @@ namespace IDUNv2.Pages
             SG.SetDanger(sensor.DangerLo, sensor.DangerHi);
 
             viewModel.Sensor = sensor;
-            
+
+            var cmdBarItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Repair, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
+                new CmdBarItem(Symbol.View, "Gauges", o => { DAL.PopNavLink(); Frame.Navigate(typeof(SensorOverviewPage)); })
+            };
+
             DAL.PushNavLink(new NavLinkItem(viewModel.Sensor.Id.ToString(), GetType(), e.Parameter));
+            DAL.SetCmdBarItems(cmdBarItems);
 
             CompositionTarget.Rendering += CompositionTarget_Rendering;
         }

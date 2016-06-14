@@ -102,6 +102,11 @@ namespace IDUNv2.Pages
             viewModel.SelectMainMenu(ContentFrame, item);
         }
 
+        public void ContentNavigate(Type pageType, object param = null)
+        {
+            ContentFrame.Navigate(pageType, param);
+        }
+
         public void PushNavLink(NavLinkItem item)
         {
             var last = viewModel.NavLinks.LastOrDefault();

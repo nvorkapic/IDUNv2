@@ -45,5 +45,10 @@ namespace IDUNv2.Pages
             var lb = sender as ListBox;
             Frame.Navigate(typeof(Pages.FaultReportDetailsPage), lb.SelectedItem, new DrillInNavigationTransitionInfo());
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DAL.SetCmdBarItems(null);
+        }
     }
 }
