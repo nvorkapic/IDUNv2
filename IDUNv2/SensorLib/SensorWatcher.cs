@@ -28,15 +28,6 @@ namespace IDUNv2.SensorLib
         public SensorReadings BiasReadings;
         public bool HasSensors { get; private set; }
 
-        //private void UpdateSensors(SensorReadings readings)
-        //{
-        //    var now = DateTime.Now;
-        //    foreach (var s in Sensors)
-        //    {
-        //        s.UpdateValue(now, readings);
-        //    }
-        //}
-
         private async Task Init()
         {
             await hts221.Init();

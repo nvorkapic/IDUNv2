@@ -23,11 +23,18 @@ namespace IDUNv2.Pages
     public class SensorDetailsViewModel : NotifyBase
     {
         private Sensor _sensor;
+        private float _bias;
 
         public Sensor Sensor
         {
             get { return _sensor; }
             set { _sensor = value; Notify(); }
+        }
+
+        public float Bias
+        {
+            get { return _bias; }
+            set { _bias = value; Notify(); DAL.SetSensorBias(Sensor.Id, value); }
         }
     }
 
@@ -40,7 +47,7 @@ namespace IDUNv2.Pages
         public SensorDetailsPage()
         {
             this.InitializeComponent();
-            this.DataContext = this;
+            this.DataContext = viewModel;
 
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -63,8 +70,9 @@ namespace IDUNv2.Pages
 
             var cmdBarItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Repair, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
-                new CmdBarItem(Symbol.View, "Gauges", o => { DAL.PopNavLink(); Frame.Navigate(typeof(SensorOverviewPage)); })
+                new CmdBarItem(Symbol.Setting, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
+                new CmdBarItem(Symbol.Repair, "Repair", o => DAL.ClearSensorFaultState(viewModel.Sensor.Id)),
+                new CmdBarItem(Symbol.Clear, "Clear Bias", o => viewModel.Bias = 0)
             };
 
             DAL.PushNavLink(new NavLinkItem(viewModel.Sensor.Id.ToString(), GetType(), e.Parameter));

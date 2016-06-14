@@ -26,7 +26,6 @@ namespace IDUNv2.Pages
         public static ShellPage Current;
         private ShellViewModel viewModel = new ShellViewModel();
         public Notification SelectedNotificationItem = new Notification();
-        public static Grid Spinner;
 
         public IObservableVector<ICommandBarElement> CmdBarPrimaryCommands
         {
@@ -46,8 +45,6 @@ namespace IDUNv2.Pages
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Delete), Label = "Delete" });
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Save), Label = "Save" });
             //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Add), Label = "Create New" });
-
-            Spinner = SpinnerPanel;
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -73,15 +70,15 @@ namespace IDUNv2.Pages
 
         public static void SetSpinner(LoadingState state)
         {
-            if (Spinner == null)
+            if (Current.SpinnerPanel == null)
                 return;
             switch (state)
             {
                 case LoadingState.Loading:
-                    Spinner.Visibility = Visibility.Visible;
+                    Current.SpinnerPanel.Visibility = Visibility.Visible;
                     break;
                 default:
-                    Spinner.Visibility = Visibility.Collapsed;
+                    Current.SpinnerPanel.Visibility = Visibility.Collapsed;
                     break;
             }
         }

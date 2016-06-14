@@ -1,5 +1,6 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
+using IDUNv2.Models;
 using IDUNv2.SensorLib;
 using IDUNv2.ViewModels;
 using System;
@@ -32,6 +33,17 @@ namespace IDUNv2.Pages
             return o => Frame.Navigate(typeof(Pages.SensorDetailsPage), s);
         }
 
+        #region CmdBar Actions
+
+        private void ResetBias(object param)
+        {
+            viewModel.BiasTemp = 0;
+            viewModel.BiasHumid = 0;
+            viewModel.BiasPress = 0;
+        }
+
+        #endregion
+
         public SensorOverviewPage()
         {
             this.InitializeComponent();
@@ -45,7 +57,11 @@ namespace IDUNv2.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DAL.SetCmdBarItems(viewModel.CmdBarItems);
+            var cmdBarItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Clear, "Reset Bias", ResetBias),
+            };
+            DAL.SetCmdBarItems(cmdBarItems);
         }
     }
 }

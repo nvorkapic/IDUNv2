@@ -14,7 +14,7 @@ namespace IDUNv2.SensorLib
 
     public enum SensorState
     {
-        Offline,
+        Simulated,
         Online,
         Faulted
     }

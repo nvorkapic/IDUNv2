@@ -17,7 +17,7 @@ namespace IDUNv2.Converters
             {
                 case SensorState.Online:
                     return "Green";
-                case SensorState.Offline:
+                case SensorState.Simulated:
                     return "DarkGray";
                 case SensorState.Faulted:
                     return "Red";

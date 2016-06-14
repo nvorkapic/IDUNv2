@@ -20,8 +20,6 @@ namespace IDUNv2.ViewModels
         public Sensor HumiditySensor { get; private set; }
         public Sensor PressureSensor { get; private set; }
 
-        public CmdBarItem[] CmdBarItems { get; private set; }
-
         #endregion
 
         #region Bias
@@ -33,27 +31,17 @@ namespace IDUNv2.ViewModels
         public float BiasTemp
         {
             get { return _biasTemp; }
-            set { _biasTemp = value; Notify(); }
+            set { _biasTemp = value; Notify(); DAL.SetSensorBias(SensorId.Temperature, value); }
         }
         public float BiasHumid
         {
             get { return _biasHumid; }
-            set { _biasHumid = value; Notify(); }
+            set { _biasHumid = value; Notify(); DAL.SetSensorBias(SensorId.Humidity, value); }
         }
         public float BiasPress
         {
             get { return _biasPress; }
-            set { _biasPress = value; Notify(); }
-        }
-
-        #endregion
-
-        #region CmdBar Actions
-
-        private void ResetBias(string propName)
-        {
-            var pi = GetType().GetProperty(propName);
-            pi.SetValue(this, 0.0f);
+            set { _biasPress = value; Notify(); DAL.SetSensorBias(SensorId.Pressure, value); }
         }
 
         #endregion
@@ -63,11 +51,6 @@ namespace IDUNv2.ViewModels
             TemperatureSensor = DAL.GetSensor(SensorId.Temperature);
             HumiditySensor = DAL.GetSensor(SensorId.Humidity);
             PressureSensor = DAL.GetSensor(SensorId.Pressure);
-
-            CmdBarItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Repair, "Bias", o => { return; })
-            };
         }
     }
 }
