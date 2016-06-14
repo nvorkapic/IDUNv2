@@ -36,20 +36,23 @@ namespace IDUNv2.Controls
                 set { _labels = value; Notify(); }
             }
 
+            public List<int> LabelYs { get; private set; }
+
             public void SetLabels(float min, float max, float height, float fontSize, string format = "F0")
             {
-                var labels = new List<ScaleLabel>();
-
                 float stepSize = 10.0f;
                 float range = max - min;
                 float rangeStep = range / stepSize;
                 float yStep = (height / stepSize);
                 float yAdjust = (fontSize + 5.0f) * 0.5f;
+                var labels = new List<ScaleLabel>((int)stepSize);
+                LabelYs = new List<int>((int)stepSize);
                 for (float v = max, y = -yAdjust; v >= min; v -= rangeStep, y += yStep)
                 {
                     string text = v.ToString(format);
                     float top = y;
                     labels.Add(new ScaleLabel { Text = text, Ty = top });
+                    LabelYs.Add((int)(y+yAdjust));
                 }
 
                 Labels = labels;
@@ -102,13 +105,13 @@ namespace IDUNv2.Controls
 
             centerY = h >> 1;
 
-            dataPointsCap = (int)Width >> 1;
+            dataPointsCap = (int)(Width * 0.45);
             dataPoints = new List<float>(dataPointsCap);
 
             ColorDangerLo = 0xFF00FFFF;
             ColorDangerHi = 0xFFFF0000;
             ColorScaleLines = 0xFF808080;
-            ColorDataLines = 0xFFFFFF00;
+            ColorDataLines = 0xFFFFFFFF;
         }
 
         #region Clamp
@@ -160,10 +163,12 @@ namespace IDUNv2.Controls
 
         private void DrawScaleLines()
         {
-            DrawLine(0, 0, wb.PixelWidth, 0, ColorScaleLines);
-            DrawLine(0, wb.PixelHeight - 1, wb.PixelWidth, wb.PixelHeight - 1, ColorScaleLines);
+            uint scaleColor = ColorScaleLines;
+            foreach (var y in viewModel.LabelYs)
+            {
+                DrawLine(0, y, wb.PixelWidth, y, scaleColor);
+            }
 
-            DrawLine(0, centerY, wb.PixelWidth, centerY, ColorScaleLines);
             DrawLine(0, dangerLoY, wb.PixelWidth, dangerLoY, ColorDangerLo);
             DrawLine(0, dangerHiY, wb.PixelWidth, dangerHiY, ColorDangerHi);
         }
@@ -174,13 +179,14 @@ namespace IDUNv2.Controls
             int x = 0;
             int dx = 2;
             int h = wb.PixelHeight;
+            uint color = ColorDataLines;
             for (int i = 1; i < dataPoints.Count; ++i)
             {
                 float y0 = dataPoints[i - 1];
                 float y1 = dataPoints[i];
                 int py0 = h - (int)((y0 - rangeMin) * rangeStep);
                 int py1 = h - (int)((y1 - rangeMin) * rangeStep);
-                DrawLine(x, py0, x + dx, py1, 0xFFFFFF00);
+                DrawLine(x, py0, x + dx, py1, color);
                 x += dx;
             }
         }
