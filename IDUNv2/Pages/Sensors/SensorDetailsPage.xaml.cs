@@ -32,8 +32,8 @@ namespace IDUNv2.Pages
 
         public float Bias
         {
-            get { return DAL.GetSensorBias(Sensor.Id); }
-            set { DAL.SetSensorBias(Sensor.Id, value); Notify();  }
+            get { return Sensor != null ? DAL.GetSensorBias(Sensor.Id) : 0.0f; }
+            set { if (Sensor != null) { DAL.SetSensorBias(Sensor.Id, value); Notify(); } }
         }
     }
 
@@ -70,9 +70,9 @@ namespace IDUNv2.Pages
 
             var cmdBarItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Setting, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
+                new CmdBarItem(Symbol.Clear, "Clear Bias", o => viewModel.Bias = 0),
                 new CmdBarItem(Symbol.Repair, "Repair", o => DAL.ClearSensorFaultState(viewModel.Sensor.Id)),
-                new CmdBarItem(Symbol.Clear, "Clear Bias", o => viewModel.Bias = 0)
+                new CmdBarItem(Symbol.Setting, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
             };
 
             DAL.PushNavLink(new NavLinkItem(viewModel.Sensor.Id.ToString(), GetType(), e.Parameter));

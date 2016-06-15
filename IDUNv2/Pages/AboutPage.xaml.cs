@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDUNv2.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,20 +26,21 @@ namespace IDUNv2.Pages
         private void Credentials_Click(object sender, RoutedEventArgs e)
         {
             Credentials.Visibility = Visibility.Visible;
-
         }
 
         private void Documentation_Click(object sender, RoutedEventArgs e)
         {
-
             ShellPage.Current.ShowWeb(new Uri ("ms-appx-web:///Assets/IDUNDocumentation.html"));
-            
         }
 
         private void Tutorial_Click(object sender, RoutedEventArgs e)
         {
             ShellPage.Current.ShowWeb(new Uri ("ms-appx-web:///Assets/IDUNTutorial.html"));
+        }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DAL.SetCmdBarItems(null);
         }
     }
 }

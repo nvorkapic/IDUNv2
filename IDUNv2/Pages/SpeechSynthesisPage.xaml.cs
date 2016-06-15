@@ -47,19 +47,6 @@ namespace IDUNv2.Pages
             DAL.SetCmdBarItems(null);
         }
 
-        //private void btnClear_Click(object sender, RoutedEventArgs e)
-        //{
-        //    textBoxRead.Text = string.Empty;
-        //}
-
-            //private async void btnRead_Click(object sender, RoutedEventArgs e)
-            //{
-            //    MediaElement mediaElement = new MediaElement();
-            //    SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(textBoxRead.Text);
-            //    mediaElement.SetSource(stream, stream.ContentType);
-            //    mediaElement.Play();
-            //}
-
         private void InitializeListboxVoiceChooser()
         {
             var voices = SpeechSynthesizer.AllVoices;
@@ -101,11 +88,11 @@ namespace IDUNv2.Pages
         private void NavigationItems()
         {
             CmdBarItems = new CmdBarItem[]
-                {
-                new CmdBarItem(Symbol.Pin, "LED Control",NavigateToLED),
-                new CmdBarItem(Symbol.Delete, "Clear Text", ClearText),
+            {
                 new CmdBarItem(Symbol.Microphone, "Read Text", ReadText),
-                };
+                new CmdBarItem(Symbol.Delete, "Clear Text", ClearText),
+                new CmdBarItem(Symbol.Pin, "LED Control",NavigateToLED),
+            };
         }
 
         private void ClearText(object param)

@@ -98,9 +98,9 @@ namespace IDUNv2.ViewModels
         {
             CmdBarItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Delete, "Delete", DeleteTemplate),
-                new CmdBarItem(Symbol.Save, "Save", SaveTemplate),
                 new CmdBarItem(Symbol.Add, "Create", CreateTemplate),
+                new CmdBarItem(Symbol.Save, "Save", SaveTemplate),
+                new CmdBarItem(Symbol.Delete, "Delete", DeleteTemplate),
             };
         }
 

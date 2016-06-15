@@ -61,5 +61,10 @@ namespace IDUNv2.Pages
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Server settings have been saved locally.");
             }
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DAL.SetCmdBarItems(null);
+        }
     }
 }

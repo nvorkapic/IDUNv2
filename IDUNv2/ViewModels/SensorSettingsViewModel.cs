@@ -121,10 +121,13 @@ namespace IDUNv2.ViewModels
         {
             if (SelectedTrigger != null)
             {
-
                 SelectedTrigger.Model = await DAL.DeleteSensorTrigger(SelectedTrigger.Model);
 
-                string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has been deleted.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
+                string NotificationDescription =
+                    "Trigger Id: " + SelectedTrigger.Model.Id +
+                    " has been deleted.\nComparer: " + SelectedTrigger.Model.Comparer +
+                    "\nValue: " + SelectedTrigger.Model.Value +
+                    "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Deleted", NotificationDescription);
 
                 Triggers.Remove(SelectedTrigger);
@@ -151,9 +154,9 @@ namespace IDUNv2.ViewModels
 
             TriggerCmdBarItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Delete, "Delete",DeleteTrigger),
+                new CmdBarItem(Symbol.Add, "Create", CreateTrigger),
                 new CmdBarItem(Symbol.Save, "Save", SaveTrigger),
-                new CmdBarItem(Symbol.Add, "Create", CreateTrigger)
+                new CmdBarItem(Symbol.Delete, "Delete",DeleteTrigger),
             };
         }
 

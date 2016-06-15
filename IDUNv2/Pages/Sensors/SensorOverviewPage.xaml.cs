@@ -57,11 +57,7 @@ namespace IDUNv2.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var cmdBarItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Clear, "Reset Bias", ResetBias),
-            };
-            DAL.SetCmdBarItems(cmdBarItems);
+            DAL.SetCmdBarItems(null);
         }
     }
 }

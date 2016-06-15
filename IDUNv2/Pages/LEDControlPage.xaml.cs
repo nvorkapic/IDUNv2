@@ -34,7 +34,7 @@ namespace IDUNv2.Pages
         private I2cDevice device;
         public byte[] buffer = new byte[1 + 192];
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        
+
 
         private async Task<I2cDevice> GetDeviceAsync()
         {
@@ -63,7 +63,7 @@ namespace IDUNv2.Pages
             var data = new byte[1 + 192];
             device?.Write(data);
 
-            
+
         }
 
         public void LoadBuffer(byte[] buff)
@@ -192,8 +192,8 @@ namespace IDUNv2.Pages
 
         public unsafe void Grid(int rows, int cols, int pad, uint color)
         {
-            int dx = (Width - (cols-1)*pad) / cols;
-            int dy = (Height - (rows-1)*pad) / rows;
+            int dx = (Width - (cols - 1) * pad) / cols;
+            int dy = (Height - (rows - 1) * pad) / rows;
             int x = dx;
             int y = dy;
             dx += pad;
@@ -297,12 +297,12 @@ namespace IDUNv2.Pages
             ledMatrix.Flush();
         }
 
-  
+
         private void UpdateLedStatus()
         {
             for (int y = 0; y < 8; y++)
             {
-                for (int x=0; x < 8; x++)
+                for (int x = 0; x < 8; x++)
                 {
                     int i = 1 + y * 24 + x;
                     var q1 = ledMatrix.buffer[i + 0];
@@ -319,7 +319,7 @@ namespace IDUNv2.Pages
 
         private void EmptyBuffer()
         {
-            for (int i=0; i < ledMatrix.buffer.Length; i++)
+            for (int i = 0; i < ledMatrix.buffer.Length; i++)
             {
                 ledMatrix.buffer[i] = 0;
             }
@@ -428,18 +428,6 @@ namespace IDUNv2.Pages
             fillToggle.Background = new SolidColorBrush(new Windows.UI.Color { R = 0, G = 0, B = 0, A = 255 });
         }
 
-        //private void toSpeech_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(SpeechSynthesisPage), null);
-        //}
-        //FirstSaveButton
-        //private  void SaveCurrent_Click(object sender, RoutedEventArgs e)
-        //{
-        //    LEDImageNameTB.Text = string.Empty;
-        //    LEDImageDescriptionTB.Text = string.Empty;
-        //    SaveLEDToolTip.Visibility = Visibility.Visible;
-        //}
-
         public class SavedLEDImages
         {
             public string Name { get; set; }
@@ -451,27 +439,6 @@ namespace IDUNv2.Pages
             public string Description { get; set; }
             public byte[] Buffer { get; set; }
         }
-        //FirstLoadButton
-        //private async void LoadCurrent_Click(object sender, RoutedEventArgs e)
-        //{
-        //    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
-        //    StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
-
-        //    IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
-
-        //    List<string> LEDImagesList = new List<string>();
-
-        //    foreach (StorageFile item in LEDFiles)
-        //    {
-        //        LEDImagesList.Add(item.Name);
-        //    }
-
-        //    LoadLedList.ItemsSource = LEDImagesList;
-
-        //    LoadLEDToolTip.Visibility = Visibility.Visible;
-        //}
-
 
         private async void Load_Click(object sender, RoutedEventArgs e)
         {
@@ -487,7 +454,7 @@ namespace IDUNv2.Pages
                 var file = await LEDFolder.GetFileAsync(SavedLEDImageName);
 
                 var data = await file.OpenReadAsync();
-                
+
                 StreamReader r = new StreamReader(data.AsStream());
 
                 string text = r.ReadToEnd();
@@ -504,7 +471,7 @@ namespace IDUNv2.Pages
             {
 
             }
-            
+
         }
 
         private void LoadCancel_Click(object sender, RoutedEventArgs e)
@@ -555,7 +522,7 @@ namespace IDUNv2.Pages
 
                 LEDSaveSameNameWarning.Visibility = Visibility.Collapsed;
 
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "LED Image Saved", "LED Image " + LED.Name + " saved.\nDescription: "+ LED.Description);
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "LED Image Saved", "LED Image " + LED.Name + " saved.\nDescription: " + LED.Description);
 
                 ClearLEDStatus();
                 EmptyBuffer();
@@ -635,15 +602,12 @@ namespace IDUNv2.Pages
         private void NavigationItems()
         {
             CmdBarItems = new CmdBarItem[]
-                {
-                // first item added will be to the right
-                new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
+            {
+                new CmdBarItem(Symbol.Save, "Save", SaveLED),
                 new CmdBarItem(Symbol.Delete, "Clear", ClearLED),
                 new CmdBarItem(Symbol.OpenFile, "Load", LoadLED),
-
-                // last item added will be the left most one
-                new CmdBarItem(Symbol.Save, "Save", SaveLED),
-                };
+                new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
+            };
         }
 
         private void ClearLED(object param)

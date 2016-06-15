@@ -166,7 +166,7 @@ namespace IDUNv2.SensorLib
             {
                 val = GetSimValue();
             }
-            if (val.HasValue)
+            if (State != SensorState.Offline && val.HasValue)
             {
                 Value = val.Value;
                 if (bias.HasValue)
