@@ -4,8 +4,10 @@ using IDUNv2.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -24,6 +26,29 @@ namespace IDUNv2.Pages
     public sealed partial class DeviceSettingsPage : Page
     {
         private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel();
+
+        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
+
+
+        private void NavigationItems()
+        {
+            CmdBarItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Save, "Save", SaveDeviceSettings)
+            };
+        }
+
+        private async void SaveDeviceSettings(object param)
+        {
+            ShellPage.SetSpinner(LoadingState.Loading);
+            var status = await DAL.AuthenticateAuthorization();
+            viewModel.ConnectionStatus = !status;
+            if (status)
+                viewModel.AuthorisationMessage = "Log in Successful!";
+            else 
+                viewModel.AuthorisationMessage = "Authorisation Failed. Please Enter Valid details or check your Internet Connection!";
+            ShellPage.SetSpinner(LoadingState.Finished);
+        }
 
         public DeviceSettingsPage()
         {
@@ -62,9 +87,18 @@ namespace IDUNv2.Pages
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var status = await DAL.AuthenticateAuthorization();
+            viewModel.ConnectionStatus = !status;
+            NavigationItems();
+            DAL.SetCmdBarItems(CmdBarItems);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
         }
+
     }
 }

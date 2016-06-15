@@ -61,6 +61,7 @@ namespace IDUNv2.DataAccess
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 
+
         #region Sensors
 
         public static bool HasSensors()
@@ -97,6 +98,10 @@ namespace IDUNv2.DataAccess
         #endregion
 
         #region Cloud
+        public static Task<bool> AuthenticateAuthorization()
+        {
+            return cloud.Authenticate();
+        }
 
         private static void InitCloud()
         {
@@ -129,6 +134,7 @@ namespace IDUNv2.DataAccess
                     SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
                 };
 
+                
                 InsightsHelper.Init();
                 //InsightsHelper.SetUser(connectionInfo);
             }

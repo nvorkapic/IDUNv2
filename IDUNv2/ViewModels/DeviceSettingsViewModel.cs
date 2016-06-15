@@ -40,5 +40,30 @@ namespace IDUNv2.ViewModels
             get { return DeviceSettings.Password; }
             set { DeviceSettings.Password = value; Notify(); }
         }
+
+        private string _authorisationMessage;
+        public string AuthorisationMessage
+        {
+            get { return _authorisationMessage; }
+            set { _authorisationMessage = value; Notify(); }
+        }
+
+        private bool _connectionStatus;
+        public bool ConnectionStatus
+        {
+            get { return _connectionStatus; }
+            set { _connectionStatus = value; Notify(); }
+        }
+
+        public string ConnectionMessage
+        {
+            get
+            {
+                if (ConnectionStatus)
+                    return "Connected";
+                else
+                    return "Disconneted";
+            }
+        }
     }
 }
