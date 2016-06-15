@@ -68,6 +68,19 @@ namespace IDUNv2.Pages
             viewModel.Sensor = sensor;
             viewModel.Bias = DAL.GetSensorBias(sensor.Id);
 
+            switch (sensor.State)
+            {
+                case SensorState.Online:
+                    SG.ColorDataLines = 0xFF00FF00;
+                    break;
+                case SensorState.Simulated:
+                    SG.ColorDataLines = 0xFFFFFF00;
+                    break;
+                case SensorState.Offline:
+                    SG.ColorDataLines = 0;
+                    break;
+            }
+
             var cmdBarItems = new CmdBarItem[]
             {
                 new CmdBarItem(Symbol.Clear, "Clear Bias", o => viewModel.Bias = 0),

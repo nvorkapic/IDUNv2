@@ -111,7 +111,7 @@ namespace IDUNv2.Controls
             ColorDangerLo = 0xFF00FFFF;
             ColorDangerHi = 0xFFFF0000;
             ColorScaleLines = 0xFF808080;
-            ColorDataLines = 0xFFFFFFFF;
+            ColorDataLines = 0xFFFFFF00;
         }
 
         #region Clamp
