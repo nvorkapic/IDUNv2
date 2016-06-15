@@ -41,44 +41,23 @@ namespace IDUNv2.DataAccess
 
         public WorkOrderDiscCode GetCachedWorkOrderDiscCode(string discCode)
         {
-            if (discCode == null)
+            if (discCode == null || !woDiscDict.ContainsKey(discCode))
                 return null;
-            try
-            {
-                return woDiscDict[discCode];
-            }
-            catch (KeyNotFoundException)
-            {
-                return null;
-            }
+             return woDiscDict[discCode];
         }
 
         public WorkOrderSymptCode GetCachedWorkOrderSymptCode(string symptCode)
         {
-            if (symptCode == null)
+            if (symptCode == null || !woSymptDict.ContainsKey(symptCode))
                 return null;
-            try
-            {
-                return woSymptDict[symptCode];
-            }
-            catch (KeyNotFoundException)
-            {
-                return null;
-            }
+            return woSymptDict[symptCode];
         }
 
         public MaintenancePriority GetCachedMaintenancePriority(string prioCode)
         {
-            if (prioCode == null)
+            if (prioCode == null || !woPrioDict.ContainsKey(prioCode))
                 return null;
-            try
-            {
-                return woPrioDict[prioCode];
-            }
-            catch (KeyNotFoundException)
-            {
-                return null;
-            }
+            return woPrioDict[prioCode];
         }
 
         public List<WorkOrderDiscCode> GetCachedWorkOrderDiscCodes()

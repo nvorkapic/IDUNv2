@@ -20,23 +20,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
-    public class SensorDetailsViewModel : NotifyBase
-    {
-        private Sensor _sensor;
-
-        public Sensor Sensor
-        {
-            get { return _sensor; }
-            set { _sensor = value; Notify(); }
-        }
-
-        public float Bias
-        {
-            get { return Sensor != null ? DAL.GetSensorBias(Sensor.Id) : 0.0f; }
-            set { if (Sensor != null) { DAL.SetSensorBias(Sensor.Id, value); Notify(); } }
-        }
-    }
-
     public sealed partial class SensorDetailsPage : Page
     {
         private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };

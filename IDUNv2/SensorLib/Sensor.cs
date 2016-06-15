@@ -172,8 +172,10 @@ namespace IDUNv2.SensorLib
                 if (bias.HasValue)
                     Value += bias.Value;
 
-                if (Value > DangerHi || Value < DangerLo)
+                if ((Value > DangerHi || Value < DangerLo) && !Faulted)
+                {
                     Faulted = true;
+                }
             }
         }
 

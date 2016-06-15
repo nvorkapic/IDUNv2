@@ -11,12 +11,12 @@
     d:DesignWidth="200">
     <UserControl.Resources>
         <conv:SensorStateToColorConverter x:Key="StateColorConverter" />
-        <conv:SensorFaultedToColor x:Key="FaultColor"/>
     </UserControl.Resources>
     <StackPanel>
-        <Button VerticalAlignment="Top"
-                Background="{Binding Faulted, Converter={StaticResource FaultColor}}"
-                Command="{Binding Command}">
+        <Button x:Name="gaugeButton"
+                Command="{Binding Command}"
+                VerticalAlignment="Top"
+                Background="Transparent">
             <StackPanel>
                 <TextBlock Text="{Binding Id}" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <local:Gauge

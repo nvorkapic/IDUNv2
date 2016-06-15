@@ -41,9 +41,9 @@ namespace IDUNv2.ViewModels
 
         #region Properties
 
-        public List<WorkOrderDiscCode> DiscoveryList { get { return DAL.GetWorkOrderDiscCodes(); } }
-        public List<WorkOrderSymptCode> SymptomList { get { return DAL.GetWorkOrderSymptCodes(); } }
-        public List<MaintenancePriority> PriorityList { get { return DAL.GetWorkOrderPrioCodes(); } }
+        public List<WorkOrderDiscCode> DiscoveryList { get; private set; }
+        public List<WorkOrderSymptCode> SymptomList { get; private set; }
+        public List<MaintenancePriority> PriorityList { get; private set; }
         public ICollection<CmdBarItem> CmdBarItems { get; private set; }
 
         #endregion
@@ -111,6 +111,16 @@ namespace IDUNv2.ViewModels
         public async Task InitAsync()
         {
             await DAL.FillCaches();
+            try
+            {
+                DiscoveryList = DAL.GetWorkOrderDiscCodes();
+                SymptomList = DAL.GetWorkOrderSymptCodes();
+                PriorityList = DAL.GetWorkOrderPrioCodes();
+            }
+            catch
+            {
+
+            }
             var temp = await DAL.GetFaultReportTemplates();
             Templates = new ObservableCollection<FaultReportTemplateViewModel>(temp.Select(t => new FaultReportTemplateViewModel(t)));
             SelectedTemplate = Templates.FirstOrDefault();

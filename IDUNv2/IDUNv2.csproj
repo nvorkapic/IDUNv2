@@ -107,6 +107,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FireOverlay.xaml.cs">
+      <DependentUpon>FireOverlay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SensorGauge.xaml.cs">
       <DependentUpon>SensorGauge.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,7 @@
     <Compile Include="ViewModels\DeviceSettingsViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateFormViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateViewModel.cs" />
+    <Compile Include="ViewModels\SensorDetailsViewModel.cs" />
     <Compile Include="ViewModels\SensorOverviewViewModel.cs" />
     <Compile Include="ViewModels\SensorSettingsViewModel.cs" />
     <Compile Include="ViewModels\SensorTriggerSettingViewModel.cs" />
@@ -291,6 +295,10 @@
     <Page Include="Controls\Gauge\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FireOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\OnScreenKeyboard\OnScreenKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>

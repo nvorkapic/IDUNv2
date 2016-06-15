@@ -83,7 +83,19 @@ namespace IDUNv2.SensorLib
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         Sensors[0].UpdateValue(now, Readings.Temperature, BiasValues[0]);
+                        //Sensors[1].UpdateValue(now, Readings.Humidity, BiasValues[1]);
+                        //Sensors[2].UpdateValue(now, Readings.Pressure, BiasValues[2]);
+                    });
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        //Sensors[0].UpdateValue(now, Readings.Temperature, BiasValues[0]);
                         Sensors[1].UpdateValue(now, Readings.Humidity, BiasValues[1]);
+                        //Sensors[2].UpdateValue(now, Readings.Pressure, BiasValues[2]);
+                    });
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        //Sensors[0].UpdateValue(now, Readings.Temperature, BiasValues[0]);
+                        //Sensors[1].UpdateValue(now, Readings.Humidity, BiasValues[1]);
                         Sensors[2].UpdateValue(now, Readings.Pressure, BiasValues[2]);
                     });
 

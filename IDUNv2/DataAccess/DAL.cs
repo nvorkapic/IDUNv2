@@ -151,17 +151,38 @@ namespace IDUNv2.DataAccess
 
         public static List<WorkOrderDiscCode> GetWorkOrderDiscCodes()
         {
-            return cloud.GetCachedWorkOrderDiscCodes();
+            try
+            {
+                return cloud.GetCachedWorkOrderDiscCodes();
+            }
+            catch (Exception)
+            {
+                return new List<WorkOrderDiscCode>();
+            }
         }
 
         public static List<WorkOrderSymptCode> GetWorkOrderSymptCodes()
         {
-            return cloud.GetCachedWorkOrderSymptCodes();
+            try
+            {
+                return cloud.GetCachedWorkOrderSymptCodes();
+            }
+            catch (Exception)
+            {
+                return new List<WorkOrderSymptCode>();
+            }
         }
 
         public static List<MaintenancePriority> GetWorkOrderPrioCodes()
         {
-            return cloud.GetCachedMaintenancePriorities();
+            try
+            {
+                return cloud.GetCachedMaintenancePriorities();
+            }
+            catch (Exception)
+            {
+                return new List<MaintenancePriority>();
+            }
         }
 
         public static WorkOrderDiscCode GetWorkOrderDiscovery(string discCode)

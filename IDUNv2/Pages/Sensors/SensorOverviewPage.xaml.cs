@@ -44,6 +44,16 @@ namespace IDUNv2.Pages
 
         #endregion
 
+        private void CompositionTarget_Rendering(object sender, object e)
+        {
+            if (viewModel.TemperatureSensor.Faulted)
+                fire0.Draw();
+            if (viewModel.HumiditySensor.Faulted)
+                fire1.Draw();
+            if (viewModel.PressureSensor.Faulted)
+                fire2.Draw();
+        }
+
         public SensorOverviewPage()
         {
             this.InitializeComponent();
@@ -58,6 +68,13 @@ namespace IDUNv2.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
+        }
+
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            CompositionTarget.Rendering -= CompositionTarget_Rendering;
         }
     }
 }
