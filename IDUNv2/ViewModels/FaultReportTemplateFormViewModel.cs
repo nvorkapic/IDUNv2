@@ -52,9 +52,10 @@ namespace IDUNv2.ViewModels
 
         private void CreateTemplate(object param)
         {
-            SelectedTemplate = new FaultReportTemplateViewModel(new FaultReportTemplate { Name = "#New Template" });
+            var template = new FaultReportTemplateViewModel(new FaultReportTemplate { Name = "#New Template" });
+            Templates.Add(template);
+            SelectedTemplate = template;
             SelectedTemplate.Dirty = true;
-            Templates.Add(SelectedTemplate);
             ShellPage.Current.AddNotificatoin(
                 NotificationType.Information,
                 "Template Created",
