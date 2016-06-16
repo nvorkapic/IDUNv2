@@ -110,6 +110,9 @@
     <Compile Include="Controls\FireOverlay.xaml.cs">
       <DependentUpon>FireOverlay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NumericKeyboard.xaml.cs">
+      <DependentUpon>NumericKeyboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SensorGauge.xaml.cs">
       <DependentUpon>SensorGauge.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\FireOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NumericKeyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
