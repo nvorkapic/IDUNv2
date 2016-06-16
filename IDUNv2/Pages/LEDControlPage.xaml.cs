@@ -332,6 +332,7 @@ namespace IDUNv2.Pages
                 ledStatus[x] = false;
                 x++;
             }
+
         }
         private void LedImage_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
@@ -552,6 +553,7 @@ namespace IDUNv2.Pages
         {
             EmptyBuffer();
             ClearLEDStatus();
+            ledBitmap.Flush();
         }
 
         private async void DeleteLoad_Click(object sender, RoutedEventArgs e)
