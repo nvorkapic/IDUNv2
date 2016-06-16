@@ -76,11 +76,18 @@ namespace IDUNv2.Pages
         }
 
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             var first = viewModel.NavList.First();
             viewModel.SelectMainMenu(ContentFrame, first);
+            var status = await DAL.AuthenticateAuthorization();
+            if (status)
+                Current.AddNotificatoin(Models.NotificationType.Information, "Log In Successful!", "You have been connected to IFS Clouds Service!");
+            else
+                Current.AddNotificatoin(Models.NotificationType.Warning, "Authorization Failed!", "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
         }
+
+
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
         {

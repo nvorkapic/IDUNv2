@@ -46,6 +46,7 @@ namespace IDUNv2.DataAccess
             db.CreateTable<SensorTrigger>();
 
             InitCloud();
+
         }
 
         public static void SetDispatcher(CoreDispatcher dispatcher)

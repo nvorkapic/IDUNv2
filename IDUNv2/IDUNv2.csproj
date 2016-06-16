@@ -241,6 +241,7 @@
     <Content Include="Assets\logo-addovation.png" />
     <Content Include="Assets\Magnet.png" />
     <Content Include="Assets\microphone.png" />
+    <Content Include="Assets\NoIDUN32x32.png" />
     <Content Include="Assets\Overview.png" />
     <Content Include="Assets\Plus.png" />
     <Content Include="Assets\Pressure.png" />

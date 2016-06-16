@@ -47,9 +47,16 @@ namespace IDUNv2.Pages
             timer.Interval = TimeSpan.FromMilliseconds(2500);
             timer.Tick += Timer_Tick;
             if (status)
+            {
                 viewModel.AuthorisationMessage = "Log in Successful!";
-            else 
-                viewModel.AuthorisationMessage = "Authorisation Failed. Please Enter Valid details or check your Internet Connection!";
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Log In Successful!", "You have been connected to IFS Clouds Service!");
+            }
+                
+            else
+            {
+                viewModel.AuthorisationMessage = "Authorization Failed. Please Enter Valid details or check your Internet Connection!";
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Warning, "Authorization Failed!", "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
+            }
             timer.Start();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
@@ -90,11 +97,11 @@ namespace IDUNv2.Pages
                 viewModel.Password.Length <= 3 ||
                 viewModel.URL.Length == 0)
             {
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Server Settings Error", "Please check that all information is entered correctly and try again!");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Device Settings Error", "Please check that all information is entered correctly and try again!");
             }
             else
             {
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Server Settings Saved", "Server settings have been saved locally.");
+                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Device Settings Saved", "Device settings have been saved locally.");
             }
         }
 
