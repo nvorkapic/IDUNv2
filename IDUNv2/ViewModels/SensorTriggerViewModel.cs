@@ -26,6 +26,7 @@ namespace IDUNv2.ViewModels
             {
                 _comparer = value;
                 Model.Comparer = value;
+                Notify();
                 Notify("ComparerBelow");
                 Notify("ComparerAbove");
             }
