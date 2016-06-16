@@ -77,19 +77,14 @@ namespace IDUNv2.ViewModels
 
         #endregion
 
+        #region Constructors
+
         public SensorTriggerViewModel(SensorTrigger model)
         {
             Model = model;
             Comparer = model.Comparer;
-
         }
 
-        public override string ToString()
-        {
-            if (Model.TemplateId == 0)
-                return $"Existing Trigger Not Configured: Enter and Save Changes!";
-            else
-                return $"TriggerId: {Model.Id} ON value {Model.Comparer.ToString().ToUpper()} {Model.Value} with TemplateID {Model.TemplateId}";
-        }
+        #endregion
     }
 }

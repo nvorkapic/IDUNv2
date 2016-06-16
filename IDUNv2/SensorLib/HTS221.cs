@@ -4,6 +4,9 @@ using Windows.Devices.I2c;
 
 namespace IDUNv2.SensorLib
 {
+    /// <summary>
+    /// Temperature and Humidity device
+    /// </summary>
     public class HTS221 : Device
     {
         public const byte C_Addr = 0x5F;
@@ -70,6 +73,9 @@ namespace IDUNv2.SensorLib
             return t => t * m + b;
         }
 
+        /// <summary>
+        /// Initialize and send initial configuration settings to device
+        /// </summary>
         public override async Task Init()
         {
             await GetDevice(C_Addr, I2cBusSpeed.FastMode);
@@ -97,6 +103,10 @@ namespace IDUNv2.SensorLib
             convertHumidity = GetHumidityConverter();
         }
 
+        /// <summary>
+        /// Try and get new readings, may fail in which case readings.X will be null
+        /// </summary>
+        /// <param name="readings">Optionally filled in readings.Temperature and readings.Humidity</param>
         public override void GetReadings(ref SensorReadings readings)
         {
             var status = Read8(C_Status);

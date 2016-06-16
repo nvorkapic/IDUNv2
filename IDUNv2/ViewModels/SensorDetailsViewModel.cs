@@ -12,8 +12,14 @@ namespace IDUNv2.ViewModels
 {
     public class SensorDetailsViewModel : NotifyBase
     {
+        #region Notify Fields
+
         private Sensor _sensor;
         private List<SensorTrigger> _triggers;
+
+        #endregion
+
+        #region Notify Properties
 
         public Sensor Sensor
         {
@@ -32,6 +38,8 @@ namespace IDUNv2.ViewModels
             get { return Sensor != null ? DAL.GetSensorBias(Sensor.Id) : 0.0f; }
             set { if (Sensor != null) { DAL.SetSensorBias(Sensor.Id, value); Notify(); } }
         }
+
+        #endregion
 
         public async Task InitAsync(Sensor sensor)
         {

@@ -19,6 +19,7 @@ namespace IDUNv2.Converters
                 return Visibility.Visible;
         }
 
+        // Not used
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return LoadingState.Finished;

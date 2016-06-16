@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.DataAccess
 {
+    /// <summary>
+    /// Wrapper over ApplicationData.Current.LocalSettings
+    /// </summary>
     public static class DeviceSettings
     {
         private static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;

@@ -12,12 +12,12 @@ namespace IDUNv2.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
-               return Visibility.Collapsed;
-           else
-               return Visibility.Visible;
+                return Visibility.Collapsed;
+            else
+                return Visibility.Visible;
         }
 
-
+        // Not used
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return Visibility.Visible;

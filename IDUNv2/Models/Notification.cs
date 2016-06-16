@@ -13,6 +13,7 @@ namespace IDUNv2.Models
         Error,
         Tooltip
     }
+
     public class Notification
     {
         public NotificationType Type { get; set; }

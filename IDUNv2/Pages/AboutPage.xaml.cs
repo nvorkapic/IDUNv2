@@ -18,10 +18,16 @@ namespace IDUNv2.Pages
 {
     public sealed partial class AboutPage : Page
     {
+        #region Constructors
+
         public AboutPage()
         {
             this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Event Handlers
 
         private void Credentials_Click(object sender, RoutedEventArgs e)
         {
@@ -37,6 +43,8 @@ namespace IDUNv2.Pages
         {
             ShellPage.Current.ShowWeb(new Uri ("ms-appx-web:///Assets/IDUNTutorial.html"));
         }
+
+        #endregion
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

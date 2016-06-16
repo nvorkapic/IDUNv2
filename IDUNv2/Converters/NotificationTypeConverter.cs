@@ -17,8 +17,8 @@ namespace IDUNv2.Converters
             var n = value as Notification;
             if (n == null)
                 return "";
-            switch(n.Type)
-                {
+            switch (n.Type)
+            {
                 case NotificationType.Error: return "\xE730";
                 case NotificationType.Warning: return "\xE8C9";
                 case NotificationType.Information: return "\xE8BD";
@@ -27,6 +27,7 @@ namespace IDUNv2.Converters
             return "";
         }
 
+        // Not used
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return NotificationType.Error;

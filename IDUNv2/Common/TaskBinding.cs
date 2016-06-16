@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.Common
 {
+    /// <summary>
+    /// Helper class for 'async properties' viewmodel bindings
+    /// </summary>
+    /// <typeparam name="T">Type of the property</typeparam>
     public class TaskBinding<T> : INotifyPropertyChanged
     {
         public Task<T> Task { get; private set; }

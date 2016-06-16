@@ -98,10 +98,12 @@ namespace IDUNv2.ViewModels
 
         #endregion
 
+        #region CmdBar Actions
+
         private void SaveSensor(object param)
         {
             Sensor.SaveToLocalSettings();
-            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Sensor Saved", "Sensor "+Sensor.Id+" Settings Changes Saved!");
+            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Sensor Saved", "Sensor " + Sensor.Id + " Settings Changes Saved!");
         }
 
         private void CreateTrigger(object param)
@@ -143,6 +145,16 @@ namespace IDUNv2.ViewModels
             }
         }
 
+        #endregion
+
+        public void UpdateSelectedTemplate()
+        {
+            if (SelectedTrigger != null)
+            {
+                SelectedTemplate = Templates.SingleOrDefault(p => p.Id == SelectedTrigger.TemplateId);
+            }
+        }
+
         public async Task InitAsync()
         {
             ShellPage.SetSpinner(LoadingState.Loading);
@@ -152,6 +164,8 @@ namespace IDUNv2.ViewModels
             SelectedTrigger = Triggers.FirstOrDefault();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
+
+        #region Constructors
 
         public SensorSettingsViewModel()
         {
@@ -168,12 +182,6 @@ namespace IDUNv2.ViewModels
             };
         }
 
-        public void UpdateSelectedTemplate()
-        {
-            if (SelectedTrigger != null)
-            {
-                SelectedTemplate = Templates.SingleOrDefault(p => p.Id == SelectedTrigger.TemplateId);
-            }
-        }
+        #endregion
     }
 }

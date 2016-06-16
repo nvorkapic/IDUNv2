@@ -21,6 +21,7 @@ namespace IDUNv2.Converters
                 return "#FF00CC00";
         }
 
+        // Not used
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return SensorFaultState.Normal;

@@ -5,6 +5,9 @@ using Windows.Devices.I2c;
 
 namespace IDUNv2.SensorLib
 {
+    /// <summary>
+    /// Represents a physical sensor device on the SenseHat board
+    /// </summary>
     public abstract class Device : IDisposable
     {
         protected I2cDevice device;

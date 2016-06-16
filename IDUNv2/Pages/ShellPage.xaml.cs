@@ -25,38 +25,27 @@ namespace IDUNv2.Pages
 {
     public sealed partial class ShellPage : Page
     {
+        // Singleton reference to access controls on this page from other pages
         public static ShellPage Current;
+
+        #region FIelds
+
         private ShellViewModel viewModel = new ShellViewModel();
         public Notification SelectedNotificationItem = new Notification();
 
+        #endregion
+
+        #region Properties
+
+        // Expose CmdBar's primary commands so each page can add/remove buttons to it
         public IObservableVector<ICommandBarElement> CmdBarPrimaryCommands
         {
             get { return CmdBar.PrimaryCommands; }
         }
 
-        public void ShowWeb(Uri adress)
-        {
-            viewModel.localWebPage = adress;
-            if (adress.ToString().Contains("IDUNDocumentation"))
-            {
-                DocumentationNavigation.Visibility = Visibility.Visible;
-                TutorialNavigation.Visibility = Visibility.Collapsed;
-            }
-            else if (adress.ToString().Contains("IDUNTutorial"))
-            {
-                DocumentationNavigation.Visibility = Visibility.Collapsed;
-                TutorialNavigation.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                DocumentationNavigation.Visibility = Visibility.Collapsed;
-                TutorialNavigation.Visibility = Visibility.Collapsed;
-            }
-            Current.WebPageContentFrame.Visibility = Visibility.Visible;
-            Current.CmdBar.Visibility = Visibility.Collapsed;
+        #endregion
 
-        }
-
+        #region Constructors
 
         public ShellPage()
         {
@@ -65,16 +54,11 @@ namespace IDUNv2.Pages
             this.Loaded += MainPage_Loaded;
             Current = this;
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
-
-            
-
-            //Window.Current.Content.
-
-            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Delete), Label = "Delete" });
-            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Save), Label = "Save" });
-            //CmdBar.PrimaryCommands.Add(new AppBarButton { Icon = new SymbolIcon(Symbol.Add), Label = "Create New" });
         }
 
+        #endregion
+
+        #region Event Handlers
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -82,12 +66,16 @@ namespace IDUNv2.Pages
             viewModel.SelectMainMenu(ContentFrame, first);
             var status = await DAL.AuthenticateAuthorization();
             if (status)
-                Current.AddNotificatoin(Models.NotificationType.Information, "Log In Successful!", "You have been connected to IFS Clouds Service!");
+                Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "Log In Successful!",
+                    "You have been connected to IFS Clouds Service!");
             else
-                Current.AddNotificatoin(Models.NotificationType.Warning, "Authorization Failed!", "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
+                Current.AddNotificatoin(
+                    NotificationType.Warning,
+                    "Authorization Failed!",
+                    "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
         }
-
-
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
         {
@@ -101,6 +89,8 @@ namespace IDUNv2.Pages
             var timer = (DispatcherTimer)sender;
             timer.Stop();
         }
+
+        #endregion
 
         #region Spinner
 
@@ -196,7 +186,13 @@ namespace IDUNv2.Pages
         {
             DateTime Date = new DateTime();
             Date = DateTime.Now;
-            viewModel.NotificationList.Insert(0, new Notification { Type = Type, ShortDescription = ShortDescription, LongDescription = LongDescription, Date = Date.ToString("dd/MM/yyyy HH:mm:ss") });
+            viewModel.NotificationList.Insert(0, new Notification
+            {
+                Type = Type,
+                ShortDescription = ShortDescription,
+                LongDescription = LongDescription,
+                Date = Date.ToString("dd/MM/yyyy HH:mm:ss")
+            });
         }
 
         private void NotificationItemSelectionChange(object sender, SelectionChangedEventArgs e)
@@ -210,7 +206,13 @@ namespace IDUNv2.Pages
             }
             else
             {
-                ExtendedNotification.DataContext = new Notification { ShortDescription = "No Notifications", LongDescription = "Notifications have been read or the Notification List is Empty.", Type = NotificationType.Information, Date=DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") };
+                ExtendedNotification.DataContext = new Notification
+                {
+                    ShortDescription = "No Notifications",
+                    LongDescription = "Notifications have been read or the Notification List is Empty.",
+                    Type = NotificationType.Information,
+                    Date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+                };
             }
         }
 
@@ -279,6 +281,8 @@ namespace IDUNv2.Pages
 
         #endregion
 
+        #region WebView
+
         private void CloseWeb_Click(object sender, RoutedEventArgs e)
         {
             Current.WebPageContentFrame.Visibility = Visibility.Collapsed;
@@ -295,5 +299,29 @@ namespace IDUNv2.Pages
             var btn = (Button)sender;
             Current.ShowWeb(new Uri("ms-appx-web:///Assets/IDUNTutorial.html#" + btn.Tag.ToString()));
         }
+
+        public void ShowWeb(Uri adress)
+        {
+            viewModel.localWebPage = adress;
+            if (adress.ToString().Contains("IDUNDocumentation"))
+            {
+                DocumentationNavigation.Visibility = Visibility.Visible;
+                TutorialNavigation.Visibility = Visibility.Collapsed;
+            }
+            else if (adress.ToString().Contains("IDUNTutorial"))
+            {
+                DocumentationNavigation.Visibility = Visibility.Collapsed;
+                TutorialNavigation.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                DocumentationNavigation.Visibility = Visibility.Collapsed;
+                TutorialNavigation.Visibility = Visibility.Collapsed;
+            }
+            Current.WebPageContentFrame.Visibility = Visibility.Visible;
+            Current.CmdBar.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
     }
 }

@@ -24,14 +24,21 @@ namespace IDUNv2.Pages
 {
     public sealed partial class SensorSettingsPage : Page
     {
+        #region Fields
+
         private SensorSettingsViewModel viewModel = new SensorSettingsViewModel();
+
+        #endregion
+
+        #region Constructors
 
         public SensorSettingsPage()
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
-            //this.Loaded += async (s, e) => await viewModel.InitAsync();
         }
+
+        #endregion
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -44,6 +51,9 @@ namespace IDUNv2.Pages
         {
             DAL.SetCmdBarItems(null);
         }
+
+        #region Event Handlers
+
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             DAL.ShowOSK(sender as TextBox);
@@ -78,5 +88,7 @@ namespace IDUNv2.Pages
                 DAL.SetCmdBarItems(viewModel.TriggerCmdBarItems);
             }
         }
+
+        #endregion
     }
 }

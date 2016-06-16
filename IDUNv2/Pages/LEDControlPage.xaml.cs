@@ -31,10 +31,13 @@ namespace IDUNv2.Pages
 {
     public class LedMatrix : IDisposable
     {
-        private I2cDevice device;
-        public byte[] buffer = new byte[1 + 192];
-        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        #region Fields
 
+        private I2cDevice device;
+        private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        public byte[] buffer = new byte[1 + 192];
+
+        #endregion
 
         private async Task<I2cDevice> GetDeviceAsync()
         {
@@ -62,8 +65,6 @@ namespace IDUNv2.Pages
             }
             var data = new byte[1 + 192];
             device?.Write(data);
-
-
         }
 
         public void LoadBuffer(byte[] buff)
@@ -73,10 +74,7 @@ namespace IDUNv2.Pages
                 buffer = buff;
                 Flush();
             }
-            catch
-            {
-
-            }
+            catch { } // ignore
         }
 
         public void SaveBuffer()
@@ -91,7 +89,6 @@ namespace IDUNv2.Pages
             buffer[i + 8] = g;
             buffer[i + 16] = b;
         }
-
 
         public void Flush()
         {
@@ -109,6 +106,7 @@ namespace IDUNv2.Pages
     }
 
     #region CustomDrawing
+
     public class Bitmap : IDisposable
     {
         private WriteableBitmap wb;
@@ -228,20 +226,79 @@ namespace IDUNv2.Pages
             }
         }
     }
+
     #endregion
 
     public sealed partial class LEDControlPage : Page
     {
+        private class SavedLEDImages
+        {
+            public string Name { get; set; }
+            public StorageFile StorageFile { get; set; }
+        }
+
+        private class LEDImage
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public byte[] Buffer { get; set; }
+        }
+
         const int LedSize = 40;
         const int LedPad = 2;
         const int LedSizeNoPad = LedSize - LedPad;
 
+        #region Fields
+
         private LedMatrix ledMatrix;
         private bool[] ledStatus = new bool[8 * 8];
         private byte r5 = 31, g6 = 63, b5 = 31;
-        Bitmap ledBitmap;
+        private Bitmap ledBitmap;
         private int px, py;
-        public string SavedLEDImageName = string.Empty;
+        public string SavedLEDImageName = "";
+
+        #endregion
+
+        #region CmdBar Actions
+
+        private void ClearLED(object param)
+        {
+            EmptyBuffer();
+            ClearLEDStatus();
+        }
+
+        private async void LoadLED(object param)
+        {
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
+            IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
+            var LEDImagesList = new List<string>();
+
+            foreach (StorageFile item in LEDFiles)
+            {
+                LEDImagesList.Add(item.Name);
+            }
+
+            LoadLedList.ItemsSource = LEDImagesList;
+            LoadLEDToolTip.Visibility = Visibility.Visible;
+        }
+
+        private void SaveLED(object param)
+        {
+            LEDImageNameTB.Text = string.Empty;
+            LEDImageDescriptionTB.Text = string.Empty;
+            SaveLEDToolTip.Visibility = Visibility.Visible;
+        }
+
+        private void NavigateToSpeech(object param)
+        {
+            Frame.Navigate(typeof(SpeechSynthesisPage), null);
+        }
+
+        #endregion
+
+
+        #region Constructors
 
         public LEDControlPage()
         {
@@ -249,15 +306,24 @@ namespace IDUNv2.Pages
             this.Loaded += LEDControlPage_Loaded;
         }
 
+        #endregion
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ledMatrix = new LedMatrix();
             ledMatrix.Init();
+
             ledImage.PointerMoved += LedImage_PointerMoved;
             ledImage.PointerPressed += LedImage_PointerPressed;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
-            NavigationItems();
-            DAL.SetCmdBarItems(CmdBarItems);
+
+            DAL.SetCmdBarItems(new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Save, "Save", SaveLED),
+                new CmdBarItem(Symbol.Clear, "Clear", ClearLED),
+                new CmdBarItem(Symbol.OpenFile, "Load", LoadLED),
+                new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
+            });
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -266,15 +332,9 @@ namespace IDUNv2.Pages
             ledImage.PointerPressed -= LedImage_PointerPressed;
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
             ledMatrix.Dispose();
-
-            DAL.SetCmdBarItems(null);
         }
 
-        private void LEDControlPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            ledBitmap = new Bitmap((int)ledImage.Width, (int)ledImage.Height);
-            ledImage.Source = ledBitmap.Sink;
-        }
+        #region LED Manipulation
 
         private void SetLed(int px, int py)
         {
@@ -284,7 +344,6 @@ namespace IDUNv2.Pages
             int y = (py - ypad) / (LedSize - LedPad);
             int i = y * 8 + x;
 
-            //Debug.WriteLine("set led: {0}, {1} [{2}]", x, y, i);
             ledStatus[i] = fillToggle.IsChecked.Value;
             if (ledStatus[i])
             {
@@ -296,7 +355,6 @@ namespace IDUNv2.Pages
             }
             ledMatrix.Flush();
         }
-
 
         private void UpdateLedStatus()
         {
@@ -324,6 +382,7 @@ namespace IDUNv2.Pages
                 ledMatrix.buffer[i] = 0;
             }
         }
+
         private void ClearLEDStatus()
         {
             int x = 0;
@@ -332,8 +391,50 @@ namespace IDUNv2.Pages
                 ledStatus[x] = false;
                 x++;
             }
-
         }
+
+        private unsafe void Draw()
+        {
+            int w = ledBitmap.Width;
+            int h = ledBitmap.Height;
+            int pitch = ledBitmap.Pitch;
+            for (int y = 0; y < h; ++y)
+            {
+                fixed (byte* bp = &ledBitmap.Pixels[y * pitch])
+                {
+                    uint* p = (uint*)bp;
+                    for (int x = 0; x < w; ++x)
+                    {
+                        uint c = (uint)((x * 255) / w);
+                        p[x] = c;
+                    }
+                }
+            }
+
+            ledBitmap.Flush();
+        }
+
+        #endregion
+
+        private void UpdateColorPreview()
+        {
+            if (colorPreview != null)
+            {
+                byte r = (byte)((r5 * 255) >> 5);
+                byte g = (byte)((g6 * 255) >> 6);
+                byte b = (byte)((b5 * 255) >> 5);
+                colorPreview.Fill = new SolidColorBrush(new Windows.UI.Color { R = r, G = g, B = b, A = 255 });
+            }
+        }
+
+        #region Event Handlers
+
+        private void LEDControlPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ledBitmap = new Bitmap((int)ledImage.Width, (int)ledImage.Height);
+            ledImage.Source = ledBitmap.Sink;
+        }
+
         private void LedImage_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             var pt = e.GetCurrentPoint(sender as UIElement);
@@ -343,7 +444,6 @@ namespace IDUNv2.Pages
             {
                 SetLed(px, py);
             }
-            //Debug.WriteLine("pointer: {0}, {1}", px, py);
         }
 
         private void LedImage_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -379,38 +479,6 @@ namespace IDUNv2.Pages
             ledBitmap.Flush();
         }
 
-        private unsafe void Draw()
-        {
-            int w = ledBitmap.Width;
-            int h = ledBitmap.Height;
-            int pitch = ledBitmap.Pitch;
-            for (int y = 0; y < h; ++y)
-            {
-                fixed (byte* bp = &ledBitmap.Pixels[y * pitch])
-                {
-                    uint* p = (uint*)bp;
-                    for (int x = 0; x < w; ++x)
-                    {
-                        uint c = (uint)((x * 255) / w);
-                        p[x] = c;
-                    }
-                }
-            }
-
-            ledBitmap.Flush();
-        }
-
-        private void UpdateColorPreview()
-        {
-            if (colorPreview != null)
-            {
-                byte r = (byte)((r5 * 255) >> 5);
-                byte g = (byte)((g6 * 255) >> 6);
-                byte b = (byte)((b5 * 255) >> 5);
-                colorPreview.Fill = new SolidColorBrush(new Windows.UI.Color { R = r, G = g, B = b, A = 255 });
-            }
-        }
-
         private void unCheckfill(object sender, RoutedEventArgs e)
         {
 
@@ -429,18 +497,6 @@ namespace IDUNv2.Pages
             fillToggle.Background = new SolidColorBrush(new Windows.UI.Color { R = 0, G = 0, B = 0, A = 255 });
         }
 
-        public class SavedLEDImages
-        {
-            public string Name { get; set; }
-            public StorageFile StorageFile { get; set; }
-        }
-        public class LEDImage
-        {
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public byte[] Buffer { get; set; }
-        }
-
         private async void Load_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -449,30 +505,19 @@ namespace IDUNv2.Pages
                 ClearLEDStatus();
 
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
                 StorageFolder LEDFolder = await localFolder.GetFolderAsync("LEDImages");
-
                 var file = await LEDFolder.GetFileAsync(SavedLEDImageName);
-
                 var data = await file.OpenReadAsync();
-
-                StreamReader r = new StreamReader(data.AsStream());
-
-                string text = r.ReadToEnd();
-
-                var Image = JsonConvert.DeserializeObject<LEDImage>(text);
-
-                ledMatrix.LoadBuffer(Image.Buffer);
-
-                UpdateLedStatus();
-
-                LoadLEDToolTip.Visibility = Visibility.Collapsed;
+                using (var r = new StreamReader(data.AsStream()))
+                {
+                    string text = r.ReadToEnd();
+                    var Image = JsonConvert.DeserializeObject<LEDImage>(text);
+                    ledMatrix.LoadBuffer(Image.Buffer);
+                    UpdateLedStatus();
+                    LoadLEDToolTip.Visibility = Visibility.Collapsed;
+                }
             }
-            catch
-            {
-
-            }
-
+            catch { } // ignore
         }
 
         private void LoadCancel_Click(object sender, RoutedEventArgs e)
@@ -504,27 +549,22 @@ namespace IDUNv2.Pages
             try
             {
                 byte[] TempBuffer = new byte[ledMatrix.buffer.Length];
-
                 Array.Copy(ledMatrix.buffer, TempBuffer, ledMatrix.buffer.Length);
-
                 var LED = new LEDImage { Name = LEDImageNameTB.Text, Description = LEDImageDescriptionTB.Text, Buffer = TempBuffer };
-
                 string json = JsonConvert.SerializeObject(LED);
-
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
                 StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
-
                 var LEDFile = await LEDFolder.CreateFileAsync(LEDImageNameTB.Text, CreationCollisionOption.FailIfExists);
-
-                await Windows.Storage.FileIO.WriteTextAsync(LEDFile, json);
-
+                await FileIO.WriteTextAsync(LEDFile, json);
                 SaveLEDToolTip.Visibility = Visibility.Collapsed;
-
                 LEDSaveSameNameWarning.Visibility = Visibility.Collapsed;
-
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "LED Image Saved", "LED Image " + LED.Name + " saved.\nDescription: " + LED.Description);
-
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "LED Image Saved",
+                    "LED Image " +
+                    LED.Name +
+                    "saved.\nDescription: " +
+                    LED.Description);
                 ClearLEDStatus();
                 EmptyBuffer();
             }
@@ -546,7 +586,6 @@ namespace IDUNv2.Pages
         {
             var item = ((ListView)sender).SelectedItem;
             SavedLEDImageName = (string)item;
-
         }
 
         private void ClearLED_Click(object sender, RoutedEventArgs e)
@@ -561,24 +600,17 @@ namespace IDUNv2.Pages
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
                 StorageFolder LEDFolder = await localFolder.GetFolderAsync("LEDImages");
-
                 var file = await LEDFolder.GetFileAsync(SavedLEDImageName);
-
                 await file.DeleteAsync();
-
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "LED Image Deleted", SavedLEDImageName);
-
-                SavedLEDImageName = string.Empty;
-
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "LED Image Deleted",
+                    SavedLEDImageName);
+                SavedLEDImageName = "";
                 LoadLEDToolTip.Visibility = Visibility.Collapsed;
             }
-            catch
-            {
-
-            }
-
+            catch { } // ignore
         }
 
         private void sliderRed_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -599,53 +631,6 @@ namespace IDUNv2.Pages
             UpdateColorPreview();
         }
 
-        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
-
-        private void NavigationItems()
-        {
-            CmdBarItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Save, "Save", SaveLED),
-                new CmdBarItem(Symbol.Clear, "Clear", ClearLED),
-                new CmdBarItem(Symbol.OpenFile, "Load", LoadLED),
-                new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
-            };
-        }
-
-        private void ClearLED(object param)
-        {
-            EmptyBuffer();
-            ClearLEDStatus();
-        }
-        private async void LoadLED(object param)
-        {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
-            StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);
-
-            IReadOnlyList<StorageFile> LEDFiles = await LEDFolder.GetFilesAsync();
-
-            List<string> LEDImagesList = new List<string>();
-
-            foreach (StorageFile item in LEDFiles)
-            {
-                LEDImagesList.Add(item.Name);
-            }
-
-            LoadLedList.ItemsSource = LEDImagesList;
-
-            LoadLEDToolTip.Visibility = Visibility.Visible;
-        }
-        private void SaveLED(object param)
-        {
-            LEDImageNameTB.Text = string.Empty;
-            LEDImageDescriptionTB.Text = string.Empty;
-            SaveLEDToolTip.Visibility = Visibility.Visible;
-        }
-        private void NavigateToSpeech(object param)
-        {
-            Frame.Navigate(typeof(SpeechSynthesisPage), null);
-        }
+        #endregion
     }
-
 }

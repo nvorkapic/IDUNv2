@@ -18,6 +18,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Controls
 {
+    /// <summary>
+    /// Custom live graph drawing using software rendering
+    /// </summary>
     public sealed partial class SensorGraph : UserControl
     {
         private class ViewModel : NotifyBase
@@ -28,7 +31,13 @@ namespace IDUNv2.Controls
                 public float Ty { get; set; }
             }
 
+            #region Notify Fields
+
             private List<ScaleLabel> _labels;
+
+            #endregion
+
+            #region Notify Properties
 
             public List<ScaleLabel> Labels
             {
@@ -36,8 +45,18 @@ namespace IDUNv2.Controls
                 set { _labels = value; Notify(); }
             }
 
+            #endregion
+
             public List<int> LabelYs { get; private set; }
 
+            /// <summary>
+            /// Set Y-axis labels
+            /// </summary>
+            /// <param name="min">Minimum value for data points, mapped to maximum Y coordinate</param>
+            /// <param name="max">Maximum value for data points, mapped to minimum Y coordinate</param>
+            /// <param name="height">Height of Image to draw graph to</param>
+            /// <param name="fontSize">FontSize for labels</param>
+            /// <param name="format">String format for the label number, default to whole number/integer</param>
             public void SetLabels(float min, float max, float height, float fontSize, string format = "F0")
             {
                 float stepSize = 10.0f;
@@ -91,6 +110,9 @@ namespace IDUNv2.Controls
 
         #endregion
 
+
+        #region Constructors
+
         public SensorGraph()
         {
             this.InitializeComponent();
@@ -114,6 +136,8 @@ namespace IDUNv2.Controls
             ColorDataLines = 0xFFFFFF00;
         }
 
+        #endregion
+
         #region Clamp
 
         private static int Clamp(int v, int min, int max)
@@ -128,6 +152,11 @@ namespace IDUNv2.Controls
 
         #endregion
 
+        /// <summary>
+        /// Set the range for data point values
+        /// </summary>
+        /// <param name="min">Minimum range</param>
+        /// <param name="max">Maximum range</param>
         public void SetRange(float min, float max)
         {
             if (min >= max)
@@ -142,6 +171,11 @@ namespace IDUNv2.Controls
             viewModel.SetLabels(min, max, wb.PixelHeight, (float)FontSize);
         }
 
+        /// <summary>
+        /// Set danger thresholds which will be draw as bands using ColorDanger*
+        /// </summary>
+        /// <param name="lo">Data value for low threshold</param>
+        /// <param name="hi">Data value for high threshold</param>
         public void SetDanger(float lo, float hi)
         {
             lo = Clamp(lo, rangeMin, rangeMax);
@@ -152,6 +186,10 @@ namespace IDUNv2.Controls
             dangerHiY = (int)((rangeMax - dangerHi) * rangeStep);
         }
 
+        /// <summary>
+        /// Add new data point to graph, value must be within RangeMin and RangeMax
+        /// </summary>
+        /// <param name="y">Y-value to graph</param>
         public void AddDataPoint(float y)
         {
             if (dataPoints.Count == dataPointsCap)
@@ -161,6 +199,9 @@ namespace IDUNv2.Controls
             dataPoints.Add(y);
         }
 
+        /// <summary>
+        /// Draw horizontal lines for each label and draw Danger zone bands
+        /// </summary>
         private void DrawScaleLines()
         {
             int xmax = wb.PixelWidth - 1;
@@ -184,6 +225,9 @@ namespace IDUNv2.Controls
             hLine(dangerHiY + 1, 0, xmax, ColorDangerHi);
         }
 
+        /// <summary>
+        /// Draw lines between all added data points
+        /// </summary>
         private void DrawDataLines()
         {
             int centerY = wb.PixelHeight >> 1;
@@ -202,6 +246,9 @@ namespace IDUNv2.Controls
             }
         }
 
+        /// <summary>
+        /// Copy rendered graph to the WriteableBitmap
+        /// </summary>
         public void Render()
         {
             Clear();
@@ -216,6 +263,9 @@ namespace IDUNv2.Controls
 
         #region Custom Drawing
 
+        /// <summary>
+        /// Clear to transparent black
+        /// </summary>
         private unsafe void Clear()
         {
             fixed (byte* pixels = &wbPixels[0])
@@ -229,6 +279,14 @@ namespace IDUNv2.Controls
             }
         }
 
+        /// <summary>
+        /// Draw a solid filled rectangle wihtout clipping
+        /// </summary>
+        /// <param name="x">Top-left X</param>
+        /// <param name="y">Top-left Y</param>
+        /// <param name="w">Width of rectangle</param>
+        /// <param name="h">Height of rectangle</param>
+        /// <param name="color"></param>
         private unsafe void FillRectFast(int x, int y, int w, int h, uint color)
         {
             fixed (byte* p8 = &wbPixels[0])
@@ -243,6 +301,16 @@ namespace IDUNv2.Controls
             }
         }
 
+        /// <summary>
+        /// Draw an approximately 3 pixel thick line (not exact or anti-aliased)
+        /// Does not to proper clipping and expects x0,y0 to be the left point and x1,y1 to be the right point.
+        /// Include in both end points.
+        /// </summary>
+        /// <param name="x0">Left X</param>
+        /// <param name="y0">Left Y</param>
+        /// <param name="x1">Right X</param>
+        /// <param name="y1">Right Y</param>
+        /// <param name="color"></param>
         private unsafe void DrawFatLine(int x0, int y0, int x1, int y1, uint color)
         {
             int width = wb.PixelWidth;
@@ -304,6 +372,14 @@ namespace IDUNv2.Controls
             }
         }
 
+        /// <summary>
+        /// Special case of horizontal line for speed.
+        /// Does clipping, but still expects x0 to be left and x1 to be right.
+        /// </summary>
+        /// <param name="y"></param>
+        /// <param name="x0"></param>
+        /// <param name="x1"></param>
+        /// <param name="color"></param>
         private unsafe void hLine(int y, int x0, int x1, uint color)
         {
             y = Clamp(y, 0, wb.PixelHeight - 1);

@@ -32,6 +32,9 @@ namespace IDUNv2.DataAccess
         Finished
     }
 
+    /// <summary>
+    /// Global application data access
+    /// </summary>
     public static class DAL
     {
         private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
@@ -46,7 +49,6 @@ namespace IDUNv2.DataAccess
             db.CreateTable<SensorTrigger>();
 
             InitCloud();
-
         }
 
         public static void SetDispatcher(CoreDispatcher dispatcher)
@@ -55,16 +57,13 @@ namespace IDUNv2.DataAccess
             sensorWatcher.LoadSettings();
         }
 
-        public static async Task FillCaches()
-        {
-            ShellPage.SetSpinner(LoadingState.Loading);
-            await cloud.FillCaches();
-            ShellPage.SetSpinner(LoadingState.Finished);
-        }
-
 
         #region Sensors
 
+        /// <summary>
+        /// Check of real hardware sensors actually exists.
+        /// </summary>
+        /// <returns></returns>
         public static bool HasSensors()
         {
             return sensorWatcher.HasSensors;
@@ -99,6 +98,7 @@ namespace IDUNv2.DataAccess
         #endregion
 
         #region Cloud
+
         public static Task<bool> AuthenticateAuthorization()
         {
             return cloud.Authenticate();
@@ -143,6 +143,13 @@ namespace IDUNv2.DataAccess
             {
                 throw ex;
             }
+        }
+
+        public static async Task FillCaches()
+        {
+            ShellPage.SetSpinner(LoadingState.Loading);
+            await cloud.FillCaches();
+            ShellPage.SetSpinner(LoadingState.Finished);
         }
 
         #endregion

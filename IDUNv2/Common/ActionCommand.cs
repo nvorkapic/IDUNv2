@@ -7,6 +7,10 @@ using System.Windows.Input;
 
 namespace IDUNv2.Common
 {
+    /// <summary>
+    /// Generic ICommand Binder
+    /// </summary>
+    /// <typeparam name="T">Type to be passed to Execute callback</typeparam>
     public class ActionCommand<T> : ICommand
     {
         private Action<T> _execute;

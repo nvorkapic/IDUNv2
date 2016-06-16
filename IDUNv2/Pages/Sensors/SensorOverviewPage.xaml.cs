@@ -25,8 +25,12 @@ namespace IDUNv2.Pages
 {
     public sealed partial class SensorOverviewPage : Page
     {
+        #region Fields
+
         private Random rnd = new Random();
         private SensorOverviewViewModel viewModel = new SensorOverviewViewModel();
+
+        #endregion
 
         private Action<object> ShowDetailsFor(Sensor s)
         {
@@ -44,15 +48,7 @@ namespace IDUNv2.Pages
 
         #endregion
 
-        private void CompositionTarget_Rendering(object sender, object e)
-        {
-            if (viewModel.TemperatureSensor.FaultState == SensorFaultState.Faulted)
-                fire0.Draw();
-            if (viewModel.HumiditySensor.FaultState == SensorFaultState.Faulted)
-                fire1.Draw();
-            if (viewModel.PressureSensor.FaultState == SensorFaultState.Faulted)
-                fire2.Draw();
-        }
+        #region Constructors
 
         public SensorOverviewPage()
         {
@@ -65,6 +61,8 @@ namespace IDUNv2.Pages
             this.DataContext = viewModel;
         }
 
+        #endregion
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
@@ -74,6 +72,18 @@ namespace IDUNv2.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
+        }
+
+        #region Event Handlers
+
+        private void CompositionTarget_Rendering(object sender, object e)
+        {
+            if (viewModel.TemperatureSensor.FaultState == SensorFaultState.Faulted)
+                fire0.Draw();
+            if (viewModel.HumiditySensor.FaultState == SensorFaultState.Faulted)
+                fire1.Draw();
+            if (viewModel.PressureSensor.FaultState == SensorFaultState.Faulted)
+                fire2.Draw();
         }
 
         private void ClearBias_Click(object sender, RoutedEventArgs e)
@@ -93,5 +103,7 @@ namespace IDUNv2.Pages
                     break;
             }
         }
+
+        #endregion
     }
 }

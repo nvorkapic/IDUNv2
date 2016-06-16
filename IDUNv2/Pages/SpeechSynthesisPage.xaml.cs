@@ -22,9 +22,37 @@ namespace IDUNv2.Pages
 
     public sealed partial class SpeechSynthesisPage : Page
     {
+        #region Fields
+
         private SpeechSynthesizer synthesizer;
         private ResourceContext speechContext;
         private ResourceMap speechResourceMap;
+
+        #endregion
+
+        #region CmdBar Actions
+
+        private void ClearText(object param)
+        {
+            textBoxRead.Text = string.Empty;
+        }
+
+        private async void ReadText(object param)
+        {
+            MediaElement mediaElement = new MediaElement();
+            SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(textBoxRead.Text);
+            mediaElement.SetSource(stream, stream.ContentType);
+            mediaElement.Play();
+        }
+
+        private void NavigateToLED(object param)
+        {
+            Frame.Navigate(typeof(LEDControlPage), null);
+        }
+
+        #endregion
+
+        #region Constructors
 
         public SpeechSynthesisPage()
         {
@@ -36,15 +64,16 @@ namespace IDUNv2.Pages
             InitializeListboxVoiceChooser();
         }
 
+        #endregion
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            NavigationItems();
-            DAL.SetCmdBarItems(CmdBarItems);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            DAL.SetCmdBarItems(null);
+            DAL.SetCmdBarItems(new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Microphone, "Read Text", ReadText),
+                new CmdBarItem(Symbol.Delete, "Clear Text", ClearText),
+                new CmdBarItem(Symbol.Pin, "LED Control",NavigateToLED),
+            });
         }
 
         private void InitializeListboxVoiceChooser()
@@ -66,6 +95,8 @@ namespace IDUNv2.Pages
             }
         }
 
+        #region Event Handlers
+
         private void onSelectChange(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem item = (ComboBoxItem)(listBox.SelectedItem);
@@ -83,32 +114,6 @@ namespace IDUNv2.Pages
             DAL.ShowOSK(null);
         }
 
-        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
-
-        private void NavigationItems()
-        {
-            CmdBarItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Microphone, "Read Text", ReadText),
-                new CmdBarItem(Symbol.Delete, "Clear Text", ClearText),
-                new CmdBarItem(Symbol.Pin, "LED Control",NavigateToLED),
-            };
-        }
-
-        private void ClearText(object param)
-        {
-            textBoxRead.Text = string.Empty;
-        }
-        private async void ReadText(object param)
-        {
-            MediaElement mediaElement = new MediaElement();
-            SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(textBoxRead.Text);
-            mediaElement.SetSource(stream, stream.ContentType);
-            mediaElement.Play();
-        }
-        private void NavigateToLED(object param)
-        {
-            Frame.Navigate(typeof(LEDControlPage), null);
-        }
+        #endregion
     }
 }

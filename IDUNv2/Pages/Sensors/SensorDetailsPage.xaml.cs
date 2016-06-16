@@ -22,9 +22,15 @@ namespace IDUNv2.Pages
 {
     public sealed partial class SensorDetailsPage : Page
     {
+        #region Fields
+
         private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
         private Random rnd = new Random();
         private SensorDetailsViewModel viewModel = new SensorDetailsViewModel();
+
+        #endregion
+
+        #region Constructors
 
         public SensorDetailsPage()
         {
@@ -32,11 +38,7 @@ namespace IDUNv2.Pages
             this.DataContext = viewModel;
         }
 
-        private void Timer_Tick(object sender, object e)
-        {
-            float v = viewModel.Sensor.Value;
-            SG.AddDataPoint(v);
-        }
+        #endregion
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -47,7 +49,6 @@ namespace IDUNv2.Pages
 
             SG.SetRange(sensor.RangeMin, sensor.RangeMax);
             SG.SetDanger(sensor.DangerLo, sensor.DangerHi);
-
 
             switch (sensor.DeviceState)
             {
@@ -83,14 +84,24 @@ namespace IDUNv2.Pages
             timer.Stop();
         }
 
+        #region Event Handlers
+
         private void CompositionTarget_Rendering(object sender, object e)
         {
             SG.Render();
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            float v = viewModel.Sensor.Value;
+            SG.AddDataPoint(v);
         }
 
         private void ResetBias_Click(object sender, RoutedEventArgs e)
         {
             viewModel.Bias = 0;
         }
+
+        #endregion
     }
 }

@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace IDUNv2.SensorLib
 {
+    /// <summary>
+    /// Implemented sensors, will be used as array indices so should be 0 based and contiguous
+    /// </summary>
     public enum SensorId
     {
         Temperature,
@@ -12,6 +15,9 @@ namespace IDUNv2.SensorLib
         Pressure
     }
 
+    /// <summary>
+    /// Indicates whether sensor is real and online, simulated or offline.
+    /// </summary>
     public enum SensorDeviceState
     {
         Offline,
@@ -19,16 +25,25 @@ namespace IDUNv2.SensorLib
         Online
     }
 
+    /// <summary>
+    /// Indicates if value has dipped into danger range or triggered a Trigger threshold
+    /// </summary>
     public enum SensorFaultState
     {
         Normal,
         Faulted
     }
 
+    /// <summary>
+    /// Represents a Sensor on the SenseHat board (not necessarily 1:1 to a physical device)
+    /// </summary>
     public class Sensor : NotifyBase
     {
         #region Settings
 
+        /// <summary>
+        /// The fields which will be saved into LocalSettings
+        /// </summary>
         private class SensorSettings
         {
             public SensorDeviceState DeviceState;

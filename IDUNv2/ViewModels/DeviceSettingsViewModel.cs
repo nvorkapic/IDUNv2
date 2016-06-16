@@ -11,6 +11,15 @@ namespace IDUNv2.ViewModels
 {
     public class DeviceSettingsViewModel : NotifyBase
     {
+        #region Notify Fields
+
+        private string _authorisationMessage;
+        private bool _connectionStatus;
+
+        #endregion
+
+        #region Notify Properties
+
         public string ObjectID
         {
             get { return DeviceSettings.ObjectID; }
@@ -41,19 +50,21 @@ namespace IDUNv2.ViewModels
             set { DeviceSettings.Password = value; Notify(); }
         }
 
-        private string _authorisationMessage;
         public string AuthorisationMessage
         {
             get { return _authorisationMessage; }
             set { _authorisationMessage = value; Notify(); }
         }
 
-        private bool _connectionStatus;
         public bool ConnectionStatus
         {
             get { return _connectionStatus; }
             set { _connectionStatus = value; Notify(); }
         }
+
+        #endregion
+
+        #region Properties
 
         public string ConnectionMessage
         {
@@ -65,5 +76,7 @@ namespace IDUNv2.ViewModels
                     return "Disconneted";
             }
         }
+
+        #endregion
     }
 }

@@ -25,18 +25,13 @@ namespace IDUNv2.Pages
 {
     public sealed partial class DeviceSettingsPage : Page
     {
+        #region Fields
+
         private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel();
 
-        public ICollection<CmdBarItem> CmdBarItems { get; private set; }
+        #endregion
 
-
-        private void NavigationItems()
-        {
-            CmdBarItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Save, "Save", SaveDeviceSettings)
-            };
-        }
+        #region CmdBar Actions
 
         private async void SaveDeviceSettings(object param)
         {
@@ -51,7 +46,7 @@ namespace IDUNv2.Pages
                 viewModel.AuthorisationMessage = "Log in Successful!";
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Log In Successful!", "You have been connected to IFS Clouds Service!");
             }
-                
+
             else
             {
                 viewModel.AuthorisationMessage = "Authorization Failed. Please Enter Valid details or check your Internet Connection!";
@@ -61,17 +56,30 @@ namespace IDUNv2.Pages
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 
-        private void Timer_Tick(object sender, object e)
-        {
-            viewModel.AuthorisationMessage = "";
-            var timer = (DispatcherTimer)sender;
-            timer.Stop();
-        }
+        #endregion
+
+        #region Constructors
 
         public DeviceSettingsPage()
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
+        }
+
+        #endregion
+
+        private void NavigationItems()
+        {
+
+        }
+
+        #region Event Handlers
+
+        private void Timer_Tick(object sender, object e)
+        {
+            viewModel.AuthorisationMessage = "";
+            var timer = (DispatcherTimer)sender;
+            timer.Stop();
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -97,26 +105,38 @@ namespace IDUNv2.Pages
                 viewModel.Password.Length <= 3 ||
                 viewModel.URL.Length == 0)
             {
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Error, "Device Settings Error", "Please check that all information is entered correctly and try again!");
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Error,
+                    "Device Settings Error",
+                    "Please check that all information is entered correctly and try again!");
             }
             else
             {
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Device Settings Saved", "Device settings have been saved locally.");
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "Device Settings Saved",
+                    "Device settings have been saved locally.");
             }
         }
+
+        #endregion
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             var status = await DAL.AuthenticateAuthorization();
             viewModel.ConnectionStatus = !status;
-            NavigationItems();
-            DAL.SetCmdBarItems(CmdBarItems);
+
+            var cmdBarItems = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Save, "Save", SaveDeviceSettings)
+            };
+
+            DAL.SetCmdBarItems(cmdBarItems);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
         }
-
     }
 }

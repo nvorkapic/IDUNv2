@@ -4,6 +4,9 @@ using Windows.Devices.I2c;
 
 namespace IDUNv2.SensorLib
 {
+    /// <summary>
+    /// Pressure and Temperature device
+    /// </summary>
     public class LPS25H : Device
     {
         private const byte C_Addr = 0x5C;
@@ -19,6 +22,9 @@ namespace IDUNv2.SensorLib
 
         public float? Pressure { get; set; }
 
+        /// <summary>
+        /// Initialize and send initial configuration settings to device
+        /// </summary>
         public override async Task Init()
         {
             await GetDevice(C_Addr, I2cBusSpeed.FastMode);
@@ -49,6 +55,10 @@ namespace IDUNv2.SensorLib
             WriteByte(C_Ctrl2, 0x40);
         }
 
+        /// <summary>
+        /// Try and get new readings.
+        /// </summary>
+        /// <param name="readings">Optionally filled out readings.Pressure</param>
         public override void GetReadings(ref SensorReadings readings)
         {
             var status = Read8(C_Status);

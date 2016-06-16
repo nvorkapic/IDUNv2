@@ -25,6 +25,7 @@ namespace IDUNv2.Converters
             return "";
         }
 
+        // Not used
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return SensorDeviceState.Offline;

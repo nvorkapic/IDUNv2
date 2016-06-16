@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.DataAccess
 {
+    /// <summary>
+    /// CloudClient augmented with some simple caching of rarely changing list data
+    /// </summary>
     public class CachingCloudClient : CloudClient
     {
         #region Fields
@@ -75,6 +78,10 @@ namespace IDUNv2.DataAccess
             return woPrioCodes;
         }
 
+        /// <summary>
+        /// If caches are empty fill them up with data from database
+        /// </summary>
+        /// <returns></returns>
         public async Task FillCaches()
         {
             woDiscCodes = woDiscCodes ?? await GetWorkOrderDiscCodes().ConfigureAwait(false);

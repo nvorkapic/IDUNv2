@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.Common
 {
+    /// <summary>
+    /// Helper baseclass to update viewmodel bindings
+    /// </summary>
     public class NotifyBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

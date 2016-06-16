@@ -15,6 +15,7 @@ namespace IDUNv2.Converters
             return (bool)value ? "*" : "";
         }
 
+        // Not used
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return false;

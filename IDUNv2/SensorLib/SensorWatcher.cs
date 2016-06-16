@@ -9,10 +9,18 @@ using Windows.UI.Core;
 
 namespace IDUNv2.SensorLib
 {
+    /// <summary>
+    /// Background thread which monitors sensors and checks triggers and danger zones
+    /// </summary>
     public class SensorWatcher
     {
+        #region Devices
+
         private static readonly HTS221 hts221 = new HTS221();
         private static readonly LPS25H lps25h = new LPS25H();
+
+        #endregion
+
         private static readonly Random rnd = new Random();
 
         private ThreadPoolTimer pollTimer;
@@ -62,8 +70,14 @@ namespace IDUNv2.SensorLib
             }
         }
 
+        /// <summary>
+        /// Starts the background thread
+        /// </summary>
+        /// <param name="dispatcher">The CoreDispatcher for the UI thread</param>
+        /// <param name="period">How often it should poll the sensors (in milliseconds)</param>
         public SensorWatcher(CoreDispatcher dispatcher, int period)
         {
+            // setup simulated reading functions
             Sensors[0].GetSimValue = () => (float)(30.0 + rnd.NextDouble() * 5.0);
             Sensors[1].GetSimValue = () => (float)(30.0 + rnd.NextDouble() * 5.0);
             Sensors[2].GetSimValue = () => 1000.0f + (float)(50.0 - rnd.NextDouble() * 100.0);

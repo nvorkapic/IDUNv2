@@ -21,7 +21,13 @@ namespace IDUNv2.Pages
 {
     public sealed partial class FaultReportListingPage : Page
     {
+        #region Properties
+
         public List<FaultReport> Reports { get; private set; } = new List<FaultReport>();
+
+        #endregion
+
+        #region Constructors
 
         public FaultReportListingPage()
         {
@@ -29,6 +35,10 @@ namespace IDUNv2.Pages
             this.DataContext = this;
             Loaded += ReportListPage_Loaded;
         }
+
+        #endregion
+
+        #region Event Handlers
 
         private async void ReportListPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -45,6 +55,8 @@ namespace IDUNv2.Pages
             var lb = sender as ListBox;
             Frame.Navigate(typeof(Pages.FaultReportDetailsPage), lb.SelectedItem, new DrillInNavigationTransitionInfo());
         }
+
+        #endregion
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
