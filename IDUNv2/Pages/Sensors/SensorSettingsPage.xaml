@@ -114,13 +114,17 @@
                             ItemsSource="{Binding Triggers}"
                             ItemTemplate="{StaticResource TriggerListData}"
                             SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}"
-                            SelectionChanged="Triggers_SelectionChanged">
+                            SelectionChanged="Triggers_SelectionChanged"
+                            Background="Black"
+                            BorderBrush="DarkGray"
+                            BorderThickness="2">
                         </ListBox>
                     </Grid>
                     <ToolTip Grid.Column="1"
                              MaxHeight="330"
                              VerticalAlignment="Top"
-                             Visibility="Visible" Margin="10,0,0,0">
+                             Visibility="Visible" Margin="10,0,0,0"
+                             Background="Black">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />

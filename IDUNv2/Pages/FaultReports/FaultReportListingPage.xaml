@@ -48,6 +48,8 @@
                  ItemsSource="{Binding Reports}"
                  ItemTemplate="{StaticResource FaultReportData}"
                  Tapped="ListBox_Tapped"
-                 />
+                 Background="Black"
+                 BorderBrush="DarkGray"
+                 BorderThickness="2"/>
     </Grid>
 </Page>

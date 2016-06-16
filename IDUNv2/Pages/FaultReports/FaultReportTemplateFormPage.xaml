@@ -31,7 +31,10 @@
                      ItemTemplate="{StaticResource TemplateListData}"
                      ItemsSource="{Binding Templates}"
                      SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"
-                     SelectionMode="Single"/>
+                     SelectionMode="Single"
+                     Background="Black"
+                     BorderBrush="DarkGray"
+                     BorderThickness="2"/>
         </Grid>
         <Grid Grid.Column="1" Margin="0" Padding="10">
             <Grid.RowDefinitions>
