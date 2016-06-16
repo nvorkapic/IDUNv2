@@ -202,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\1200.png" />
-    <Content Include="Assets\Accelerometer.png" />
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
     <Content Include="Assets\BadgeLogo.scale-150.png" />
@@ -210,10 +209,6 @@
     <Content Include="Assets\BadgeLogo.scale-400.png" />
     <Content Include="Assets\CloudIcon.png" />
     <Content Include="Assets\fancyloading.gif" />
-    <Content Include="Assets\Finger.png" />
-    <Content Include="Assets\Gyroscope.png" />
-    <Content Include="Assets\Home.png" />
-    <Content Include="Assets\Humidity.png" />
     <Content Include="Assets\IDUNDocumentation.html" />
     <Content Include="Assets\IDUNTutorial.html" />
     <Content Include="Assets\image-loader.gif" />
@@ -236,22 +231,10 @@
     <Content Include="Assets\images\image16.png" />
     <Content Include="Assets\images\image17.png" />
     <Content Include="Assets\images\image18.png" />
-    <Content Include="Assets\index.png" />
-    <Content Include="Assets\Information.png" />
-    <Content Include="Assets\LED.png" />
     <Content Include="Assets\loading-icon.gif" />
     <Content Include="Assets\loadingpro.gif" />
     <Content Include="Assets\logo-addovation.png" />
-    <Content Include="Assets\Magnet.png" />
-    <Content Include="Assets\microphone.png" />
     <Content Include="Assets\NoIDUN32x32.png" />
-    <Content Include="Assets\Overview.png" />
-    <Content Include="Assets\Plus.png" />
-    <Content Include="Assets\Pressure.png" />
-    <Content Include="Assets\Report.png" />
-    <Content Include="Assets\Ruler.png" />
-    <Content Include="Assets\Server.png" />
-    <Content Include="Assets\settings.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
@@ -271,10 +254,6 @@
     <Content Include="Assets\StoreLogo.scale-150.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
-    <Content Include="Assets\Thermometer.png" />
-    <Content Include="Assets\Tools.png" />
-    <Content Include="Assets\Usage.png" />
-    <Content Include="Assets\Users.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
