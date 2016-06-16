@@ -52,7 +52,7 @@ namespace IDUNv2.Controls
                     string text = v.ToString(format);
                     float top = y;
                     labels.Add(new ScaleLabel { Text = text, Ty = top });
-                    LabelYs.Add((int)(y+yAdjust));
+                    LabelYs.Add((int)(y + yAdjust));
                 }
 
                 Labels = labels;
@@ -163,6 +163,7 @@ namespace IDUNv2.Controls
 
         private void DrawScaleLines()
         {
+            int xmax = wb.PixelWidth - 1;
             int lh = wb.PixelHeight - dangerLoY - 1;
             int hh = wb.PixelHeight - dangerHiY - 1;
             FillRectFast(0, dangerLoY + 1, wb.PixelWidth - 1, lh, (ColorDangerLo & 0x303030));
@@ -171,16 +172,16 @@ namespace IDUNv2.Controls
             uint scaleColor = ColorScaleLines;
             foreach (var y in viewModel.LabelYs)
             {
-                DrawLine(0, y, wb.PixelWidth, y, scaleColor);
+                hLine(y, 0, xmax, scaleColor);
             }
 
-            DrawLine(0, dangerLoY-1, wb.PixelWidth, dangerLoY-1, ColorDangerLo);
-            DrawLine(0, dangerLoY, wb.PixelWidth, dangerLoY, ColorDangerLo);
-            DrawLine(0, dangerLoY+1, wb.PixelWidth, dangerLoY+1, ColorDangerLo);
+            hLine(dangerLoY - 1, 0, xmax, ColorDangerLo);
+            hLine(dangerLoY, 0, xmax, ColorDangerLo);
+            hLine(dangerLoY + 1, 0, xmax, ColorDangerLo);
 
-            DrawLine(0, dangerHiY-1, wb.PixelWidth, dangerHiY-1, ColorDangerHi);
-            DrawLine(0, dangerHiY, wb.PixelWidth, dangerHiY, ColorDangerHi);
-            DrawLine(0, dangerHiY+1, wb.PixelWidth, dangerHiY+1, ColorDangerHi);
+            hLine(dangerHiY - 1, 0, xmax, ColorDangerHi);
+            hLine(dangerHiY, 0, xmax, ColorDangerHi);
+            hLine(dangerHiY + 1, 0, xmax, ColorDangerHi);
         }
 
         private void DrawDataLines()
@@ -303,56 +304,20 @@ namespace IDUNv2.Controls
             }
         }
 
-        private unsafe void DrawLine(int x0, int y0, int x1, int y1, uint color)
+        private unsafe void hLine(int y, int x0, int x1, uint color)
         {
-            int width = wb.PixelWidth;
-            int height = wb.PixelHeight;
+            y = Clamp(y, 0, wb.PixelHeight - 1);
+            x0 = Clamp(x0, 0, wb.PixelWidth - 1);
+            x1 = Clamp(x1, 0, wb.PixelWidth - 1);
 
-            x0 = Clamp(x0, 0, width - 1);
-            x1 = Clamp(x1, 0, width - 1);
-            y0 = Clamp(y0, 0, height - 1);
-            y1 = Clamp(y1, 0, height - 1);
-
-            int dx = x1 - x0;
-            int dy = y1 - y0;
-            int e0 = dx > 0 ? 1 : -1;
-            int e1 = e0;
-            int step0 = dy > 0 ? width : -width;
-            int step1 = 0;
-            int i = dx > 0 ? dx : -dx;
-            int j = dy > 0 ? dy : -dy;
-            int d, n;
-
-            if (j >= i)
+            int n = x1 - x0 + 1;
+            fixed (byte* p8 = &wbPixels[0])
             {
-                e1 = 0;
-                step1 = step0;
-                d = i;
-                i = j;
-                j = d;
-            }
-            d = i / 2;
-            step0 += e0;
-            step1 += e1;
-            n = i;
-
-            fixed (byte* pixels = &wbPixels[0])
-            {
-                uint* p = (uint*)pixels + y0 * width + x0;
-                do
+                uint* p = (uint*)p8 + y * wb.PixelWidth + x0;
+                for (int i = 0; i < n; ++i)
                 {
-                    *p = color;
-                    d += j;
-                    if (d >= i)
-                    {
-                        d -= i;
-                        p += step0;
-                    }
-                    else
-                    {
-                        p += step1;
-                    }
-                } while (n-- > 0);
+                    p[i] = color;
+                }
             }
         }
 
