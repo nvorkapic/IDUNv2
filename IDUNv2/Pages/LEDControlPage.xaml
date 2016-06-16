@@ -8,7 +8,7 @@
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Grid Background="{StaticResource StandardBackground}">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
                 <Image x:Name="ledImage" HorizontalAlignment="Left" Height="318" VerticalAlignment="Center" Width="318" Margin="5"/>
             </StackPanel>
@@ -42,16 +42,9 @@
                 <StackPanel VerticalAlignment="Bottom" Grid.Row="3" >
                     <Rectangle x:Name="colorPreview" HorizontalAlignment="Center" Height="100" Stroke="White" VerticalAlignment="Bottom" Width="110" Fill="White"/>
                 </StackPanel>
-               
+
             </Grid>
         </StackPanel>
-        <!--<Button Content="Try Speech Synthesis" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="toSpeech_Click"></Button>-->
-        <!--<StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button Content="Save Current" Click="SaveCurrent_Click" Width="110"/>
-            <Button Content="Load Saved" Click="LoadCurrent_Click" Width="110"/>
-            <Button Content="Clear LED" Click="ClearLED_Click" Width="110"/>
-        </StackPanel>-->
-
         <ToolTip x:Name="SaveLEDToolTip" Visibility="Collapsed">
             <ToolTip.Content>
                 <Grid>

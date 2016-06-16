@@ -50,34 +50,42 @@ namespace IDUNv2.ViewModels
             set { _triggers = value; Notify(); }
         }
 
-        public SensorState SensorState
+        public SensorDeviceState SensorDeviceState
         {
-            get { return Sensor.State; }
+            get { return Sensor.DeviceState; }
             set
             {
-                Sensor.State = value;
-                Notify("SensorStateOffline");
-                Notify("SensorStateOnline");
-                Notify("SensorStateSimulated");
+                Sensor.DeviceState = value;
+                Notify("SensorDeviceStateOffline");
+                Notify("SensorDeviceStateOnline");
+                Notify("SensorDeviceStateSimulated");
             }
         }
 
-        public bool SensorStateOffline
+        public bool SensorDeviceStateOffline
         {
-            get { return SensorState == SensorState.Offline; }
-            set { SensorState = SensorState.Offline; }
+            get { return SensorDeviceState == SensorDeviceState.Offline; }
+            set { SensorDeviceState = SensorDeviceState.Offline; }
         }
 
-        public bool SensorStateOnline
+        public bool SensorDeviceStateOnline
         {
-            get { return SensorState == SensorState.Online; }
-            set { SensorState = SensorState.Online; }
+            get { return SensorDeviceState == SensorDeviceState.Online; }
+            set { SensorDeviceState = SensorDeviceState.Online; }
         }
 
-        public bool SensorStateSimulated
+        public bool SensorDeviceStateSimulated
         {
-            get { return SensorState == SensorState.Simulated; }
-            set { SensorState = SensorState.Simulated; }
+            get { return SensorDeviceState == SensorDeviceState.Simulated; }
+            set { SensorDeviceState = SensorDeviceState.Simulated; }
+        }
+
+        public void SetSelectedTriggerFromTemplate(FaultReportTemplate template)
+        {
+            if (SelectedTrigger != null)
+            {
+                SelectedTrigger.TemplateId = template.Id;
+            }
         }
 
         #endregion
@@ -98,7 +106,7 @@ namespace IDUNv2.ViewModels
 
         private void CreateTrigger(object param)
         {
-            var trigger = new SensorTriggerViewModel(new SensorTrigger());
+            var trigger = new SensorTriggerViewModel(new SensorTrigger { SensorId = Sensor.Id });
             Triggers.Add(trigger);
             SelectedTrigger = trigger;
             ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Created", "Empty Trigger Created.");
@@ -139,7 +147,7 @@ namespace IDUNv2.ViewModels
         {
             ShellPage.SetSpinner(LoadingState.Loading);
             Templates = await DAL.GetFaultReportTemplates();
-            var triggers = await DAL.GetSensorTriggers();
+            var triggers = await DAL.GetSensorTriggersFor(Sensor.Id);
             Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
             SelectedTrigger = Triggers.FirstOrDefault();
             ShellPage.SetSpinner(LoadingState.Finished);

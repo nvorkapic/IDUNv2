@@ -8,18 +8,18 @@ using Windows.UI.Xaml.Data;
 
 namespace IDUNv2.Converters
 {
-    public class SensorStateToColorConverter : IValueConverter
+    public class SensorDeviceStateToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var state = (SensorState)value;
+            var state = (SensorDeviceState)value;
             switch (state)
             {
-                case SensorState.Offline:
+                case SensorDeviceState.Offline:
                     return "DarkGray";
-                case SensorState.Online:
-                    return "Green";
-                case SensorState.Simulated:
+                case SensorDeviceState.Online:
+                    return "#FF00CC00";
+                case SensorDeviceState.Simulated:
                     return "Gold";
             }
             return "";
@@ -27,7 +27,7 @@ namespace IDUNv2.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return SensorState.Offline;
+            return SensorDeviceState.Offline;
         }
     }
 }

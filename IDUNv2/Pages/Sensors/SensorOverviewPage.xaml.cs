@@ -46,11 +46,11 @@ namespace IDUNv2.Pages
 
         private void CompositionTarget_Rendering(object sender, object e)
         {
-            if (viewModel.TemperatureSensor.Faulted)
+            if (viewModel.TemperatureSensor.FaultState == SensorFaultState.Faulted)
                 fire0.Draw();
-            if (viewModel.HumiditySensor.Faulted)
+            if (viewModel.HumiditySensor.FaultState == SensorFaultState.Faulted)
                 fire1.Draw();
-            if (viewModel.PressureSensor.Faulted)
+            if (viewModel.PressureSensor.FaultState == SensorFaultState.Faulted)
                 fire2.Draw();
         }
 
@@ -71,10 +71,27 @@ namespace IDUNv2.Pages
             CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
 
-
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
+        }
+
+        private void ClearBias_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            int i = Convert.ToInt32(btn.Tag);
+            switch (i)
+            {
+                case 0:
+                    viewModel.BiasTemp = 0;
+                    break;
+                case 1:
+                    viewModel.BiasHumid = 0;
+                    break;
+                case 2:
+                    viewModel.BiasPress = 0;
+                    break;
+            }
         }
     }
 }

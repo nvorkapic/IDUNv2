@@ -35,14 +35,14 @@ namespace IDUNv2.SensorLib
 
             if (hts221.IsValid)
             {
-                Sensors[(int)SensorId.Temperature].State = SensorState.Online;
+                Sensors[(int)SensorId.Temperature].DeviceState = SensorDeviceState.Online;
                 Sensors[(int)SensorId.Temperature].HasHardware = true;
-                Sensors[(int)SensorId.Humidity].State = SensorState.Online;
+                Sensors[(int)SensorId.Humidity].DeviceState = SensorDeviceState.Online;
                 Sensors[(int)SensorId.Humidity].HasHardware = true;
             }
             if (lps25h.IsValid)
             {
-                Sensors[(int)SensorId.Pressure].State = SensorState.Online;
+                Sensors[(int)SensorId.Pressure].DeviceState = SensorDeviceState.Online;
                 Sensors[(int)SensorId.Pressure].HasHardware = true;
             }
 

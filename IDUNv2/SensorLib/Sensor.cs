@@ -12,11 +12,17 @@ namespace IDUNv2.SensorLib
         Pressure
     }
 
-    public enum SensorState
+    public enum SensorDeviceState
     {
         Offline,
         Simulated,
         Online
+    }
+
+    public enum SensorFaultState
+    {
+        Normal,
+        Faulted
     }
 
     public class Sensor : NotifyBase
@@ -25,7 +31,7 @@ namespace IDUNv2.SensorLib
 
         private class SensorSettings
         {
-            public SensorState State;
+            public SensorDeviceState DeviceState;
             public float RangeMin;
             public float RangeMax;
             public float DangerLo;
@@ -52,13 +58,13 @@ namespace IDUNv2.SensorLib
         private float _rangeMax;
         private float _dangerLo;
         private float _dangerHi;
-        private SensorState _state;
+        private SensorDeviceState _deviceState;
+        private SensorFaultState _faultState;
         private float _value;
         private string _valueStringFormat;
         private string _unit;
         private ActionCommand<object> _command;
         private bool _hasHardware;
-        private bool _faulted;
 
         #endregion
 
@@ -88,10 +94,16 @@ namespace IDUNv2.SensorLib
             set { _dangerHi = value; Notify(); }
         }
 
-        public SensorState State
+        public SensorDeviceState DeviceState
         {
-            get { return _state; }
-            set { _state = value; Notify(); }
+            get { return _deviceState; }
+            set { _deviceState = value; Notify(); }
+        }
+
+        public SensorFaultState FaultState
+        {
+            get { return _faultState; }
+            set { _faultState = value; Notify(); }
         }
 
         public float Value
@@ -122,12 +134,6 @@ namespace IDUNv2.SensorLib
         {
             get { return _hasHardware; }
             set { _hasHardware = value; Notify(); }
-        }
-
-        public bool Faulted
-        {
-            get { return _faulted; }
-            set { _faulted = value; Notify(); }
         }
 
         #endregion
@@ -162,19 +168,19 @@ namespace IDUNv2.SensorLib
 
         public void UpdateValue(DateTime timestamp, float? val, float? bias)
         {
-            if (State == SensorState.Simulated && GetSimValue != null)
+            if (DeviceState == SensorDeviceState.Simulated && GetSimValue != null)
             {
                 val = GetSimValue();
             }
-            if (State != SensorState.Offline && val.HasValue)
+            if (DeviceState != SensorDeviceState.Offline && val.HasValue)
             {
                 Value = val.Value;
                 if (bias.HasValue)
                     Value += bias.Value;
 
-                if ((Value > DangerHi || Value < DangerLo) && !Faulted)
+                if ((Value > DangerHi || Value < DangerLo) && (FaultState != SensorFaultState.Faulted))
                 {
-                    Faulted = true;
+                    FaultState = SensorFaultState.Faulted;
                 }
             }
         }
@@ -190,7 +196,7 @@ namespace IDUNv2.SensorLib
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             var ss = new SensorSettings
             {
-                State = State,
+                DeviceState = DeviceState,
                 RangeMin = RangeMin,
                 RangeMax = RangeMax,
                 DangerLo = DangerLo,
@@ -209,7 +215,7 @@ namespace IDUNv2.SensorLib
             var ss = SensorSettings.CreateFromJson(json);
             if (ss != null)
             {
-                State = ss.State;
+                DeviceState = ss.DeviceState;
                 RangeMin = ss.RangeMin;
                 RangeMax = ss.RangeMax;
                 DangerLo = ss.DangerLo;

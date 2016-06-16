@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="200">
     <UserControl.Resources>
-        <conv:SensorStateToColorConverter x:Key="StateColorConverter" />
+        <conv:SensorDeviceStateToColorConverter x:Key="DeviceColor" />
     </UserControl.Resources>
     <StackPanel>
         <Button x:Name="gaugeButton"
@@ -38,10 +38,10 @@
             </StackPanel>
         </Button>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Column="0">
-            <TextBlock Text="{Binding State}" HorizontalAlignment="Center" Margin="0,10,0,0" ></TextBlock>
+            <TextBlock Text="{Binding DeviceState}" HorizontalAlignment="Center" Margin="0,10,0,0" ></TextBlock>
             <Grid>
                 <Ellipse Height="45" Width="45" Fill="#FF515151"></Ellipse>
-                <Ellipse Height="35" Width="35" Fill="{Binding State, Converter={StaticResource StateColorConverter}}"></Ellipse>
+                <Ellipse Height="35" Width="35" Fill="{Binding DeviceState, Converter={StaticResource DeviceColor}}"></Ellipse>
             </Grid>
         </StackPanel>
     </StackPanel>

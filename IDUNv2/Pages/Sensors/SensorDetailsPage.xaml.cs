@@ -38,7 +38,7 @@ namespace IDUNv2.Pages
             SG.AddDataPoint(v);
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -48,33 +48,32 @@ namespace IDUNv2.Pages
             SG.SetRange(sensor.RangeMin, sensor.RangeMax);
             SG.SetDanger(sensor.DangerLo, sensor.DangerHi);
 
-            viewModel.Sensor = sensor;
-            viewModel.Bias = DAL.GetSensorBias(sensor.Id);
 
-            switch (sensor.State)
+            switch (sensor.DeviceState)
             {
-                case SensorState.Online:
+                case SensorDeviceState.Online:
                     SG.ColorDataLines = 0xFF00FF00;
                     break;
-                case SensorState.Simulated:
+                case SensorDeviceState.Simulated:
                     SG.ColorDataLines = 0xFFFFFF00;
                     break;
-                case SensorState.Offline:
+                case SensorDeviceState.Offline:
                     SG.ColorDataLines = 0;
                     break;
             }
 
             var cmdBarItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Clear, "Clear Bias", o => viewModel.Bias = 0),
-                new CmdBarItem(Symbol.Repair, "Repair", o => DAL.ClearSensorFaultState(viewModel.Sensor.Id)),
+                new CmdBarItem(Symbol.Repair, "Repair", o => DAL.ClearSensorFaultState(sensor.Id)),
                 new CmdBarItem(Symbol.Setting, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
             };
 
-            DAL.PushNavLink(new NavLinkItem(viewModel.Sensor.Id.ToString(), GetType(), e.Parameter));
+            DAL.PushNavLink(new NavLinkItem(sensor.Id.ToString(), GetType(), sensor));
             DAL.SetCmdBarItems(cmdBarItems);
 
             CompositionTarget.Rendering += CompositionTarget_Rendering;
+
+            await viewModel.InitAsync(sensor);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -87,6 +86,11 @@ namespace IDUNv2.Pages
         private void CompositionTarget_Rendering(object sender, object e)
         {
             SG.Render();
+        }
+
+        private void ResetBias_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.Bias = 0;
         }
     }
 }

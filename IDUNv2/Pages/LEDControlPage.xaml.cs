@@ -604,7 +604,7 @@ namespace IDUNv2.Pages
             CmdBarItems = new CmdBarItem[]
             {
                 new CmdBarItem(Symbol.Save, "Save", SaveLED),
-                new CmdBarItem(Symbol.Delete, "Clear", ClearLED),
+                new CmdBarItem(Symbol.Clear, "Clear", ClearLED),
                 new CmdBarItem(Symbol.OpenFile, "Load", LoadLED),
                 new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
             };

@@ -78,7 +78,7 @@ namespace IDUNv2.DataAccess
         public static void ClearSensorFaultState(SensorId id)
         {
             var s = GetSensor(id);
-            s.Faulted = false;
+            s.FaultState = SensorFaultState.Normal;
         }
 
         public static float GetSensorBias(SensorId id)
@@ -251,9 +251,9 @@ namespace IDUNv2.DataAccess
 
         #region SensorTriggers
 
-        public static Task<List<SensorTrigger>> GetSensorTriggers()
+        public static Task<List<SensorTrigger>> GetSensorTriggersFor(SensorId id)
         {
-            var triggers = db.Table<SensorTrigger>().ToList();
+            var triggers = db.Table<SensorTrigger>().Where(t => t.SensorId == id).ToList();
             return Task.FromResult(triggers);
         }
 

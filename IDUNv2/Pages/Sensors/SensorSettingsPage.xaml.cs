@@ -35,8 +35,8 @@ namespace IDUNv2.Pages
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await viewModel.InitAsync();
             viewModel.Sensor = e.Parameter as Sensor;
+            await viewModel.InitAsync();
             DAL.PushNavLink(new NavLinkItem("Settings", GetType(), e.Parameter));
         }
 
@@ -60,7 +60,7 @@ namespace IDUNv2.Pages
             var item = (FaultReportTemplate)cb.SelectedItem;
             if (item != null)
             {
-                viewModel.SelectedTrigger.TemplateId = item.Id;
+                viewModel.SetSelectedTriggerFromTemplate(item);
             }
         }
 

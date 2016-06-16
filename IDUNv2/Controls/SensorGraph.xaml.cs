@@ -108,7 +108,7 @@ namespace IDUNv2.Controls
             dataPointsCap = (int)(Width * 0.45);
             dataPoints = new List<float>(dataPointsCap);
 
-            ColorDangerLo = 0xFF00FFFF;
+            ColorDangerLo = 0xFFFF0000;
             ColorDangerHi = 0xFFFF0000;
             ColorScaleLines = 0xFF808080;
             ColorDataLines = 0xFFFFFF00;
@@ -163,14 +163,24 @@ namespace IDUNv2.Controls
 
         private void DrawScaleLines()
         {
+            int lh = wb.PixelHeight - dangerLoY - 1;
+            int hh = wb.PixelHeight - dangerHiY - 1;
+            FillRectFast(0, dangerLoY + 1, wb.PixelWidth - 1, lh, (ColorDangerLo & 0x303030));
+            FillRectFast(0, 0, wb.PixelWidth - 1, dangerHiY, (ColorDangerHi & 0x303030));
+
             uint scaleColor = ColorScaleLines;
             foreach (var y in viewModel.LabelYs)
             {
                 DrawLine(0, y, wb.PixelWidth, y, scaleColor);
             }
 
+            DrawLine(0, dangerLoY-1, wb.PixelWidth, dangerLoY-1, ColorDangerLo);
             DrawLine(0, dangerLoY, wb.PixelWidth, dangerLoY, ColorDangerLo);
+            DrawLine(0, dangerLoY+1, wb.PixelWidth, dangerLoY+1, ColorDangerLo);
+
+            DrawLine(0, dangerHiY-1, wb.PixelWidth, dangerHiY-1, ColorDangerHi);
             DrawLine(0, dangerHiY, wb.PixelWidth, dangerHiY, ColorDangerHi);
+            DrawLine(0, dangerHiY+1, wb.PixelWidth, dangerHiY+1, ColorDangerHi);
         }
 
         private void DrawDataLines()
@@ -186,7 +196,7 @@ namespace IDUNv2.Controls
                 float y1 = dataPoints[i];
                 int py0 = h - (int)((y0 - rangeMin) * rangeStep);
                 int py1 = h - (int)((y1 - rangeMin) * rangeStep);
-                DrawLine(x, py0, x + dx, py1, color);
+                DrawFatLine(x, py0, x + dx, py1, color);
                 x += dx;
             }
         }
@@ -215,6 +225,81 @@ namespace IDUNv2.Controls
                 {
                     p[i] = 0;
                 }
+            }
+        }
+
+        private unsafe void FillRectFast(int x, int y, int w, int h, uint color)
+        {
+            fixed (byte* p8 = &wbPixels[0])
+            {
+                uint* p = (uint*)p8 + y * w + x;
+                while (h-- > 0)
+                {
+                    for (int i = 0; i < w; ++i)
+                        p[i] = color;
+                    p += w;
+                }
+            }
+        }
+
+        private unsafe void DrawFatLine(int x0, int y0, int x1, int y1, uint color)
+        {
+            int width = wb.PixelWidth;
+            int height = wb.PixelHeight;
+
+            x0 = Clamp(x0, 3, width - 4);
+            x1 = Clamp(x1, 3, width - 4);
+            y0 = Clamp(y0, 3, height - 4);
+            y1 = Clamp(y1, 3, height - 4);
+
+            int dx = x1 - x0;
+            int dy = y1 - y0;
+            int e0 = dx > 0 ? 1 : -1;
+            int e1 = e0;
+            int step0 = dy > 0 ? width : -width;
+            int step1 = 0;
+            int i = dx > 0 ? dx : -dx;
+            int j = dy > 0 ? dy : -dy;
+            int d, n;
+
+            if (j >= i)
+            {
+                e1 = 0;
+                step1 = step0;
+                d = i;
+                i = j;
+                j = d;
+            }
+            d = i / 2;
+            step0 += e0;
+            step1 += e1;
+            n = i;
+
+            int step0_2x = 2 * step0;
+            int step1_2x = 2 * step1;
+
+            fixed (byte* pixels = &wbPixels[0])
+            {
+                uint* p = (uint*)pixels + y0 * width + x0;
+                do
+                {
+                    //*p = color;
+                    p[-1] = color;
+                    p[0] = color;
+                    p[1] = color;
+                    p[step0] = color;
+                    p[step1] = color;
+                    d += j;
+                    if (d >= i)
+                    {
+                        d -= i;
+                        p += step0;
+                    }
+                    else
+                    {
+                        p += step1;
+                    }
+                } while (n-- > 0);
             }
         }
 

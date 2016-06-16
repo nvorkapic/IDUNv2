@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:osk="using:OnScreenKeyboard"
-    xmlns:conv="using:IDUNv2.Converters"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="TriggerListData">
@@ -24,7 +23,6 @@
                 <TextBlock Grid.Column="3" Text="{Binding TemplateId}"/>
             </Grid>
         </DataTemplate>
-        <conv:SensorStateToColorConverter x:Key="SensorStateColor"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot PivotItemLoaded="Pivot_PivotItemLoaded">
@@ -34,17 +32,17 @@
                         <RadioButton GroupName="SensorState"
                                      Content="Offline"
                                      Foreground="LightGray"
-                                     IsChecked="{Binding SensorStateOffline, Mode=TwoWay}"/>
+                                     IsChecked="{Binding SensorDeviceStateOffline, Mode=TwoWay}"/>
                         <RadioButton GroupName="SensorState"
                                      Content="Online"
                                      Foreground="LightGreen"
-                                     IsChecked="{Binding SensorStateOnline, Mode=TwoWay}"
+                                     IsChecked="{Binding SensorDeviceStateOnline, Mode=TwoWay}"
                                      IsEnabled="{Binding Sensor.HasHardware}"
                                      />
                         <RadioButton GroupName="SensorState"
                                      Content="Simulated"
                                      Foreground="Gold"
-                                     IsChecked="{Binding SensorStateSimulated, Mode=TwoWay}"
+                                     IsChecked="{Binding SensorDeviceStateSimulated, Mode=TwoWay}"
                                      />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
