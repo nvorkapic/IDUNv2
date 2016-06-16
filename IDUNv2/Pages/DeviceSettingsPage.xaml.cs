@@ -43,11 +43,22 @@ namespace IDUNv2.Pages
             ShellPage.SetSpinner(LoadingState.Loading);
             var status = await DAL.AuthenticateAuthorization();
             viewModel.ConnectionStatus = !status;
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(2500);
+            timer.Tick += Timer_Tick;
             if (status)
                 viewModel.AuthorisationMessage = "Log in Successful!";
             else 
                 viewModel.AuthorisationMessage = "Authorisation Failed. Please Enter Valid details or check your Internet Connection!";
+            timer.Start();
             ShellPage.SetSpinner(LoadingState.Finished);
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            viewModel.AuthorisationMessage = "";
+            var timer = (DispatcherTimer)sender;
+            timer.Stop();
         }
 
         public DeviceSettingsPage()

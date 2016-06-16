@@ -43,14 +43,16 @@
                              Password="{Binding Password, Mode=TwoWay}"
                              GotFocus="PasswordBox_GotFocus"
                              LostFocus="TBLostFocus"/>
-                <Grid Margin="70,30,0,0">
+                <Grid Margin="0,30,0,0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition MaxWidth="40"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>                        
-                    <Ellipse Width="35" Height="35" Fill="White" VerticalAlignment="Center"/>
-                    <Ellipse Width="25" Height="25" Fill="{Binding ConnectionStatus, Converter={StaticResource RedorGreen}}" VerticalAlignment="Center" HorizontalAlignment="Center"></Ellipse>
-                    <TextBlock Text="{Binding ConnectionMessage}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1"></TextBlock>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Text="Cloud Status"></TextBlock>
+                    <Ellipse Width="35" Height="35" Fill="#FF515151" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"/>
+                    <Ellipse Width="25" Height="25" Fill="{Binding ConnectionStatus, Converter={StaticResource RedorGreen}}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"></Ellipse>
+                    <TextBlock Text="{Binding ConnectionMessage}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="5,0,0,0"></TextBlock>
                 </Grid>
                 
             </StackPanel>
