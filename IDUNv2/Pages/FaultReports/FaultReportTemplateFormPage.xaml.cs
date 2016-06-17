@@ -23,7 +23,7 @@ namespace IDUNv2.Pages
     {
         #region Properties
 
-        private FaultReportTemplateFormViewModel viewModel = new FaultReportTemplateFormViewModel();
+        private FaultReportTemplateFormViewModel viewModel;
 
         #endregion
 
@@ -31,6 +31,8 @@ namespace IDUNv2.Pages
 
         public FaultReportTemplateFormPage()
         {
+            viewModel = new FaultReportTemplateFormViewModel(DAL.FaultReportAccess);
+
             this.InitializeComponent();
             this.DataContext = viewModel;
             this.Loaded += Templates_Loaded;

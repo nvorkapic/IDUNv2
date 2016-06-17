@@ -26,7 +26,8 @@ namespace IDUNv2.Pages
 
         private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
         private Random rnd = new Random();
-        private SensorDetailsViewModel viewModel = new SensorDetailsViewModel();
+        private ISensorAccess sensorAccess = DAL.SensorAccess;
+        private SensorDetailsViewModel viewModel;
 
         #endregion
 
@@ -34,6 +35,8 @@ namespace IDUNv2.Pages
 
         public SensorDetailsPage()
         {
+            viewModel = new SensorDetailsViewModel(sensorAccess, DAL.SensorTriggerAccess);
+
             this.InitializeComponent();
             this.DataContext = viewModel;
         }
@@ -65,7 +68,7 @@ namespace IDUNv2.Pages
 
             var cmdBarItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Repair, "Repair", o => DAL.ClearSensorFaultState(sensor.Id)),
+                new CmdBarItem(Symbol.Repair, "Repair", o => sensorAccess.ClearSensorFaultState(sensor.Id)),
                 new CmdBarItem(Symbol.Setting, "Settings", o => Frame.Navigate(typeof(SensorSettingsPage), sensor)),
             };
 

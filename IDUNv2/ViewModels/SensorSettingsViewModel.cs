@@ -15,6 +15,13 @@ namespace IDUNv2.ViewModels
 {
     public class SensorSettingsViewModel : NotifyBase
     {
+        #region Fields
+
+        private ISensorTriggerAccess triggerAccess;
+        private IFaultReportAccess faultReportAccess;
+
+        #endregion
+
         #region Notify Fields
 
         private Sensor _sensor;
@@ -119,7 +126,7 @@ namespace IDUNv2.ViewModels
             if (SelectedTemplate != null)
             {
                 SelectedTrigger.TemplateId = SelectedTemplate.Id;
-                SelectedTrigger.Model = await DAL.SetSensorTrigger(SelectedTrigger.Model);
+                SelectedTrigger.Model = await triggerAccess.SetSensorTrigger(SelectedTrigger.Model);
 
                 string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has had its' changes saved.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Saved", NotificationDescription);
@@ -131,7 +138,7 @@ namespace IDUNv2.ViewModels
         {
             if (SelectedTrigger != null)
             {
-                SelectedTrigger.Model = await DAL.DeleteSensorTrigger(SelectedTrigger.Model);
+                SelectedTrigger.Model = await triggerAccess.DeleteSensorTrigger(SelectedTrigger.Model);
 
                 string NotificationDescription =
                     "Trigger Id: " + SelectedTrigger.Model.Id +
@@ -158,17 +165,22 @@ namespace IDUNv2.ViewModels
         public async Task InitAsync()
         {
             ShellPage.SetSpinner(LoadingState.Loading);
-            Templates = await DAL.GetFaultReportTemplates();
-            var triggers = await DAL.GetSensorTriggersFor(Sensor.Id);
-            Triggers = new ObservableCollection<SensorTriggerViewModel>(triggers.Select(t => new SensorTriggerViewModel(t)));
+            Templates = await faultReportAccess.GetFaultReportTemplates();
+            var triggers = await triggerAccess.GetSensorTriggersFor(Sensor.Id);
+            Triggers = new ObservableCollection<SensorTriggerViewModel>(
+                triggers.Select(t => new SensorTriggerViewModel(t))
+                );
             SelectedTrigger = Triggers.FirstOrDefault();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 
         #region Constructors
 
-        public SensorSettingsViewModel()
+        public SensorSettingsViewModel(ISensorTriggerAccess triggerAccess, IFaultReportAccess faultReportAcccess)
         {
+            this.triggerAccess = triggerAccess;
+            this.faultReportAccess = faultReportAcccess;
+
             GeneralCmdBarItems = new CmdBarItem[]
             {
                 new CmdBarItem(Symbol.Save, "Save", SaveSensor)

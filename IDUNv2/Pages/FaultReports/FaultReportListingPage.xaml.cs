@@ -21,6 +21,12 @@ namespace IDUNv2.Pages
 {
     public sealed partial class FaultReportListingPage : Page
     {
+        #region Fields
+
+        private IFaultReportAccess faultReportAccess = DAL.FaultReportAccess;
+
+        #endregion
+
         #region Properties
 
         public List<FaultReport> Reports { get; private set; } = new List<FaultReport>();
@@ -44,7 +50,7 @@ namespace IDUNv2.Pages
         {
             this.DataContext = null;
             ShellPage.SetSpinner(LoadingState.Loading);
-            var reports = await DAL.GetFaultReports();
+            var reports = await faultReportAccess.GetFaultReports();
             ShellPage.SetSpinner(LoadingState.Finished);
             Reports = reports.OrderByDescending(r => r.RegDate).ToList();
             this.DataContext = this;

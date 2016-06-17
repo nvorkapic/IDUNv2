@@ -12,6 +12,13 @@ namespace IDUNv2.ViewModels
 {
     public class SensorDetailsViewModel : NotifyBase
     {
+        #region Fields
+
+        private ISensorAccess sensorAccess;
+        private ISensorTriggerAccess triggerAccess;
+
+        #endregion
+
         #region Notify Fields
 
         private Sensor _sensor;
@@ -35,17 +42,23 @@ namespace IDUNv2.ViewModels
 
         public float Bias
         {
-            get { return Sensor != null ? DAL.GetSensorBias(Sensor.Id) : 0.0f; }
-            set { if (Sensor != null) { DAL.SetSensorBias(Sensor.Id, value); Notify(); } }
+            get { return Sensor != null ? sensorAccess.GetSensorBias(Sensor.Id) : 0.0f; }
+            set { if (Sensor != null) { sensorAccess.SetSensorBias(Sensor.Id, value); Notify(); } }
         }
 
         #endregion
 
+        public SensorDetailsViewModel(ISensorAccess sensorAccess, ISensorTriggerAccess triggerAccess)
+        {
+            this.sensorAccess = sensorAccess;
+            this.triggerAccess = triggerAccess;
+        }
+
         public async Task InitAsync(Sensor sensor)
         {
             Sensor = sensor;
-            Bias = DAL.GetSensorBias(sensor.Id);
-            Triggers = await DAL.GetSensorTriggersFor(sensor.Id);
+            Bias = sensorAccess.GetSensorBias(sensor.Id);
+            Triggers = await triggerAccess.GetSensorTriggersFor(sensor.Id);
         }
     }
 }
