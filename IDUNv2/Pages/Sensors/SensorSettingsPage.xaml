@@ -1,5 +1,4 @@
 ﻿<Page
-    RequestedTheme="Dark"
     x:Class="IDUNv2.Pages.SensorSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -24,14 +23,14 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource StandardBackground}">
         <Pivot PivotItemLoaded="Pivot_PivotItemLoaded">
             <PivotItem Header="General">
                 <StackPanel HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <RadioButton GroupName="SensorState"
                                      Content="Offline"
-                                     Foreground="LightGray"
+                                     Foreground="{ThemeResource StandardForeground}"
                                      IsChecked="{Binding SensorDeviceStateOffline, Mode=TwoWay}"/>
                         <RadioButton GroupName="SensorState"
                                      Content="Online"
@@ -51,21 +50,28 @@
                             Width="195"
                             Text="{Binding Sensor.Unit, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
-                            LostFocus="TextBox_LostFocus"/>
+                            LostFocus="TextBox_LostFocus"
+                            BorderBrush="{ThemeResource StandardBorder}"
+                            Foreground="{ThemeResource StandardForeground}"
+                            />
                         <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
                             <TextBox
                             Header="Range (min):"
                             Width="195"
                             Text="{Binding Sensor.RangeMin, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
-                            LostFocus="TextBox_LostFocus"/>
+                            LostFocus="TextBox_LostFocus"
+                            BorderBrush="{ThemeResource StandardBorder}"
+                            Foreground="{ThemeResource StandardForeground}"/>
                             <TextBox
                             Header="Range (max):"
                             Width="195"
                             Margin="10,0,0,0"
                             Text="{Binding Sensor.RangeMax, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
-                            LostFocus="TextBox_LostFocus"/>
+                            LostFocus="TextBox_LostFocus"
+                            BorderBrush="{ThemeResource StandardBorder}"
+                            Foreground="{ThemeResource StandardForeground}"/>
                         </StackPanel>
                     </StackPanel>
                     
@@ -75,14 +81,18 @@
                             Width="195"
                             Text="{Binding Sensor.DangerLo, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
-                            LostFocus="TextBox_LostFocus"/>
+                            LostFocus="TextBox_LostFocus"
+                            BorderBrush="{ThemeResource StandardBorder}"
+                            Foreground="{ThemeResource StandardForeground}"/>
                         <TextBox
                             Header="Danger (high):"
                             Width="195"
                             Margin="10,0,0,0"
                             Text="{Binding Sensor.DangerHi, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
-                            LostFocus="TextBox_LostFocus"/>
+                            LostFocus="TextBox_LostFocus"
+                            BorderBrush="{ThemeResource StandardBorder}"
+                            Foreground="{ThemeResource StandardForeground}"/>
                     </StackPanel>
                 </StackPanel>
             </PivotItem>
@@ -103,10 +113,10 @@
                             <ColumnDefinition Width="75"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="0" FontWeight="Bold" Text="Id" VerticalAlignment="Top"/>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="1" FontWeight="Bold" Text="Comparer"/>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="2" FontWeight="Bold" Text="Value"/>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="3" FontWeight="Bold" Text="Template"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="0" FontWeight="Bold" Text="Id" VerticalAlignment="Top" Foreground="{ThemeResource StandardForeground}"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="1" FontWeight="Bold" Text="Comparer" Foreground="{ThemeResource StandardForeground}"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="2" FontWeight="Bold" Text="Value" Foreground="{ThemeResource StandardForeground}"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="3" FontWeight="Bold" Text="Template" Foreground="{ThemeResource StandardForeground}"/>
                         <ListBox
                             Margin="0,0,0,10"
                             Grid.Row="1"
@@ -115,8 +125,8 @@
                             ItemTemplate="{StaticResource TriggerListData}"
                             SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}"
                             SelectionChanged="Triggers_SelectionChanged"
-                            Background="Black"
-                            BorderBrush="DarkGray"
+                            Background="{ThemeResource StandardBackground}"
+                            BorderBrush="{ThemeResource StandardBorder}"
                             BorderThickness="2">
                         </ListBox>
                     </Grid>
@@ -124,20 +134,26 @@
                              MaxHeight="330"
                              VerticalAlignment="Top"
                              Visibility="Visible" Margin="10,0,0,0"
-                             Background="Black">
+                             Background="{ThemeResource StandardBackground}"
+                             Foreground="{ThemeResource StandardForeground}"
+                             BorderBrush="{ThemeResource StandardBorder}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
+                                <TextBox Width="120" Height="60" Header="Threshold" PlaceholderText="When value" Text="{Binding SelectedTrigger.Value, Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"/>
                                 <StackPanel Margin="10,25,0,0" VerticalAlignment="Center">
                                     <RadioButton Margin="0,0,0,0"
                             			GroupName="TriggerComparer"
                             			Content="Below"
                             			IsChecked="{Binding SelectedTrigger.ComparerBelow, Mode=TwoWay}"
-                            			VerticalAlignment="Bottom" />
+                            			VerticalAlignment="Bottom"
+                                        Foreground="{ThemeResource StandardForeground}"/>
                                     <RadioButton Margin="0,0,0,0"
                             			GroupName="TriggerComparer" Content="Above"
                             			IsChecked="{Binding SelectedTrigger.ComparerAbove, Mode=TwoWay}"
-                            			VerticalAlignment="Bottom" />
+                            			VerticalAlignment="Bottom"
+                                        Foreground="{ThemeResource StandardForeground}"
+                                        
+                                        />
                                 </StackPanel>
                             </StackPanel>
                             <ComboBox Header="Template"
@@ -145,7 +161,8 @@
                                       Margin="0,10,0,0"
                                       ItemsSource="{Binding Templates}"
                                       SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"
-                                      SelectionChanged="Templates_SelectionChanged">
+                                      SelectionChanged="Templates_SelectionChanged"
+                                      Foreground="{ThemeResource StandardForeground}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Name}"/>

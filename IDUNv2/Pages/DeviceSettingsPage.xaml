@@ -1,4 +1,4 @@
-﻿<Page RequestedTheme="Dark"
+﻿<Page
     x:Class="IDUNv2.Pages.DeviceSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -20,43 +20,53 @@
                          Header="ObjectId"
                          Text="{Binding ObjectID, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"/>
+                         LostFocus="TBLostFocus"
+                         Foreground="{ThemeResource StandardForeground}"
+                         BorderBrush="{ThemeResource StandardBorder}"/>
                 <TextBox Width="350"
                          Header="CloudUrl"
                          Text="{Binding URL, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"/>
+                         LostFocus="TBLostFocus"
+                         Foreground="{ThemeResource StandardForeground}"
+                         BorderBrush="{ThemeResource StandardBorder}"/>
                 <TextBox Width="350"
                          Header="SystemID"
                          Text="{Binding SystemID, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"/>
+                         LostFocus="TBLostFocus"
+                         Foreground="{ThemeResource StandardForeground}"
+                         BorderBrush="{ThemeResource StandardBorder}"/>
             </StackPanel>
             <StackPanel Margin="10,0,0,0">
                 <TextBox Width="350"
                          Header="Username"
                          Text="{Binding Username, Mode=TwoWay}"
                          GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"/>
+                         LostFocus="TBLostFocus"
+                         Foreground="{ThemeResource StandardForeground}"
+                         BorderBrush="{ThemeResource StandardBorder}"/>
                 <PasswordBox Width="350"
                              Header="Password"
                              Password="{Binding Password, Mode=TwoWay}"
                              GotFocus="PasswordBox_GotFocus"
-                             LostFocus="TBLostFocus"/>
+                             LostFocus="TBLostFocus"
+                             Foreground="{ThemeResource StandardForeground}"
+                             BorderBrush="{ThemeResource StandardBorder}"/>
                 <Grid Margin="0,30,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition MaxWidth="40"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Text="Cloud Status"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Text="Cloud Status" Foreground="{ThemeResource StandardForeground}"></TextBlock>
                     <Ellipse Width="35" Height="35" Fill="#FF515151" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"/>
                     <Ellipse Width="25" Height="25" Fill="{Binding ConnectionStatus, Converter={StaticResource RedorGreen}}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"></Ellipse>
-                    <TextBlock Text="{Binding ConnectionMessage}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="5,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding ConnectionMessage}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="5,0,0,0" Foreground="{ThemeResource StandardForeground}"></TextBlock>
                 </Grid>
                 
             </StackPanel>
         </StackPanel>
-        <TextBlock TextWrapping="WrapWholeWords" Text="{Binding AuthorisationMessage}" Margin="10,220,10,10"/>
+        <TextBlock TextWrapping="WrapWholeWords" Text="{Binding AuthorisationMessage}" Margin="10,220,10,10" Foreground="{ThemeResource StandardForeground}"/>
     </Grid>
 </Page>

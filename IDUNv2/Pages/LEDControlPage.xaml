@@ -1,4 +1,4 @@
-﻿<Page RequestedTheme="Dark" 
+﻿<Page
     x:Class="IDUNv2.Pages.LEDControlPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -23,7 +23,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="RGB Color Slider Selector" Padding="5,0,0,20"></TextBlock>
+                <TextBlock Text="RGB Color Slider Selector" Padding="5,0,0,20" Foreground="{ThemeResource StandardForeground}"></TextBlock>
                 <StackPanel  Grid.Row="1">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="Red" Margin="10" Foreground="Red"></TextBlock>
@@ -45,7 +45,7 @@
 
             </Grid>
         </StackPanel>
-        <ToolTip x:Name="SaveLEDToolTip" Visibility="Collapsed">
+        <ToolTip x:Name="SaveLEDToolTip" Visibility="Collapsed" Background="{ThemeResource StandardBackground}">
             <ToolTip.Content>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -54,20 +54,20 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
-                        <TextBlock Text="Enter LED Image Name:"></TextBlock>
-                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB" GotFocus="LEDImageNameTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus"></TextBox>
-                        <TextBlock Text="Image Description:"></TextBlock>
-                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB" GotFocus="LEDImageDescriptionTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus"></TextBox>
+                        <TextBlock Text="Enter LED Image Name:" Foreground="{ThemeResource StandardForeground}"></TextBlock>
+                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB" GotFocus="LEDImageNameTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"></TextBox>
+                        <TextBlock Text="Image Description:" Foreground="{ThemeResource StandardForeground}"></TextBlock>
+                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB" GotFocus="LEDImageDescriptionTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"></TextBox>
                     </StackPanel>
                     <TextBlock FontWeight="Bold" Foreground="Red" Grid.Row="1" Text="File with that name already exists!" Visibility="Collapsed" x:Name="LEDSaveSameNameWarning"></TextBlock>
                     <StackPanel Orientation="Horizontal" Grid.Row="2">
-                        <Button Margin="5" Click="Save_Click">Save</Button>
-                        <Button Margin="5" Click="Cancel_Click">Cancel</Button>
+                        <Button Margin="5" Click="Save_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Save</Button>
+                        <Button Margin="5" Click="Cancel_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Cancel</Button>
                     </StackPanel>
                 </Grid>
             </ToolTip.Content>
         </ToolTip>
-        <ToolTip x:Name="LoadLEDToolTip" Visibility="Collapsed">
+        <ToolTip x:Name="LoadLEDToolTip" Visibility="Collapsed" Background="{ThemeResource StandardBackground}">
             <ToolTip.Content>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -75,12 +75,12 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0">Saved LED Images</TextBlock>
-                    <ListView Grid.Row="1" x:Name="LoadLedList" SelectionMode="Single" SelectionChanged="LoadLedList_SelectionChanged" VerticalAlignment="Top" Height="300" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                    <TextBlock Grid.Row="0" Foreground="{ThemeResource StandardForeground}">Saved LED Images</TextBlock>
+                    <ListView Grid.Row="1" x:Name="LoadLedList" SelectionMode="Single" SelectionChanged="LoadLedList_SelectionChanged" VerticalAlignment="Top" Height="300" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="{ThemeResource StandardForeground}"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="2">
-                        <Button Margin="5" Click="DeleteLoad_Click">Delete Selected</Button>
-                        <Button Margin="5" Click="Load_Click">Load</Button>
-                        <Button Margin="5" Click="LoadCancel_Click">Cancel</Button>
+                        <Button Margin="5" Click="DeleteLoad_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Delete Selected</Button>
+                        <Button Margin="5" Click="Load_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Load</Button>
+                        <Button Margin="5" Click="LoadCancel_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Cancel</Button>
                     </StackPanel>
                 </Grid>
             </ToolTip.Content>

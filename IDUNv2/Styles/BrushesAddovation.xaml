@@ -6,12 +6,13 @@
     <SolidColorBrush x:Key="MainMenuBrush" Color="#FF435600"></SolidColorBrush>
     <SolidColorBrush x:Key="SubMenuBrush" Color="#FF435500"></SolidColorBrush>
     <SolidColorBrush x:Key="ButtonBrush" Color="#FF668100"></SolidColorBrush>
+    <SolidColorBrush x:Key="NormalButtonBrush" Color="#FF333333"></SolidColorBrush>
     <SolidColorBrush x:Key="StandardBackground" Color="Black"></SolidColorBrush>
     <SolidColorBrush x:Key="StandardForeground" Color="White"></SolidColorBrush>
-    <SolidColorBrush x:Key="StandardBorder" Color="Gray"></SolidColorBrush>
+    <SolidColorBrush x:Key="StandardBorder" Color="#FF333333" ></SolidColorBrush>
     <SolidColorBrush x:Key="TextHighLight" Color="#FF60A3E6"></SolidColorBrush>
     <SolidColorBrush x:Key="NotificationBackground" Color="#7F000000"></SolidColorBrush>
     <SolidColorBrush x:Key="NotificationListBackground" Color="#E5000000"></SolidColorBrush>
     <SolidColorBrush x:Key="ExtendedNotificationBackground" Color="#D8000000"></SolidColorBrush>
-
+    <SolidColorBrush x:Key="TopBarBrush" Color="#FF333333"></SolidColorBrush>
 </ResourceDictionary>

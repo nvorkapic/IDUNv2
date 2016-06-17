@@ -34,7 +34,7 @@ namespace IDUNv2
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
+            Current.RequestedTheme = ApplicationTheme.Dark;
             brushViewModel.PropertyChanged += BrushViewModel_PropertyChanged;
         }
 
@@ -43,6 +43,9 @@ namespace IDUNv2
             ResourceDictionary RD = new ResourceDictionary();
             RD.Source = new Uri(brushViewModel.BrushesResources, UriKind.RelativeOrAbsolute);
             Application.Current.Resources.MergedDictionaries.Add(RD);
+
+            if (brushViewModel.BrushesResources.Contains("Windows"))
+                Current.RequestedTheme = ApplicationTheme.Light;
         }
 
 
@@ -55,7 +58,12 @@ namespace IDUNv2
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             if (brushViewModel.BrushesResources == null || brushViewModel.BrushesResources == string.Empty)
+            {
                 brushViewModel.BrushesResources = "ms-appx:///Styles/BrushesAddovation.xaml";
+            }
+                
+
+           
 #if true
             if (System.Diagnostics.Debugger.IsAttached)
             {

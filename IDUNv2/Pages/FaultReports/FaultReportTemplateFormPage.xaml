@@ -1,4 +1,4 @@
-﻿<Page RequestedTheme="Dark"
+﻿<Page
     x:Class="IDUNv2.Pages.FaultReportTemplateFormPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,10 +15,10 @@
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding IdString}"/>
+                <TextBlock Text="{Binding IdString}" Foreground="{ThemeResource StandardForeground}"/>
                 <StackPanel Orientation="Horizontal"
                             Grid.Column="1">
-                    <TextBlock Text="{Binding Name}" />
+                    <TextBlock Text="{Binding Name}" Foreground="{ThemeResource StandardForeground}"/>
                     <TextBlock Text="{Binding Dirty, Converter={StaticResource DirtyFlag}}"
                                Margin="5,0,0,0"
                                Foreground="Red"
@@ -43,8 +43,9 @@
                      ItemsSource="{Binding Templates}"
                      SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"
                      SelectionMode="Single"
-                     Background="Black"
-                     BorderBrush="DarkGray"
+                     Background="{ThemeResource StandardBackground}"
+                     BorderBrush="{ThemeResource StandardBorder}"
+                     Foreground="{ThemeResource StandardForeground}"
                      BorderThickness="2"/>
         </Grid>
         <Grid Grid.Column="1" Margin="0" Padding="10">
@@ -60,19 +61,19 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Text="Name:" Style="{StaticResource LabelStyle}"/>
-            <TextBlock Grid.Row="1" Text="Directive:" Style="{StaticResource LabelStyle}" />
-            <TextBlock Grid.Row="2" Text="Fault Desc:" Style="{StaticResource LabelStyle}" />
-            <TextBlock Grid.Row="3" Text="Discovery:" Style="{StaticResource LabelStyle}" />
-            <TextBlock Grid.Row="4" Text="Symptom:" Style="{StaticResource LabelStyle}" />
-            <TextBlock Grid.Row="5" Text="Priority:" Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="0" Text="Name:" Style="{StaticResource LabelStyle}" Foreground="{ThemeResource StandardForeground}"/>
+            <TextBlock Grid.Row="1" Text="Directive:" Style="{StaticResource LabelStyle}" Foreground="{ThemeResource StandardForeground}"/>
+            <TextBlock Grid.Row="2" Text="Fault Desc:" Style="{StaticResource LabelStyle}" Foreground="{ThemeResource StandardForeground}"/>
+            <TextBlock Grid.Row="3" Text="Discovery:" Style="{StaticResource LabelStyle}" Foreground="{ThemeResource StandardForeground}"/>
+            <TextBlock Grid.Row="4" Text="Symptom:" Style="{StaticResource LabelStyle}" Foreground="{ThemeResource StandardForeground}"/>
+            <TextBlock Grid.Row="5" Text="Priority:" Style="{StaticResource LabelStyle}" Foreground="{ThemeResource StandardForeground}"/>
 
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedTemplate.Name, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedTemplate.Directive, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedTemplate.FaultDescr, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" Height="96" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-            <ComboBox Grid.Row="3" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" SelectedItem="{Binding SelectedTemplate.Discovery, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
-            <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" SelectedItem="{Binding SelectedTemplate.Symptom, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
-            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding SelectedTemplate.Priority, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedTemplate.Name, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedTemplate.Directive, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedTemplate.FaultDescr, Mode=TwoWay}" Style="{StaticResource TextBoxSingleStyle}" Height="96" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding DiscoveryList}" SelectedItem="{Binding SelectedTemplate.Discovery, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding SymptomList}" SelectedItem="{Binding SelectedTemplate.Symptom, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5,0,0" Width="250" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding SelectedTemplate.Priority, Mode=TwoWay}" ItemTemplate="{StaticResource FaultCodeData}" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"/>
         </Grid>
     </Grid>
 </Page>

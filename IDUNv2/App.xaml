@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IDUNv2"
-    RequestedTheme="Light">
+    >
     <Application.Resources>
         <ResourceDictionary>
             <Style x:Key="ListViewStyle" TargetType="ListView">
@@ -51,6 +51,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Controls/Gauge/Generic.xaml" />
                 <ResourceDictionary Source="/Styles/IDUNStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/BrushesAddovation.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

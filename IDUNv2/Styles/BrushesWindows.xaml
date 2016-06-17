@@ -3,15 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IDUNv2.Styles">
 
-    <SolidColorBrush x:Key="MainMenuBrush" Color="Black"></SolidColorBrush>
+    <SolidColorBrush x:Key="MainMenuBrush" Color="Purple"></SolidColorBrush>
     <SolidColorBrush x:Key="SubMenuBrush" Color="White"></SolidColorBrush>
-    <SolidColorBrush x:Key="ButtonBrush" Color="Yellow"></SolidColorBrush>
-    <SolidColorBrush x:Key="StandardBackground" Color="Orange"></SolidColorBrush>
-    <SolidColorBrush x:Key="StandardForeground" Color="Blue"></SolidColorBrush>
-    <SolidColorBrush x:Key="StandardBorder" Color="Pink"></SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonBrush" Color="Purple"></SolidColorBrush>
+    <SolidColorBrush x:Key="NormalButtonBrush" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="StandardBackground" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="StandardForeground" Color="Black"></SolidColorBrush>
+    <SolidColorBrush x:Key="StandardBorder" Color="Black"></SolidColorBrush>
     <SolidColorBrush x:Key="TextHighLight" Color="Red"></SolidColorBrush>
-    <SolidColorBrush x:Key="NotificationBackground" Color="DarkGoldenrod"></SolidColorBrush>
-    <SolidColorBrush x:Key="NotificationListBackground" Color="DarkGreen"></SolidColorBrush>
+    <SolidColorBrush x:Key="NotificationBackground" Color="Gray"></SolidColorBrush>
+    <SolidColorBrush x:Key="NotificationListBackground" Color="DarkGray"></SolidColorBrush>
     <SolidColorBrush x:Key="ExtendedNotificationBackground" Color="DarkGray"></SolidColorBrush>
-
+    <SolidColorBrush x:Key="TopBarBrush" Color="Purple"></SolidColorBrush>
 </ResourceDictionary>

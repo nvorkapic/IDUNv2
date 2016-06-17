@@ -1,4 +1,4 @@
-﻿<Page RequestedTheme="Dark"
+﻿<Page
     x:Class="IDUNv2.Pages.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -34,6 +34,8 @@
                             IsSticky="True"
                             VerticalContentAlignment="Center"
                             MinWidth="750"
+                            Background="{ThemeResource TopBarBrush}"
+                            Foreground="{ThemeResource StandardForeground}"
                             >
                     <CommandBar.Content>
                         <StackPanel Orientation="Horizontal">
@@ -46,7 +48,8 @@
                                     Text="IDUN"
                                     VerticalAlignment="Center"
                                     Margin="10,0,0,0"
-                                    FontWeight="Bold"/>
+                                    FontWeight="Bold"
+                                    />
                             </StackPanel>
                             <ItemsControl ItemsSource="{Binding NavLinks}">
                                 <ItemsControl.ItemsPanel>
@@ -57,8 +60,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock VerticalAlignment="Center" Text="/" Padding="5,0,5,0"/>
-                                            <HyperlinkButton Content="{Binding Title}" Foreground="White" Click="NavLink_Click" Tag="{Binding}"/>
+                                            <TextBlock VerticalAlignment="Center" Text="/" Padding="5,0,5,0" Foreground="{ThemeResource StandardForeground}"/>
+                                            <HyperlinkButton Content="{Binding Title}" Foreground="{ThemeResource StandardForeground}" Click="NavLink_Click" Tag="{Binding}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -82,13 +85,14 @@
                         SelectedItem="{Binding SelectedNavMenuItem}"
                         ItemTemplate="{ThemeResource NavMenuData}"
                         Background="{ThemeResource MainMenuBrush}"
+                        Foreground="{ThemeResource StandardForeground}"
                         SelectionChanged="NavMenu_SelectionChanged"
                         />
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                        <Button Width="50" Height="50" Click="NotificationButton_Click">
+                        <Button Width="50" Height="50" Click="NotificationButton_Click" Background="{ThemeResource ButtonBrush}" Foreground="{ThemeResource StandardForeground}">
                             <StackPanel>
-                                <TextBlock Text="&#xE8C9;" FontFamily="Segoe MDL2 Assets"/>
-                                <TextBlock Text="{Binding NotificationNumber}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="&#xE8C9;" FontFamily="Segoe MDL2 Assets" Foreground="{ThemeResource StandardForeground}"/>
+                                <TextBlock Text="{Binding NotificationNumber}" HorizontalAlignment="Center" Foreground="{ThemeResource StandardForeground}"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -123,7 +127,8 @@
                             <TextBlock
                                 Text="Loading..."
                                 VerticalAlignment="Center"
-                                Margin="10,0,0,0"/>
+                                Margin="10,0,0,0"
+                                Foreground="{ThemeResource StandardForeground}"/>
                             <Image gif:AnimationBehavior.SourceUri="Assets/loading-icon.gif"
                                        Height="30"
                                        Margin="5"
@@ -135,13 +140,14 @@
                                 Visibility="Collapsed"
                                 Click="NotificationButton_Click"
                                 Background="{ThemeResource MainMenuBrush}"
+                                Foreground="{ThemeResource StandardForeground}"
                                 Height="50"
                                 >
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets"
                                            Text="{Binding LatestNotification, Converter={StaticResource NotifyIcon}}"
                                            Margin="10,0,0,0"
-                                           VerticalAlignment="Center"
+                                           VerticalAlignment="Center"                    
                                            />
                                 <TextBlock Text="{Binding LatestNotification.ShortDescription}"
                                            Margin="5,0,0,0"/>
@@ -158,7 +164,7 @@
                     <ColumnDefinition Width="600"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer>
-                    <ListView ItemsSource="{Binding NotificationList}" ScrollViewer.HorizontalScrollMode="Enabled" SelectionChanged="NotificationItemSelectionChange" x:Name="NotificationFlyOutList" SelectionMode="Single"  Grid.Column="0" Background="{ThemeResource NotificationListBackground}" Height="390" Loaded="NotificationFlyOutList_Loaded">
+                    <ListView ItemsSource="{Binding NotificationList}" ScrollViewer.HorizontalScrollMode="Enabled" SelectionChanged="NotificationItemSelectionChange" x:Name="NotificationFlyOutList" SelectionMode="Single"  Grid.Column="0" Background="{ThemeResource NotificationListBackground}" Height="390" Loaded="NotificationFlyOutList_Loaded" Foreground="{ThemeResource StandardForeground}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -175,22 +181,22 @@
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Converter={StaticResource NotifyIcon}}" FontSize="20" VerticalAlignment="Center" Margin="10"></TextBlock>
-                                <TextBlock Text="{Binding Type}" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Converter={StaticResource NotifyIcon}}" FontSize="20" VerticalAlignment="Center" Margin="10" Foreground="{ThemeResource StandardForeground}"></TextBlock>
+                                <TextBlock Text="{Binding Type}" FontSize="20" VerticalAlignment="Center" Foreground="{ThemeResource StandardForeground}"></TextBlock>
                             </StackPanel>
-                            <TextBlock Text="{Binding Date}" Padding="10"></TextBlock>
+                            <TextBlock Text="{Binding Date}" Padding="10" Foreground="{ThemeResource StandardForeground}"></TextBlock>
                         </StackPanel>
-                        <TextBlock Text="{Binding ShortDescription}" TextWrapping="WrapWholeWords" FontSize="20" Padding="10" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock Text="{Binding ShortDescription}" TextWrapping="WrapWholeWords" FontSize="20" Padding="10" VerticalAlignment="Center" Foreground="{ThemeResource StandardForeground}"></TextBlock>
                     </StackPanel>
                     <ScrollViewer  Padding="10" Height="200">
-                        <TextBlock Text="{Binding LongDescription}" TextWrapping="WrapWholeWords" FontSize="15"></TextBlock>
+                        <TextBlock Text="{Binding LongDescription}" TextWrapping="WrapWholeWords" FontSize="15" Foreground="{ThemeResource StandardForeground}"></TextBlock>
                     </ScrollViewer>
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,20">
-                    <Button Content="Close Message List" Padding="10" Click="CloseNotification_Click" VerticalAlignment="Center"></Button>
-                    <Button Content="Mark as Read" Padding="10" Click="NotificationViewed_Click" VerticalAlignment="Center" Margin="5,0,0,0"></Button>
-                    <Button Content="Mark ALL as Read" Padding="10" Click="NotificationALLViewed_Click" VerticalAlignment="Center" Margin="5,0,0,0"></Button>
+                    <Button Content="Close Message List" Padding="10" Click="CloseNotification_Click" VerticalAlignment="Center" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}"></Button>
+                    <Button Content="Mark as Read" Padding="10" Click="NotificationViewed_Click" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}"></Button>
+                    <Button Content="Mark ALL as Read" Padding="10" Click="NotificationALLViewed_Click" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}"></Button>
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -227,25 +233,25 @@
             <Grid>
                 <WebView Source="{Binding localWebPage}" Height="450"/>
                 <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="DocumentationNavigation" Visibility="Collapsed">
-                    <Button Click="NavDocButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5"></Button>
-                    <Button Click="NavDocButton_Click" Width="120" Tag="Introduction" Content="Introduction" Margin="0,5,0,5"></Button>
-                    <Button Click="NavDocButton_Click" Width="120" Tag="Requirements" Content="Requirements" Margin="0,5,0,5"></Button>
-                    <Button Click="NavDocButton_Click" Width="120" Tag="TechnicalDetails" Margin="0,5,0,5" Content="Details"></Button>
-                    <Button Click="NavDocButton_Click" Width="120" Tag="Version" Content="Version" Margin="0,5,0,5"></Button>
-                    <Button Click="NavDocButton_Click" Width="120" Tag="Copyright" Content="Copyright" Margin="0,5,0,5"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Introduction" Content="Introduction" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Requirements" Content="Requirements" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="TechnicalDetails" Margin="0,5,0,5" Content="Details" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Version" Content="Version" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavDocButton_Click" Width="120" Tag="Copyright" Content="Copyright" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
                 </StackPanel>
                 <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="TutorialNavigation" Visibility="Collapsed">
-                    <Button Click="NavTutButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="MainPage" Content="Main Page" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="BottomBar" Content="Bottom Bar" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="SensorOverview" Content="Sensor" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="SensorSetting" Content="Settings" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="Templates" Content="Templates" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="FaultReport" Content="Reports" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="AdditionalApps" Content="Additional Apps" Margin="0,5,0,5"></Button>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="DeviceSettings" Content="Device" Margin="0,5,0,5"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="MainPage" Content="Main Page" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="BottomBar" Content="Bottom Bar" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="SensorOverview" Content="Sensor" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="SensorSetting" Content="Settings" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="Templates" Content="Templates" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="FaultReport" Content="Reports" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="AdditionalApps" Content="Additional Apps" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="DeviceSettings" Content="Device" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
                 </StackPanel>
-                <Button Content="Close" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="CloseWeb_Click" Width="120" Margin="0,5,0,5"></Button>
+                <Button Content="Close" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="CloseWeb_Click" Width="120" Margin="0,5,0,5" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}" BorderBrush="{ThemeResource StandardBorder}"></Button>
             </Grid>
         </Frame>
     </Grid>
