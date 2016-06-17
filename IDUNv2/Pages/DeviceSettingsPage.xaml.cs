@@ -36,7 +36,7 @@ namespace IDUNv2.Pages
         private async void SaveDeviceSettings(object param)
         {
             ShellPage.SetSpinner(LoadingState.Loading);
-            var status = await DAL.AuthenticateAuthorization();
+            var status = await DAL.ConnectToCloud();
             viewModel.ConnectionStatus = !status;
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(2500);
@@ -123,7 +123,7 @@ namespace IDUNv2.Pages
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            var status = await DAL.AuthenticateAuthorization();
+            var status = await DAL.ConnectToCloud();
             viewModel.ConnectionStatus = !status;
 
             var cmdBarItems = new CmdBarItem[]

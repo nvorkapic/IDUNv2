@@ -59,8 +59,6 @@ namespace IDUNv2.DataAccess
             sensorWatcher = new SensorWatcher(dispatcher, 100);
             sensorWatcher.LoadSettings();
 
-            InitCloud();
-
             SensorAccess = new SensorAccess(sensorWatcher);
             SensorTriggerAccess = new SensorTriggerAccess(db);
             //FaultReportAccess = new FaultReportAccess(cloud, db);
@@ -69,12 +67,7 @@ namespace IDUNv2.DataAccess
 
         #region Cloud
 
-        public static Task<bool> AuthenticateAuthorization()
-        {
-            return cloud.Authenticate();
-        }
-
-        private static void InitCloud()
+        public static Task<bool> ConnectToCloud()
         {
             try
             {
@@ -104,10 +97,11 @@ namespace IDUNv2.DataAccess
                     ConnectionInfo = connectionInfo,
                     SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
                 };
-
                 
                 InsightsHelper.Init();
                 //InsightsHelper.SetUser(connectionInfo);
+
+                return cloud.Authenticate();
             }
             catch (Exception ex)
             {

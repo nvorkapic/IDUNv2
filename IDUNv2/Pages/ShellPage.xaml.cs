@@ -64,7 +64,7 @@ namespace IDUNv2.Pages
         {
             var first = viewModel.NavList.First();
             viewModel.SelectMainMenu(ContentFrame, first);
-            var status = await DAL.AuthenticateAuthorization();
+            var status = await DAL.ConnectToCloud();
             if (status)
                 Current.AddNotificatoin(
                     NotificationType.Information,
