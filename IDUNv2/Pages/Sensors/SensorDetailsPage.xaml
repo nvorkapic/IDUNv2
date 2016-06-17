@@ -12,6 +12,7 @@
     <Page.Resources>
         <conv:SensorDeviceStateToColorConverter x:Key="DeviceColor"/>
         <conv:SensorFaultStateToColor x:Key="FaultColor" />
+        <conv:SensorDeviceStateToVisibility x:Key="FaultStateVisible"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid HorizontalAlignment="Left" Margin="10">
@@ -63,7 +64,8 @@
                                Foreground="{Binding Sensor.DeviceState, Converter={StaticResource DeviceColor}}"
                                />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal"
+                                Visibility="{Binding Sensor.DeviceState, Converter={StaticResource FaultStateVisible}}">
                         <Ellipse Height="15"
                                  Width="15"
                                  Fill="{Binding Sensor.FaultState, Converter={StaticResource FaultColor}}"
@@ -75,6 +77,7 @@
                     </StackPanel>
                     <TextBlock Margin="5,0,0,0"
                                Text="{Binding Sensor.Value}"
+                               Visibility="{Binding Sensor.DeviceState, Converter={StaticResource FaultStateVisible}}"
                                />
                 </StackPanel>
                 <ListView Grid.ColumnSpan="2"

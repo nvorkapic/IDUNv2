@@ -118,8 +118,10 @@
       <DependentUpon>SensorGauge.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\RedOrGreenConverter.cs" />
+    <Compile Include="Converters\SensorDeviceStateToVisibility.cs" />
     <Compile Include="Converters\SensorFaultStateToColor.cs" />
     <Compile Include="Converters\SensorDeviceStateToColorConverter.cs" />
+    <Compile Include="Converters\SensorToGaugeIndicatorColor.cs" />
     <Compile Include="DataAccess\DAL.cs" />
     <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\NotifyBase.cs" />

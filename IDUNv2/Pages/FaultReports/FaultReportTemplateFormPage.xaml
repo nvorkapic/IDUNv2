@@ -10,10 +10,21 @@
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="TemplateListData">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" />
-                <TextBlock Text="{Binding Dirty, Converter={StaticResource DirtyFlag}}" Margin="5,0,0,0" Foreground="Red" />
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding IdString}"/>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="1">
+                    <TextBlock Text="{Binding Name}" />
+                    <TextBlock Text="{Binding Dirty, Converter={StaticResource DirtyFlag}}"
+                               Margin="5,0,0,0"
+                               Foreground="Red"
+                               />
+                </StackPanel>
+            </Grid>
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{StaticResource StandardBackground}">
