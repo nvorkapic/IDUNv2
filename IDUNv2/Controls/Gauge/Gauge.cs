@@ -106,7 +106,7 @@ namespace IDUNv2.Controls
                 "DangerLoBrush",
                 typeof(Brush),
                 typeof(Gauge),
-                new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
+                new PropertyMetadata(new SolidColorBrush(Colors.Red)));
 
         public static readonly DependencyProperty DangerHiBrushProperty =
             DependencyProperty.Register(
