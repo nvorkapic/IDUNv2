@@ -279,6 +279,20 @@ namespace IDUNv2.Pages
             }
         }
 
+        public void ShowNumPad(Control target)
+        {
+            if (target != null)
+            {
+                NumPad.SetTarget(target);
+                NumPad.Visibility = Visibility.Visible;
+                CmdBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                NumPad.Visibility = Visibility.Collapsed;
+                CmdBar.Visibility = Visibility.Visible;
+            }
+        }
         #endregion
 
         #region WebView

@@ -56,12 +56,12 @@ namespace IDUNv2.Pages
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            DAL.ShowOSK(sender as TextBox);
+            DAL.ShowNumPad(sender as TextBox);
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            DAL.ShowOSK(null);
+            DAL.ShowNumPad(null);
         }
 
         private void Templates_SelectionChanged(object sender, SelectionChangedEventArgs e)

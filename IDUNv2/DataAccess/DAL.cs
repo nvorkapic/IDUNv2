@@ -334,5 +334,14 @@ namespace IDUNv2.DataAccess
         }
 
         #endregion
+
+        #region NumPad
+
+        public static void ShowNumPad(Control target)
+        {
+            ShellPage.Current.ShowNumPad(target);
+        }
+
+        #endregion
     }
 }

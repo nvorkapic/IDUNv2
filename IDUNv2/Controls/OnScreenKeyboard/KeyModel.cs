@@ -172,6 +172,7 @@ namespace OnScreenKeyboard
         protected string keyName;
         protected string text;
         public static KeyboardViewModel theKeyboardViewModel;
+        public static NumericKeyboardViewModel theNumericKeyboardViewModel;
         protected char unshiftedCodePoint; // the character you normally get from this key-button.
         protected char shiftedCodePoint; // the character you get when the Shift key is active.
     }

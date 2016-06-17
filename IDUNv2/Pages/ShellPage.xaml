@@ -218,6 +218,11 @@
                               Height="250"
                               Visibility="Collapsed"
                               />
+        <osk:NumericKeyboard x:Name="NumPad"
+                             Grid.Row="1"
+                             VerticalAlignment="Bottom"
+                             Margin="0,0,0,-45"
+                             Visibility="Collapsed"/>
         <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" Width="800" Height="480" x:Name="WebPageContentFrame" Visibility="Collapsed" Background="Black">
             <Grid>
                 <WebView Source="{Binding localWebPage}" Height="450"/>
