@@ -14,6 +14,12 @@ namespace IDUNv2.ViewModels
 {
     public class SensorOverviewViewModel : NotifyBase
     {
+        #region Fields
+
+        private ISensorAccess sensorAccess;
+
+        #endregion
+
         #region Properties
 
         public Sensor TemperatureSensor { get; private set; }
@@ -26,27 +32,29 @@ namespace IDUNv2.ViewModels
 
         public float BiasTemp
         {
-            get { return DAL.GetSensorBias(SensorId.Temperature); }
-            set { DAL.SetSensorBias(SensorId.Temperature, value); Notify(); }
+            get { return sensorAccess.GetSensorBias(SensorId.Temperature); }
+            set { sensorAccess.SetSensorBias(SensorId.Temperature, value); Notify(); }
         }
         public float BiasHumid
         {
-            get { return DAL.GetSensorBias(SensorId.Humidity); }
-            set { DAL.SetSensorBias(SensorId.Humidity, value); Notify(); }
+            get { return sensorAccess.GetSensorBias(SensorId.Humidity); }
+            set { sensorAccess.SetSensorBias(SensorId.Humidity, value); Notify(); }
         }
         public float BiasPress
         {
-            get { return DAL.GetSensorBias(SensorId.Pressure); }
-            set { DAL.SetSensorBias(SensorId.Pressure, value); Notify(); }
+            get { return sensorAccess.GetSensorBias(SensorId.Pressure); }
+            set { sensorAccess.SetSensorBias(SensorId.Pressure, value); Notify(); }
         }
 
         #endregion
 
-        public SensorOverviewViewModel()
+        public SensorOverviewViewModel(ISensorAccess sensorAccess)
         {
-            TemperatureSensor = DAL.GetSensor(SensorId.Temperature);
-            HumiditySensor = DAL.GetSensor(SensorId.Humidity);
-            PressureSensor = DAL.GetSensor(SensorId.Pressure);
+            this.sensorAccess = sensorAccess;
+
+            TemperatureSensor = sensorAccess.GetSensor(SensorId.Temperature);
+            HumiditySensor = sensorAccess.GetSensor(SensorId.Humidity);
+            PressureSensor = sensorAccess.GetSensor(SensorId.Pressure);
         }
     }
 }

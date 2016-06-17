@@ -16,14 +16,41 @@ namespace IDUNv2.ViewModels
 {
     public class FaultReportTemplateFormViewModel : NotifyBase
     {
+        #region Fields
+
+        private IFaultReportAccess faultReportAccess;
+
+        #endregion
+
         #region Notify Fields
 
+        private List<WorkOrderDiscCode> _discList;
+        private List<WorkOrderSymptCode> _symptList;
+        private List<MaintenancePriority> _prioList;
         private ObservableCollection<FaultReportTemplateViewModel> _templates;
         private FaultReportTemplateViewModel _selectedTemplate;
 
         #endregion
 
         #region Notify Properties
+
+        public List<WorkOrderDiscCode> DiscoveryList
+        {
+            get { return _discList; }
+            private set { _discList = value; Notify(); }
+        }
+
+        public List<WorkOrderSymptCode> SymptomList
+        {
+            get { return _symptList; }
+            private set { _symptList = value; Notify(); }
+        }
+
+        public List<MaintenancePriority> PriorityList
+        {
+            get { return _prioList; }
+            private set { _prioList = value; Notify(); }
+        }
 
         public ObservableCollection<FaultReportTemplateViewModel> Templates
         {
@@ -41,9 +68,6 @@ namespace IDUNv2.ViewModels
 
         #region Properties
 
-        public List<WorkOrderDiscCode> DiscoveryList { get; private set; }
-        public List<WorkOrderSymptCode> SymptomList { get; private set; }
-        public List<MaintenancePriority> PriorityList { get; private set; }
         public ICollection<CmdBarItem> CmdBarItems { get; private set; }
 
         #endregion
@@ -52,7 +76,9 @@ namespace IDUNv2.ViewModels
 
         private void CreateTemplate(object param)
         {
-            var template = new FaultReportTemplateViewModel(new FaultReportTemplate { Name = "#New Template" });
+            var template = new FaultReportTemplateViewModel(
+                new FaultReportTemplate { Name = "#New Template" },
+                faultReportAccess);
             Templates.Add(template);
             SelectedTemplate = template;
             SelectedTemplate.Dirty = true;
@@ -64,7 +90,7 @@ namespace IDUNv2.ViewModels
 
         private async void SaveTemplate(object param)
         {
-            SelectedTemplate.Model = await DAL.SetFaultReportTemplate(SelectedTemplate.Model);
+            SelectedTemplate.Model = await faultReportAccess.SetFaultReportTemplate(SelectedTemplate.Model);
             SelectedTemplate.Dirty = false;
             ShellPage.Current.AddNotificatoin(
                 NotificationType.Information,
@@ -74,7 +100,7 @@ namespace IDUNv2.ViewModels
 
         private async void DeleteTemplate(object param)
         {
-            bool success = await DAL.DeleteFaultReportTemplate(SelectedTemplate.Model);
+            bool success = await faultReportAccess.DeleteFaultReportTemplate(SelectedTemplate.Model);
             if (success)
             {
                 ShellPage.Current.AddNotificatoin(NotificationType.Information,
@@ -95,8 +121,10 @@ namespace IDUNv2.ViewModels
 
         #region Constructors
 
-        public FaultReportTemplateFormViewModel()
+        public FaultReportTemplateFormViewModel(IFaultReportAccess faultReportAccess)
         {
+            this.faultReportAccess = faultReportAccess;
+
             CmdBarItems = new CmdBarItem[]
             {
                 new CmdBarItem(Symbol.Add, "Create", CreateTemplate),
@@ -114,16 +142,17 @@ namespace IDUNv2.ViewModels
             await DAL.FillCaches();
             try
             {
-                DiscoveryList = DAL.GetWorkOrderDiscCodes();
-                SymptomList = DAL.GetWorkOrderSymptCodes();
-                PriorityList = DAL.GetWorkOrderPrioCodes();
+                DiscoveryList = faultReportAccess.GetWorkOrderDiscCodes();
+                SymptomList = faultReportAccess.GetWorkOrderSymptCodes();
+                PriorityList = faultReportAccess.GetWorkOrderPrioCodes();
             }
             catch
             {
 
             }
-            var temp = await DAL.GetFaultReportTemplates();
-            Templates = new ObservableCollection<FaultReportTemplateViewModel>(temp.Select(t => new FaultReportTemplateViewModel(t)));
+            var temp = await faultReportAccess.GetFaultReportTemplates();
+            Templates = new ObservableCollection<FaultReportTemplateViewModel>(
+                temp.Select(t => new FaultReportTemplateViewModel(t, faultReportAccess)));
             SelectedTemplate = Templates.FirstOrDefault();
         }
 

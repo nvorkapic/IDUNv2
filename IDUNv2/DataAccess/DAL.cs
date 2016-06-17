@@ -43,59 +43,29 @@ namespace IDUNv2.DataAccess
         private static CachingCloudClient cloud;
         private static SensorWatcher sensorWatcher;
 
+        public static ISensorAccess SensorAccess { get; private set; }
+        public static ISensorTriggerAccess SensorTriggerAccess { get; private set; }
+        public static IFaultReportAccess FaultReportAccess { get; private set; }
+
+
         static DAL()
         {
             db.CreateTable<FaultReportTemplate>();
             db.CreateTable<SensorTrigger>();
-
-            InitCloud();
         }
 
-        public static void SetDispatcher(CoreDispatcher dispatcher)
+        public static void Init(CoreDispatcher dispatcher)
         {
             sensorWatcher = new SensorWatcher(dispatcher, 100);
             sensorWatcher.LoadSettings();
+
+            InitCloud();
+
+            SensorAccess = new SensorAccess(sensorWatcher);
+            SensorTriggerAccess = new SensorTriggerAccess(db);
+            //FaultReportAccess = new FaultReportAccess(cloud, db);
+            FaultReportAccess = new MockFaultReportAccess();
         }
-
-
-        #region Sensors
-
-        /// <summary>
-        /// Check of real hardware sensors actually exists.
-        /// </summary>
-        /// <returns></returns>
-        public static bool HasSensors()
-        {
-            return sensorWatcher.HasSensors;
-        }
-
-        public static Sensor GetSensor(SensorId id)
-        {
-            return sensorWatcher.GetSensor(id);
-        }
-
-        public static void ClearSensorFaultState(SensorId id)
-        {
-            var s = GetSensor(id);
-            s.FaultState = SensorFaultState.Normal;
-        }
-
-        public static float GetSensorBias(SensorId id)
-        {
-            int i = (int)id;
-            if (i >= 0 && i < sensorWatcher.BiasValues.Length)
-                return sensorWatcher.BiasValues[i];
-            return 0.0f;
-        }
-
-        public static void SetSensorBias(SensorId id, float val)
-        {
-            int i = (int)id;
-            if (i >= 0 && i < sensorWatcher.BiasValues.Length)
-                sensorWatcher.BiasValues[i] = val;
-        }
-
-        #endregion
 
         #region Cloud
 
@@ -148,154 +118,9 @@ namespace IDUNv2.DataAccess
         public static async Task FillCaches()
         {
             ShellPage.SetSpinner(LoadingState.Loading);
-            await cloud.FillCaches();
+            await FaultReportAccess.FillCaches();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
-
-        #endregion
-
-        #region FaultCodes
-
-        public static List<WorkOrderDiscCode> GetWorkOrderDiscCodes()
-        {
-            try
-            {
-                return cloud.GetCachedWorkOrderDiscCodes();
-            }
-            catch (Exception)
-            {
-                return new List<WorkOrderDiscCode>();
-            }
-        }
-
-        public static List<WorkOrderSymptCode> GetWorkOrderSymptCodes()
-        {
-            try
-            {
-                return cloud.GetCachedWorkOrderSymptCodes();
-            }
-            catch (Exception)
-            {
-                return new List<WorkOrderSymptCode>();
-            }
-        }
-
-        public static List<MaintenancePriority> GetWorkOrderPrioCodes()
-        {
-            try
-            {
-                return cloud.GetCachedMaintenancePriorities();
-            }
-            catch (Exception)
-            {
-                return new List<MaintenancePriority>();
-            }
-        }
-
-        public static WorkOrderDiscCode GetWorkOrderDiscovery(string discCode)
-        {
-            return cloud.GetCachedWorkOrderDiscCode(discCode);
-        }
-
-        public static WorkOrderSymptCode GetWorkOrderSymptom(string symptCode)
-        {
-            return cloud.GetCachedWorkOrderSymptCode(symptCode);
-        }
-
-        public static MaintenancePriority GetWorkOrderPiority(string prioCode)
-        {
-            return cloud.GetCachedMaintenancePriority(prioCode);
-        }
-
-        #endregion
-
-        #region Fault Reports
-
-        public static Task<List<FaultReportTemplate>> GetFaultReportTemplates()
-        {
-            var templates = db.Table<FaultReportTemplate>().ToList();
-            return Task.FromResult(templates);
-        }
-
-        public static Task<FaultReportTemplate> FindFaultReportTemplate(int Id)
-        {
-            var template = db.Find<FaultReportTemplate>(Id);
-            return Task.FromResult(template);
-        }
-
-        public static Task<FaultReportTemplate> SetFaultReportTemplate(FaultReportTemplate template)
-        {
-            if (template.Id == 0)
-                db.Insert(template);
-            else
-                db.Update(template);
-            return Task.FromResult(template);
-        }
-
-        public static Task<bool> DeleteFaultReportTemplate(FaultReportTemplate template)
-        {
-            //string sql = "SELECT id 
-            var q = db.Table<SensorTrigger>().Where(sr => sr.TemplateId == template.Id);
-            if (q.Count() != 0)
-            {
-                return Task.FromResult(false);
-            }
-            db.Delete(template);
-            return Task.FromResult(true);
-        }
-
-        public static Task<List<FaultReport>> GetFaultReports()
-        {
-            return cloud.GetFaultReports();
-        }
-
-        public static Task<FaultReport> SetFaultReport(FaultReport report)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region SensorTriggers
-
-        public static Task<List<SensorTrigger>> GetSensorTriggersFor(SensorId id)
-        {
-            var triggers = db.Table<SensorTrigger>().Where(t => t.SensorId == id).ToList();
-            return Task.FromResult(triggers);
-        }
-
-        public static Task<SensorTrigger> SetSensorTrigger(SensorTrigger trigger)
-        {
-            if (trigger.Id == 0)
-            {
-                db.Insert(trigger);
-            }
-            else
-            {
-                db.Update(trigger);
-            }
-            return Task.FromResult(trigger);
-        }
-
-
-        public static Task<SensorTrigger> DeleteSensorTrigger(SensorTrigger trigger)
-        {
-            db.Delete(trigger);
-            return Task.FromResult(trigger);
-        }
-
-        public static Task<SensorTrigger> FindSensorTrigger(int Id)
-        {
-            var trigger = db.Find<SensorTrigger>(Id);
-            return Task.FromResult(trigger);
-        }
-
-        //public static Task<SensorTrigger> InsertTrigger(SensorTrigger trigger)
-        //{
-        //    db.Insert(trigger);
-        //    return Task.FromResult(trigger);
-
-        //}
 
         #endregion
 

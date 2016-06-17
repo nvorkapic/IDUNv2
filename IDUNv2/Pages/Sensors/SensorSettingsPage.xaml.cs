@@ -26,7 +26,7 @@ namespace IDUNv2.Pages
     {
         #region Fields
 
-        private SensorSettingsViewModel viewModel = new SensorSettingsViewModel();
+        private SensorSettingsViewModel viewModel;
 
         #endregion
 
@@ -34,6 +34,7 @@ namespace IDUNv2.Pages
 
         public SensorSettingsPage()
         {
+            viewModel = new SensorSettingsViewModel(DAL.SensorTriggerAccess, DAL.FaultReportAccess);
             this.InitializeComponent();
             this.DataContext = viewModel;
         }

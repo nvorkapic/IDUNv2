@@ -28,13 +28,17 @@ namespace IDUNv2.Pages
         #region Fields
 
         private Random rnd = new Random();
-        private SensorOverviewViewModel viewModel = new SensorOverviewViewModel();
+        private ISensorAccess sensorAccess = DAL.SensorAccess;
+        private SensorOverviewViewModel viewModel;
 
         #endregion
 
-        private Action<object> ShowDetailsFor(Sensor s)
+        private Action<object> ShowDetailsFor(SensorId id)
         {
-            return o => Frame.Navigate(typeof(Pages.SensorDetailsPage), s);
+            return o =>
+            {
+                Frame.Navigate(typeof(Pages.SensorDetailsPage), sensorAccess.GetSensor(id));
+            };
         }
 
         #region CmdBar Actions
@@ -52,11 +56,13 @@ namespace IDUNv2.Pages
 
         public SensorOverviewPage()
         {
+            viewModel = new SensorOverviewViewModel(sensorAccess);
+
             this.InitializeComponent();
 
-            viewModel.TemperatureSensor.Command = new ActionCommand<object>(ShowDetailsFor(DAL.GetSensor(SensorId.Temperature)));
-            viewModel.HumiditySensor.Command = new ActionCommand<object>(ShowDetailsFor(DAL.GetSensor(SensorId.Humidity)));
-            viewModel.PressureSensor.Command = new ActionCommand<object>(ShowDetailsFor(DAL.GetSensor(SensorId.Pressure)));
+            viewModel.TemperatureSensor.Command = new ActionCommand<object>(ShowDetailsFor(SensorId.Temperature));
+            viewModel.HumiditySensor.Command = new ActionCommand<object>(ShowDetailsFor(SensorId.Humidity));
+            viewModel.PressureSensor.Command = new ActionCommand<object>(ShowDetailsFor(SensorId.Pressure));
 
             this.DataContext = viewModel;
         }

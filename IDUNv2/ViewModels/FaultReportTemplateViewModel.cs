@@ -15,6 +15,7 @@ namespace IDUNv2.ViewModels
     {
         #region Fields
 
+        private IFaultReportAccess faultReportAccess;
         private FaultReportTemplate model;
 
         #endregion
@@ -64,19 +65,19 @@ namespace IDUNv2.ViewModels
 
         public WorkOrderDiscCode Discovery
         {
-            get { return DAL.GetWorkOrderDiscovery(model.DiscCode); }
+            get { return faultReportAccess.LookupWorkOrderDiscovery(model.DiscCode); }
             set { model.DiscCode = value.ErrDiscoverCode; SetDirty(); }
         }
 
         public WorkOrderSymptCode Symptom
         {
-            get { return DAL.GetWorkOrderSymptom(model.SymptCode); }
+            get { return faultReportAccess.LookupWorkOrderSymptom(model.SymptCode); }
             set { model.SymptCode = value.ErrSymptom; SetDirty(); }
         }
 
         public MaintenancePriority Priority
         {
-            get { return DAL.GetWorkOrderPiority(model.PrioCode); }
+            get { return faultReportAccess.LookupMaintenancePriority(model.PrioCode); }
             set { model.PrioCode = value.PriorityId; SetDirty(); }
         }
 
@@ -90,9 +91,10 @@ namespace IDUNv2.ViewModels
 
         #region Constructor
 
-        public FaultReportTemplateViewModel(FaultReportTemplate model)
+        public FaultReportTemplateViewModel(FaultReportTemplate model, IFaultReportAccess faultReportAccess)
         {
             this.model = model;
+            this.faultReportAccess = faultReportAccess;
         }
 
         #endregion
