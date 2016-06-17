@@ -11,6 +11,12 @@ namespace IDUNv2.DataAccess
     {
         private SensorWatcher watcher;
 
+        public SensorFaultHandler Faulted
+        {
+            get { return watcher.Faulted; }
+            set { watcher.Faulted = value; }
+        }
+
         public SensorAccess(SensorWatcher watcher)
         {
             this.watcher = watcher;

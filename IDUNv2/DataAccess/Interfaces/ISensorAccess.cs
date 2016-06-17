@@ -9,6 +9,8 @@ namespace IDUNv2.DataAccess
 {
     public interface ISensorAccess
     {
+        SensorFaultHandler Faulted { get; set; }
+
         bool IsHardwareConnected();
         Sensor GetSensor(SensorId id);
         void ClearSensorFaultState(SensorId id);

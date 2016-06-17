@@ -1,4 +1,5 @@
 ﻿using IDUNv2.Common;
+using IDUNv2.DataAccess;
 using Newtonsoft.Json;
 using System;
 using System.Reflection;
@@ -33,6 +34,8 @@ namespace IDUNv2.SensorLib
         Normal,
         Faulted
     }
+
+    public delegate void SensorFaultHandler(Sensor sensor, DateTime timestamp);
 
     /// <summary>
     /// Represents a Sensor on the SenseHat board (not necessarily 1:1 to a physical device)
@@ -163,6 +166,7 @@ namespace IDUNv2.SensorLib
 
         public SensorId Id { get; private set; }
         public Func<float> GetSimValue { get; set; }
+        public Action<Sensor, DateTime> Faulted { get; set; }
 
         #endregion
 
@@ -196,6 +200,7 @@ namespace IDUNv2.SensorLib
                 if ((Value > DangerHi || Value < DangerLo) && (FaultState != SensorFaultState.Faulted))
                 {
                     FaultState = SensorFaultState.Faulted;
+                    Faulted?.Invoke(this, timestamp);
                 }
             }
         }
