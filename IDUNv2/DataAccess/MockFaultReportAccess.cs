@@ -18,31 +18,31 @@ namespace IDUNv2.DataAccess
 
         public Task FillCaches()
         {
-            discCodes = new List<WorkOrderDiscCode>()
+            discCodes = discCodes ?? new List<WorkOrderDiscCode>()
             {
                 new WorkOrderDiscCode { ErrDiscoverCode = "1", Description = "Disc 1" },
                 new WorkOrderDiscCode { ErrDiscoverCode = "2", Description = "Disc 2" },
                 new WorkOrderDiscCode { ErrDiscoverCode = "3", Description = "Disc 3" },
             };
-            symptCodes = new List<WorkOrderSymptCode>()
+            symptCodes = symptCodes ?? new List<WorkOrderSymptCode>()
             {
                 new WorkOrderSymptCode { ErrSymptom = "1", Description = "Sympt 1" },
                 new WorkOrderSymptCode { ErrSymptom = "2", Description = "Sympt 2" },
                 new WorkOrderSymptCode { ErrSymptom = "3", Description = "Sympt 3" },
             };
-            prioCodes = new List<MaintenancePriority>()
+            prioCodes = prioCodes ?? new List<MaintenancePriority>()
             {
                 new MaintenancePriority { PriorityId = "1", Description = "Prio 1" },
                 new MaintenancePriority { PriorityId = "2", Description = "Prio 2" },
                 new MaintenancePriority { PriorityId = "3", Description = "Prio 3" },
             };
-            templates = new List<FaultReportTemplate>()
+            templates = templates ?? new List<FaultReportTemplate>()
             {
                 new FaultReportTemplate { Id = 1, Name = "Test 1", DiscCode = "1", SymptCode = "1", PrioCode = "1" },
                 new FaultReportTemplate { Id = 2, Name = "Test 2", DiscCode = "2", SymptCode = "2", PrioCode = "2" },
                 new FaultReportTemplate { Id = 3, Name = "Test 3", DiscCode = "3", SymptCode = "3", PrioCode = "3" },
             };
-            faultReports = new List<FaultReport>()
+            faultReports = faultReports ?? new List<FaultReport>()
             {
                 new FaultReport
                 {

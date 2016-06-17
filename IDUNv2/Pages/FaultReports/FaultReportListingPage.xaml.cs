@@ -49,9 +49,12 @@ namespace IDUNv2.Pages
         private async void ReportListPage_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = null;
+
             ShellPage.SetSpinner(LoadingState.Loading);
-            var reports = await faultReportAccess.GetFaultReports();
+            await faultReportAccess.FillCaches();
             ShellPage.SetSpinner(LoadingState.Finished);
+
+            var reports = await faultReportAccess.GetFaultReports();
             Reports = reports.OrderByDescending(r => r.RegDate).ToList();
             this.DataContext = this;
         }
