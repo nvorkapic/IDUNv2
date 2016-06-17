@@ -11,7 +11,7 @@
     <Page.Resources>
         <conv:RedOrGreenConverter x:Key="RedorGreen"></conv:RedOrGreenConverter>
     </Page.Resources>
-    <Grid Background="{StaticResource StandardBackground}">
+    <Grid Background="{ThemeResource StandardBackground}">
         <StackPanel HorizontalAlignment="Left"
                     Orientation="Horizontal"
                     Margin="10">

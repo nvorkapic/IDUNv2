@@ -337,5 +337,10 @@ namespace IDUNv2.Pages
         }
 
         #endregion
+
+        public static void Reload()
+        {
+            Current.Frame.Navigate(typeof(ShellPage));
+        }
     }
 }

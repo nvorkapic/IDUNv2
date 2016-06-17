@@ -27,7 +27,7 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    <Grid Background="{StaticResource StandardBackground}">
+    <Grid Background="{ThemeResource StandardBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" />

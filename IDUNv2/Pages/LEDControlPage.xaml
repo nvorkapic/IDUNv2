@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:OnScreenKeyboard="using:OnScreenKeyboard"
     mc:Ignorable="d">
-    <Grid Background="{StaticResource StandardBackground}">
+    <Grid Background="{ThemeResource StandardBackground}">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
                 <Image x:Name="ledImage" HorizontalAlignment="Left" Height="318" VerticalAlignment="Center" Width="318" Margin="5"/>
@@ -27,15 +27,15 @@
                 <StackPanel  Grid.Row="1">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="Red" Margin="10" Foreground="Red"></TextBlock>
-                        <Slider x:Name="sliderRed" Margin="15,0,0,0"  HorizontalAlignment="Center" Height="48"  VerticalAlignment="Center" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderRed_ValueChanged" Value="31" Foreground="{StaticResource StandardForeground}"/>
+                        <Slider x:Name="sliderRed" Margin="15,0,0,0"  HorizontalAlignment="Center" Height="48"  VerticalAlignment="Center" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderRed_ValueChanged" Value="31" Foreground="{ThemeResource StandardForeground}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="Green" Margin="10" Foreground="Green"></TextBlock>
-                        <Slider x:Name="sliderGreen" Margin="0,0,0,0" HorizontalAlignment="Center" Height="48"  VerticalAlignment="Top" Width="165" Maximum="63" LargeChange="4" ValueChanged="sliderGreen_ValueChanged" Value="63" Foreground="{StaticResource StandardForeground}"/>
+                        <Slider x:Name="sliderGreen" Margin="0,0,0,0" HorizontalAlignment="Center" Height="48"  VerticalAlignment="Top" Width="165" Maximum="63" LargeChange="4" ValueChanged="sliderGreen_ValueChanged" Value="63" Foreground="{ThemeResource StandardForeground}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center"  Text="Blue" Margin="10" Foreground="Blue"></TextBlock>
-                        <Slider x:Name="sliderBlue" HorizontalAlignment="Center" Margin="10,0,0,0" Height="48" VerticalAlignment="Top" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderBlue_ValueChanged" Value="31" Foreground="{StaticResource StandardForeground}"/>
+                        <Slider x:Name="sliderBlue" HorizontalAlignment="Center" Margin="10,0,0,0" Height="48" VerticalAlignment="Top" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderBlue_ValueChanged" Value="31" Foreground="{ThemeResource StandardForeground}"/>
                     </StackPanel>
                 </StackPanel>
                 <ToggleButton x:Name="fillToggle" Grid.Row="2" Grid.Column="0" IsChecked="True" Unchecked="unCheckfill" Checked="fillToggle_Checked" Loaded="onLoad" Content="Fill" Width="150" HorizontalAlignment="Center"  />
