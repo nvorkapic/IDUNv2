@@ -66,25 +66,9 @@ namespace IDUNv2.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            CompositionTarget.Rendering -= CompositionTarget_Rendering;
         }
 
         #region Event Handlers
-
-        private void CompositionTarget_Rendering(object sender, object e)
-        {
-            if (viewModel.TemperatureSensor.FaultState == SensorFaultState.Faulted)
-                fire0.Draw();
-            if (viewModel.HumiditySensor.FaultState == SensorFaultState.Faulted)
-                fire1.Draw();
-            if (viewModel.PressureSensor.FaultState == SensorFaultState.Faulted)
-                fire2.Draw();
-        }
 
         private void ClearBias_Click(object sender, RoutedEventArgs e)
         {

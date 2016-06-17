@@ -10,13 +10,16 @@
     d:DesignHeight="300"
     d:DesignWidth="200">
     <UserControl.Resources>
-        <conv:SensorDeviceStateToColorConverter x:Key="DeviceColor" />
+        <conv:SensorDeviceStateToColorConverter x:Key="DeviceColor"/>
+        <conv:SensorToGaugeIndicatorColor x:Key="IndicatorColor"/>
+        <conv:SensorFaultStateToColor x:Key="FaultColor"/>
+        <conv:SensorDeviceStateToVisibility x:Key="FaultStateVisible"/>
     </UserControl.Resources>
     <StackPanel>
         <Button x:Name="gaugeButton"
                 Command="{Binding Command}"
                 VerticalAlignment="Top"
-                Background="Transparent">
+                Background="{Binding FaultState, Converter={StaticResource IndicatorColor}}">
             <StackPanel>
                 <TextBlock Text="{Binding Id}" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <local:Gauge
@@ -38,11 +41,17 @@
             </StackPanel>
         </Button>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Column="0">
-            <TextBlock Text="{Binding DeviceState}" HorizontalAlignment="Center" Margin="0,10,0,0" ></TextBlock>
+            <TextBlock Text="{Binding DeviceState}" HorizontalAlignment="Center" Margin="0,10,0,0"/>
             <Grid>
-                <Ellipse Height="45" Width="45" Fill="#FF515151"></Ellipse>
-                <Ellipse Height="35" Width="35" Fill="{Binding DeviceState, Converter={StaticResource DeviceColor}}"></Ellipse>
+                <Ellipse Height="45" Width="45" Fill="#FF515151"/>
+                <Ellipse Height="35" Width="35" Fill="{Binding DeviceState, Converter={StaticResource DeviceColor}}"/>
+                <Ellipse Height="35" Width="35" Fill="{Binding FaultState, Converter={StaticResource IndicatorColor}}"/>
             </Grid>
+            <TextBlock Text="{Binding FaultState}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,0"
+                       Foreground="{Binding FaultState, Converter={StaticResource FaultColor}}"
+                       Visibility="{Binding DeviceState, Converter={StaticResource FaultStateVisible}}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>
