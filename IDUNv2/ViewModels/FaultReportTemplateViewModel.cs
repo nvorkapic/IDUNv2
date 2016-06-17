@@ -36,7 +36,12 @@ namespace IDUNv2.ViewModels
         public FaultReportTemplate Model
         {
             get { return model; }
-            set { model = value; Notify(); }
+            set { model = value; Notify(); Notify("IdString"); }
+        }
+
+        public string IdString
+        {
+            get { return $"{model.Id}:"; }
         }
 
         public string Name
