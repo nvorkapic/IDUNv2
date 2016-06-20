@@ -65,10 +65,10 @@ namespace IDUNv2.ViewModels
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
             new NavMenuItem { Label = "Sensors", Symbol = Symbol.View, PageType = typeof(Pages.SensorOverviewPage) },
-            new NavMenuItem { Label = "Fault Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
+            new NavMenuItem { Label = "Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
             new NavMenuItem { Label = "Templates", Symbol = Symbol.Document, PageType = typeof(Pages.FaultReportTemplateFormPage) },
-            new NavMenuItem { Label = "Additional Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.LEDControlPage) },
-            new NavMenuItem { Label = "Device Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) },
+            new NavMenuItem { Label = "Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.LEDControlPage) },
+            new NavMenuItem { Label = "Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) },
         };
 
