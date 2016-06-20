@@ -1,29 +1,19 @@
 ﻿using System;
-using IDUNv2.Common;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
-using IDUNv2.ViewModels;
 using Newtonsoft.Json;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using IDUNv2.Models;
 using IDUNv2.DataAccess;
 
@@ -481,7 +471,6 @@ namespace IDUNv2.Pages
 
         private void unCheckfill(object sender, RoutedEventArgs e)
         {
-
             fillToggle.Background = new SolidColorBrush(new Windows.UI.Color { R = 104, G = 33, B = 122, A = 255 });
             fillToggle.Content = "Remove Fill";
         }
@@ -550,7 +539,12 @@ namespace IDUNv2.Pages
             {
                 byte[] TempBuffer = new byte[ledMatrix.buffer.Length];
                 Array.Copy(ledMatrix.buffer, TempBuffer, ledMatrix.buffer.Length);
-                var LED = new LEDImage { Name = LEDImageNameTB.Text, Description = LEDImageDescriptionTB.Text, Buffer = TempBuffer };
+                var LED = new LEDImage
+                {
+                    Name = LEDImageNameTB.Text,
+                    Description = LEDImageDescriptionTB.Text,
+                    Buffer = TempBuffer
+                };
                 string json = JsonConvert.SerializeObject(LED);
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
                 StorageFolder LEDFolder = await localFolder.CreateFolderAsync("LEDImages", CreationCollisionOption.OpenIfExists);

@@ -1,4 +1,5 @@
 ﻿using IDUNv2.Common;
+using IDUNv2.DataAccess;
 using Newtonsoft.Json;
 using System;
 using System.Reflection;
@@ -33,6 +34,8 @@ namespace IDUNv2.SensorLib
         Normal,
         Faulted
     }
+
+    public delegate void SensorFaultHandler(Sensor sensor, DateTime timestamp);
 
     /// <summary>
     /// Represents a Sensor on the SenseHat board (not necessarily 1:1 to a physical device)
@@ -163,6 +166,7 @@ namespace IDUNv2.SensorLib
 
         public SensorId Id { get; private set; }
         public Func<float> GetSimValue { get; set; }
+        public Action<Sensor, DateTime> Faulted { get; set; }
 
         #endregion
 
@@ -181,6 +185,12 @@ namespace IDUNv2.SensorLib
                 SaveToLocalSettings();
         }
 
+        /// <summary>
+        /// Update current sensor Value with the reading.
+        /// </summary>
+        /// <param name="timestamp">Time when reading was sampled</param>
+        /// <param name="val">Value that was read</param>
+        /// <param name="bias">Optional bias to add to value</param>
         public void UpdateValue(DateTime timestamp, float? val, float? bias)
         {
             if (DeviceState == SensorDeviceState.Simulated && GetSimValue != null)
@@ -196,10 +206,15 @@ namespace IDUNv2.SensorLib
                 if ((Value > DangerHi || Value < DangerLo) && (FaultState != SensorFaultState.Faulted))
                 {
                     FaultState = SensorFaultState.Faulted;
+                    Faulted?.Invoke(this, timestamp);
                 }
             }
         }
 
+        /// <summary>
+        /// Determines whether this sensor has been saved to LocalSettings or not.
+        /// </summary>
+        /// <returns>True or false of settings exists</returns>
         private bool HasSettingsValues()
         {
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;

@@ -3,8 +3,6 @@ using Addovation.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin;
 
 namespace IDUNv2.DataAccess

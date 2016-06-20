@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IDUNv2.Common
@@ -14,6 +11,9 @@ namespace IDUNv2.Common
     public class TaskBinding<T> : INotifyPropertyChanged
     {
         public Task<T> Task { get; private set; }
+        /// <summary>
+        /// Either returns the Result of Task, or a default value if Task is not completed.
+        /// </summary>
         public T Result { get { return Task.Status == TaskStatus.RanToCompletion ? Task.Result : default(T); } }
         public TaskStatus Status { get { return Task.Status; } }
         public bool IsCompleted { get { return Task.IsCompleted; } }

@@ -97,12 +97,8 @@ namespace IDUNv2
                 Window.Current.Activate();
             }
 
-
-
-
-
-            //await AppData.InitAsync().ConfigureAwait(false);
             DAL.Init(Window.Current.Dispatcher);
+            await DAL.ConnectToCloud();
             await DAL.FillCaches().ConfigureAwait(false);
         }
 

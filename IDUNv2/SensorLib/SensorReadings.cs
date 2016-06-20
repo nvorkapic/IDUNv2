@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.SensorLib
 {
+    /// <summary>
+    /// All readings from SensorWatcher
+    /// </summary>
     public struct SensorReadings
     {
         public float? Temperature;

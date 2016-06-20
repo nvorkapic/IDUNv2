@@ -10,6 +10,10 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public interface IFaultReportAccess
     {
+        /// <summary>
+        /// Must be called before using any of the non-Task returning methods
+        /// </summary>
+        /// <returns></returns>
         Task FillCaches();
 
         Task<List<FaultReportTemplate>> GetFaultReportTemplates();

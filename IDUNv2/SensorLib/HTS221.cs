@@ -11,6 +11,8 @@ namespace IDUNv2.SensorLib
     {
         public const byte C_Addr = 0x5F;
 
+        #region Register Mapping
+
         public const byte C_AvConf = 0x10;
         public const byte C_Ctrl1 = 0x20;
         public const byte C_Status = 0x27;
@@ -28,12 +30,18 @@ namespace IDUNv2.SensorLib
         public const byte C_T0Out = 0x3C;
         public const byte C_T1Out = 0x3E;
 
+        #endregion
+
         private Func<Int16, float> convertTemperature;
         private Func<Int16, float> convertHumidity;
 
         public float? Temperature { get; private set; }
         public float? Humidity { get; private set; }
 
+        /// <summary>
+        /// Get the function for converting raw reading to celcius degrees
+        /// </summary>
+        /// <returns>A function taking 16 bit integer of raw data and returns a float of celcius degrees</returns>
         private Func<Int16, float> GetTemperatureConverter()
         {
             byte rawMsb = Read8(C_T1T0 + 0x80);
@@ -56,6 +64,10 @@ namespace IDUNv2.SensorLib
             return t => t * m + b;
         }
 
+        /// <summary>
+        /// Get the function for converting raw reading to realtive humidity in percent.
+        /// </summary>
+        /// <returns>A function taking a 16 bit raw integer of raw data and returns a float of % relative humidity.</returns>
         private Func<Int16, float> GetHumidityConverter()
         {
             byte h0h2 = Read8(C_H0H2 + 0x80);

@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IDUNv2.SensorLib;
+﻿using IDUNv2.SensorLib;
 
 namespace IDUNv2.DataAccess
 {
     public class SensorAccess : ISensorAccess
     {
         private SensorWatcher watcher;
+
+        public SensorFaultHandler Faulted
+        {
+            get { return watcher.Faulted; }
+            set { watcher.Faulted = value; }
+        }
 
         public SensorAccess(SensorWatcher watcher)
         {

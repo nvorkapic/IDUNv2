@@ -11,6 +11,8 @@ namespace IDUNv2.SensorLib
     {
         private const byte C_Addr = 0x5C;
 
+        #region Regiser Mapping
+
         private const byte C_ResConf = 0x10;
         private const byte C_Ctrl1 = 0x20;
         private const byte C_Ctrl2 = 0x21;
@@ -18,6 +20,11 @@ namespace IDUNv2.SensorLib
         private const byte C_PressOutXL = 0x28;
         private const byte C_FifoCtrl = 0x2E;
 
+        #endregion
+
+        /// <summary>
+        /// Conversion factor from raw data to hecto Pascal
+        /// </summary>
         private const float pressureFactor = 1.0f / 4096.0f;
 
         public float? Pressure { get; set; }
