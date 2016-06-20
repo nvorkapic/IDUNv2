@@ -147,7 +147,26 @@ namespace IDUNv2.DataAccess
 
         public Task<FaultReport> SetFaultReport(FaultReport report)
         {
-            throw new NotImplementedException();
+            int n = faultReports.Count + 1;
+            report.WoNo = n;
+            report.RegDate = DateTime.Now;
+            return Task.FromResult(report);
+
+            //var report = new FaultReport
+            //{
+            //    Contract = "Contract 3",
+            //    ErrDescr = "ErrDescr 3",
+            //    ErrDescrLo = "ErrDescrLo 3",
+            //    ErrDiscoverCode = "3",
+            //    ErrSymptom = "3",
+            //    PriorityId = "3",
+            //    MchCode = "MchCode 3",
+            //    MchCodeContract = "MchCodeContract 3",
+            //    MchName = "MchName 3",
+            //    OrgCode = "OrgCode 3",
+            //    WoNo = 3,
+            //    RegDate = DateTime.Now
+            //},
         }
 
         public Task<FaultReportTemplate> SetFaultReportTemplate(FaultReportTemplate template)

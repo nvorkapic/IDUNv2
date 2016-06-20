@@ -52,7 +52,37 @@ namespace IDUNv2.DataAccess
             SensorTriggerAccess = new SensorTriggerAccess(db);
 
             CreateCloudClient();
+
+            InstallSensorFaultHandler();
         }
+
+        #region Fault Handlers
+
+        private static void InstallSensorFaultHandler()
+        {
+            SensorAccess.Faulted += async (sensor, fault, timestamp) =>
+            {
+                var dialog = new ContentDialog { Title = "Faulted" };
+                dialog.Loaded += async (sender, e) =>
+                {
+                    await Task.Delay(4000);
+                    dialog.Hide();
+                };
+                var panel = new StackPanel();
+                panel.Children.Add(new TextBlock
+                {
+                    Text = $"Sensor '{sensor.Id}' faulted from: {fault.Type}"
+                });
+                dialog.Content = panel;
+                dialog.PrimaryButtonText = "View Report";
+                dialog.IsPrimaryButtonEnabled = true;
+                dialog.SecondaryButtonText = "Close";
+                dialog.IsSecondaryButtonEnabled = true;
+                await dialog.ShowAsync();
+            };
+        }
+
+        #endregion
 
         #region Cloud
 
