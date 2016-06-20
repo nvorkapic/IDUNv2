@@ -6,35 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
-    <Page.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="Red"></Setter>
-        </Style>
-    </Page.Resources>
-    
-    <Grid Background="{ThemeResource StandardBackground}">
+
+
+        <Grid Background="{ThemeResource StandardBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Right" Grid.RowSpan="2" Width="140">
-            <ListBox SelectionChanged="ListBox_SelectionChanged" Width="140" Height="120" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource StandardBackground}">
-                <ListBoxItem Content="Addovation Theme" Tag="ms-appx:///Styles/BrushesAddovation.xaml" ></ListBoxItem>
-                <ListBoxItem Content="Windows Theme" Tag="ms-appx:///Styles/BrushesWindows.xaml"></ListBoxItem>
-            </ListBox>
-            <Button Click="Button_Click" Width="140" Foreground="{ThemeResource StandardForeground}">Change Theme</Button>
-        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" Grid.RowSpan="2" Width="140"/>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="0" Grid.RowSpan="2">
-            <Button Margin="5" Click="Documentation_Click" Width="140" Background="{ThemeResource NormalButtonBrush}" Foreground="{ThemeResource StandardForeground}">Documentation</Button>
-            <Button Margin="5" Click="Tutorial_Click" Width="140" Background="{ThemeResource NormalButtonBrush}" Foreground="{ThemeResource StandardForeground}">Tutorial</Button>
+            <Button Margin="5" Click="Documentation_Click" Width="140">Documentation</Button>
+            <Button Margin="5" Click="Tutorial_Click" Width="140">Tutorial</Button>
         </StackPanel>
         <Grid Grid.Row="1" Margin="5" x:Name="Credentials" Visibility="Visible">
             <Image Source="/Assets/1200.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15"></Image>
             <StackPanel VerticalAlignment="Bottom" Margin="15">
-                <TextBlock HorizontalAlignment="Right" Foreground="{ThemeResource StandardForeground}">Copyright © 2016</TextBlock>
-                <TextBlock HorizontalAlignment="Right" Foreground="{ThemeResource StandardForeground}">Mårten Hansson</TextBlock>
-                <TextBlock HorizontalAlignment="Right" Foreground="{ThemeResource StandardForeground}">Nikola Vorkapic</TextBlock>
+                <TextBlock HorizontalAlignment="Right">Copyright © 2016</TextBlock>
+                <TextBlock HorizontalAlignment="Right">Mårten Hansson</TextBlock>
+                <TextBlock HorizontalAlignment="Right">Nikola Vorkapic</TextBlock>
             </StackPanel>
         </Grid>
     </Grid>

@@ -70,7 +70,7 @@ namespace IDUNv2.ViewModels
         {
             get
             {
-                if (ConnectionStatus)
+                if (!ConnectionStatus)
                     return "Connected";
                 else
                     return "Disconneted";

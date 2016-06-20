@@ -25,29 +25,29 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="WO No:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" FontWeight="Bold" Text="WO Site:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" FontWeight="Bold" Text="Entry Date:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="3" Grid.Column="0" FontWeight="Bold" Text="Directive:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" FontWeight="Bold" Text="Maint Org:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="5" Grid.Column="0" FontWeight="Bold" Text="Object ID:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" FontWeight="Bold" Text="Site:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="7" Grid.Column="0" FontWeight="Bold" Text="Description:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="8" Grid.Column="0" FontWeight="Bold" Text="Fault Desc:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="9" Grid.Column="0" FontWeight="Bold" Text="Discovery:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="10" Grid.Column="0" FontWeight="Bold" Text="Symptom:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="11" Grid.Column="0" FontWeight="Bold" Text="Priority:" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WoNo}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Contract}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding RegDate}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ErrDescr}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding OrgCode}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding MchCode}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding MchCodeContract}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding MchName}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding ErrDescrLo}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding ErrDiscoverCode}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding ErrSymptom}" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding PriorityId}" Foreground="{ThemeResource StandardForeground}"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="WO No:"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" FontWeight="Bold" Text="WO Site:" />
+        <TextBlock Grid.Row="2" Grid.Column="0" FontWeight="Bold" Text="Entry Date:" />
+        <TextBlock Grid.Row="3" Grid.Column="0" FontWeight="Bold" Text="Directive:" />
+        <TextBlock Grid.Row="4" Grid.Column="0" FontWeight="Bold" Text="Maint Org:" />
+        <TextBlock Grid.Row="5" Grid.Column="0" FontWeight="Bold" Text="Object ID:" />
+        <TextBlock Grid.Row="6" Grid.Column="0" FontWeight="Bold" Text="Site:" />
+        <TextBlock Grid.Row="7" Grid.Column="0" FontWeight="Bold" Text="Description:" />
+        <TextBlock Grid.Row="8" Grid.Column="0" FontWeight="Bold" Text="Fault Desc:" />
+        <TextBlock Grid.Row="9" Grid.Column="0" FontWeight="Bold" Text="Discovery:" />
+        <TextBlock Grid.Row="10" Grid.Column="0" FontWeight="Bold" Text="Symptom:" />
+        <TextBlock Grid.Row="11" Grid.Column="0" FontWeight="Bold" Text="Priority:" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WoNo}" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Contract}" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding RegDate}" />
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ErrDescr}" />
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding OrgCode}"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding MchCode}" />
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding MchCodeContract}" />
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding MchName}" />
+        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding ErrDescrLo}"/>
+        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding ErrDiscoverCode}" />
+        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding ErrSymptom}" />
+        <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding PriorityId}" />
     </Grid>
 </Page>

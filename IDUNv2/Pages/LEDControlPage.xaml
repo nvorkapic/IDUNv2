@@ -23,19 +23,19 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="RGB Color Slider Selector" Padding="5,0,0,20" Foreground="{ThemeResource StandardForeground}"></TextBlock>
+                <TextBlock Text="RGB Color Slider Selector" Padding="5,0,0,20"></TextBlock>
                 <StackPanel  Grid.Row="1">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="Red" Margin="10" Foreground="Red"></TextBlock>
-                        <Slider x:Name="sliderRed" Margin="15,0,0,0"  HorizontalAlignment="Center" Height="48"  VerticalAlignment="Center" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderRed_ValueChanged" Value="31" Foreground="{ThemeResource StandardForeground}"/>
+                        <Slider x:Name="sliderRed" Margin="15,0,0,0"  HorizontalAlignment="Center" Height="48"  VerticalAlignment="Center" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderRed_ValueChanged" Value="31"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="Green" Margin="10" Foreground="Green"></TextBlock>
-                        <Slider x:Name="sliderGreen" Margin="0,0,0,0" HorizontalAlignment="Center" Height="48"  VerticalAlignment="Top" Width="165" Maximum="63" LargeChange="4" ValueChanged="sliderGreen_ValueChanged" Value="63" Foreground="{ThemeResource StandardForeground}"/>
+                        <Slider x:Name="sliderGreen" Margin="0,0,0,0" HorizontalAlignment="Center" Height="48"  VerticalAlignment="Top" Width="165" Maximum="63" LargeChange="4" ValueChanged="sliderGreen_ValueChanged" Value="63"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center"  Text="Blue" Margin="10" Foreground="Blue"></TextBlock>
-                        <Slider x:Name="sliderBlue" HorizontalAlignment="Center" Margin="10,0,0,0" Height="48" VerticalAlignment="Top" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderBlue_ValueChanged" Value="31" Foreground="{ThemeResource StandardForeground}"/>
+                        <Slider x:Name="sliderBlue" HorizontalAlignment="Center" Margin="10,0,0,0" Height="48" VerticalAlignment="Top" Width="165" Maximum="31" LargeChange="4" ValueChanged="sliderBlue_ValueChanged" Value="31"/>
                     </StackPanel>
                 </StackPanel>
                 <ToggleButton x:Name="fillToggle" Grid.Row="2" Grid.Column="0" IsChecked="True" Unchecked="unCheckfill" Checked="fillToggle_Checked" Loaded="onLoad" Content="Fill" Width="150" HorizontalAlignment="Center"  />
@@ -54,20 +54,20 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
-                        <TextBlock Text="Enter LED Image Name:" Foreground="{ThemeResource StandardForeground}"></TextBlock>
-                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB" GotFocus="LEDImageNameTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"></TextBox>
-                        <TextBlock Text="Image Description:" Foreground="{ThemeResource StandardForeground}"></TextBlock>
-                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB" GotFocus="LEDImageDescriptionTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus" Foreground="{ThemeResource StandardForeground}" BorderBrush="{ThemeResource StandardBorder}"></TextBox>
+                        <TextBlock Text="Enter LED Image Name:"></TextBlock>
+                        <TextBox PlaceholderText="Name" x:Name="LEDImageNameTB" GotFocus="LEDImageNameTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus"></TextBox>
+                        <TextBlock Text="Image Description:"></TextBlock>
+                        <TextBox PlaceholderText="Description" x:Name="LEDImageDescriptionTB" GotFocus="LEDImageDescriptionTB_GotFocus" LostFocus="LEDImageNameTB_LostFocus"></TextBox>
                     </StackPanel>
                     <TextBlock FontWeight="Bold" Foreground="Red" Grid.Row="1" Text="File with that name already exists!" Visibility="Collapsed" x:Name="LEDSaveSameNameWarning"></TextBlock>
                     <StackPanel Orientation="Horizontal" Grid.Row="2">
-                        <Button Margin="5" Click="Save_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Save</Button>
-                        <Button Margin="5" Click="Cancel_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Cancel</Button>
+                        <Button Margin="5" Click="Save_Click">Save</Button>
+                        <Button Margin="5" Click="Cancel_Click">Cancel</Button>
                     </StackPanel>
                 </Grid>
             </ToolTip.Content>
         </ToolTip>
-        <ToolTip x:Name="LoadLEDToolTip" Visibility="Collapsed" Background="{ThemeResource StandardBackground}">
+        <ToolTip x:Name="LoadLEDToolTip" Visibility="Collapsed">
             <ToolTip.Content>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -75,12 +75,12 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Foreground="{ThemeResource StandardForeground}">Saved LED Images</TextBlock>
-                    <ListView Grid.Row="1" x:Name="LoadLedList" SelectionMode="Single" SelectionChanged="LoadLedList_SelectionChanged" VerticalAlignment="Top" Height="300" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="{ThemeResource StandardForeground}"/>
+                    <TextBlock Grid.Row="0">Saved LED Images</TextBlock>
+                    <ListView Grid.Row="1" x:Name="LoadLedList" SelectionMode="Single" SelectionChanged="LoadLedList_SelectionChanged" VerticalAlignment="Top" Height="300" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="2">
-                        <Button Margin="5" Click="DeleteLoad_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Delete Selected</Button>
-                        <Button Margin="5" Click="Load_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Load</Button>
-                        <Button Margin="5" Click="LoadCancel_Click" Foreground="{ThemeResource StandardForeground}" Background="{ThemeResource NormalButtonBrush}">Cancel</Button>
+                        <Button Margin="5" Click="DeleteLoad_Click">Delete Selected</Button>
+                        <Button Margin="5" Click="Load_Click">Load</Button>
+                        <Button Margin="5" Click="LoadCancel_Click">Cancel</Button>
                     </StackPanel>
                 </Grid>
             </ToolTip.Content>

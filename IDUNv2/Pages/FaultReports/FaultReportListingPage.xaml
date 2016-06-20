@@ -16,11 +16,11 @@
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding WoNo}" Foreground="{ThemeResource StandardForeground}"/>
-                <TextBlock Grid.Column="1" Text="{Binding RegDate}" Foreground="{ThemeResource StandardForeground}"/>
-                <TextBlock Grid.Column="2" Text="{Binding Contract}" Foreground="{ThemeResource StandardForeground}"/>
-                <TextBlock Grid.Column="3" Text="{Binding MchCode}" Foreground="{ThemeResource StandardForeground}"/>
-                <TextBlock Grid.Column="4" Text="{Binding MchName}" Foreground="{ThemeResource StandardForeground}"/>
+                <TextBlock Grid.Column="0" Text="{Binding WoNo}"/>
+                <TextBlock Grid.Column="1" Text="{Binding RegDate}" />
+                <TextBlock Grid.Column="2" Text="{Binding Contract}" />
+                <TextBlock Grid.Column="3" Text="{Binding MchCode}" />
+                <TextBlock Grid.Column="4" Text="{Binding MchName}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -36,19 +36,17 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Margin="20,10,0,0" Grid.Column="0" Text="WO No" FontWeight="Bold" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Margin="20,10,0,0" Grid.Column="1" Text="Entry Date" FontWeight="Bold" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Margin="20,10,0,0" Grid.Column="2" Text="WO Site" FontWeight="Bold" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Margin="20,10,0,0" Grid.Column="3" Text="Object ID" FontWeight="Bold" Foreground="{ThemeResource StandardForeground}"/>
-        <TextBlock Margin="20,10,0,0" Grid.Column="4" Text="Description" FontWeight="Bold" Foreground="{ThemeResource StandardForeground}"/>
+        <TextBlock Margin="20,10,0,0" Grid.Column="0" Text="WO No" FontWeight="Bold"/>
+        <TextBlock Margin="20,10,0,0" Grid.Column="1" Text="Entry Date" FontWeight="Bold" />
+        <TextBlock Margin="20,10,0,0" Grid.Column="2" Text="WO Site" FontWeight="Bold" />
+        <TextBlock Margin="20,10,0,0" Grid.Column="3" Text="Object ID" FontWeight="Bold" />
+        <TextBlock Margin="20,10,0,0" Grid.Column="4" Text="Description" FontWeight="Bold" />
         <ListBox Margin="10"
                  Grid.Row="1"
                  Grid.ColumnSpan="5"
                  ItemsSource="{Binding Reports}"
                  ItemTemplate="{StaticResource FaultReportData}"
                  Tapped="ListBox_Tapped"
-                 Background="{ThemeResource StandardBackground}"
-                 BorderBrush="{ThemeResource StandardBorder}"
                  BorderThickness="2"/>
     </Grid>
 </Page>

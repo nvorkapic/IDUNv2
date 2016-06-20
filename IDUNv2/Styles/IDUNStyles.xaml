@@ -5,10 +5,11 @@
     xmlns:local="using:IDUNv2.Styles">
 
     <!--Using RequestedTheme="Dark"-->
-    
-    <!--MainBrushes-->
-   
 
+    <!--MainBrushes-->
+    <Style TargetType="HyperlinkButton">
+        <Setter Property="Foreground" Value="white"/>
+    </Style>
     <!--ShellPage-->
     <con:NotificationTypeConverter x:Key="NotifyIcon"/>
     <DataTemplate x:Key="NavMenuData">
