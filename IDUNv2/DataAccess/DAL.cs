@@ -48,12 +48,10 @@ namespace IDUNv2.DataAccess
             sensorWatcher = new SensorWatcher(dispatcher, 100);
             sensorWatcher.LoadSettings();
 
-            CreateCloudClient();
-
             SensorAccess = new SensorAccess(sensorWatcher);
             SensorTriggerAccess = new SensorTriggerAccess(db);
-            FaultReportAccess = new FaultReportAccess(cloud, db);
-            //FaultReportAccess = new MockFaultReportAccess();
+
+            CreateCloudClient();
         }
 
         #region Cloud
@@ -99,6 +97,9 @@ namespace IDUNv2.DataAccess
 
                 InsightsHelper.Init();
                 //InsightsHelper.SetUser(connectionInfo);
+
+                FaultReportAccess = new FaultReportAccess(cloud, db);
+                //FaultReportAccess = new MockFaultReportAccess();
             }
             catch (Exception ex)
             {

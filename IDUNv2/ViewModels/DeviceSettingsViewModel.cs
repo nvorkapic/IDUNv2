@@ -59,7 +59,7 @@ namespace IDUNv2.ViewModels
         public bool ConnectionStatus
         {
             get { return _connectionStatus; }
-            set { _connectionStatus = value; Notify(); }
+            set { _connectionStatus = value; Notify(); Notify("ConnectionMessage"); }
         }
 
         #endregion
