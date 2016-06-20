@@ -37,17 +37,17 @@
         <TextBlock Grid.Row="9" Grid.Column="0" FontWeight="Bold" Text="Discovery:" />
         <TextBlock Grid.Row="10" Grid.Column="0" FontWeight="Bold" Text="Symptom:" />
         <TextBlock Grid.Row="11" Grid.Column="0" FontWeight="Bold" Text="Priority:" />
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WoNo}" />
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Contract}" />
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding RegDate}" />
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ErrDescr}" />
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding OrgCode}"/>
-        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding MchCode}" />
-        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding MchCodeContract}" />
-        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding MchName}" />
-        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding ErrDescrLo}"/>
-        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding ErrDiscoverCode}" />
-        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding ErrSymptom}" />
-        <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding PriorityId}" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Model.WoNo}" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Model.Contract}" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Model.RegDate}" />
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Model.ErrDescr}" />
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Model.OrgCode}"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Model.MchCode}" />
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Model.MchCodeContract}" />
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Model.MchName}" />
+        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Model.ErrDescrLo}"/>
+        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Discovery}" />
+        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding Symptom}" />
+        <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding Priority}" />
     </Grid>
 </Page>

@@ -199,6 +199,7 @@
     <Compile Include="SensorLib\SensorWatcher.cs" />
     <Compile Include="ViewModels\AppBrushViewModel.cs" />
     <Compile Include="ViewModels\DeviceSettingsViewModel.cs" />
+    <Compile Include="ViewModels\FaultReportDetailsViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateFormViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateViewModel.cs" />
     <Compile Include="ViewModels\SensorDetailsViewModel.cs" />
