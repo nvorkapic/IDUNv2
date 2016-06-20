@@ -1,10 +1,5 @@
 ﻿using IDUNv2.SensorLib;
 using SQLite.Net.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IDUNv2.Models
 {

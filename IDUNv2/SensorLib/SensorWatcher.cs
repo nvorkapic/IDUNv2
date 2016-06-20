@@ -36,6 +36,10 @@ namespace IDUNv2.SensorLib
         public bool HasSensors { get; private set; }
         public float[] BiasValues { get; private set; }
 
+        /// <summary>
+        /// Try and connect to all known hardware devices
+        /// </summary>
+        /// <returns></returns>
         private async Task Init()
         {
             await hts221.Init();
@@ -62,6 +66,9 @@ namespace IDUNv2.SensorLib
             return Sensors[(int)id];
         }
 
+        /// <summary>
+        /// Load all Sensor settings
+        /// </summary>
         public void LoadSettings()
         {
             foreach (var s in Sensors)

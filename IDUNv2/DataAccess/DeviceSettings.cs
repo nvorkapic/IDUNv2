@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Windows.Storage;
 
 namespace IDUNv2.DataAccess
 {
@@ -11,7 +7,7 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public static class DeviceSettings
     {
-        private static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public static string ObjectID
         {

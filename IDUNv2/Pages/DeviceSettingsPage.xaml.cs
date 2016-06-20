@@ -1,24 +1,9 @@
 ﻿using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using IDUNv2.ViewModels;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
@@ -44,13 +29,19 @@ namespace IDUNv2.Pages
             if (status)
             {
                 viewModel.AuthorisationMessage = "Log in Successful!";
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Log In Successful!", "You have been connected to IFS Clouds Service!");
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "Log In Successful!",
+                    "You have been connected to IFS Clouds Service!");
             }
 
             else
             {
                 viewModel.AuthorisationMessage = "Authorization Failed. Please Enter Valid details or check your Internet Connection!";
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Warning, "Authorization Failed!", "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Warning,
+                    "Authorization Failed!",
+                    "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
             }
             timer.Start();
             ShellPage.SetSpinner(LoadingState.Finished);
@@ -67,11 +58,6 @@ namespace IDUNv2.Pages
         }
 
         #endregion
-
-        private void NavigationItems()
-        {
-
-        }
 
         #region Event Handlers
 
@@ -124,7 +110,7 @@ namespace IDUNv2.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             var status = await DAL.ConnectToCloud();
-            viewModel.ConnectionStatus = !status;
+            viewModel.ConnectionStatus = !status; // for RedOrGreenConverter
 
             var cmdBarItems = new CmdBarItem[]
             {

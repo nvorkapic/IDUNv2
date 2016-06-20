@@ -1,30 +1,20 @@
 ﻿using IDUNv2.Models;
 using IDUNv2.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 using IDUNv2.DataAccess;
-using System.Collections.ObjectModel;
 
 namespace IDUNv2.Pages
 {
     public sealed partial class ShellPage : Page
     {
-        // Singleton reference to access controls on this page from other pages
+        /// <summary>
+        /// Singleton reference to access controls on this page from other pages
+        /// </summary>
         public static ShellPage Current;
 
         #region FIelds
@@ -36,7 +26,9 @@ namespace IDUNv2.Pages
 
         #region Properties
 
-        // Expose CmdBar's primary commands so each page can add/remove buttons to it
+        /// <summary>
+        /// Expose CmdBar's primary commands so each page can add/remove buttons to it
+        /// </summary>
         public IObservableVector<ICommandBarElement> CmdBarPrimaryCommands
         {
             get { return CmdBar.PrimaryCommands; }

@@ -185,6 +185,12 @@ namespace IDUNv2.SensorLib
                 SaveToLocalSettings();
         }
 
+        /// <summary>
+        /// Update current sensor Value with the reading.
+        /// </summary>
+        /// <param name="timestamp">Time when reading was sampled</param>
+        /// <param name="val">Value that was read</param>
+        /// <param name="bias">Optional bias to add to value</param>
         public void UpdateValue(DateTime timestamp, float? val, float? bias)
         {
             if (DeviceState == SensorDeviceState.Simulated && GetSimValue != null)
@@ -205,6 +211,10 @@ namespace IDUNv2.SensorLib
             }
         }
 
+        /// <summary>
+        /// Determines whether this sensor has been saved to LocalSettings or not.
+        /// </summary>
+        /// <returns>True or false of settings exists</returns>
         private bool HasSettingsValues()
         {
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;

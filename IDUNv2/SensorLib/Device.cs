@@ -26,6 +26,13 @@ namespace IDUNv2.SensorLib
         public abstract Task Init();
         public abstract void GetReadings(ref SensorReadings readings);
 
+        /// <summary>
+        /// Try and connect to a specific device address
+        /// </summary>
+        /// <param name="addr">Address of device</param>
+        /// <param name="speed">Bus speed</param>
+        /// <param name="sharing">Sharing mode</param>
+        /// <returns></returns>
         protected async Task GetDevice(int addr, I2cBusSpeed speed = I2cBusSpeed.StandardMode, I2cSharingMode sharing = I2cSharingMode.Exclusive)
         {
             var aqs = I2cDevice.GetDeviceSelector();
@@ -38,6 +45,12 @@ namespace IDUNv2.SensorLib
             device = await I2cDevice.FromIdAsync(infos[0].Id, settings);
         }
 
+        /// <summary>
+        /// Read bytes from device
+        /// </summary>
+        /// <param name="addr">Address to read from</param>
+        /// <param name="count">Number of bytes to read</param>
+        /// <returns></returns>
         protected byte[] ReadBytes(byte addr, int count)
         {
             try
@@ -54,24 +67,44 @@ namespace IDUNv2.SensorLib
             }
         }
 
+        /// <summary>
+        /// Read a single byte.
+        /// </summary>
+        /// <param name="addr">Address to read from</param>
+        /// <returns></returns>
         protected byte Read8( byte addr)
         {
             var bytes = ReadBytes(addr, 1);
             return bytes[0];
         }
 
+        /// <summary>
+        /// Read a single 16 bit integer in Little Endian format
+        /// </summary>
+        /// <param name="addr">Address to read from</param>
+        /// <returns></returns>
         protected UInt16 Read16LE(byte addr)
         {
             var bytes = ReadBytes(addr, 2);
             return (UInt16)(((UInt16)bytes[1] << 8) | (UInt16)bytes[0]);
         }
 
+        /// <summary>
+        /// Read a single 24 bit integer in little endian format
+        /// </summary>
+        /// <param name="addr">Address to read from</param>
+        /// <returns></returns>
         protected UInt32 Read24LE(byte addr)
         {
             var bytes = ReadBytes(addr, 3);
             return (UInt32)(((UInt32)bytes[2] << 16) | ((UInt32)bytes[1] << 8) | (UInt32)bytes[0]);
         }
 
+        /// <summary>
+        /// Write a single byte.
+        /// </summary>
+        /// <param name="addr">Address to write at.</param>
+        /// <param name="val">Byte value which is written</param>
         protected void WriteByte(byte addr, byte val)
         {
             try

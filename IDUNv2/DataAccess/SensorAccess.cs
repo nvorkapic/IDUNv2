@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IDUNv2.SensorLib;
+﻿using IDUNv2.SensorLib;
 
 namespace IDUNv2.DataAccess
 {
