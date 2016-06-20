@@ -38,8 +38,8 @@
                 <Setter Property="VerticalAlignment" Value="Stretch" />
                 <!--<Setter Property="Margin" Value="1" />-->
                 <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush" Value="Black" />
-                <Setter Property="Background" Value="Gray" />
+                <Setter Property="BorderBrush" Value="White" />
+                <Setter Property="Background" Value="Black" />
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
@@ -84,7 +84,7 @@
             <Button Name="btnVK_0" IsTabStop="False" Content="{Binding KB.KeyVK_0.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="10" Foreground="White"/>
             <Button Name="btnVK_OemMinus" IsTabStop="False" Content="{Binding KB.KeyVK_OemMinus.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="11" Foreground="White"/>
             <Button Name="btnVK_OemPlus" IsTabStop="False" Content="{Binding KB.KeyVK_OemPlus.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="12" Foreground="White"/>
-            <Button Name="btnBackspace" IsTabStop="False" Content="&#x232B;" Command="{Binding BackspaceCommand}" Grid.Column="13" Foreground="White"/>
+            <Button Name="btnBackspace" IsTabStop="False" FontFamily="Segoe MDL2 Assets" Content="&#xE72B;" Command="{Binding BackspaceCommand}" Grid.Column="13" Foreground="White" FontWeight="Bold"/>
         </Grid>
         <!-- The 2nd row, upper-most letters (KeysRow2) -->
         <Grid Grid.Row="1">
@@ -148,23 +148,23 @@
             <Button Name="btnVK_L" IsTabStop="False" Content="{Binding KB.KeyVK_L.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="9" Foreground="White"/>
             <Button Name="btnVK_Oem1" IsTabStop="False" Content="{Binding KB.KeyVK_Oem1.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="10" Foreground="White"/>
             <Button Name="btnVK_Oem7" IsTabStop="False" Content="{Binding KB.KeyVK_Oem7.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="11" Foreground="White"/>
-            <Button Name="btnEnter" IsTabStop="False" Content="⇒" FontFamily="Arial" FontSize="32" FontWeight="Bold" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding EnterKey.Text}" Grid.Column="12" Foreground="White" />
+            <Button Name="btnEnter" IsTabStop="False" Content="↲" FontFamily="Segoe UI Symbol" FontSize="32" FontWeight="Bold" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding EnterKey.Text}" Grid.Column="12" Foreground="White" />
         </Grid>
         <!-- The 4th row, bottom-most keys (KeysRow4) -->
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6.5*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="6.5*"/>
+                <ColumnDefinition Width="107*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="107"/>
             </Grid.ColumnDefinitions>
             <Button Name="btnShift_Left" IsTabStop="False" Content="&#x21E7;" FontSize="28" Command="{Binding ShiftCommand}" Foreground="White"/>
             <Button Name="btnVK_Z" IsTabStop="False" Content="{Binding KB.KeyVK_Z.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="1" Foreground="White"/>

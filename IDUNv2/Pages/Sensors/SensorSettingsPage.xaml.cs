@@ -51,6 +51,16 @@ namespace IDUNv2.Pages
             DAL.ShowNumPad(null);
         }
 
+        private void TextBoxUnit_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DAL.ShowOSK(sender as TextBox);
+        }
+
+        private void TextBoxUnit_LostFocus(object sender, RoutedEventArgs e)
+        {
+            DAL.ShowOSK(null);
+        }
+
         private void Templates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var cb = (ComboBox)sender;

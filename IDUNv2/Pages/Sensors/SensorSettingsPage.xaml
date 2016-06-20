@@ -49,8 +49,8 @@
                             Header="Unit:"
                             Width="195"
                             Text="{Binding Sensor.Unit, Mode=TwoWay}"
-                            GotFocus="TextBox_GotFocus"
-                            LostFocus="TextBox_LostFocus"
+                            GotFocus="TextBoxUnit_GotFocus"
+                            LostFocus="TextBoxUnit_LostFocus"
                             />
                         <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
                             <TextBox

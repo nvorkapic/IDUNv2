@@ -16,10 +16,18 @@
     <!--<Page.BottomAppBar>
     </Page.BottomAppBar>-->
     <Grid Background="Black">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <osk:NumericKeyboard x:Name="NumPad"
+                             Grid.Row="1"
+                             VerticalAlignment="Bottom"
+                             HorizontalAlignment="Left"
+                             Margin="70,0,0,-45"
+                             Visibility="Collapsed" Canvas.ZIndex="1000" Background="Black"
+                             />
         <RelativePanel Height="60" Background="{ThemeResource StandardBackground}">
             <StackPanel Orientation="Horizontal">
                 <Button
@@ -205,11 +213,7 @@
                               Height="250"
                               Visibility="Collapsed"
                               />
-        <osk:NumericKeyboard x:Name="NumPad"
-                             Grid.Row="1"
-                             VerticalAlignment="Bottom"
-                             Margin="0,0,0,-45"
-                             Visibility="Collapsed"/>
+        
         <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" Width="800" Height="480" x:Name="WebPageContentFrame" Visibility="Collapsed" Background="Black">
             <Grid>
                 <WebView Source="{Binding localWebPage}" Height="450"/>
