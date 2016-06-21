@@ -272,12 +272,10 @@ namespace IDUNv2.Pages
             {
                 NumPad.SetTarget(target);
                 NumPad.Visibility = Visibility.Visible;
-                CmdBar.Visibility = Visibility.Collapsed;
             }
             else
             {
                 NumPad.Visibility = Visibility.Collapsed;
-                CmdBar.Visibility = Visibility.Visible;
             }
         }
         #endregion
@@ -328,6 +326,7 @@ namespace IDUNv2.Pages
         public static void Reload()
         {
             Current.Frame.Navigate(typeof(ShellPage));
+            
         }
     }
 }

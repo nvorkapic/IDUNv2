@@ -32,6 +32,7 @@ namespace IDUNv2.Pages
             viewModel.Sensor = e.Parameter as Sensor;
             await viewModel.InitAsync();
             DAL.PushNavLink(new NavLinkItem("Settings", GetType(), e.Parameter));
+
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -44,12 +45,15 @@ namespace IDUNv2.Pages
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             DAL.ShowNumPad(sender as TextBox);
+            TriggeerList.Visibility = Visibility.Collapsed;
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             DAL.ShowNumPad(null);
+            TriggeerList.Visibility = Visibility.Visible;
         }
+
 
         private void TextBoxUnit_GotFocus(object sender, RoutedEventArgs e)
         {

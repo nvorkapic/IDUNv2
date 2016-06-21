@@ -96,5 +96,12 @@ namespace IDUNv2.Pages
         }
 
         #endregion
+
+        private void TriggerSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            var item = ((ListView)sender).SelectedItem as SensorTrigger;
+            SG.SetTrigger(item.Value, item.Comparer == SensorTriggerComparer.Above ? 1 : -1);
+
+        }
     }
 }

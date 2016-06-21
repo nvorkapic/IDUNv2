@@ -8,7 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gif ="using:XamlAnimatedGif"
     xmlns:osk="using:OnScreenKeyboard"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Height="480"
+    Width="800">
     <Page.Resources>
         <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
       
@@ -24,8 +26,8 @@
         <osk:NumericKeyboard x:Name="NumPad"
                              Grid.Row="1"
                              VerticalAlignment="Bottom"
-                             HorizontalAlignment="Left"
-                             Margin="70,0,0,-45"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,-55"
                              Visibility="Collapsed" Canvas.ZIndex="1000" Background="Black"
                              />
         <RelativePanel Height="60" Background="{ThemeResource StandardBackground}">
