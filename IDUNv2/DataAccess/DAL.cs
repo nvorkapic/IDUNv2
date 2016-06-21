@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Core;
+using IDUNv2.SensorLib.IMU;
 using Newtonsoft.Json;
 
 namespace IDUNv2.DataAccess
@@ -37,6 +38,8 @@ namespace IDUNv2.DataAccess
         public static ISensorTriggerAccess SensorTriggerAccess { get; private set; }
         public static IFaultReportAccess FaultReportAccess { get; private set; }
 
+        public static ImuSensorWatcher ImuSensorWatcher;
+
 
         static DAL()
         {
@@ -48,6 +51,8 @@ namespace IDUNv2.DataAccess
         {
             sensorWatcher = new SensorWatcher(dispatcher, 100);
             sensorWatcher.LoadSettings();
+
+            ImuSensorWatcher = new ImuSensorWatcher(dispatcher, 10);
 
             SensorAccess = new SensorAccess(sensorWatcher);
             SensorTriggerAccess = new SensorTriggerAccess(db);

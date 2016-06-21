@@ -152,6 +152,9 @@
     <Compile Include="Pages\FaultReports\FaultReportListingPage.xaml.cs">
       <DependentUpon>FaultReportListingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ImuTestPage.xaml.cs">
+      <DependentUpon>ImuTestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Sensors\SensorDetailsPage.xaml.cs">
       <DependentUpon>SensorDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SensorLib\Device.cs" />
     <Compile Include="SensorLib\HTS221.cs" />
+    <Compile Include="SensorLib\IMU\AxisDirection.cs" />
+    <Compile Include="SensorLib\IMU\AxisRotation.cs" />
+    <Compile Include="SensorLib\IMU\I2CSupport.cs" />
+    <Compile Include="SensorLib\IMU\ImuSensor.cs" />
+    <Compile Include="SensorLib\IMU\ImuSensorWatcher.cs" />
+    <Compile Include="SensorLib\IMU\LSM9DS1Config.cs" />
+    <Compile Include="SensorLib\IMU\LSM9DS1Defines.cs" />
+    <Compile Include="SensorLib\IMU\LSM9DS1ImuSensor.cs" />
+    <Compile Include="SensorLib\IMU\MathSupport.cs" />
+    <Compile Include="SensorLib\IMU\Quaternion.cs" />
+    <Compile Include="SensorLib\IMU\SensorException.cs" />
+    <Compile Include="SensorLib\IMU\SensorFusion.cs" />
+    <Compile Include="SensorLib\IMU\SensorFusionRTQF.cs" />
+    <Compile Include="SensorLib\IMU\ImuSensorReadings.cs" />
+    <Compile Include="SensorLib\IMU\Vector3.cs" />
     <Compile Include="SensorLib\LPS25H.cs" />
     <Compile Include="SensorLib\Sensor.cs" />
     <Compile Include="SensorLib\SensorReadings.cs" />
@@ -309,6 +327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ImuTestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
