@@ -60,7 +60,7 @@ namespace IDUNv2.ViewModels
         #region Properties
 
         public ObservableCollection<Notification> NotificationList { get; private set; }
-        public ObservableCollection<NavLinkItem> NavLinks { get; private set; } = new ObservableCollection<NavLinkItem>();
+        public ObservableCollection<NavLinkItem> NavLinks { get; private set; }
 
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {

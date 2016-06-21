@@ -107,10 +107,21 @@ namespace IDUNv2.ViewModels
 
         #region CmdBar Actions
 
-        private void SaveSensor(object param)
+        private async void SaveSensor(object param)
         {
+            var triggers = await triggerAccess.GetSensorTriggersFor(Sensor.Id);
+            var ts = triggers.Select(t => new Sensor.Trigger
+            {
+                id = t.Id,
+                cmp = t.Comparer == SensorTriggerComparer.Above ? 1 : -1,
+                val = t.Value
+            }).ToArray();
+            Sensor.SetTriggers(ts);
             Sensor.SaveToLocalSettings();
-            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Sensor Saved", "Sensor " + Sensor.Id + " Settings Changes Saved!");
+            ShellPage.Current.AddNotificatoin(
+                NotificationType.Information,
+                "Sensor Saved",
+                "Sensor " + Sensor.Id + " Settings Changes Saved!");
         }
 
         private void CreateTrigger(object param)
@@ -118,7 +129,10 @@ namespace IDUNv2.ViewModels
             var trigger = new SensorTriggerViewModel(new SensorTrigger { SensorId = Sensor.Id });
             Triggers.Add(trigger);
             SelectedTrigger = trigger;
-            ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Created", "Empty Trigger Created.");
+            ShellPage.Current.AddNotificatoin(
+                NotificationType.Information,
+                "Trigger Created",
+                "Empty Trigger Created.");
         }
 
         private async void SaveTrigger(object param)
@@ -129,7 +143,10 @@ namespace IDUNv2.ViewModels
                 SelectedTrigger.Model = await triggerAccess.SetSensorTrigger(SelectedTrigger.Model);
 
                 string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has had its' changes saved.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Saved", NotificationDescription);
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "Trigger Saved",
+                    NotificationDescription);
 
             }
         }

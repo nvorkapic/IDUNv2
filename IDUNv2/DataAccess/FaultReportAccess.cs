@@ -108,9 +108,13 @@ namespace IDUNv2.DataAccess
             return cloud.GetCachedMaintenancePriority(prioCode);
         }
 
-        public Task<List<FaultReport>> GetFaultReports()
+        public async Task<List<FaultReport>> GetFaultReports(string mchCode = null)
         {
-            return cloud.GetFaultReports();
+            var reports = await cloud.GetFaultReports();
+            if (mchCode == null || mchCode == "")
+                return reports;
+            else
+                return reports.Where(r => r.MchCode == mchCode).ToList();
         }
 
         public Task<FaultReport> SetFaultReport(FaultReport report)

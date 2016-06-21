@@ -28,7 +28,7 @@ namespace IDUNv2.DataAccess
         WorkOrderSymptCode LookupWorkOrderSymptom(string symptCode);
         MaintenancePriority LookupMaintenancePriority(string prioCode);
 
-        Task<List<FaultReport>> GetFaultReports();
+        Task<List<FaultReport>> GetFaultReports(string mchCode = null);
         Task<FaultReport> SetFaultReport(FaultReport report);
     }
 }

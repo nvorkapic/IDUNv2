@@ -105,9 +105,12 @@ namespace IDUNv2.DataAccess
             return Task.FromResult(template);
         }
 
-        public Task<List<FaultReport>> GetFaultReports()
+        public Task<List<FaultReport>> GetFaultReports(string mchCode = null)
         {
-            return Task.FromResult(faultReports);
+            if (mchCode == null)
+                return Task.FromResult(faultReports);
+            else
+                return Task.FromResult(faultReports.Where(r => r.MchCode == mchCode).ToList());
         }
 
         public Task<List<FaultReportTemplate>> GetFaultReportTemplates()

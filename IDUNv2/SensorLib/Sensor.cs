@@ -1,5 +1,6 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
+using IDUNv2.Models;
 using Newtonsoft.Json;
 using System;
 using System.Reflection;
@@ -56,12 +57,20 @@ namespace IDUNv2.SensorLib
     /// </summary>
     public class Sensor : NotifyBase
     {
-        #region Trigger Types
+        public struct Trigger
+        {
+            public int id;
+            public int cmp;
+            public float val;
 
-        private const int TriggerHi = -2;
-        private const int TriggerLo = -1;
-
-        #endregion
+            public override string ToString()
+            {
+                string s = $"TRIGGER ON VAL ";
+                s += cmp > 0 ? ">" : "<";
+                s += $" {val}";
+                return s;
+            }
+        }
 
         #region Settings
 
@@ -77,6 +86,7 @@ namespace IDUNv2.SensorLib
             public float DangerHi;
             public string ValueStringFormat;
             public string Unit;
+            public Trigger[] Triggers;
 
             public string ToJson()
             {
@@ -188,6 +198,7 @@ namespace IDUNv2.SensorLib
         public SensorId Id { get; private set; }
         public Func<float> GetSimValue { get; set; }
         public Action<Sensor, SensorFault, DateTime> Faulted { get; set; }
+        public Trigger[] Triggers { get; set; }
 
         #endregion
 
@@ -227,9 +238,27 @@ namespace IDUNv2.SensorLib
                 var fault = new SensorFault();
 
                 if (Value > DangerHi)
+                {
                     fault.Type = SensorFaultType.FromDangerHi;
+                }
                 else if (Value < DangerLo)
+                {
                     fault.Type = SensorFaultType.FromDangerLo;
+                }
+                else
+                {
+                    if (Triggers != null)
+                    {
+                        foreach (var t in Triggers)
+                        {
+                            if ((t.cmp > 0 && Value > t.val) || (t.cmp < 0 && Value < t.val))
+                            {
+                                fault.Type = SensorFaultType.FromTrigger;
+                                fault.Id = t.id;
+                            }
+                        }
+                    }
+                }
 
                 if (FaultState != SensorFaultState.Faulted && fault.Type != SensorFaultType.NoFault)
                 {
@@ -260,7 +289,8 @@ namespace IDUNv2.SensorLib
                 DangerLo = DangerLo,
                 DangerHi = DangerHi,
                 ValueStringFormat = ValueStringFormat,
-                Unit = Unit
+                Unit = Unit,
+                Triggers = Triggers
             };
 
             localSettings.Values[settingsKey] = ss.ToJson();
@@ -280,7 +310,14 @@ namespace IDUNv2.SensorLib
                 DangerHi = ss.DangerHi;
                 ValueStringFormat = ss.ValueStringFormat;
                 Unit = ss.Unit;
+                Triggers = ss.Triggers;
             }
+        }
+
+        public bool SetTriggers(Trigger[] triggers)
+        {
+            Triggers = triggers;
+            return true;
         }
     }
 }

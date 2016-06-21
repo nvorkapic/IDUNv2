@@ -79,12 +79,16 @@
                                Visibility="{Binding Sensor.DeviceState, Converter={StaticResource FaultStateVisible}}"
                                />
                 </StackPanel>
-                <ListView Grid.ColumnSpan="2"
-                         Grid.Row="1"
-                         Margin="0,10,0,0"
-                         ItemsSource="{Binding Triggers}"
-                          SelectionChanged="TriggerSelectionChange"
-                         />
+                <StackPanel Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="Active Triggers"/>
+                    <ListView
+                        Margin="0,10,0,0"
+                        ItemsSource="{Binding Triggers}"
+                        SelectionChanged="TriggerSelectionChange"
+                        />
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>

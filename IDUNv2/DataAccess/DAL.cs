@@ -33,13 +33,11 @@ namespace IDUNv2.DataAccess
 
         private static CachingCloudClient cloud;
         private static SensorWatcher sensorWatcher;
+        public static ImuSensorWatcher ImuSensorWatcher;
 
         public static ISensorAccess SensorAccess { get; private set; }
         public static ISensorTriggerAccess SensorTriggerAccess { get; private set; }
         public static IFaultReportAccess FaultReportAccess { get; private set; }
-
-        public static ImuSensorWatcher ImuSensorWatcher;
-
 
         static DAL()
         {
@@ -86,11 +84,10 @@ namespace IDUNv2.DataAccess
                 dialog.IsSecondaryButtonEnabled = true;
                 await dialog.ShowAsync();
 
-
                 string shortDescription = "Sensor Triggered";
-                string longDescription = "Sensor has entered Triggered State!\n\nSensor ID: " + sensor.Id +"\nFaulted State: "+ sensor.FaultState + "\nDevice State: " + sensor.DeviceState +"\nSensor Value: " + sensor.Value + "\nSensor Danger High Value: " +sensor.DangerHi + "\nSensor Danger Low Value: " + sensor.DangerLo+ "\nSensor Maximum Value: " + sensor.RangeMax + "\nSensor Minimum Value: " + sensor.RangeMin + "\nFault ID: " + fault.Id +"\nFault Type: "+ fault.Type ;
+                string longDescription = "Sensor has entered Triggered State!\n\nSensor ID: " + sensor.Id + "\nFaulted State: " + sensor.FaultState + "\nDevice State: " + sensor.DeviceState + "\nSensor Value: " + sensor.Value + "\nSensor Danger High Value: " + sensor.DangerHi + "\nSensor Danger Low Value: " + sensor.DangerLo + "\nSensor Maximum Value: " + sensor.RangeMax + "\nSensor Minimum Value: " + sensor.RangeMin + "\nFault ID: " + fault.Id + "\nFault Type: " + fault.Type;
 
-                ShellPage.Current.AddNotificatoin( NotificationType.Warning, shortDescription, longDescription);
+                ShellPage.Current.AddNotificatoin(NotificationType.Warning, shortDescription, longDescription);
 
                 DocumentString document = new DocumentString();
                 document.shortDescription = shortDescription;
@@ -101,7 +98,6 @@ namespace IDUNv2.DataAccess
                 StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
                 var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(TriggerReportFile, json);
-
             };
         }
 
@@ -113,7 +109,6 @@ namespace IDUNv2.DataAccess
             public string DeviceID { get { return DeviceSettings.ObjectID; } }
             public string SystemID { get { return DeviceSettings.SystemID; } }
         }
-
 
         #endregion
 
@@ -172,7 +167,6 @@ namespace IDUNv2.DataAccess
 
         public static Task<bool> ConnectToCloud()
         {
-
             CreateCloudClient();
             return cloud.Authenticate();
         }

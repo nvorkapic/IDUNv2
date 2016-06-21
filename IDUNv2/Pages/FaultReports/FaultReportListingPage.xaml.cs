@@ -43,7 +43,7 @@ namespace IDUNv2.Pages
 
             ShellPage.SetSpinner(LoadingState.Loading);
             await faultReportAccess.FillCaches();
-            var reports = await faultReportAccess.GetFaultReports();
+            var reports = await faultReportAccess.GetFaultReports(DeviceSettings.ObjectID);
             ShellPage.SetSpinner(LoadingState.Finished);
             Reports = reports.OrderByDescending(r => r.RegDate).ToList();
             this.DataContext = this;
