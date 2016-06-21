@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Core;
+using Newtonsoft.Json;
 
 namespace IDUNv2.DataAccess
 {
@@ -79,8 +80,35 @@ namespace IDUNv2.DataAccess
                 dialog.SecondaryButtonText = "Close";
                 dialog.IsSecondaryButtonEnabled = true;
                 await dialog.ShowAsync();
+
+
+                string shortDescription = "Sensor has been Triggered";
+                string longDescription = "Sensor has entered Triggered State!\n\nSensor ID: " + sensor.Id +"\nFaulted State: "+ sensor.FaultState + "\nDevice State: " + sensor.DeviceState +"\nSensor Value: " + sensor.Value + "\nSensor Danger High Value: " +sensor.DangerHi + "\nSensor Danger Low Value: " + sensor.DangerLo+ "\nSensor Maximum Value: " + sensor.RangeMax + "\nSensor Minimum Value: " + sensor.RangeMin + "\nFault ID: " + fault.Id +"\nFault Type: "+ fault.Type ;
+
+                ShellPage.Current.AddNotificatoin( NotificationType.Warning, shortDescription, longDescription);
+
+                DocumentString document = new DocumentString();
+                document.shortDescription = shortDescription;
+                document.longDescription = longDescription;
+
+                string json = JsonConvert.SerializeObject(document);
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
+                var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(TriggerReportFile, json);
+
             };
         }
+
+        public class DocumentString
+        {
+            public string shortDescription { get; set; }
+            public string longDescription { get; set; }
+            public string Date { get { return DateTime.Now.ToString(); } }
+            public string DeviceID { get { return DeviceSettings.ObjectID; } }
+            public string SystemID { get { return DeviceSettings.SystemID; } }
+        }
+
 
         #endregion
 
