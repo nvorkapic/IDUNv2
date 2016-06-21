@@ -38,6 +38,13 @@ namespace IDUNv2.Pages
             {
                 Pose.Text = r.FusionPose.ToString(true);
             }
+            MagnetProgressBarX.Value =r.FusionPose.AsDegrees.X;
+            MagnetProgressBarY.Value =r.FusionPose.AsDegrees.Y;
+            MagnetProgressBarZ.Value =r.FusionPose.AsDegrees.Z;
+            
+            MFX.Text = r.FusionPose.AsDegrees.X.ToString();
+            MFY.Text = r.FusionPose.AsDegrees.Y.ToString();
+            MFZ.Text = r.FusionPose.AsDegrees.Z.ToString();
         }
     }
 }

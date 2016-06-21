@@ -9,5 +9,27 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="Pose" Text="Pose" FontSize="25"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ProgressBar Height="50" x:Name="MagnetProgressBarX" Width="200" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Minimum="-90" Maximum="90">
+                <ProgressBar.RenderTransform>
+                    <CompositeTransform Rotation="-90"/>
+                </ProgressBar.RenderTransform>
+            </ProgressBar>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,0,0" x:Name="MFX">Value x</TextBlock>
+            <ProgressBar Height="50" x:Name="MagnetProgressBarY" Width="200" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="0" Minimum="-180" Maximum="180">
+                <ProgressBar.RenderTransform>
+                    <CompositeTransform Rotation="-180"/>
+                </ProgressBar.RenderTransform>
+            </ProgressBar>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,250,0,0" x:Name="MFY">Value y</TextBlock>
+            <ProgressBar Height="50" x:Name="MagnetProgressBarZ" Width="200" Grid.Column="2" Minimum="-180" Maximum="180"></ProgressBar>
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,0,0" x:Name="MFZ">Value z</TextBlock>
+        </Grid>
+
     </Grid>
 </Page>
