@@ -82,7 +82,7 @@ namespace IDUNv2.DataAccess
                 await dialog.ShowAsync();
 
 
-                string shortDescription = "Sensor has been Triggered";
+                string shortDescription = "Sensor Triggered";
                 string longDescription = "Sensor has entered Triggered State!\n\nSensor ID: " + sensor.Id +"\nFaulted State: "+ sensor.FaultState + "\nDevice State: " + sensor.DeviceState +"\nSensor Value: " + sensor.Value + "\nSensor Danger High Value: " +sensor.DangerHi + "\nSensor Danger Low Value: " + sensor.DangerLo+ "\nSensor Maximum Value: " + sensor.RangeMax + "\nSensor Minimum Value: " + sensor.RangeMin + "\nFault ID: " + fault.Id +"\nFault Type: "+ fault.Type ;
 
                 ShellPage.Current.AddNotificatoin( NotificationType.Warning, shortDescription, longDescription);
