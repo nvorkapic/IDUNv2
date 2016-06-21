@@ -13,7 +13,8 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Right" Grid.RowSpan="2" Width="140"/>
+        <StackPanel HorizontalAlignment="Right" Grid.RowSpan="2">
+        </StackPanel>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="0" Grid.RowSpan="2">
             <Button Margin="5" Click="Documentation_Click" Width="140">Documentation</Button>
             <Button Margin="5" Click="Tutorial_Click" Width="140">Tutorial</Button>

@@ -136,7 +136,7 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btnCapsLock" IsTabStop="False" Content="&#x21EA;" FontSize="28" Command="{Binding CapsLockCommand}" Grid.Column="0" Foreground="White" />
+            <Button Name="btnCapsLock" IsTabStop="False" Content="CAPS" FontSize="15" Command="{Binding CapsLockCommand}" Grid.Column="0" Foreground="White" />
             <Button Name="btnVK_A" IsTabStop="False" Content="{Binding KB.KeyVK_A.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="1" Foreground="White"/>
             <Button Name="btnVK_S" IsTabStop="False" Content="{Binding KB.KeyVK_S.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="2" Foreground="White"/>
             <Button Name="btnVK_D" IsTabStop="False" Content="{Binding KB.KeyVK_D.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="3" Foreground="White"/>
@@ -166,7 +166,7 @@
                 <ColumnDefinition Width="49*"/>
                 <ColumnDefinition Width="107"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btnShift_Left" IsTabStop="False" Content="&#x21E7;" FontSize="28" Command="{Binding ShiftCommand}" Foreground="White"/>
+            <Button Name="btnShift_Left" IsTabStop="False" Content="↑" FontFamily="Segoe UI Symbol" FontSize="28" Command="{Binding ShiftCommand}" Foreground="White"/>
             <Button Name="btnVK_Z" IsTabStop="False" Content="{Binding KB.KeyVK_Z.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="1" Foreground="White"/>
             <Button Name="btnVK_X" IsTabStop="False" Content="{Binding KB.KeyVK_X.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="2" Foreground="White"/>
             <Button Name="btnVK_C" IsTabStop="False" Content="{Binding KB.KeyVK_C.Text}" Command="{Binding KeyPressedCommand}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Grid.Column="3" Foreground="White"/>

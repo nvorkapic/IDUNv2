@@ -1,4 +1,5 @@
-﻿using IDUNv2.DataAccess;
+﻿using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.DataAccess;
 using IDUNv2.ViewModels;
 using System;
 using Windows.UI.Xaml;
@@ -9,7 +10,7 @@ namespace IDUNv2.Pages
 {
     public sealed partial class AboutPage : Page
     {
-        string theme;
+        
 
         #region Constructors
 
@@ -42,19 +43,6 @@ namespace IDUNv2.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            App.brushViewModel.BrushesResources = theme;
-            ShellPage.Reload();
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var item = ((ListBox)sender).SelectedItem as ListBoxItem;
-            theme = item.Tag.ToString();
-            
         }
     }
 }

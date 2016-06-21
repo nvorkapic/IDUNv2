@@ -76,12 +76,7 @@ namespace IDUNv2.Pages
             var first = viewModel.NavList.First();
             viewModel.SelectMainMenu(ContentFrame, first);
             var status = await DAL.ConnectToCloud();
-            if (status)
-                Current.AddNotificatoin(
-                    NotificationType.Information,
-                    "Log In Successful!",
-                    "You have been connected to IFS Clouds Service!");
-            else
+            if (!status)
                 Current.AddNotificatoin(
                     NotificationType.Warning,
                     "Authorization Failed!",
