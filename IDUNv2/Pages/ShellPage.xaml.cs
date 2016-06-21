@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using IDUNv2.DataAccess;
+using System.Threading.Tasks;
 
 namespace IDUNv2.Pages
 {
@@ -49,30 +50,10 @@ namespace IDUNv2.Pages
 
         #endregion
 
-        private void InstallSensorFaultHandler()
-        {
-            var sa = DAL.SensorAccess;
-            sa.Faulted += async (s, ts) =>
-            {
-                var dialog = new ContentDialog { Title = "Faulted" };
-                var panel = new StackPanel();
-                panel.Children.Add(new TextBlock
-                {
-                    Text = $"Sensor '{s.Id}' faulted"
-                });
-                dialog.Content = panel;
-                dialog.PrimaryButtonText = "OK";
-                dialog.IsPrimaryButtonEnabled = true;
-                await dialog.ShowAsync();
-            };
-        }
-
         #region Event Handlers
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            InstallSensorFaultHandler();
-
             var first = viewModel.NavList.First();
             viewModel.SelectMainMenu(ContentFrame, first);
             var status = await DAL.ConnectToCloud();

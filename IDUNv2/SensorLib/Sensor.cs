@@ -35,13 +35,34 @@ namespace IDUNv2.SensorLib
         Faulted
     }
 
-    public delegate void SensorFaultHandler(Sensor sensor, DateTime timestamp);
+    public enum SensorFaultType
+    {
+        NoFault,
+        FromDangerLo,
+        FromDangerHi,
+        FromTrigger
+    }
+
+    public class SensorFault
+    {
+        public SensorFaultType Type { get; set; }
+        public int Id { get; set; }
+    }
+
+    public delegate void SensorFaultHandler(Sensor sensor, SensorFault fault, DateTime timestamp);
 
     /// <summary>
     /// Represents a Sensor on the SenseHat board (not necessarily 1:1 to a physical device)
     /// </summary>
     public class Sensor : NotifyBase
     {
+        #region Trigger Types
+
+        private const int TriggerHi = -2;
+        private const int TriggerLo = -1;
+
+        #endregion
+
         #region Settings
 
         /// <summary>
@@ -166,7 +187,7 @@ namespace IDUNv2.SensorLib
 
         public SensorId Id { get; private set; }
         public Func<float> GetSimValue { get; set; }
-        public Action<Sensor, DateTime> Faulted { get; set; }
+        public Action<Sensor, SensorFault, DateTime> Faulted { get; set; }
 
         #endregion
 
@@ -203,10 +224,17 @@ namespace IDUNv2.SensorLib
                 if (bias.HasValue)
                     Value += bias.Value;
 
-                if ((Value > DangerHi || Value < DangerLo) && (FaultState != SensorFaultState.Faulted))
+                var fault = new SensorFault();
+
+                if (Value > DangerHi)
+                    fault.Type = SensorFaultType.FromDangerHi;
+                else if (Value < DangerLo)
+                    fault.Type = SensorFaultType.FromDangerLo;
+
+                if (FaultState != SensorFaultState.Faulted && fault.Type != SensorFaultType.NoFault)
                 {
                     FaultState = SensorFaultState.Faulted;
-                    Faulted?.Invoke(this, timestamp);
+                    Faulted?.Invoke(this, fault, timestamp);
                 }
             }
         }

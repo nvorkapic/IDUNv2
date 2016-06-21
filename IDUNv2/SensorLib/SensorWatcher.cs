@@ -98,7 +98,7 @@ namespace IDUNv2.SensorLib
 
             foreach (var sensor in Sensors)
             {
-                sensor.Faulted = (s, ts) => Faulted?.Invoke(s, ts);
+                sensor.Faulted = (s, f, ts) => Faulted?.Invoke(s, f, ts);
             }
 
             BiasValues = new float[Sensors.Length];
