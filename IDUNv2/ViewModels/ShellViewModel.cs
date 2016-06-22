@@ -64,11 +64,11 @@ namespace IDUNv2.ViewModels
 
         public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
         {
-            new NavMenuItem { Label = "IMU", Symbol = Symbol.Bullets, PageType = typeof(Pages.ImuTestPage) },
             new NavMenuItem { Label = "Sensors", Symbol = Symbol.View, PageType = typeof(Pages.SensorOverviewPage) },
             new NavMenuItem { Label = "Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
             new NavMenuItem { Label = "Templates", Symbol = Symbol.Document, PageType = typeof(Pages.FaultReportTemplateFormPage) },
             new NavMenuItem { Label = "Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.LEDControlPage) },
+            new NavMenuItem { Label = "IMU", Symbol = Symbol.Bullets, PageType = typeof(Pages.ImuTestPage) },
             new NavMenuItem { Label = "Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) },
             new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) },
         };
