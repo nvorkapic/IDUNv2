@@ -15,20 +15,20 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ProgressBar Height="50" x:Name="MagnetProgressBarX" Width="200" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Minimum="-90" Maximum="90">
+            <ProgressBar Height="55" x:Name="MagnetProgressBarX" Width="200" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Minimum="-90" Maximum="90" Grid.ColumnSpan="3" Margin="-265,0,0,0">
                 <ProgressBar.RenderTransform>
                     <CompositeTransform Rotation="-90"/>
                 </ProgressBar.RenderTransform>
             </ProgressBar>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,0,0" x:Name="MFX">Value x</TextBlock>
-            <ProgressBar Height="50" x:Name="MagnetProgressBarY" Width="200" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="0" Minimum="-180" Maximum="180">
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="150,220,0,0" x:Name="MFX">Value x</TextBlock>
+            <ProgressBar Height="50" x:Name="MagnetProgressBarY" RenderTransformOrigin="0.499,0.5" Grid.Column="0" Minimum="-180" Maximum="180" Margin="-350,150,0,0" Grid.ColumnSpan="3" Width="300">
                 <ProgressBar.RenderTransform>
-                    <CompositeTransform Rotation="-180"/>
+                    <CompositeTransform Rotation="-180" TranslateX="0.4"/>
                 </ProgressBar.RenderTransform>
             </ProgressBar>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,250,0,0" x:Name="MFY">Value y</TextBlock>
-            <ProgressBar Height="50" x:Name="MagnetProgressBarZ" Width="200" Grid.Column="2" Minimum="-180" Maximum="180"></ProgressBar>
-            <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,0,0" x:Name="MFZ">Value z</TextBlock>
+            <ProgressBar Height="50" x:Name="MagnetProgressBarZ" Width="300" Grid.Column="0" Minimum="-180" Maximum="180" Margin="355,150,0,0" Grid.ColumnSpan="3" ></ProgressBar>
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-150,220,0,0" x:Name="MFZ">Value z</TextBlock>
         </Grid>
 
     </Grid>
