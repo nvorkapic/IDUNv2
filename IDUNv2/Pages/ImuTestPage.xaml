@@ -28,7 +28,7 @@
                     </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Center">Gyroscope Vector</TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center">X</TextBlock>
-                <ProgressBar Grid.Column="1" Grid.Row="1" x:Name="GyroX" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                <ProgressBar Grid.Column="1" Grid.Row="1" x:Name="GyroX" Height="20" Width="150"></ProgressBar>
                     <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160"/>
@@ -39,7 +39,7 @@
                     </Grid>
                     
                     <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">Y</TextBlock>
-                <ProgressBar Grid.Column="1" Grid.Row="3" x:Name="GyroY" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                <ProgressBar Grid.Column="1" Grid.Row="3" x:Name="GyroY" Height="20" Width="150"></ProgressBar>
                     <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160"/>
@@ -50,7 +50,7 @@
                     </Grid>
                 
                 <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">Z</TextBlock>
-                <ProgressBar Grid.Column="1" Grid.Row="5" x:Name="GyroZ" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                <ProgressBar Grid.Column="1" Grid.Row="5" x:Name="GyroZ" Height="20" Width="150"></ProgressBar>
                     <Grid Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160"/>
@@ -59,7 +59,7 @@
                         <TextBlock  Grid.Column="0" x:Name="GyroZValue" HorizontalAlignment="Right" Margin="0,0,5,0">GyroZValue</TextBlock>
                         <TextBlock  Grid.Column="1">°/s</TextBlock>
                     </Grid>
-                    <ProgressBar Grid.Column="1" Grid.Row="7" x:Name="Gyro" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                    <ProgressBar Grid.Column="1" Grid.Row="7" x:Name="Gyro" Height="20" Width="150"></ProgressBar>
                     <TextBlock Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center">Scalar</TextBlock>
                     <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
@@ -121,7 +121,7 @@
                         <TextBlock  Grid.Column="1">uT</TextBlock>
                     </Grid>
                 
-                    <ProgressBar Grid.Column="1" Grid.Row="7" x:Name="Magnet" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                    <ProgressBar Grid.Column="1" Grid.Row="7" x:Name="Magnet" Height="20" Width="150" Minimum="0" Maximum="120"></ProgressBar>
                     <TextBlock Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center">Scalar</TextBlock>
                     <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>

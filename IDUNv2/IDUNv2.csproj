@@ -220,6 +220,7 @@
     <Compile Include="ViewModels\FaultReportDetailsViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateFormViewModel.cs" />
     <Compile Include="ViewModels\FaultReportTemplateViewModel.cs" />
+    <Compile Include="ViewModels\IMUViewModel.cs" />
     <Compile Include="ViewModels\SensorDetailsViewModel.cs" />
     <Compile Include="ViewModels\SensorOverviewViewModel.cs" />
     <Compile Include="ViewModels\SensorSettingsViewModel.cs" />
