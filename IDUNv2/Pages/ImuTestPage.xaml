@@ -10,7 +10,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-            <Grid Width="225" Height="210">
+            <Grid Width="225" Height="270">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="25"></ColumnDefinition>
                     <ColumnDefinition Width="200"></ColumnDefinition>
@@ -23,7 +23,9 @@
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Center">Gyroscope Vector</TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center">X</TextBlock>
                 <ProgressBar Grid.Column="1" Grid.Row="1" x:Name="GyroX" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
@@ -57,9 +59,19 @@
                         <TextBlock  Grid.Column="0" x:Name="GyroZValue" HorizontalAlignment="Right" Margin="0,0,5,0">GyroZValue</TextBlock>
                         <TextBlock  Grid.Column="1">°/s</TextBlock>
                     </Grid>
+                    <ProgressBar Grid.Column="1" Grid.Row="7" x:Name="Gyro" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                    <TextBlock Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center">Scalar</TextBlock>
+                    <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Column="0" x:Name="GyroValue" HorizontalAlignment="Right" Margin="0,0,5,0">GyroValue</TextBlock>
+                        <TextBlock  Grid.Column="1">°/s</TextBlock>
+                    </Grid>
                 </Grid>
             
-            <Grid Width="225" Height="210" Margin="10,0,0,0">
+            <Grid Width="225" Height="270" Margin="10,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="25"></ColumnDefinition>
                     <ColumnDefinition Width="200"></ColumnDefinition>
@@ -72,7 +84,9 @@
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
-                </Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Center">Magnetic Field Vector</TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center">X</TextBlock>
                 <ProgressBar Grid.Column="1" Grid.Row="1" x:Name="MagnetX" Height="20" Width="150" Minimum="-80" Maximum="80"></ProgressBar>
@@ -106,9 +120,20 @@
                         <TextBlock  Grid.Column="0" x:Name="MagnetZValue" HorizontalAlignment="Right" Margin="0,0,5,0">MagnetZValue</TextBlock>
                         <TextBlock  Grid.Column="1">uT</TextBlock>
                     </Grid>
+                
+                    <ProgressBar Grid.Column="1" Grid.Row="7" x:Name="Magnet" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                    <TextBlock Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center">Scalar</TextBlock>
+                    <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Column="0" x:Name="MagnetValue" HorizontalAlignment="Right" Margin="0,0,5,0">MagnetValue</TextBlock>
+                        <TextBlock  Grid.Column="1">uT</TextBlock>
+                    </Grid>
                 </Grid>
             
-            <Grid Width="225" Height="210" Margin="10,0,0,0">
+            <Grid Width="225" Height="270" Margin="10,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="25"></ColumnDefinition>
                     <ColumnDefinition Width="200"></ColumnDefinition>
@@ -121,7 +146,9 @@
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Center">Acceleration Vector</TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center">X</TextBlock>
                 <ProgressBar Grid.Column="1" Grid.Row="1" x:Name="AccelerationX" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
@@ -153,6 +180,16 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <TextBlock  Grid.Column="0" x:Name="AccelerationZValue" HorizontalAlignment="Right" Margin="0,0,5,0">AcceZValue</TextBlock>
+                        <TextBlock  Grid.Column="1">g</TextBlock>
+                    </Grid>
+                    <ProgressBar Grid.Column="1" Grid.Row="7" x:Name="Accel" Height="20" Width="150" Minimum="-180" Maximum="180"></ProgressBar>
+                    <TextBlock Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center">Scalar</TextBlock>
+                    <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Column="0" x:Name="AccelValue" HorizontalAlignment="Right" Margin="0,0,5,0">AccelValue</TextBlock>
                         <TextBlock  Grid.Column="1">g</TextBlock>
                     </Grid>
                 </Grid>

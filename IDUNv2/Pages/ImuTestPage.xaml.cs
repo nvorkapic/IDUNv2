@@ -24,6 +24,11 @@ namespace IDUNv2.Pages
         double gymin = double.MaxValue;
         double gzmax = double.MinValue;
         double gzmin = double.MaxValue;
+        double gmax = double.MinValue;
+        double gmin = double.MaxValue;
+
+        double mmax = double.MinValue;
+        double mmin = double.MaxValue;
 
         double axmax = double.MinValue;
         double axmin = double.MaxValue;
@@ -31,7 +36,8 @@ namespace IDUNv2.Pages
         double aymin = double.MaxValue;
         double azmax = double.MinValue;
         double azmin = double.MaxValue;
-
+        double amax = double.MinValue;
+        double amin = double.MaxValue;
 
         private DispatcherTimer timer = new DispatcherTimer
         {
@@ -94,6 +100,20 @@ namespace IDUNv2.Pages
                 AccelerationZ.Maximum = azmax;
 
                 AccelerationZValue.Text = r.Acceleration.Z.ToString("0.0000");
+
+                var AcceloScalar = Math.Sqrt(Math.Pow(r.Acceleration.X, 2) + Math.Pow(r.Acceleration.Y, 2) + Math.Pow(r.Acceleration.Z, 2));
+                Accel.Value = AcceloScalar;
+                if (amax < AcceloScalar)
+                    amax = AcceloScalar;
+                if (amin > AcceloScalar)
+                    amin = AcceloScalar;
+
+                Accel.Minimum = amin;
+                Accel.Maximum = amax;
+
+                AccelValue.Text = AcceloScalar.ToString("0.0000");
+
+
             }
 
             if (r.MagneticFieldValid)
@@ -104,6 +124,16 @@ namespace IDUNv2.Pages
                 MagnetYValue.Text = r.MagneticField.Y.ToString("0.0000");
                 MagnetZ.Value = r.MagneticField.Z;
                 MagnetZValue.Text = r.MagneticField.Z.ToString("0.0000");
+
+                var MagnetScalar = Math.Sqrt(Math.Pow(r.MagneticField.X, 2) + Math.Pow(r.MagneticField.Y, 2) + Math.Pow(r.MagneticField.Z, 2));
+                Magnet.Value = MagnetScalar;
+                if (mmax < MagnetScalar)
+                    mmax = MagnetScalar;
+                if (mmin > MagnetScalar)
+                    mmin = MagnetScalar;
+
+                MagnetValue.Text = MagnetScalar.ToString("0.0000");
+
             }
 
 
@@ -141,6 +171,18 @@ namespace IDUNv2.Pages
                 GyroZ.Maximum = gzmax;
 
                 GyroZValue.Text = r.Gyro.AsDegrees.Z.ToString("0.0000");
+
+                var GyroScalar = Math.Sqrt(Math.Pow(r.Gyro.AsDegrees.X, 2) + Math.Pow(r.Gyro.AsDegrees.Y, 2) + Math.Pow(r.Gyro.AsDegrees.Z, 2));
+                Gyro.Value = GyroScalar;
+                if (gmax < GyroScalar)
+                    gmax = GyroScalar;
+                if (gmin > GyroScalar)
+                    gmin = GyroScalar;
+
+                Gyro.Minimum = gmin;
+                Gyro.Maximum = gmax;
+
+                GyroValue.Text = GyroScalar.ToString("0.0000");
             }
            
         }
