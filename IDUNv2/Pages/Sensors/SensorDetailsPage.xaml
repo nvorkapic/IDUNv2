@@ -85,7 +85,7 @@
                     <TextBlock Text="Active Triggers"/>
                     <ListView
                         Margin="0,10,0,0"
-                        ItemsSource="{Binding Triggers}"
+                        ItemsSource="{Binding Sensor.Triggers}"
                         SelectionChanged="TriggerSelectionChange"
                         />
                 </StackPanel>

@@ -86,11 +86,11 @@ namespace IDUNv2.Controls
         private int centerY;
         private int dangerLoY;
         private int dangerHiY;
+        private bool triggerLineEnabled;
+        private int triggerLineY;
+        private int triggerLineDirection;
 
         private ViewModel viewModel = new ViewModel();
-
-        private float? triggerLineY;
-        private int triggerLineDirection;
 
         #endregion
 
@@ -101,9 +101,7 @@ namespace IDUNv2.Controls
         public uint ColorScaleLines { get; set; }
         public uint ColorDataLines { get; set; }
 
-
         #endregion
-
 
         #region Constructors
 
@@ -165,13 +163,20 @@ namespace IDUNv2.Controls
             viewModel.SetLabels(min, max, wb.PixelHeight, (float)FontSize);
         }
 
-        public void SetTrigger(float? value, int direction)
+        public void SetTrigger(float? value, int direction = 0)
         {
-            triggerLineY = value;
-            triggerLineDirection = direction;
+            if (!value.HasValue)
+            {
+                triggerLineEnabled = false;
+            }
+            else
+            {
+                triggerLineEnabled = true;
+                triggerLineY = wb.PixelHeight - (int)((value.Value - rangeMin) * rangeStep);
+                triggerLineY = Clamp(triggerLineY, 0, wb.PixelHeight - 1);
+                triggerLineDirection = direction;
+            }
         }
-
-
 
         /// <summary>
         /// Set danger thresholds which will be draw as bands using ColorDanger*
@@ -186,6 +191,8 @@ namespace IDUNv2.Controls
             dangerHi = hi;
             dangerLoY = wb.PixelHeight - (int)((dangerLo - rangeMin) * rangeStep);
             dangerHiY = (int)((rangeMax - dangerHi) * rangeStep);
+            dangerLoY = Clamp(dangerLoY, 0, wb.PixelHeight - 1);
+            dangerHiY = Clamp(dangerHiY, 0, wb.PixelHeight - 1);
         }
 
         /// <summary>
@@ -202,7 +209,7 @@ namespace IDUNv2.Controls
         }
 
         /// <summary>
-        /// Draw horizontal lines for each label and draw Danger zone bands
+        /// Draw lines for danger zones, scale ticks and triggers.
         /// </summary>
         private void DrawScaleLines()
         {
@@ -212,7 +219,13 @@ namespace IDUNv2.Controls
             FillRectFast(0, dangerLoY + 1, wb.PixelWidth - 1, lh, (ColorDangerLo & 0x303030));
             FillRectFast(0, 0, wb.PixelWidth - 1, dangerHiY, (ColorDangerHi & 0x303030));
 
-            DrawTriggerLine();
+            if (triggerLineEnabled)
+            {
+                if (triggerLineDirection > 0)
+                    FillRectFast(0, 0, wb.PixelWidth - 1, triggerLineY, (0xFF00FF & 0x303030));
+                else
+                    FillRectFast(0, triggerLineY + 3, wb.PixelWidth - 1, wb.PixelHeight - triggerLineY - 4, (0xFF00FF & 0x303030));
+            }
 
             uint scaleColor = ColorScaleLines;
             foreach (var y in viewModel.LabelYs)
@@ -227,24 +240,15 @@ namespace IDUNv2.Controls
             hLine(dangerHiY - 1, 0, xmax, ColorDangerHi);
             hLine(dangerHiY, 0, xmax, ColorDangerHi);
             hLine(dangerHiY + 1, 0, xmax, ColorDangerHi);
-        }
 
-        private void DrawTriggerLine()
-        {
-            if (triggerLineY.HasValue)
+            if (triggerLineEnabled)
             {
-                int Y  = wb.PixelHeight - (int)((triggerLineY.Value - rangeMin)* rangeStep);
-                int xmax = wb.PixelWidth - 1;
-                hLine(Y - 1, 0, xmax, 0xFF00FF);
-                hLine(Y, 0, xmax, 0xFF00FF);
-                hLine(Y + 1, 0, xmax, 0xFF00FF);
-
-                if (triggerLineDirection > 0)
-                    FillRectFast(0, 0, wb.PixelWidth - 1, Y-1, (0xFF00FF & 0x303030));
-                else
-                    FillRectFast(0, Y+3, wb.PixelWidth - 1, wb.PixelHeight - Y - 4, (0xFF00FF & 0x303030));
+                hLine(triggerLineY - 1, 0, xmax, 0xFF00FF);
+                hLine(triggerLineY, 0, xmax, 0xFF00FF);
+                hLine(triggerLineY + 1, 0, xmax, 0xFF00FF);
             }
         }
+
         /// <summary>
         /// Draw lines between all added data points
         /// </summary>

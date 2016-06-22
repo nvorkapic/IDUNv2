@@ -95,13 +95,12 @@ namespace IDUNv2.Pages
             viewModel.Bias = 0;
         }
 
-        #endregion
-
         private void TriggerSelectionChange(object sender, SelectionChangedEventArgs e)
         {
-            var item = ((ListView)sender).SelectedItem as SensorTrigger;
-            SG.SetTrigger(item.Value, item.Comparer == SensorTriggerComparer.Above ? 1 : -1);
-
+            var trigger = (Sensor.Trigger)(sender as ListView).SelectedItem;
+            SG.SetTrigger(trigger.val, trigger.cmp);
         }
+
+        #endregion
     }
 }
