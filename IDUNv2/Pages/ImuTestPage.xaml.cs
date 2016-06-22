@@ -53,11 +53,11 @@ namespace IDUNv2.Pages
             {
                 
                 PitchAxis.Value = r.FusionPose.AsDegrees.X;
-                PitchAxisValue.Text = r.FusionPose.AsDegrees.X.ToString("0.0000") + " °";
+                PitchAxisValue.Text = r.FusionPose.AsDegrees.X.ToString("0.0000");
                 RollAxis.Value = r.FusionPose.AsDegrees.Y;
-                RollAxisValue.Text = r.FusionPose.AsDegrees.Y.ToString("0.0000") + " °";
+                RollAxisValue.Text = r.FusionPose.AsDegrees.Y.ToString("0.0000");
                 JawAxis.Value = r.FusionPose.AsDegrees.Z;
-                JawAxisValue.Text = r.FusionPose.AsDegrees.Z.ToString("0.0000") + " °";
+                JawAxisValue.Text = r.FusionPose.AsDegrees.Z.ToString("0.0000");
             }
 
             if (r.AccelerationValid)
@@ -71,7 +71,7 @@ namespace IDUNv2.Pages
                 AccelerationX.Minimum = axmin;
                 AccelerationX.Maximum = axmax;
 
-                AccelerationXValue.Text = r.Acceleration.X.ToString("0.0000") + " g";
+                AccelerationXValue.Text = r.Acceleration.X.ToString("0.0000");
 
                 AccelerationY.Value = r.Acceleration.Y;
                 if (aymax < r.Acceleration.Y)
@@ -82,7 +82,7 @@ namespace IDUNv2.Pages
                 AccelerationY.Minimum = aymin;
                 AccelerationY.Maximum = aymax;
 
-                AccelerationYValue.Text = r.Acceleration.Y.ToString("0.0000") + " g";
+                AccelerationYValue.Text = r.Acceleration.Y.ToString("0.0000");
 
                 AccelerationZ.Value = r.Acceleration.Z;
                 if (azmax < r.Acceleration.Z)
@@ -93,17 +93,17 @@ namespace IDUNv2.Pages
                 AccelerationZ.Minimum = azmin;
                 AccelerationZ.Maximum = azmax;
 
-                AccelerationZValue.Text = r.Acceleration.Z.ToString("0.0000") + " g";
+                AccelerationZValue.Text = r.Acceleration.Z.ToString("0.0000");
             }
 
             if (r.MagneticFieldValid)
             {
                 MagnetX.Value = r.MagneticField.X;
-                MagnetXValue.Text = r.MagneticField.X.ToString("0.0000") + " uT";
+                MagnetXValue.Text = r.MagneticField.X.ToString("0.0000");
                 MagnetY.Value = r.MagneticField.Y;
-                MagnetYValue.Text = r.MagneticField.Y.ToString("0.0000") + " uT";
+                MagnetYValue.Text = r.MagneticField.Y.ToString("0.0000");
                 MagnetZ.Value = r.MagneticField.Z;
-                MagnetZValue.Text = r.MagneticField.Z.ToString("0.0000") + " uT";
+                MagnetZValue.Text = r.MagneticField.Z.ToString("0.0000");
             }
 
 
@@ -118,7 +118,7 @@ namespace IDUNv2.Pages
                 GyroX.Minimum = gxmin;
                 GyroX.Maximum = gxmax;
 
-                GyroXValue.Text = r.Gyro.AsDegrees.X.ToString("0.0000") + " °/s";
+                GyroXValue.Text = r.Gyro.AsDegrees.X.ToString("0.0000");
 
                 GyroY.Value = r.Gyro.Y;
                 if (gymax < r.Gyro.Y)
@@ -129,7 +129,7 @@ namespace IDUNv2.Pages
                 GyroY.Minimum = gymin;
                 GyroY.Maximum = gymax;
 
-                GyroYValue.Text = r.Gyro.AsDegrees.Y.ToString("0.0000") + " °/s";
+                GyroYValue.Text = r.Gyro.AsDegrees.Y.ToString("0.0000");
 
                 GyroZ.Value = r.Gyro.X;
                 if (gzmax < r.Gyro.Z)
@@ -140,7 +140,7 @@ namespace IDUNv2.Pages
                 GyroZ.Minimum = gzmin;
                 GyroZ.Maximum = gzmax;
 
-                GyroZValue.Text = r.Gyro.AsDegrees.Z.ToString("0.0000") + " °/s";
+                GyroZValue.Text = r.Gyro.AsDegrees.Z.ToString("0.0000");
             }
            
         }
