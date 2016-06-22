@@ -44,8 +44,6 @@ namespace IDUNv2
             Application.Current.Resources.MergedDictionaries.Add(RD);
         }
 
-
-
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -56,8 +54,8 @@ namespace IDUNv2
             if (brushViewModel.BrushesResources == null || brushViewModel.BrushesResources == string.Empty)
             {
                 brushViewModel.BrushesResources = "ms-appx:///Styles/BrushesAddovation.xaml";
-            }       
-           
+            }
+
 #if false
             if (System.Diagnostics.Debugger.IsAttached)
             {

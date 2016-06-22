@@ -1,5 +1,6 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.Models;
+using IDUNv2.SensorLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,17 @@ namespace IDUNv2.ViewModels
 {
     public class SensorTriggerViewModel : NotifyBase
     {
+        #region Fields
+
+        private Sensor sensor;
+
+        #endregion
+
         #region Notify Fields
 
         private SensorTriggerComparer _comparer = SensorTriggerComparer.Below;
         private SensorTrigger _model;
+        private bool _isEnabled;
 
         #endregion
 
@@ -75,16 +83,47 @@ namespace IDUNv2.ViewModels
             set { Model.Value = value; Notify(); }
         }
 
-        #endregion
-
-        #region Constructors
-
-        public SensorTriggerViewModel(SensorTrigger model)
+        public bool IsEnabled
         {
-            Model = model;
-            Comparer = model.Comparer;
+            get { return _isEnabled; }
+            set { _isEnabled = value; Notify(); ToggleEnabled(value); }
         }
 
         #endregion
+
+        private void ToggleEnabled(bool value)
+        {
+            Sensor.Trigger trigger;
+
+            trigger.id = Id;
+            trigger.cmp = Comparer == SensorTriggerComparer.Above ? 1 : -1;
+            trigger.val = Value;
+
+            if (value)
+            {
+                sensor.AddTrigger(trigger);
+            }
+            else
+            {
+                sensor.RemoveTrigger(trigger);
+            }
+        }
+
+        #region Constructors
+
+        public SensorTriggerViewModel(Sensor sensor, SensorTrigger model)
+        {
+            this.sensor = sensor;
+            Model = model;
+            Comparer = model.Comparer;
+            IsEnabled = sensor.Triggers.Any(t => t.id == model.Id);
+        }
+
+        #endregion
+
+        public override string ToString()
+        {
+            return $"Id: {Id}\nComparer: {Comparer}\nValue: {Value}\nTemplate Id: {TemplateId}";
+        }
     }
 }

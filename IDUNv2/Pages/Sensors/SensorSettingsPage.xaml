@@ -12,16 +12,16 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="75"/>
-                    <!--<ColumnDefinition Width="100"/>-->
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Id}"/>
-                <TextBlock Grid.Column="1" Text="{Binding Comparer}"/>
-                <TextBlock Grid.Column="2" Text="{Binding Value}"/>
-                <TextBlock Grid.Column="3" Text="{Binding TemplateId}"/>
-                <!--<TextBlock Grid.Column="4" Text="&#xE74E;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right"></TextBlock>-->
+                <CheckBox Grid.Column="0" Margin="0,-5,0,0" IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
+                <TextBlock Grid.Column="1" Text="{Binding Id}"/>
+                <TextBlock Grid.Column="2" Text="{Binding Comparer}"/>
+                <TextBlock Grid.Column="3" Text="{Binding Value}"/>
+                <TextBlock Grid.Column="4" Text="{Binding TemplateId}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -105,18 +105,20 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="75"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="75"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="0" FontWeight="Bold" Text="Id" VerticalAlignment="Top"/>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="1" FontWeight="Bold" Text="Comparer"/>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="2" FontWeight="Bold" Text="Value"/>
-                        <TextBlock Margin="10,0,0,0" Grid.Column="3" FontWeight="Bold" Text="Template"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="0" FontWeight="Bold" Text="Enabled"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="1" FontWeight="Bold" Text="Id" VerticalAlignment="Top"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="2" FontWeight="Bold" Text="Comparer"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="3" FontWeight="Bold" Text="Value"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="4" FontWeight="Bold" Text="Template"/>
                         <ListBox
                             Margin="0,0,0,10"
                             Grid.Row="1"
-                            Grid.ColumnSpan="4"
+                            Grid.ColumnSpan="5"
                             ItemsSource="{Binding Triggers}"
                             ItemTemplate="{StaticResource TriggerListData}"
                             SelectedItem="{Binding SelectedTrigger, Mode=TwoWay}"

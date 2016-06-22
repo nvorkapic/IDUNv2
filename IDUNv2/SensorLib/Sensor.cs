@@ -3,6 +3,8 @@ using IDUNv2.DataAccess;
 using IDUNv2.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace IDUNv2.SensorLib
@@ -65,10 +67,20 @@ namespace IDUNv2.SensorLib
 
             public override string ToString()
             {
-                string s = $"TRIGGER ON VAL ";
+                string s = $"TRIGGER ({id}) ON VAL ";
                 s += cmp > 0 ? ">" : "<";
                 s += $" {val}";
                 return s;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return id == ((Trigger)obj).id;
+            }
+
+            public override int GetHashCode()
+            {
+                return id.GetHashCode();
             }
         }
 
@@ -79,14 +91,22 @@ namespace IDUNv2.SensorLib
         /// </summary>
         private class SensorSettings
         {
-            public SensorDeviceState DeviceState;
             public float RangeMin;
             public float RangeMax;
             public float DangerLo;
             public float DangerHi;
-            public string ValueStringFormat;
             public string Unit;
-            public Trigger[] Triggers;
+            public List<Trigger> Triggers;
+
+            public SensorSettings()
+            {
+                RangeMin = 0;
+                RangeMax = 0;
+                DangerLo = 0;
+                DangerHi = 0;
+                Unit = "";
+                Triggers = new List<Trigger>();
+            }
 
             public string ToJson()
             {
@@ -110,7 +130,6 @@ namespace IDUNv2.SensorLib
         private SensorDeviceState _deviceState;
         private SensorFaultState _faultState;
         private float _value;
-        private string _valueStringFormat;
         private string _unit;
         private ActionCommand<object> _command;
         private bool _hasHardware;
@@ -161,12 +180,6 @@ namespace IDUNv2.SensorLib
             set { _value = value; Notify(); }
         }
 
-        public string ValueStringFormat
-        {
-            get { return _valueStringFormat; }
-            set { _valueStringFormat = value; Notify(); }
-        }
-
         public string Unit
         {
             get { return _unit; }
@@ -197,24 +210,37 @@ namespace IDUNv2.SensorLib
 
         public SensorId Id { get; private set; }
         public Func<float> GetSimValue { get; set; }
+        public string ValueStringFormat { get; set; }
         public Action<Sensor, SensorFault, DateTime> Faulted { get; set; }
-        public Trigger[] Triggers { get; set; }
+        public List<Trigger> Triggers { get; set; }
 
         #endregion
 
-        public Sensor(SensorId id, float rangeMin, float rangeMax, string unit, string valueStringFormat = "F2")
+        #region Constructors
+
+        public Sensor(SensorId id, string valueStringFormat = "F2")
         {
             settingsKey = "sensor." + (int)id;
             Id = id;
-            RangeMin = rangeMin;
-            RangeMax = rangeMax;
-            DangerLo = rangeMin;
-            DangerHi = rangeMax;
-            Unit = unit;
+            Triggers = new List<Trigger>();
+
             ValueStringFormat = valueStringFormat;
 
-            if (!HasSettingsValues())
-                SaveToLocalSettings();
+            if (HasSettingsValues())
+            {
+                LoadFromLocalSettings();
+            }
+            else
+            {
+                SetDefaults();
+            }
+        }
+
+        #endregion
+
+        public override string ToString()
+        {
+            return $"Sensor Id: {Id}\nRange: {RangeMin} to {RangeMax}\nDanger: {DangerLo} and {DangerHi}\nUnit: {Unit}";
         }
 
         /// <summary>
@@ -278,17 +304,66 @@ namespace IDUNv2.SensorLib
             return localSettings.Values[settingsKey] != null;
         }
 
+        public void Clear()
+        {
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            localSettings.Values[settingsKey] = new SensorSettings().ToJson();
+            RangeMin = 0;
+            RangeMax = 0;
+            DangerLo = 0;
+            DangerHi = 0;
+            Unit = "";
+            DeviceState = SensorDeviceState.Offline;
+            FaultState = SensorFaultState.Normal;
+            Triggers?.Clear();
+        }
+
+        public void SetDefaults()
+        {
+            Clear();
+
+            switch (Id)
+            {
+                case SensorId.Temperature:
+                    RangeMin = -100;
+                    RangeMax = 100;
+                    DangerLo = -100;
+                    DangerHi = 100;
+                    Unit = "° C";
+                    ValueStringFormat = "F2";
+                    break;
+
+                case SensorId.Humidity:
+                    RangeMin = 0;
+                    RangeMax = 100;
+                    DangerLo = 0;
+                    DangerHi = 100;
+                    Unit = "% RH";
+                    ValueStringFormat = "F2";
+                    break;
+
+                case SensorId.Pressure:
+                    RangeMin = 500;
+                    RangeMax = 2000;
+                    DangerLo = 500;
+                    DangerHi = 2000;
+                    Unit = "hPa";
+                    ValueStringFormat = "N0";
+                    break;
+            }
+
+            SaveToLocalSettings();
+        }
+
         public void SaveToLocalSettings()
         {
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             var ss = new SensorSettings
             {
-                DeviceState = DeviceState,
                 RangeMin = RangeMin,
                 RangeMax = RangeMax,
                 DangerLo = DangerLo,
                 DangerHi = DangerHi,
-                ValueStringFormat = ValueStringFormat,
                 Unit = Unit,
                 Triggers = Triggers
             };
@@ -303,21 +378,42 @@ namespace IDUNv2.SensorLib
             var ss = SensorSettings.CreateFromJson(json);
             if (ss != null)
             {
-                DeviceState = ss.DeviceState;
                 RangeMin = ss.RangeMin;
                 RangeMax = ss.RangeMax;
                 DangerLo = ss.DangerLo;
                 DangerHi = ss.DangerHi;
-                ValueStringFormat = ss.ValueStringFormat;
                 Unit = ss.Unit;
                 Triggers = ss.Triggers;
             }
         }
 
-        public bool SetTriggers(Trigger[] triggers)
+        public void AddTrigger(Trigger t)
         {
-            Triggers = triggers;
-            return true;
+            if (!Triggers.Any(p => p.id == t.id))
+            {
+                Triggers.Add(t);
+                SaveToLocalSettings();
+            }
+        }
+
+        public void RemoveTrigger(Trigger t)
+        {
+            Triggers.Remove(t);
+            SaveToLocalSettings();
+        }
+
+        public void SetTrigger(int id, float val, int cmp)
+        {
+            Trigger t;
+            t.id = id;
+            t.cmp = cmp;
+            t.val = val;
+            int i = Triggers.IndexOf(t);
+            if (i != -1)
+            {
+                Triggers[i] = t;
+                SaveToLocalSettings();
+            }
         }
     }
 }

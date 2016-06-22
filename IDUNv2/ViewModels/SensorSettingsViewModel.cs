@@ -107,16 +107,16 @@ namespace IDUNv2.ViewModels
 
         #region CmdBar Actions
 
-        private async void SaveSensor(object param)
+        private void SaveSensor(object param)
         {
-            var triggers = await triggerAccess.GetSensorTriggersFor(Sensor.Id);
-            var ts = triggers.Select(t => new Sensor.Trigger
-            {
-                id = t.Id,
-                cmp = t.Comparer == SensorTriggerComparer.Above ? 1 : -1,
-                val = t.Value
-            }).ToArray();
-            Sensor.SetTriggers(ts);
+            //var triggers = await triggerAccess.GetSensorTriggersFor(Sensor.Id);
+            //var ts = triggers.Select(t => new Sensor.Trigger
+            //{
+            //    id = t.Id,
+            //    cmp = t.Comparer == SensorTriggerComparer.Above ? 1 : -1,
+            //    val = t.Value
+            //}).ToArray();
+            //Sensor.SetTriggers(ts);
             Sensor.SaveToLocalSettings();
             ShellPage.Current.AddNotificatoin(
                 NotificationType.Information,
@@ -124,15 +124,37 @@ namespace IDUNv2.ViewModels
                 "Sensor " + Sensor.Id + " Settings Changes Saved!");
         }
 
-        private void CreateTrigger(object param)
+        private void ClearSensor(object param)
         {
-            var trigger = new SensorTriggerViewModel(new SensorTrigger { SensorId = Sensor.Id });
-            Triggers.Add(trigger);
-            SelectedTrigger = trigger;
+            Sensor.Clear();
+            Notify("SensorDeviceStateOnline");
+            Notify("SensorDeviceStateSimulated");
+            Notify("SensorDeviceStateOffline");
+
             ShellPage.Current.AddNotificatoin(
                 NotificationType.Information,
-                "Trigger Created",
-                "Empty Trigger Created.");
+                "Sensor Cleared",
+                Sensor.ToString());
+        }
+
+        private void ResetSensor(object param)
+        {
+            Sensor.SetDefaults();
+            Notify("SensorDeviceStateOnline");
+            Notify("SensorDeviceStateSimulated");
+            Notify("SensorDeviceStateOffline");
+
+            ShellPage.Current.AddNotificatoin(
+                NotificationType.Information,
+                "Sensor Reset",
+                Sensor.ToString());
+        }
+
+        private void CreateTrigger(object param)
+        {
+            var trigger = new SensorTriggerViewModel(Sensor, new SensorTrigger { SensorId = Sensor.Id });
+            Triggers.Add(trigger);
+            SelectedTrigger = trigger;
         }
 
         private async void SaveTrigger(object param)
@@ -141,13 +163,12 @@ namespace IDUNv2.ViewModels
             {
                 SelectedTrigger.TemplateId = SelectedTemplate.Id;
                 SelectedTrigger.Model = await triggerAccess.SetSensorTrigger(SelectedTrigger.Model);
+                Sensor.SetTrigger(SelectedTrigger.Id, SelectedTrigger.Value, SelectedTrigger.Comparer == SensorTriggerComparer.Above ? 1 : -1);
 
-                string NotificationDescription = "Trigger Id: " + SelectedTrigger.Model.Id + " has had its' changes saved.\nComparer: " + SelectedTrigger.Model.Comparer + "\nValue: " + SelectedTrigger.Model.Value + "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
                 ShellPage.Current.AddNotificatoin(
                     NotificationType.Information,
                     "Trigger Saved",
-                    NotificationDescription);
-
+                    SelectedTrigger.ToString());
             }
         }
 
@@ -156,13 +177,9 @@ namespace IDUNv2.ViewModels
             if (SelectedTrigger != null)
             {
                 SelectedTrigger.Model = await triggerAccess.DeleteSensorTrigger(SelectedTrigger.Model);
+                Sensor.RemoveTrigger(new Sensor.Trigger { id = SelectedTrigger.Id });
 
-                string NotificationDescription =
-                    "Trigger Id: " + SelectedTrigger.Model.Id +
-                    " has been deleted.\nComparer: " + SelectedTrigger.Model.Comparer +
-                    "\nValue: " + SelectedTrigger.Model.Value +
-                    "\nTemplate Id: " + SelectedTrigger.Model.TemplateId;
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Trigger Deleted", NotificationDescription);
+                ShellPage.Current.AddNotificatoin(NotificationType.Information, "Trigger Deleted", SelectedTrigger.ToString());
 
                 Triggers.Remove(SelectedTrigger);
                 SelectedTrigger = Triggers.LastOrDefault();
@@ -185,8 +202,7 @@ namespace IDUNv2.ViewModels
             Templates = await faultReportAccess.GetFaultReportTemplates();
             var triggers = await triggerAccess.GetSensorTriggersFor(Sensor.Id);
             Triggers = new ObservableCollection<SensorTriggerViewModel>(
-                triggers.Select(t => new SensorTriggerViewModel(t))
-                );
+                triggers.Select(t => new SensorTriggerViewModel(Sensor, t)));
             SelectedTrigger = Triggers.FirstOrDefault();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
@@ -200,7 +216,9 @@ namespace IDUNv2.ViewModels
 
             GeneralCmdBarItems = new CmdBarItem[]
             {
-                new CmdBarItem(Symbol.Save, "Save", SaveSensor)
+                new CmdBarItem(Symbol.Save, "Save", SaveSensor),
+                new CmdBarItem(Symbol.Clear, "Clear", ClearSensor),
+                new CmdBarItem(Symbol.GoToStart, "Defaults", ResetSensor)
             };
 
             TriggerCmdBarItems = new CmdBarItem[]

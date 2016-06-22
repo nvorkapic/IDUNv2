@@ -51,6 +51,14 @@ namespace IDUNv2.Controls
             {
                 float stepSize = 10.0f;
                 float range = max - min;
+
+                if (range == 0.0f)
+                {
+                    LabelYs = new List<int>();
+                    Labels = new List<ScaleLabel>();
+                    return;
+                }
+
                 float rangeStep = range / stepSize;
                 float yStep = (height / stepSize);
                 float yAdjust = (fontSize + 5.0f) * 0.5f;
@@ -151,9 +159,9 @@ namespace IDUNv2.Controls
         /// <param name="max">Maximum range</param>
         public void SetRange(float min, float max)
         {
-            if (min >= max)
+            if (min > max)
             {
-                throw new Exception("min must be < max");
+                return;
             }
 
             rangeMin = min;

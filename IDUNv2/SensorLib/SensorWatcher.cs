@@ -47,14 +47,11 @@ namespace IDUNv2.SensorLib
 
             if (hts221.IsValid)
             {
-                Sensors[(int)SensorId.Temperature].DeviceState = SensorDeviceState.Online;
                 Sensors[(int)SensorId.Temperature].HasHardware = true;
-                Sensors[(int)SensorId.Humidity].DeviceState = SensorDeviceState.Online;
                 Sensors[(int)SensorId.Humidity].HasHardware = true;
             }
             if (lps25h.IsValid)
             {
-                Sensors[(int)SensorId.Pressure].DeviceState = SensorDeviceState.Online;
                 Sensors[(int)SensorId.Pressure].HasHardware = true;
             }
 
@@ -86,9 +83,9 @@ namespace IDUNv2.SensorLib
         {
             Sensors = new Sensor[]
             {
-                new Sensor(SensorId.Temperature, -40, 100, "° C"),
-                new Sensor(SensorId.Humidity, 0, 100, "% RH"),
-                new Sensor(SensorId.Pressure, 500, 2000, "hPa", "N0")
+                new Sensor(SensorId.Temperature),
+                new Sensor(SensorId.Humidity),
+                new Sensor(SensorId.Pressure, "N0")
             };
 
             // setup simulated reading functions

@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Core;
 using IDUNv2.SensorLib.IMU;
 using Newtonsoft.Json;
+using System.Linq;
+using System.Threading;
 
 namespace IDUNv2.DataAccess
 {
@@ -28,6 +30,7 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public static class DAL
     {
+        private static volatile int dialogCount;
         private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
 
@@ -62,28 +65,40 @@ namespace IDUNv2.DataAccess
 
         #region Fault Handlers
 
+        private static async Task ShowDialog(Sensor sensor, SensorFault fault, DateTime timestamp)
+        {
+            var dialog = new ContentDialog { Title = "Faulted" };
+            dialog.Loaded += async (sender, e) =>
+            {
+                await Task.Delay(4000);
+                dialog.Hide();
+            };
+            var panel = new StackPanel();
+            panel.Children.Add(new TextBlock
+            {
+                Text = $"Sensor '{sensor.Id}' faulted from: {fault.Type}"
+            });
+            dialog.Content = panel;
+            dialog.PrimaryButtonText = "View Report";
+            dialog.IsPrimaryButtonEnabled = true;
+            dialog.SecondaryButtonText = "Close";
+            dialog.IsSecondaryButtonEnabled = true;
+
+            Interlocked.Increment(ref dialogCount);
+            await dialog.ShowAsync();
+        }
+
         private static void InstallSensorFaultHandler()
         {
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
-                var dialog = new ContentDialog { Title = "Faulted" };
-                dialog.Loaded += async (sender, e) =>
+                if (dialogCount == 0)
                 {
-                    await Task.Delay(4000);
-                    dialog.Hide();
-                };
-                var panel = new StackPanel();
-                panel.Children.Add(new TextBlock
-                {
-                    Text = $"Sensor '{sensor.Id}' faulted from: {fault.Type}"
-                });
-                dialog.Content = panel;
-                dialog.PrimaryButtonText = "View Report";
-                dialog.IsPrimaryButtonEnabled = true;
-                dialog.SecondaryButtonText = "Close";
-                dialog.IsSecondaryButtonEnabled = true;
-                await dialog.ShowAsync();
-
+                    await ShowDialog(sensor, fault, timestamp).ContinueWith(task =>
+                    {
+                        Interlocked.Decrement(ref dialogCount);
+                    });
+                }
                 string shortDescription = "Sensor Triggered";
                 string longDescription = "Sensor has entered Triggered State!\n\nSensor ID: " + sensor.Id + "\nFaulted State: " + sensor.FaultState + "\nDevice State: " + sensor.DeviceState + "\nSensor Value: " + sensor.Value + "\nSensor Danger High Value: " + sensor.DangerHi + "\nSensor Danger Low Value: " + sensor.DangerLo + "\nSensor Maximum Value: " + sensor.RangeMax + "\nSensor Minimum Value: " + sensor.RangeMin + "\nFault ID: " + fault.Id + "\nFault Type: " + fault.Type;
 
@@ -93,11 +108,18 @@ namespace IDUNv2.DataAccess
                 document.shortDescription = shortDescription;
                 document.longDescription = longDescription;
 
-                string json = JsonConvert.SerializeObject(document);
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
-                var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteTextAsync(TriggerReportFile, json);
+                try
+                {
+                    string json = JsonConvert.SerializeObject(document);
+                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                    StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
+                    var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
+                    await FileIO.WriteTextAsync(TriggerReportFile, json);
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
             };
         }
 
