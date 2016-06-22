@@ -32,7 +32,6 @@ namespace IDUNv2.Pages
             viewModel.Sensor = e.Parameter as Sensor;
             await viewModel.InitAsync();
             DAL.PushNavLink(new NavLinkItem("Settings", GetType(), e.Parameter));
-
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
