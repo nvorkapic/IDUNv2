@@ -53,6 +53,7 @@
                             Text="{Binding Sensor.Unit, Mode=TwoWay}"
                             GotFocus="TextBoxUnit_GotFocus"
                             LostFocus="TextBoxUnit_LostFocus"
+                            IsEnabled="{Binding IsOffline}"
                             />
                         <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
                             <TextBox
@@ -61,6 +62,7 @@
                             Text="{Binding Sensor.RangeMin, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
                             LostFocus="TextBox_LostFocus"
+                            IsEnabled="{Binding IsOffline}"
                             />
                             <TextBox
                             Header="Range (max):"
@@ -69,10 +71,10 @@
                             Text="{Binding Sensor.RangeMax, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
                             LostFocus="TextBox_LostFocus"
+                            IsEnabled="{Binding IsOffline}"
                             />
                         </StackPanel>
                     </StackPanel>
-                    
                     <StackPanel Orientation="Horizontal" Margin="205,0,0,0">
                         <TextBox
                             Header="Danger (low):"
@@ -80,6 +82,7 @@
                             Text="{Binding Sensor.DangerLo, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
                             LostFocus="TextBox_LostFocus"
+                            IsEnabled="{Binding IsOffline}"
                             />
                         <TextBox
                             Header="Danger (high):"
@@ -88,11 +91,12 @@
                             Text="{Binding Sensor.DangerHi, Mode=TwoWay}"
                             GotFocus="TextBox_GotFocus"
                             LostFocus="TextBox_LostFocus"
+                            IsEnabled="{Binding IsOffline}"
                             />
                     </StackPanel>
                 </StackPanel>
             </PivotItem>
-            <PivotItem Header="Triggers">
+            <PivotItem Header="Triggers" IsEnabled="{Binding IsOffline}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>

@@ -15,6 +15,7 @@ using IDUNv2.SensorLib.IMU;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading;
+using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 
 namespace IDUNv2.DataAccess
 {
@@ -88,10 +89,45 @@ namespace IDUNv2.DataAccess
             await dialog.ShowAsync();
         }
 
+        private static async Task<FaultReport> SendFaultReport(Sensor sensor, SensorFault fault, DateTime timestamp)
+        {
+            if (fault.Type == SensorFaultType.FromTrigger)
+            {
+                var trigger = await SensorTriggerAccess.FindSensorTrigger(fault.Id);
+                if (trigger == null)
+                    return null;
+
+                var template = await FaultReportAccess.FindFaultReportTemplate(trigger.TemplateId);
+                if (template == null)
+                    return null;
+
+
+                // TODO: MchCodeContract and OrgCode must by correctly linked to MchCode!
+                //       needs to be setup in DeviceSettings
+                var report = new FaultReport
+                {
+                    MchCode = DeviceSettings.ObjectID,
+                    MchCodeContract = "2",
+                    ErrDescr = template.Directive,
+                    ErrDescrLo = template.FaultDescr,
+                    ErrDiscoverCode = template.DiscCode,
+                    ErrSymptom = template.SymptCode,
+                    PriorityId = template.PrioCode,
+                    OrgCode = "101"
+                };
+
+                return await FaultReportAccess.SetFaultReport(report);
+            }
+
+            return null;
+        }
+
         private static void InstallSensorFaultHandler()
         {
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
+                //var report = await SendFaultReport(sensor, fault, timestamp);
+
                 if (dialogCount == 0)
                 {
                     await ShowDialog(sensor, fault, timestamp).ContinueWith(task =>
@@ -118,8 +154,8 @@ namespace IDUNv2.DataAccess
                 }
                 catch (Exception)
                 {
-                    // ignore
-                }
+            // ignore
+        }
             };
         }
 

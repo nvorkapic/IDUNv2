@@ -56,5 +56,20 @@ namespace IDUNv2.ViewModels
             HumiditySensor = sensorAccess.GetSensor(SensorId.Humidity);
             PressureSensor = sensorAccess.GetSensor(SensorId.Pressure);
         }
+
+        private void ActivateSensor(Sensor s)
+        {
+            if (s.HasHardware)
+                s.DeviceState = SensorDeviceState.Online;
+            else
+                s.DeviceState = SensorDeviceState.Simulated;
+        }
+
+        public void ActivateAll()
+        {
+            ActivateSensor(TemperatureSensor);
+            ActivateSensor(HumiditySensor);
+            ActivateSensor(PressureSensor);
+        }
     }
 }

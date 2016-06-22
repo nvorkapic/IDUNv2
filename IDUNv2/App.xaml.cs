@@ -56,7 +56,7 @@ namespace IDUNv2
                 brushViewModel.BrushesResources = "ms-appx:///Styles/BrushesAddovation.xaml";
             }
 
-#if false
+#if true
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;

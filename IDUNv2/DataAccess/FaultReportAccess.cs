@@ -119,7 +119,7 @@ namespace IDUNv2.DataAccess
 
         public Task<FaultReport> SetFaultReport(FaultReport report)
         {
-            throw new NotImplementedException();
+            return cloud.SetFaultReport(report);
         }
     }
 }
