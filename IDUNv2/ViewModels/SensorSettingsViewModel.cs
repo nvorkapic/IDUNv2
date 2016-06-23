@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace IDUNv2.ViewModels
@@ -66,6 +68,7 @@ namespace IDUNv2.ViewModels
                 Notify("SensorDeviceStateOffline");
                 Notify("SensorDeviceStateOnline");
                 Notify("SensorDeviceStateSimulated");
+                Notify("IsOffline");
             }
         }
 
@@ -87,6 +90,11 @@ namespace IDUNv2.ViewModels
             set { SensorDeviceState = SensorDeviceState.Simulated; }
         }
 
+        public bool IsOffline
+        {
+            get { return Sensor.DeviceState == SensorDeviceState.Offline; }
+        }
+
         public void SetSelectedTriggerFromTemplate(FaultReportTemplate template)
         {
             if (SelectedTrigger != null)
@@ -105,18 +113,26 @@ namespace IDUNv2.ViewModels
 
         #endregion
 
+        private async Task<bool> AreYouSure(string content)
+        {
+            var dialog = new ContentDialog
+            {
+                Margin = new Thickness { Top = 100 },
+                Content = new TextBlock { Margin = new Thickness { Top = 50 }, Text = content },
+                IsPrimaryButtonEnabled = true,
+                IsSecondaryButtonEnabled = true,
+                PrimaryButtonText = "Yes",
+                SecondaryButtonText = "No"
+            };
+
+            var result = await dialog.ShowAsync();
+            return result == ContentDialogResult.Primary;
+        }
+
         #region CmdBar Actions
 
         private void SaveSensor(object param)
         {
-            //var triggers = await triggerAccess.GetSensorTriggersFor(Sensor.Id);
-            //var ts = triggers.Select(t => new Sensor.Trigger
-            //{
-            //    id = t.Id,
-            //    cmp = t.Comparer == SensorTriggerComparer.Above ? 1 : -1,
-            //    val = t.Value
-            //}).ToArray();
-            //Sensor.SetTriggers(ts);
             Sensor.SaveToLocalSettings();
             ShellPage.Current.AddNotificatoin(
                 NotificationType.Information,
@@ -124,30 +140,36 @@ namespace IDUNv2.ViewModels
                 "Sensor " + Sensor.Id + " Settings Changes Saved!");
         }
 
-        private void ClearSensor(object param)
+        private async void ClearSensor(object param)
         {
-            Sensor.Clear();
-            Notify("SensorDeviceStateOnline");
-            Notify("SensorDeviceStateSimulated");
-            Notify("SensorDeviceStateOffline");
+            if (await AreYouSure("Are you sure you want to clear sensor settings?"))
+            {
+                Sensor.Clear();
+                Notify("SensorDeviceStateOnline");
+                Notify("SensorDeviceStateSimulated");
+                Notify("SensorDeviceStateOffline");
 
-            ShellPage.Current.AddNotificatoin(
-                NotificationType.Information,
-                "Sensor Cleared",
-                Sensor.ToString());
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "Sensor Cleared",
+                    Sensor.ToString());
+            }
         }
 
-        private void ResetSensor(object param)
+        private async void ResetSensor(object param)
         {
-            Sensor.SetDefaults();
-            Notify("SensorDeviceStateOnline");
-            Notify("SensorDeviceStateSimulated");
-            Notify("SensorDeviceStateOffline");
+            if (await AreYouSure("Are you sure you want to reset sensor settings?"))
+            {
+                Sensor.SetDefaults();
+                Notify("SensorDeviceStateOnline");
+                Notify("SensorDeviceStateSimulated");
+                Notify("SensorDeviceStateOffline");
 
-            ShellPage.Current.AddNotificatoin(
-                NotificationType.Information,
-                "Sensor Reset",
-                Sensor.ToString());
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "Sensor Reset",
+                    Sensor.ToString());
+            }
         }
 
         private void CreateTrigger(object param)

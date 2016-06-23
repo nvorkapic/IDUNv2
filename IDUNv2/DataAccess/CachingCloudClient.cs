@@ -35,8 +35,8 @@ namespace IDUNv2.DataAccess
 
         protected override void OnError(string error, Exception ex)
         {
-            //throw ex;
             Debug.WriteLine(error);
+            //throw ex;
         }
 
         #region Caching augmentation

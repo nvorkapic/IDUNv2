@@ -1,5 +1,6 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
+using IDUNv2.Models;
 using IDUNv2.SensorLib;
 using IDUNv2.ViewModels;
 using System;
@@ -57,7 +58,13 @@ namespace IDUNv2.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DAL.SetCmdBarItems(null);
+            DAL.SetCmdBarItems(new CmdBarItem[]
+                {
+                    new CmdBarItem(Symbol.Play, "Activate All", o =>
+                    {
+                        viewModel.ActivateAll();
+                    })
+                });
         }
 
         #region Event Handlers
