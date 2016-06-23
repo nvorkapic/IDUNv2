@@ -1,4 +1,5 @@
-﻿using IDUNv2.DataAccess;
+﻿using IDUNv2.Common;
+using IDUNv2.DataAccess;
 using IDUNv2.SensorLib.IMU;
 using System;
 using System.Collections.Generic;
@@ -8,31 +9,123 @@ using System.Threading.Tasks;
 
 namespace IDUNv2.ViewModels
 {
-    public class IMUViewModel
+    public class IMUViewModel : NotifyBase
     {
+        private Vector3 acceleration;
+        public Vector3 Acceleration
+        {
+            get { return acceleration; }
+            set { acceleration = value; Notify(); }
+        }
+        private Vector3 accelerationMax; /*= new Vector3(double.MinValue, double.MinValue, double.MinValue);*/
+        public Vector3 AccelerationMax
+        {
+            get { return accelerationMax; }
+            set { accelerationMax = value; Notify(); }
+        }
+        private Vector3 accelerationMin; /*= new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);*/
+        public Vector3 AccelerationMin
+        {
+            get { return accelerationMin; }
+            set { accelerationMin = value;Notify(); }
+        }
+        private double acceloScalar;
+        public double AcceloScalar
+        {
+            get { return acceloScalar; }
+            set { acceloScalar = value; Notify(); }
+        }
+        private double _amax; /*= double.MinValue;*/
+        public double amax
+        {
+            get { return _amax; }
+            set { _amax = value; Notify(); }
+        }
+        private double _amin;/* = double.MaxValue;*/
+        public double amin
+        {
+            get { return _amin; }
+            set { _amin = value; Notify(); }
+        }
+        private Vector3 magnet;
+        public Vector3 Magnet
+        {
+            get { return magnet; }
+            set { magnet = value; Notify(); }
+        }
+        private double magnetScalar;
+        public double MagnetScalar
+        {
+            get { return magnetScalar; }
+            set { magnetScalar = value; Notify(); }
+        }
+        private double _mmax; /*= double.MinValue;*/
+        public double mmax
+        {
+            get { return _mmax; }
+            set { _mmax = value; Notify(); }
+        }
+        private double _mmin; /*= double.MaxValue;*/
+        public double mmin
+        {
+            get { return _mmin; }
+            set { _mmin = value; Notify(); }
+        }
 
-        public Vector3 Acceleration;
-        public Vector3 AccelerationMax = new Vector3(double.MinValue, double.MinValue, double.MinValue);
-        public Vector3 AccelerationMin = new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
-        public double AcceloScalar;
-        public double amax = double.MinValue;
-        public double amin = double.MaxValue;
-
-        public Vector3 Magnet;
-        public double MagnetScalar;
-        public double mmax;
-        public double mmin;
-
-        public Vector3 Gyro;
-        public Vector3 GyroMax = new Vector3(double.MinValue, double.MinValue, double.MinValue);
-        public Vector3 GyroMin = new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
-        public double GyroScalar;
-        public double gmax = double.MinValue;
-        public double gmin = double.MaxValue;
-
-        public double PitchAxis;
-        public double RollAxis;
-        public double JawAxis;
+        private Vector3 gyro;
+        public Vector3 Gyro
+        {
+            get { return gyro; }
+            set { gyro = value; Notify(); }
+        }
+        private Vector3 gyroMax; /*= new Vector3(double.MinValue, double.MinValue, double.MinValue);*/
+        public Vector3 GyroMax
+        {
+            get { return gyroMax; }
+            set { gyroMax = value; Notify(); }
+        }
+        private Vector3 gyroMin; /*= new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);*/
+        public Vector3 GyroMin
+        {
+            get { return gyroMin; }
+            set { gyroMin = value; Notify(); }
+        }
+        private double gyroScalar;
+        public double GyroScalar
+        {
+            get { return gyroScalar; }
+            set { gyroScalar = value; Notify(); }
+        }
+        private double _gmax; /*= double.MinValue;*/
+        public double gmax
+        {
+            get { return _gmax; }
+            set { _gmax = value; Notify(); }
+        }
+        private double _gmin; /*= double.MaxValue;*/
+        public double gmin
+        {
+            get { return _gmin; }
+            set { _gmin = value; Notify(); }
+        }
+        private double pitchAxis;
+        public double PitchAxis
+        {
+            get { return pitchAxis; }
+            set { pitchAxis = value; Notify(); }
+        }
+        private double rollAxis;
+        public double RollAxis
+        {
+            get { return rollAxis; }
+            set { rollAxis = value; Notify(); }
+        }
+        private double jawAxis;
+        public double JawAxis
+        {
+            get { return jawAxis; }
+            set { jawAxis = value;Notify(); }
+        }
 
 
         
@@ -57,7 +150,7 @@ namespace IDUNv2.ViewModels
 
         public void GetGyroscope(ImuSensorReadings r)
         {
-            Gyro = r.Gyro;
+            Gyro = r.Gyro.AsDegrees;
             GyroMax = GetVectorMax(GyroMax, Gyro);
             GyroMin = GetVectorMin(GyroMin, Gyro);
             GyroScalar = Math.Sqrt(Math.Pow(r.Gyro.AsDegrees.X, 2) + Math.Pow(r.Gyro.AsDegrees.Y, 2) + Math.Pow(r.Gyro.AsDegrees.Z, 2));
