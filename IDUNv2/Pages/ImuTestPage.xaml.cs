@@ -43,6 +43,10 @@ namespace IDUNv2.Pages
             viewModel.GetGyroscope(r);
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DAL.SetCmdBarItems(null);
+        }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             timer.Stop();

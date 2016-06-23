@@ -135,8 +135,8 @@ namespace IDUNv2.ViewModels
             AccelerationMin = GetVectorMin(Acceleration, AccelerationMin);
             AccelerationMax = GetVectorMax(Acceleration, AccelerationMax);
             AcceloScalar = Math.Sqrt(Math.Pow(r.Acceleration.X, 2) + Math.Pow(r.Acceleration.Y, 2) + Math.Pow(r.Acceleration.Z, 2));
-            amax = Math.Max(AcceloScalar, amax);
-            amin = Math.Min(AcceloScalar, amin);
+            amax = Math.Max(AcceloScalar, amax)+1;
+            amin = Math.Min(AcceloScalar, amin)-1;
         }
 
         public void GetMagneticField(ImuSensorReadings r)
@@ -144,8 +144,8 @@ namespace IDUNv2.ViewModels
             Magnet = r.MagneticField;
 
             MagnetScalar = Math.Sqrt(Math.Pow(r.MagneticField.X, 2) + Math.Pow(r.MagneticField.Y, 2) + Math.Pow(r.MagneticField.Z, 2));
-            mmax = Math.Max(MagnetScalar, mmax);
-            mmin = Math.Min(MagnetScalar, mmin);
+            mmax = Math.Max(MagnetScalar, mmax)+1;
+            mmin = Math.Min(MagnetScalar, mmin)-1;
         }
 
         public void GetGyroscope(ImuSensorReadings r)
@@ -154,8 +154,8 @@ namespace IDUNv2.ViewModels
             GyroMax = GetVectorMax(GyroMax, Gyro);
             GyroMin = GetVectorMin(GyroMin, Gyro);
             GyroScalar = Math.Sqrt(Math.Pow(r.Gyro.AsDegrees.X, 2) + Math.Pow(r.Gyro.AsDegrees.Y, 2) + Math.Pow(r.Gyro.AsDegrees.Z, 2));
-            gmax = Math.Max(GyroScalar, gmax);
-            gmin = Math.Min(GyroScalar, gmin);
+            gmax = Math.Max(GyroScalar, gmax)+1;
+            gmin = Math.Min(GyroScalar, gmin)-1;
         }
 
         public Vector3 GetVectorMax(Vector3 vectorA, Vector3 vectorB)
