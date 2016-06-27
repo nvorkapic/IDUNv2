@@ -222,8 +222,8 @@ namespace IDUNv2.DataAccess
 
                 InsightsHelper.Init();
 
-                FaultReportAccess = new FaultReportAccess(cloud, db);
-                //FaultReportAccess = new MockFaultReportAccess();
+                //FaultReportAccess = new FaultReportAccess(cloud, db);
+                FaultReportAccess = new MockFaultReportAccess();
             }
             catch
             {
