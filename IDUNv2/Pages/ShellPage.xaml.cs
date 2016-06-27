@@ -49,11 +49,6 @@ namespace IDUNv2.Pages
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            
-        }
-
         #endregion
 
         #region Event Handlers
@@ -85,6 +80,7 @@ namespace IDUNv2.Pages
         public void EnableFullNavList()
         {
             viewModel.SetNavListFull();
+         
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
@@ -126,20 +122,6 @@ namespace IDUNv2.Pages
         private void NavMenuExpand_Click(object sender, RoutedEventArgs e)
         {
             viewModel.IsPaneOpen = !viewModel.IsPaneOpen;
-        }
-
-        private void NavMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                var lv = sender as ListView;
-                var item = lv.SelectedItem as NavMenuItem;
-                viewModel.SelectMainMenu(ContentFrame, item);
-            }
-            catch
-            {
-
-            }
         }
 
         public void ContentNavigate(Type pageType, object param = null)
@@ -357,6 +339,13 @@ namespace IDUNv2.Pages
         {
             Current.Frame.Navigate(typeof(ShellPage));
             
+        }
+
+        private void ListView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            var lv = sender as ListView;
+            var item = lv.SelectedItem as NavMenuItem;
+            viewModel.SelectMainMenu(ContentFrame, item);
         }
     }
 }

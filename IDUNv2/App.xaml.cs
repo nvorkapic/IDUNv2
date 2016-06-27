@@ -85,16 +85,13 @@ namespace IDUNv2
 
            
 
-            try
-            {
-                DAL.Init(Window.Current.Dispatcher);
-                await DAL.ConnectToCloud();
-                await DAL.FillCaches().ConfigureAwait(false);
-            }
-            catch
-            {
 
-            }
+                DAL.Init(Window.Current.Dispatcher);
+
+                await DAL.ConnectToCloud();
+
+                await DAL.FillCaches().ConfigureAwait(false);
+
             
         }
 

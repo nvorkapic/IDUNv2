@@ -126,7 +126,6 @@ namespace IDUNv2.DataAccess
         {
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
-                //var report = await SendFaultReport(sensor, fault, timestamp);
 
                 if (dialogCount == 0)
                 {
@@ -154,8 +153,7 @@ namespace IDUNv2.DataAccess
                 }
                 catch (Exception)
                 {
-            // ignore
-        }
+                }
             };
         }
 
@@ -176,25 +174,11 @@ namespace IDUNv2.DataAccess
         {
             try
             {
-                if (DeviceSettings.HasSettings())
-                {
+
                     string url = DeviceSettings.URL;
                     string systemid = DeviceSettings.SystemID;
                     string username = DeviceSettings.Username;
                     string password = DeviceSettings.Password;
-
-                    //url = url ?? "testcloud.addovation.com";
-                    //systemid = systemid ?? "race8.addovation.com";
-                    //username = username ?? "alex";
-                    //password = password ?? "alex";
-
-                    //if (!DeviceSettings.HasSettings())
-                    //{
-                    //    DeviceSettings.URL = url;
-                    //    DeviceSettings.SystemID = systemid;
-                    //    DeviceSettings.Username = username;
-                    //    DeviceSettings.Password = password;
-                    //}
 
                     string cloudUrl = "";
                     try
@@ -214,11 +198,9 @@ namespace IDUNv2.DataAccess
                     };
 
                     InsightsHelper.Init();
-                    //InsightsHelper.SetUser(connectionInfo);
 
                     FaultReportAccess = new FaultReportAccess(cloud, db);
-                    //FaultReportAccess = new MockFaultReportAccess();
-                }
+                
 
             }
             catch
@@ -229,14 +211,17 @@ namespace IDUNv2.DataAccess
 
         public static Task<bool> ConnectToCloud()
         {
-                CreateCloudClient();
+            CreateCloudClient();
+            if (cloud != null)
                 return cloud.Authenticate();
+            return Task.FromResult(false);
         }
 
         public static async Task FillCaches()
         {
             ShellPage.SetSpinner(LoadingState.Loading);
-            await FaultReportAccess.FillCaches();
+            if (cloud != null)
+                await FaultReportAccess.FillCaches();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 

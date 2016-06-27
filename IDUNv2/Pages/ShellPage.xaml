@@ -91,10 +91,10 @@
                 <Grid>
                     <ListView
                         ItemsSource="{Binding NavList}"
-                        SelectedItem="{Binding SelectedNavMenuItem}"
+                        SelectedItem="{Binding SelectedNavMenuItem, Mode=TwoWay}"
                         ItemTemplate="{ThemeResource NavMenuData}"
                         Background="{ThemeResource MainMenuBrush}"
-                        SelectionChanged="NavMenu_SelectionChanged"
+                        Tapped="ListView_Tapped"
                         />
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                         <Button Width="50" Height="50" Click="NotificationButton_Click">

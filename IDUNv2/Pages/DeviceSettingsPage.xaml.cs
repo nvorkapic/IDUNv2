@@ -34,6 +34,7 @@ namespace IDUNv2.Pages
                     NotificationType.Information,
                     "Log In Successful!",
                     "You have been connected to IFS Clouds Service!");
+
                 ShellPage.Current.EnableFullNavList();
 
             }

@@ -86,7 +86,9 @@ namespace IDUNv2.ViewModels
 
         public void SetNavListFull()
         {
-            NavList =NavFullList;
+            NavList = NavFullList;
+            SelectedNavMenuItem = NavFullList.Where(x => x.Label == "Settings").FirstOrDefault();
+
         }
         public void SetNavListSettings()
         {

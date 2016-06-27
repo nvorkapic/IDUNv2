@@ -21,7 +21,7 @@ namespace IDUNv2.DataAccess
 
         public async Task FillCaches()
         {
-            await cloud.FillCaches();
+                await cloud?.FillCaches();
         }
 
         public Task<List<FaultReportTemplate>> GetFaultReportTemplates()
