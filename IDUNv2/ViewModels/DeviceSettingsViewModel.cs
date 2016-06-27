@@ -77,6 +77,11 @@ namespace IDUNv2.ViewModels
             }
         }
 
+        public bool IsValidated()
+        {
+            return DeviceSettings.HasSettings();
+        }
+
         #endregion
     }
 }

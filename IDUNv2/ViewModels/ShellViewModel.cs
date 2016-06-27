@@ -62,7 +62,13 @@ namespace IDUNv2.ViewModels
         public ObservableCollection<Notification> NotificationList { get; private set; }
         public ObservableCollection<NavLinkItem> NavLinks { get; private set; }
 
-        public List<NavMenuItem> NavList { get; } = new List<NavMenuItem>()
+        private ObservableCollection<NavMenuItem> _navList;
+        public ObservableCollection<NavMenuItem> NavList { get {return _navList; } private set { _navList = value; Notify(); } } 
+        
+
+        #endregion
+
+        private ObservableCollection<NavMenuItem> NavFullList = new ObservableCollection<NavMenuItem>()
         {
             new NavMenuItem { Label = "Sensors", Symbol = Symbol.View, PageType = typeof(Pages.SensorOverviewPage) },
             new NavMenuItem { Label = "Reports", Symbol = Symbol.ProtectedDocument, PageType = typeof(Pages.FaultReportListingPage) },
@@ -70,10 +76,22 @@ namespace IDUNv2.ViewModels
             new NavMenuItem { Label = "Apps", Symbol = Symbol.AllApps, PageType = typeof(Pages.LEDControlPage) },
             new NavMenuItem { Label = "IMU", Symbol = Symbol.Bullets, PageType = typeof(Pages.ImuTestPage) },
             new NavMenuItem { Label = "Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) },
-            new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) },
+            new NavMenuItem { Label = "About", Symbol = Symbol.Help, PageType = typeof(Pages.AboutPage) }
         };
 
-        #endregion
+        private ObservableCollection<NavMenuItem> NoDeviceSettingsNavList = new ObservableCollection<NavMenuItem>()
+        {
+            new NavMenuItem { Label = "Settings", Symbol = Symbol.Globe, PageType = typeof(Pages.DeviceSettingsPage) }
+        };
+
+        public void SetNavListFull()
+        {
+            NavList =NavFullList;
+        }
+        public void SetNavListSettings()
+        {
+            NavList =NoDeviceSettingsNavList;
+        }
 
         #region Constructors
 

@@ -14,6 +14,7 @@ namespace IDUNv2.Pages
 
         private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel();
 
+
         #endregion
 
         #region CmdBar Actions
@@ -33,6 +34,8 @@ namespace IDUNv2.Pages
                     NotificationType.Information,
                     "Log In Successful!",
                     "You have been connected to IFS Clouds Service!");
+                ShellPage.Current.EnableFullNavList();
+
             }
 
             else
@@ -42,6 +45,10 @@ namespace IDUNv2.Pages
                     NotificationType.Warning,
                     "Authorization Failed!",
                     "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
+
+                if (viewModel.IsValidated())
+                    ShellPage.Current.EnableFullNavList();
+
             }
             timer.Start();
             ShellPage.SetSpinner(LoadingState.Finished);
@@ -109,8 +116,18 @@ namespace IDUNv2.Pages
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            var status = await DAL.ConnectToCloud();
-            viewModel.ConnectionStatus = !status; // for RedOrGreenConverter
+            bool status;
+            try
+            {
+                status = await DAL.ConnectToCloud();
+               
+            }
+            catch
+            {
+                status = false;
+            }
+
+            viewModel.ConnectionStatus = !status;
 
             var cmdBarItems = new CmdBarItem[]
             {

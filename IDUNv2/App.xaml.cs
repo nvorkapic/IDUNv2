@@ -25,7 +25,6 @@ namespace IDUNv2
     sealed partial class App : Application
     {
 
-        public static AppBrushViewModel brushViewModel = new AppBrushViewModel();
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,15 +33,8 @@ namespace IDUNv2
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            brushViewModel.PropertyChanged += BrushViewModel_PropertyChanged;
         }
 
-        private void BrushViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            ResourceDictionary RD = new ResourceDictionary();
-            RD.Source = new Uri(brushViewModel.BrushesResources, UriKind.RelativeOrAbsolute);
-            Application.Current.Resources.MergedDictionaries.Add(RD);
-        }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -51,10 +43,6 @@ namespace IDUNv2
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            if (brushViewModel.BrushesResources == null || brushViewModel.BrushesResources == string.Empty)
-            {
-                brushViewModel.BrushesResources = "ms-appx:///Styles/BrushesAddovation.xaml";
-            }
 
 #if true
             if (System.Diagnostics.Debugger.IsAttached)
@@ -95,9 +83,19 @@ namespace IDUNv2
                 Window.Current.Activate();
             }
 
-            DAL.Init(Window.Current.Dispatcher);
-            await DAL.ConnectToCloud();
-            await DAL.FillCaches().ConfigureAwait(false);
+           
+
+            try
+            {
+                DAL.Init(Window.Current.Dispatcher);
+                await DAL.ConnectToCloud();
+                await DAL.FillCaches().ConfigureAwait(false);
+            }
+            catch
+            {
+
+            }
+            
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using IDUNv2.DataAccess;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Navigation;
 
 namespace IDUNv2.Pages
 {
@@ -48,20 +49,42 @@ namespace IDUNv2.Pages
             viewModel.NotificationList.CollectionChanged += NotificationList_CollectionChanged;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            
+        }
+
         #endregion
 
         #region Event Handlers
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var first = viewModel.NavList.First();
-            viewModel.SelectMainMenu(ContentFrame, first);
-            var status = await DAL.ConnectToCloud();
-            if (!status)
-                Current.AddNotificatoin(
-                    NotificationType.Warning,
-                    "Authorization Failed!",
-                    "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
+            if (!DeviceSettings.HasSettings())
+            {
+                viewModel.SetNavListSettings();
+                viewModel.SelectMainMenu(ContentFrame, viewModel.NavList.FirstOrDefault());
+                
+            }             
+            else
+            {
+                viewModel.SetNavListFull();
+                var first = viewModel.NavList.First();
+                viewModel.SelectMainMenu(ContentFrame, first);
+                    var status = await DAL.ConnectToCloud();
+                    if (!status)
+                        Current.AddNotificatoin(
+                            NotificationType.Warning,
+                            "Authorization Failed!",
+                            "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
+
+            }
+            
+        }
+
+        public void EnableFullNavList()
+        {
+            viewModel.SetNavListFull();
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
@@ -107,9 +130,16 @@ namespace IDUNv2.Pages
 
         private void NavMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lv = sender as ListView;
-            var item = lv.SelectedItem as NavMenuItem;
-            viewModel.SelectMainMenu(ContentFrame, item);
+            try
+            {
+                var lv = sender as ListView;
+                var item = lv.SelectedItem as NavMenuItem;
+                viewModel.SelectMainMenu(ContentFrame, item);
+            }
+            catch
+            {
+
+            }
         }
 
         public void ContentNavigate(Type pageType, object param = null)

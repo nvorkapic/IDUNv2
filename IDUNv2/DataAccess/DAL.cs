@@ -176,57 +176,61 @@ namespace IDUNv2.DataAccess
         {
             try
             {
-                string url = DeviceSettings.URL;
-                string systemid = DeviceSettings.SystemID;
-                string username = DeviceSettings.Username;
-                string password = DeviceSettings.Password;
-
-                url = url ?? "testcloud.addovation.com";
-                systemid = systemid ?? "race8.addovation.com";
-                username = username ?? "alex";
-                password = password ?? "alex";
-
-                if (!DeviceSettings.HasSettings())
+                if (DeviceSettings.HasSettings())
                 {
-                    DeviceSettings.URL = url;
-                    DeviceSettings.SystemID = systemid;
-                    DeviceSettings.Username = username;
-                    DeviceSettings.Password = password;
+                    string url = DeviceSettings.URL;
+                    string systemid = DeviceSettings.SystemID;
+                    string username = DeviceSettings.Username;
+                    string password = DeviceSettings.Password;
+
+                    //url = url ?? "testcloud.addovation.com";
+                    //systemid = systemid ?? "race8.addovation.com";
+                    //username = username ?? "alex";
+                    //password = password ?? "alex";
+
+                    //if (!DeviceSettings.HasSettings())
+                    //{
+                    //    DeviceSettings.URL = url;
+                    //    DeviceSettings.SystemID = systemid;
+                    //    DeviceSettings.Username = username;
+                    //    DeviceSettings.Password = password;
+                    //}
+
+                    string cloudUrl = "";
+                    try
+                    {
+                        cloudUrl = CommonDictionary.CloudUrls[url];
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        cloudUrl = url;
+                    }
+                    var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
+
+                    cloud = new CachingCloudClient
+                    {
+                        ConnectionInfo = connectionInfo,
+                        SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
+                    };
+
+                    InsightsHelper.Init();
+                    //InsightsHelper.SetUser(connectionInfo);
+
+                    FaultReportAccess = new FaultReportAccess(cloud, db);
+                    //FaultReportAccess = new MockFaultReportAccess();
                 }
 
-                string cloudUrl = "";
-                try
-                {
-                    cloudUrl = CommonDictionary.CloudUrls[url];
-                }
-                catch (KeyNotFoundException)
-                {
-                    cloudUrl = url;
-                }
-                var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
-
-                cloud = new CachingCloudClient
-                {
-                    ConnectionInfo = connectionInfo,
-                    SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
-                };
-
-                InsightsHelper.Init();
-                //InsightsHelper.SetUser(connectionInfo);
-
-                FaultReportAccess = new FaultReportAccess(cloud, db);
-                //FaultReportAccess = new MockFaultReportAccess();
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                
             }
         }
 
         public static Task<bool> ConnectToCloud()
         {
-            CreateCloudClient();
-            return cloud.Authenticate();
+                CreateCloudClient();
+                return cloud.Authenticate();
         }
 
         public static async Task FillCaches()
