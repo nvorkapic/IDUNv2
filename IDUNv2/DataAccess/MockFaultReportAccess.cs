@@ -15,6 +15,8 @@ namespace IDUNv2.DataAccess
         private List<FaultReportTemplate> templates;
         private List<FaultReport> faultReports;
 
+        public bool LiveSystem { get { return false; } }
+
         public Task FillCaches()
         {
             discCodes = discCodes ?? new List<WorkOrderDiscCode>()
@@ -107,10 +109,14 @@ namespace IDUNv2.DataAccess
 
         public Task<List<FaultReport>> GetFaultReports(string mchCode = null)
         {
+#if false
             if (mchCode == null)
                 return Task.FromResult(faultReports);
             else
                 return Task.FromResult(faultReports.Where(r => r.MchCode == mchCode).ToList());
+#else
+            return Task.FromResult(faultReports);
+#endif
         }
 
         public Task<List<FaultReportTemplate>> GetFaultReportTemplates()
@@ -153,6 +159,7 @@ namespace IDUNv2.DataAccess
             int n = faultReports.Count + 1;
             report.WoNo = n;
             report.RegDate = DateTime.Now;
+            faultReports.Add(report);
             return Task.FromResult(report);
 
             //var report = new FaultReport

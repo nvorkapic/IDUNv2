@@ -47,9 +47,8 @@ namespace IDUNv2.Pages
                     "Authorization Failed!",
                     "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
 
-                if (viewModel.IsValidated())
+                if (viewModel.IsValidated)
                     ShellPage.Current.EnableFullNavList();
-
             }
             timer.Start();
             ShellPage.SetSpinner(LoadingState.Finished);
@@ -121,7 +120,6 @@ namespace IDUNv2.Pages
             try
             {
                 status = await DAL.ConnectToCloud();
-               
             }
             catch
             {

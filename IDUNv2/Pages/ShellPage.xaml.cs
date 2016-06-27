@@ -59,28 +59,31 @@ namespace IDUNv2.Pages
             {
                 viewModel.SetNavListSettings();
                 viewModel.SelectMainMenu(ContentFrame, viewModel.NavList.FirstOrDefault());
-                
-            }             
+            }
             else
             {
                 viewModel.SetNavListFull();
                 var first = viewModel.NavList.First();
                 viewModel.SelectMainMenu(ContentFrame, first);
-                    var status = await DAL.ConnectToCloud();
+                var status = await DAL.ConnectToCloud();
+                if (DAL.FaultReportAccess.LiveSystem)
+                {
                     if (!status)
-                        Current.AddNotificatoin(
+                        AddNotificatoin(
                             NotificationType.Warning,
                             "Authorization Failed!",
                             "Please enter valid IFS Cloud Log In details or check your Internet Connection!\nCloud Services are not available.");
+                }
+                else
+                {
+                    AddNotificatoin(
+                        NotificationType.Information,
+                        "Non-LiveSystem",
+                        "Not connected to real cloud, using in-memory test data");
+                }
 
             }
-            
-        }
 
-        public void EnableFullNavList()
-        {
-            viewModel.SetNavListFull();
-         
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
@@ -118,6 +121,11 @@ namespace IDUNv2.Pages
         #endregion
 
         #region Navigation
+
+        public void EnableFullNavList()
+        {
+            viewModel.SetNavListFull();
+        }
 
         private void NavMenuExpand_Click(object sender, RoutedEventArgs e)
         {
@@ -338,7 +346,7 @@ namespace IDUNv2.Pages
         public static void Reload()
         {
             Current.Frame.Navigate(typeof(ShellPage));
-            
+
         }
 
         private void ListView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

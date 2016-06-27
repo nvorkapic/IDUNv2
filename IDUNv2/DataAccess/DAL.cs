@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading;
 using Addovation.Cloud.Apps.AddoResources.Client.Portable;
+using IDUNv2.Common;
 
 namespace IDUNv2.DataAccess
 {
@@ -66,7 +67,7 @@ namespace IDUNv2.DataAccess
 
         #region Fault Handlers
 
-        private static async Task ShowDialog(Sensor sensor, SensorFault fault, DateTime timestamp)
+        private static async Task ShowDialog(Sensor sensor, SensorFault fault, FaultReport report)
         {
             var dialog = new ContentDialog { Title = "Faulted" };
             dialog.Loaded += async (sender, e) =>
@@ -75,15 +76,34 @@ namespace IDUNv2.DataAccess
                 dialog.Hide();
             };
             var panel = new StackPanel();
-            panel.Children.Add(new TextBlock
+            var text = new TextBlock();
+
+            text.Text = $"Sensor '{sensor.Id}' faulted with type: {fault.Type}\n";
+
+            if (report == null)
             {
-                Text = $"Sensor '{sensor.Id}' faulted from: {fault.Type}"
-            });
+                dialog.Title += " (ERROR)";
+                text.Text += "but failed to send a fault report, check the cloud connection";
+            }
+            else
+            {
+                text.Text = $"Report generated with Work Order: {report.WoNo}";
+            }
+
+            panel.Children.Add(text);
             dialog.Content = panel;
-            dialog.PrimaryButtonText = "View Report";
-            dialog.IsPrimaryButtonEnabled = true;
             dialog.SecondaryButtonText = "Close";
             dialog.IsSecondaryButtonEnabled = true;
+
+            if (report != null)
+            {
+                dialog.PrimaryButtonText = "View Report";
+                dialog.IsPrimaryButtonEnabled = true;
+                dialog.PrimaryButtonCommand = new ActionCommand<object>(o =>
+                {
+                    ShellPage.Current.ContentNavigate(typeof(FaultReportDetailsPage), report);
+                });
+            }
 
             Interlocked.Increment(ref dialogCount);
             await dialog.ShowAsync();
@@ -101,22 +121,27 @@ namespace IDUNv2.DataAccess
                 if (template == null)
                     return null;
 
-
-                // TODO: MchCodeContract and OrgCode must by correctly linked to MchCode!
-                //       needs to be setup in DeviceSettings
-                var report = new FaultReport
+                try
                 {
-                    MchCode = DeviceSettings.ObjectID,
-                    MchCodeContract = "2",
-                    ErrDescr = template.Directive,
-                    ErrDescrLo = template.FaultDescr,
-                    ErrDiscoverCode = template.DiscCode,
-                    ErrSymptom = template.SymptCode,
-                    PriorityId = template.PrioCode,
-                    OrgCode = "101"
-                };
+                    var machine = Machine.Machines[DeviceSettings.ObjectID];
+                    var report = new FaultReport
+                    {
+                        MchCode = machine.MchCode,
+                        MchCodeContract = machine.MchCodeContract,
+                        ErrDescr = template.Directive,
+                        ErrDescrLo = template.FaultDescr,
+                        ErrDiscoverCode = template.DiscCode,
+                        ErrSymptom = template.SymptCode,
+                        PriorityId = template.PrioCode,
+                        OrgCode = machine.OrgCode
+                    };
 
-                return await FaultReportAccess.SetFaultReport(report);
+                    return await FaultReportAccess.SetFaultReport(report);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
 
             return null;
@@ -126,10 +151,11 @@ namespace IDUNv2.DataAccess
         {
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
+                var report = await SendFaultReport(sensor, fault, timestamp);
 
                 if (dialogCount == 0)
                 {
-                    await ShowDialog(sensor, fault, timestamp).ContinueWith(task =>
+                    await ShowDialog(sensor, fault, report).ContinueWith(task =>
                     {
                         Interlocked.Decrement(ref dialogCount);
                     });
@@ -151,9 +177,7 @@ namespace IDUNv2.DataAccess
                     var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(TriggerReportFile, json);
                 }
-                catch (Exception)
-                {
-                }
+                catch { }
             };
         }
 
@@ -174,38 +198,36 @@ namespace IDUNv2.DataAccess
         {
             try
             {
+                string url = DeviceSettings.URL;
+                string systemid = DeviceSettings.SystemID;
+                string username = DeviceSettings.Username;
+                string password = DeviceSettings.Password;
 
-                    string url = DeviceSettings.URL;
-                    string systemid = DeviceSettings.SystemID;
-                    string username = DeviceSettings.Username;
-                    string password = DeviceSettings.Password;
+                string cloudUrl = "";
+                try
+                {
+                    cloudUrl = CommonDictionary.CloudUrls[url];
+                }
+                catch (KeyNotFoundException)
+                {
+                    cloudUrl = url;
+                }
+                var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
 
-                    string cloudUrl = "";
-                    try
-                    {
-                        cloudUrl = CommonDictionary.CloudUrls[url];
-                    }
-                    catch (KeyNotFoundException)
-                    {
-                        cloudUrl = url;
-                    }
-                    var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
+                cloud = new CachingCloudClient
+                {
+                    ConnectionInfo = connectionInfo,
+                    SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
+                };
 
-                    cloud = new CachingCloudClient
-                    {
-                        ConnectionInfo = connectionInfo,
-                        SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
-                    };
+                InsightsHelper.Init();
 
-                    InsightsHelper.Init();
-
-                    FaultReportAccess = new FaultReportAccess(cloud, db);
-                
-
+                FaultReportAccess = new FaultReportAccess(cloud, db);
+                //FaultReportAccess = new MockFaultReportAccess();
             }
             catch
             {
-                
+
             }
         }
 

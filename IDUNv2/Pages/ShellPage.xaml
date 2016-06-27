@@ -13,12 +13,8 @@
     Width="800">
     <Page.Resources>
         <con:StateToVisibilityConverter x:Key="STVCon"></con:StateToVisibilityConverter>
-      
     </Page.Resources>
-    <!--<Page.BottomAppBar>
-    </Page.BottomAppBar>-->
     <Grid Background="Black">
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -39,7 +35,6 @@
                     Content="&#xE700;"
                     Background="{ThemeResource ButtonBrush}"
                     Click="NavMenuExpand_Click"/>
-
                 <CommandBar x:Name="CmdBar"
                             IsOpen="False"
                             IsSticky="True"

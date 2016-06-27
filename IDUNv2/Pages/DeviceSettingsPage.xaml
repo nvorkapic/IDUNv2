@@ -16,12 +16,12 @@
                     Orientation="Horizontal"
                     Margin="10">
             <StackPanel>
-                <TextBox Width="350"
-                         Header="ObjectId"
-                         Text="{Binding ObjectID, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"
-                         />
+                <ComboBox Width="350"
+                          Header="Object"
+                          ItemsSource="{Binding Machines}"
+                          SelectedValue="{Binding ObjectID, Mode=TwoWay}"
+                          SelectedValuePath="MchCode"
+                          />
                 <TextBox Width="350"
                          Header="CloudUrl"
                          Text="{Binding URL, Mode=TwoWay}"
@@ -59,7 +59,7 @@
                     <Ellipse Width="25" Height="25" Fill="{Binding ConnectionStatus, Converter={StaticResource RedorGreen}}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"></Ellipse>
                     <TextBlock Text="{Binding ConnectionMessage}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="5,0,0,0"></TextBlock>
                 </Grid>
-                
+
             </StackPanel>
         </StackPanel>
         <TextBlock TextWrapping="WrapWholeWords" Text="{Binding AuthorisationMessage}" Margin="10,220,10,10" />

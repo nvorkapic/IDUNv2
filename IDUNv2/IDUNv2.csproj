@@ -140,6 +140,7 @@
     <Compile Include="DataAccess\Interfaces\IFaultReportAccess.cs" />
     <Compile Include="DataAccess\Interfaces\ISensorAccess.cs" />
     <Compile Include="DataAccess\Interfaces\ISensorTriggerAccess.cs" />
+    <Compile Include="DataAccess\Machines.cs" />
     <Compile Include="DataAccess\MockFaultReportAccess.cs" />
     <Compile Include="DataAccess\SensorAccess.cs" />
     <Compile Include="DataAccess\SensorTriggerAccess.cs" />
