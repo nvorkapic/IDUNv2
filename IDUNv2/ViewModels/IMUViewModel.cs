@@ -17,13 +17,13 @@ namespace IDUNv2.ViewModels
             get { return acceleration; }
             set { acceleration = value; Notify(); }
         }
-        private Vector3 accelerationMax; /*= new Vector3(double.MinValue, double.MinValue, double.MinValue);*/
+        private Vector3 accelerationMax;
         public Vector3 AccelerationMax
         {
             get { return accelerationMax; }
             set { accelerationMax = value; Notify(); }
         }
-        private Vector3 accelerationMin; /*= new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);*/
+        private Vector3 accelerationMin;
         public Vector3 AccelerationMin
         {
             get { return accelerationMin; }
@@ -35,13 +35,13 @@ namespace IDUNv2.ViewModels
             get { return acceloScalar; }
             set { acceloScalar = value; Notify(); }
         }
-        private double _amax; /*= double.MinValue;*/
+        private double _amax;
         public double amax
         {
             get { return _amax; }
             set { _amax = value; Notify(); }
         }
-        private double _amin;/* = double.MaxValue;*/
+        private double _amin;
         public double amin
         {
             get { return _amin; }
@@ -59,13 +59,13 @@ namespace IDUNv2.ViewModels
             get { return magnetScalar; }
             set { magnetScalar = value; Notify(); }
         }
-        private double _mmax; /*= double.MinValue;*/
+        private double _mmax;
         public double mmax
         {
             get { return _mmax; }
             set { _mmax = value; Notify(); }
         }
-        private double _mmin; /*= double.MaxValue;*/
+        private double _mmin;
         public double mmin
         {
             get { return _mmin; }
@@ -78,13 +78,13 @@ namespace IDUNv2.ViewModels
             get { return gyro; }
             set { gyro = value; Notify(); }
         }
-        private Vector3 gyroMax; /*= new Vector3(double.MinValue, double.MinValue, double.MinValue);*/
+        private Vector3 gyroMax;
         public Vector3 GyroMax
         {
             get { return gyroMax; }
             set { gyroMax = value; Notify(); }
         }
-        private Vector3 gyroMin; /*= new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);*/
+        private Vector3 gyroMin;
         public Vector3 GyroMin
         {
             get { return gyroMin; }
@@ -96,13 +96,13 @@ namespace IDUNv2.ViewModels
             get { return gyroScalar; }
             set { gyroScalar = value; Notify(); }
         }
-        private double _gmax; /*= double.MinValue;*/
+        private double _gmax;
         public double gmax
         {
             get { return _gmax; }
             set { _gmax = value; Notify(); }
         }
-        private double _gmin; /*= double.MaxValue;*/
+        private double _gmin;
         public double gmin
         {
             get { return _gmin; }
