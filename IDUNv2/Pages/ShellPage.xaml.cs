@@ -22,7 +22,6 @@ namespace IDUNv2.Pages
         #region FIelds
 
         private ShellViewModel viewModel = new ShellViewModel();
-        public Notification SelectedNotificationItem = new Notification();
 
         #endregion
 
@@ -81,9 +80,7 @@ namespace IDUNv2.Pages
                         "Non-LiveSystem",
                         "Not connected to real cloud, using in-memory test data");
                 }
-
             }
-
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
@@ -125,6 +122,13 @@ namespace IDUNv2.Pages
         public void EnableFullNavList()
         {
             viewModel.SetNavListFull();
+        }
+
+        private void NavMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            var lv = sender as ListView;
+            var item = lv.SelectedItem as NavMenuItem;
+            viewModel.SelectMainMenu(ContentFrame, item);
         }
 
         private void NavMenuExpand_Click(object sender, RoutedEventArgs e)
@@ -202,30 +206,9 @@ namespace IDUNv2.Pages
             });
         }
 
-        private void NotificationItemSelectionChange(object sender, SelectionChangedEventArgs e)
-        {
-            if (NotificationFlyOutList.Items.Count != 0 && NotificationFlyOutList.SelectedItem != null)
-            {
-                var NotificationListView = (ListView)sender;
-                SelectedNotificationItem = NotificationListView.SelectedItem as Notification;
-
-                ExtendedNotification.DataContext = SelectedNotificationItem;
-            }
-            else
-            {
-                ExtendedNotification.DataContext = new Notification
-                {
-                    ShortDescription = "No Notifications",
-                    LongDescription = "Notifications have been read or the Notification List is Empty.",
-                    Type = NotificationType.Information,
-                    Date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
-                };
-            }
-        }
-
         private void NotificationViewed_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.NotificationList.Remove(SelectedNotificationItem);
+            viewModel.NotificationList.Remove(viewModel.SelectedNotificationItem);
             if (NotificationFlyOutList.Items.Count == 0)
             {
                 NotificationListPanel.Visibility = Visibility.Collapsed;
@@ -346,14 +329,6 @@ namespace IDUNv2.Pages
         public static void Reload()
         {
             Current.Frame.Navigate(typeof(ShellPage));
-
-        }
-
-        private void ListView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            var lv = sender as ListView;
-            var item = lv.SelectedItem as NavMenuItem;
-            viewModel.SelectMainMenu(ContentFrame, item);
         }
     }
 }

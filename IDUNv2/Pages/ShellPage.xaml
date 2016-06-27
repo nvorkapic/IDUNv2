@@ -89,7 +89,7 @@
                         SelectedItem="{Binding SelectedNavMenuItem, Mode=TwoWay}"
                         ItemTemplate="{ThemeResource NavMenuData}"
                         Background="{ThemeResource MainMenuBrush}"
-                        Tapped="ListView_Tapped"
+                        Tapped="NavMenu_Tapped"
                         />
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                         <Button Width="50" Height="50" Click="NotificationButton_Click">
@@ -166,7 +166,15 @@
                     <ColumnDefinition Width="600"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer>
-                    <ListView ItemsSource="{Binding NotificationList}" ScrollViewer.HorizontalScrollMode="Enabled" SelectionChanged="NotificationItemSelectionChange" x:Name="NotificationFlyOutList" SelectionMode="Single"  Grid.Column="0" Background="{ThemeResource NotificationListBackground}" Height="390" Loaded="NotificationFlyOutList_Loaded">
+                    <ListView ItemsSource="{Binding NotificationList}"
+                              SelectedItem="{Binding SelectedNotificationItem, Mode=TwoWay}"
+                              ScrollViewer.HorizontalScrollMode="Enabled"
+                              x:Name="NotificationFlyOutList"
+                              SelectionMode="Single"
+                              Grid.Column="0"
+                              Background="{ThemeResource NotificationListBackground}"
+                              Height="390"
+                              Loaded="NotificationFlyOutList_Loaded">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -179,7 +187,11 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </ScrollViewer>
-                <StackPanel Grid.Column="1" x:Name="ExtendedNotification" Background="{ThemeResource ExtendedNotificationBackground}">
+                <StackPanel Grid.Column="1"
+                            x:Name="ExtendedNotification"
+                            Background="{ThemeResource ExtendedNotificationBackground}"
+                            DataContext="{Binding SelectedNotificationItem}"
+                            >
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
@@ -193,7 +205,6 @@
                     <ScrollViewer  Padding="10" Height="200">
                         <TextBlock Text="{Binding LongDescription}" TextWrapping="WrapWholeWords" FontSize="15"></TextBlock>
                     </ScrollViewer>
-
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,20">
                     <Button Content="Close Message List" Padding="10" Click="CloseNotification_Click" VerticalAlignment="Center"/>

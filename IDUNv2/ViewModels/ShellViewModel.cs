@@ -16,6 +16,7 @@ namespace IDUNv2.ViewModels
         #region Notify Fields
 
         private Notification _latestNotification;
+        private Notification _selectedNotification;
         private string _notificationNumber;
         private Uri _localWebPage;
         private NavMenuItem _selectedNavMenuItem;
@@ -29,6 +30,12 @@ namespace IDUNv2.ViewModels
         {
             get { return _latestNotification; }
             set { _latestNotification = value; Notify(); }
+        }
+
+        public Notification SelectedNotificationItem
+        {
+            get { return _selectedNotification; }
+            set { _selectedNotification = value; Notify(); }
         }
 
         public string NotificationNumber
@@ -63,8 +70,7 @@ namespace IDUNv2.ViewModels
         public ObservableCollection<NavLinkItem> NavLinks { get; private set; }
 
         private ObservableCollection<NavMenuItem> _navList;
-        public ObservableCollection<NavMenuItem> NavList { get {return _navList; } private set { _navList = value; Notify(); } } 
-        
+        public ObservableCollection<NavMenuItem> NavList { get {return _navList; } private set { _navList = value; Notify(); } }
 
         #endregion
 
