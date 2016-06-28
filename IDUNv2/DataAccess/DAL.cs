@@ -18,7 +18,6 @@ using System.Threading;
 using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 using IDUNv2.Common;
 using System.Text;
-using System.Linq;
 
 namespace IDUNv2.DataAccess
 {
@@ -40,7 +39,7 @@ namespace IDUNv2.DataAccess
         private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
 
-        private static CachingCloudClient cloud;
+        public static CachingCloudClient cloud;
         private static SensorWatcher sensorWatcher;
         public static ImuSensorWatcher ImuSensorWatcher;
 
@@ -183,8 +182,8 @@ namespace IDUNv2.DataAccess
 
                 try
                 {
-                    string json = JsonConvert.SerializeObject(document);
-                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                    string json = JsonConvert.SerializeObject(document); //pass in sensor instead!
+                    StorageFolder localFolder = ApplicationData.Current.LocalFolder; 
                     StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
                     var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(TriggerReportFile, json);
@@ -272,7 +271,7 @@ namespace IDUNv2.DataAccess
             file.DOC_CLASS = "400";
             file.DOC_FORMAT = "*";
             file.DOC_TYPE = "ORIGINAL";
-            file.TITLE = title + DateTime.Now.ToString("YYYYMMDD");
+            file.TITLE = title + DateTime.Now.ToString("yyyyMMdd");
             file.LOCAL_PATH = @"\\TriggerReports\TriggerReport";
 
             
@@ -289,9 +288,9 @@ namespace IDUNv2.DataAccess
 
         }
 
-        public static Task<List<Attachment>> GetFiles(int WoN)
+        public static Task<List<Attachment>> GetAttachements(int WoN)
         {
-            return cloud.GetAttachments("WorkOrder", string.Format("WO_NO={0}^", WoN)); ;
+            return cloud.GetAttachments("WorkOrder", string.Format("WO_NO={0}^", WoN));
         }
         #endregion
 

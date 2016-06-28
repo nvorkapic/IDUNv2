@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IDUNv2.DataAccess.DAL;
 
 namespace IDUNv2.ViewModels
 {
@@ -19,9 +20,9 @@ namespace IDUNv2.ViewModels
         #endregion
 
         #region Notify Fields
-
+        private List<Attachment> _attachements;
         private FaultReport model;
-
+        private DocumentString attachementDataText;
         #endregion
 
         #region Notify Properties
@@ -51,11 +52,27 @@ namespace IDUNv2.ViewModels
             get { return faultReportAccess.LookupMaintenancePriority(model.PriorityId)?.Description; }
         }
 
+        public List<Attachment> Attachements
+        {
+            get { return _attachements; }
+            set { _attachements = value;Notify(); }    
+        }
+
+        public DocumentString AttachementDataText
+        {
+            get { return attachementDataText; }
+            set { attachementDataText = value; Notify(); }
+        }
         #endregion
 
         public FaultReportDetailsViewModel(IFaultReportAccess faultReportAccess)
         {
             this.faultReportAccess = faultReportAccess;
+        }
+        
+        public async Task InitAsync()
+        {
+            Attachements = await DAL.GetAttachements(model.WoNo);
         }
     }
 }

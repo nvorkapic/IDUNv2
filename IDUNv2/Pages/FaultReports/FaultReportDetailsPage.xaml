@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Grid>
     <Grid Background="{ThemeResource StandardBackground}" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -23,6 +24,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="WO No:"/>
@@ -49,5 +51,45 @@
         <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Discovery}" />
         <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding Symptom}" />
         <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding Priority}" />
+
+        <ListView Grid.RowSpan="12" Grid.Row="0" Grid.Column="2" Margin="20" Header="Attachements" ItemsSource="{Binding Attachements}" SelectionChanged="ListView_SelectionChanged" x:Name="ListViewAttachements">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding DOC_NO}"/>
+                        <TextBlock Text="{Binding DOC_TITLE}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+    </Grid>
+        <ToolTip VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="AttachementTooltip" Visibility="Collapsed" ToolTipService.Placement="Top" DataContext="{Binding AttachementDataText}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="250"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="200"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Date:" Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Text="{Binding Date}" Grid.Column="1" Grid.Row="0"/>
+                <TextBlock Text="Device Id:" Grid.Column="0" Grid.Row="1"/>
+                <TextBlock Text="{Binding DeviceID}" Grid.Column="1" Grid.Row="1"/>
+                <TextBlock Text="System Id:" Grid.Column="0" Grid.Row="2"/>
+                <TextBlock Text="{Binding SystemID}" Grid.Column="1" Grid.Row="2"/>
+                <TextBlock Text="Short Description:" Grid.Column="0" Grid.Row="3"/>
+                <TextBlock Text="{Binding shortDescription}" Grid.Column="1" Grid.Row="3"/>
+                <TextBlock Text="Long Description:" Grid.Column="0" Grid.Row="4"/>
+                <TextBlock Text="{Binding longDescription}" Grid.Column="1" Grid.Row="4"/>
+                <Button Grid.ColumnSpan="2" Grid.Row="5" Click="Button_Click" >Close</Button>
+            </Grid>
+        </ToolTip>
     </Grid>
 </Page>
