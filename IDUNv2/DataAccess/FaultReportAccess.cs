@@ -13,6 +13,8 @@ namespace IDUNv2.DataAccess
         private CachingCloudClient cloud;
         private SQLiteConnection db;
 
+        public bool LiveSystem { get { return true; } }
+
         public FaultReportAccess(CachingCloudClient cloud, SQLiteConnection db)
         {
             this.cloud = cloud;

@@ -41,25 +41,29 @@ namespace IDUNv2.DataAccess
 
         #region Caching augmentation
 
+        private static TValue TryDict<TValue>(Dictionary<string, TValue> dict, string key)
+            where TValue : class
+        {
+            if (dict == null || key == null)
+                return null;
+            if (!dict.ContainsKey(key))
+                return null;
+            return dict[key];
+        }
+
         public WorkOrderDiscCode GetCachedWorkOrderDiscCode(string discCode)
         {
-            if (discCode == null || !woDiscDict.ContainsKey(discCode))
-                return null;
-             return woDiscDict[discCode];
+            return TryDict(woDiscDict, discCode);
         }
 
         public WorkOrderSymptCode GetCachedWorkOrderSymptCode(string symptCode)
         {
-            if (symptCode == null || !woSymptDict.ContainsKey(symptCode))
-                return null;
-            return woSymptDict[symptCode];
+            return TryDict(woSymptDict, symptCode);
         }
 
         public MaintenancePriority GetCachedMaintenancePriority(string prioCode)
         {
-            if (prioCode == null || !woPrioDict.ContainsKey(prioCode))
-                return null;
-            return woPrioDict[prioCode];
+            return TryDict(woPrioDict, prioCode);
         }
 
         public List<WorkOrderDiscCode> GetCachedWorkOrderDiscCodes()

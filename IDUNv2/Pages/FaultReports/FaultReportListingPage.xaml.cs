@@ -52,7 +52,11 @@ namespace IDUNv2.Pages
         private void ListBox_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var lb = sender as ListBox;
-            Frame.Navigate(typeof(FaultReportDetailsPage), lb.SelectedItem, new DrillInNavigationTransitionInfo());
+            var report = lb.SelectedItem as FaultReport;
+            if (report != null)
+            {
+                Frame.Navigate(typeof(FaultReportDetailsPage), report, new DrillInNavigationTransitionInfo());
+            }
         }
 
         #endregion

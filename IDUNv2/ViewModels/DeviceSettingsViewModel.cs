@@ -77,9 +77,20 @@ namespace IDUNv2.ViewModels
             }
         }
 
-        public bool IsValidated()
+        public bool IsValidated
         {
-            return DeviceSettings.HasSettings();
+            get { return DeviceSettings.HasSettings(); }
+        }
+
+        public List<Machine> Machines { get; }
+
+        #endregion
+
+        #region Constructors
+
+        public DeviceSettingsViewModel()
+        {
+            Machines = Machine.Machines.Values.ToList();
         }
 
         #endregion

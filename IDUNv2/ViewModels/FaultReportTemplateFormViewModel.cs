@@ -90,12 +90,22 @@ namespace IDUNv2.ViewModels
 
         private async void SaveTemplate(object param)
         {
-            SelectedTemplate.Model = await faultReportAccess.SetFaultReportTemplate(SelectedTemplate.Model);
-            SelectedTemplate.Dirty = false;
-            ShellPage.Current.AddNotificatoin(
-                NotificationType.Information,
-                "Template Saved",
-                "Template is configured and saved and ready for use!");
+            if (SelectedTemplate.IsValidated)
+            {
+                SelectedTemplate.Model = await faultReportAccess.SetFaultReportTemplate(SelectedTemplate.Model);
+                SelectedTemplate.Dirty = false;
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Information,
+                    "Template Saved",
+                    "Template is configured and saved and ready for use!");
+            }
+            else
+            {
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Error,
+                    "Validation Error",
+                    "You did not fill in all require fields for a FaultReportTemplate");
+            }
         }
 
         private async void DeleteTemplate(object param)

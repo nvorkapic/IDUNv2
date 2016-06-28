@@ -10,6 +10,8 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public interface IFaultReportAccess
     {
+        bool LiveSystem { get; }
+
         /// <summary>
         /// Must be called before using any of the non-Task returning methods
         /// </summary>

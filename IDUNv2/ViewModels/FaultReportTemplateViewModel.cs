@@ -83,6 +83,15 @@ namespace IDUNv2.ViewModels
 
         #endregion
 
+        #region Properties
+
+        public bool IsValidated
+        {
+            get { return Directive?.Length > 0; }
+        }
+
+        #endregion
+
         private void SetDirty([CallerMemberName] string caller = "")
         {
             Dirty = true;
