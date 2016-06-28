@@ -277,17 +277,14 @@ namespace IDUNv2.SensorLib
                 {
                     fault.Type = SensorFaultType.FromDangerLo;
                 }
-                else
+                if (Triggers != null)
                 {
-                    if (Triggers != null)
+                    foreach (var t in Triggers)
                     {
-                        foreach (var t in Triggers)
+                        if ((t.cmp > 0 && Value > t.val) || (t.cmp < 0 && Value < t.val))
                         {
-                            if ((t.cmp > 0 && Value > t.val) || (t.cmp < 0 && Value < t.val))
-                            {
-                                fault.Type = SensorFaultType.FromTrigger;
-                                fault.Id = t.id;
-                            }
+                            fault.Type = SensorFaultType.FromTrigger;
+                            fault.Id = t.id;
                         }
                     }
                 }
