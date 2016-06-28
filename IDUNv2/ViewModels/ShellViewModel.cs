@@ -65,9 +65,6 @@ namespace IDUNv2.ViewModels
         private ObservableCollection<NavMenuItem> _navList;
         public ObservableCollection<NavMenuItem> NavList { get {return _navList; } private set { _navList = value; Notify(); } } 
         
-
-        #endregion
-
         private ObservableCollection<NavMenuItem> NavFullList = new ObservableCollection<NavMenuItem>()
         {
             new NavMenuItem { Label = "Sensors", Symbol = Symbol.View, PageType = typeof(Pages.SensorOverviewPage) },
@@ -94,6 +91,8 @@ namespace IDUNv2.ViewModels
         {
             NavList =NoDeviceSettingsNavList;
         }
+
+        #endregion
 
         #region Constructors
 

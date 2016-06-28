@@ -62,6 +62,9 @@ namespace IDUNv2.Pages
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Report Loaded", details);
             }
+            //await DAL.createDocument();
+            //var items = await DAL.GetFiles();
+
         }
     }
 }

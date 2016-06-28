@@ -143,6 +143,7 @@ namespace IDUNv2.DataAccess
                 document.shortDescription = shortDescription;
                 document.longDescription = longDescription;
 
+
                 try
                 {
                     string json = JsonConvert.SerializeObject(document);
@@ -150,6 +151,7 @@ namespace IDUNv2.DataAccess
                     StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
                     var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(TriggerReportFile, json);
+                    
                 }
                 catch (Exception)
                 {
@@ -191,8 +193,9 @@ namespace IDUNv2.DataAccess
                     }
                     var connectionInfo = new ConnectionInfo(cloudUrl, systemid, username, password);
 
-                    cloud = new CachingCloudClient
+                cloud = new CachingCloudClient
                     {
+
                         ConnectionInfo = connectionInfo,
                         SessionManager = new Addovation.Cloud.Apps.AddoResources.Client.Portable.SessionManager()
                     };
@@ -200,7 +203,6 @@ namespace IDUNv2.DataAccess
                     InsightsHelper.Init();
 
                     FaultReportAccess = new FaultReportAccess(cloud, db);
-                
 
             }
             catch
@@ -225,6 +227,41 @@ namespace IDUNv2.DataAccess
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 
+        //public async static Task createDocument()
+        //{
+        //    DocumentFileData file = new DocumentFileData();
+        //    file.DOC_CLASS = "400";
+        //    file.DOC_SHEET = "1";
+        //    file.DOC_REV = "A1";
+        //    file.DOC_LANGUAGE = "en";
+        //    file.TITLE = "Report_" + DateTime.Now.ToString();
+        //    file.LOCAL_PATH = @"\\TriggerReports\TriggerReport";
+        //    file.DOC_TYPE = "ORIGINAL";
+
+        //    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+        //    StorageFolder TriggerReports = await localFolder.GetFolderAsync("TriggerReports");
+        //    var localFile = await TriggerReports.GetFileAsync("TriggerReport");
+        //    var data = await localFile.OpenReadAsync();
+        //    using (var r = new StreamReader(data.AsStream()))
+        //    {
+        //        string text = r.ReadToEnd();
+        //        var document = JsonConvert.DeserializeObject<DAL.DocumentString>(text);
+        //        file.FILE_DATA = document.ToString();
+        //    }
+        //    file.DOC_FORMAT = "JsonText";
+        //    file.File_Name = "TriggerReport";
+        //    file.LU_NAME = "IDUN";
+        //    file.KEY_REF = "IDUNRep";
+        //    file.SET_STATE = "Released";
+
+        //    await cloud.CreateAndCheckInDocument(file);
+        //}
+
+        //public async static Task<List<Document>> GetFiles()
+        //{
+        //    var items = await cloud.GetDocuments("IDUN", "IDUNRep",100,Document.DocObjState.Released);
+        //    return items;
+        //}
         #endregion
 
         #region Navigation
