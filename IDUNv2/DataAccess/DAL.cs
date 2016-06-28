@@ -17,6 +17,8 @@ using System.Linq;
 using System.Threading;
 using Addovation.Cloud.Apps.AddoResources.Client.Portable;
 using IDUNv2.Common;
+using System.Text;
+using System.Linq;
 
 namespace IDUNv2.DataAccess
 {
@@ -67,7 +69,7 @@ namespace IDUNv2.DataAccess
 
         #region Fault Handlers
 
-        private static async Task ShowDialog(Sensor sensor, SensorFault fault, FaultReport report)
+        private static async Task ShowDialog(Sensor sensor, SensorFault fault, FaultReport report, DocumentFileData docFileData)
         {
             var dialog = new ContentDialog { Title = "Faulted" };
             dialog.Loaded += async (sender, e) =>
@@ -87,7 +89,7 @@ namespace IDUNv2.DataAccess
             }
             else
             {
-                text.Text = $"Report generated with Work Order: {report.WoNo}";
+                text.Text = $"Report generated with Work Order: {report.WoNo} \n Attachement Number: {docFileData.DOC_NO}";
             }
 
             panel.Children.Add(text);
@@ -152,16 +154,12 @@ namespace IDUNv2.DataAccess
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
                 var report = await SendFaultReport(sensor, fault, timestamp);
-
-                if (dialogCount == 0)
-                {
-                    await ShowDialog(sensor, fault, report).ContinueWith(task =>
-                    {
-                        Interlocked.Decrement(ref dialogCount);
-                    });
-                }
+                //
+                
                 string shortDescription = "Sensor Triggered";
                 string longDescription = "Sensor has entered Triggered State!\n\nSensor ID: " + sensor.Id + "\nFaulted State: " + sensor.FaultState + "\nDevice State: " + sensor.DeviceState + "\nSensor Value: " + sensor.Value + "\nSensor Danger High Value: " + sensor.DangerHi + "\nSensor Danger Low Value: " + sensor.DangerLo + "\nSensor Maximum Value: " + sensor.RangeMax + "\nSensor Minimum Value: " + sensor.RangeMin + "\nFault ID: " + fault.Id + "\nFault Type: " + fault.Type;
+
+                int WoN = report.WoNo;
 
                 ShellPage.Current.AddNotificatoin(NotificationType.Warning, shortDescription, longDescription);
 
@@ -180,6 +178,15 @@ namespace IDUNv2.DataAccess
                     
                 }
                 catch { }
+
+                var docFileData = await createDocument(WoN, $"report_{sensor.Id}", document);
+                if (dialogCount == 0)
+                {
+                    await ShowDialog(sensor, fault, report, docFileData).ContinueWith(task =>
+                    {
+                        Interlocked.Decrement(ref dialogCount);
+                    });
+                }
             };
         }
 
@@ -249,41 +256,33 @@ namespace IDUNv2.DataAccess
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 
-        //public async static Task createDocument()
-        //{
-        //    DocumentFileData file = new DocumentFileData();
-        //    file.DOC_CLASS = "400";
-        //    file.DOC_SHEET = "1";
-        //    file.DOC_REV = "A1";
-        //    file.DOC_LANGUAGE = "en";
-        //    file.TITLE = "Report_" + DateTime.Now.ToString();
-        //    file.LOCAL_PATH = @"\\TriggerReports\TriggerReport";
-        //    file.DOC_TYPE = "ORIGINAL";
+        public static Task<DocumentFileData> createDocument(int WoN, string title, DocumentString document)
+        {
+            DocumentFileData file = new DocumentFileData();
+            file.DOC_CLASS = "400";
+            file.DOC_FORMAT = "*";
+            file.DOC_TYPE = "ORIGINAL";
+            file.TITLE = title + DateTime.Now.ToString("YYYYMMDD");
+            file.LOCAL_PATH = @"\\TriggerReports\TriggerReport";
 
-        //    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-        //    StorageFolder TriggerReports = await localFolder.GetFolderAsync("TriggerReports");
-        //    var localFile = await TriggerReports.GetFileAsync("TriggerReport");
-        //    var data = await localFile.OpenReadAsync();
-        //    using (var r = new StreamReader(data.AsStream()))
-        //    {
-        //        string text = r.ReadToEnd();
-        //        var document = JsonConvert.DeserializeObject<DAL.DocumentString>(text);
-        //        file.FILE_DATA = document.ToString();
-        //    }
-        //    file.DOC_FORMAT = "JsonText";
-        //    file.File_Name = "TriggerReport";
-        //    file.LU_NAME = "IDUN";
-        //    file.KEY_REF = "IDUNRep";
-        //    file.SET_STATE = "Released";
+            
+            file.FILE_DATA = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(document)));
+           
+            file.FILE_EXT_ORIGINAL = "TXT";
+            file.ORIGINAL_FILE_NAME = "TriggerReport.txt";
+            file.LU_NAME = "WorkOrder";
+            file.KEY_REF = string.Format("WO_NO={0}^", WoN);
+            file.SET_STATE = "Preliminary".ToUpper();
 
-        //    await cloud.CreateAndCheckInDocument(file);
-        //}
+            var result = cloud.CreateAndCheckInDocument(file);
+            return result;
 
-        //public async static Task<List<Document>> GetFiles()
-        //{
-        //    var items = await cloud.GetDocuments("IDUN", "IDUNRep",100,Document.DocObjState.Released);
-        //    return items;
-        //}
+        }
+
+        public static Task<List<Attachment>> GetFiles(int WoN)
+        {
+            return cloud.GetAttachments("WorkOrder", string.Format("WO_NO={0}^", WoN)); ;
+        }
         #endregion
 
         #region Navigation
