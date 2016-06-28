@@ -34,7 +34,7 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public static class DAL
     {
-        private static bool useLiveCloud = false;
+        private static bool useLiveCloud = true;
 
         private static volatile int dialogCount;
         private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
@@ -169,13 +169,6 @@ namespace IDUNv2.DataAccess
             {
                 var report = await SendFaultReport(sensor, fault, timestamp);
 
-                if (dialogCount == 0)
-                {
-                    await ShowDialog(sensor, fault, report).ContinueWith(task =>
-                    {
-                        Interlocked.Decrement(ref dialogCount);
-                    });
-                }
                 string shortDescription = "Sensor Triggered";
                 string longDescription = "Sensor has entered Triggered State!\n\n" + sensor.FaultString(fault);
 
