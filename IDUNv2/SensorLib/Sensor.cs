@@ -243,6 +243,12 @@ namespace IDUNv2.SensorLib
             return $"Sensor Id: {Id}\nRange: {RangeMin} to {RangeMax}\nDanger: {DangerLo} and {DangerHi}\nUnit: {Unit}";
         }
 
+        public string FaultString(SensorFault fault)
+        {
+            return this.ToString() +
+                $"\nFaulted State: {FaultState}\nDevice State: {DeviceState}\nSensor Value: {Value}\nFault ID: {fault.Id}\nFault Type: {fault.Type}";
+        }
+
         /// <summary>
         /// Update current sensor Value with the reading.
         /// </summary>
