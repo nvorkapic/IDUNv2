@@ -32,6 +32,8 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public static class DAL
     {
+        private static bool useLiveCloud = false;
+
         private static volatile int dialogCount;
         private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
@@ -61,6 +63,15 @@ namespace IDUNv2.DataAccess
             SensorTriggerAccess = new SensorTriggerAccess(db);
 
             CreateCloudClient();
+
+            if (cloud != null && useLiveCloud)
+            {
+                FaultReportAccess = new FaultReportAccess(cloud, db);
+            }
+            else
+            {
+                FaultReportAccess = new MockFaultReportAccess();
+            }
 
             InstallSensorFaultHandler();
         }
@@ -223,9 +234,6 @@ namespace IDUNv2.DataAccess
                 };
 
                 InsightsHelper.Init();
-
-                //FaultReportAccess = new FaultReportAccess(cloud, db);
-                FaultReportAccess = new MockFaultReportAccess();
             }
             catch
             {
