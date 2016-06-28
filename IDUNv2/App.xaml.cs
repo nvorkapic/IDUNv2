@@ -43,7 +43,6 @@ namespace IDUNv2
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-
 #if true
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -83,16 +82,7 @@ namespace IDUNv2
                 Window.Current.Activate();
             }
 
-           
-
-
-                DAL.Init(Window.Current.Dispatcher);
-
-                await DAL.ConnectToCloud();
-
-                await DAL.FillCaches().ConfigureAwait(false);
-
-            
+            await DAL.Init(Window.Current.Dispatcher);
         }
 
         /// <summary>

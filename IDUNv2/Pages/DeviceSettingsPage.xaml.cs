@@ -36,9 +36,7 @@ namespace IDUNv2.Pages
                     "You have been connected to IFS Clouds Service!");
 
                 ShellPage.Current.EnableFullNavList();
-
             }
-
             else
             {
                 viewModel.AuthorisationMessage = "Authorization Failed. Please Enter Valid details or check your Internet Connection!";

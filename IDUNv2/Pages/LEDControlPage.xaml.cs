@@ -287,7 +287,6 @@ namespace IDUNv2.Pages
 
         #endregion
 
-
         #region Constructors
 
         public LEDControlPage()
