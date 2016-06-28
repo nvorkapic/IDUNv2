@@ -6,8 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:osk="using:OnScreenKeyboard"
+    xmlns:conv="using:IDUNv2.Converters"
     mc:Ignorable="d">
     <Page.Resources>
+        <conv:SensorTriggerIdToBool x:Key="TriggerIdToBool"/>
         <DataTemplate x:Key="TriggerListData">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -17,7 +19,10 @@
                     <ColumnDefinition Width="75"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Column="0" Margin="0,-5,0,0" IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
+                <CheckBox Grid.Column="0"
+                          Margin="0,-5,0,0"
+                          IsChecked="{Binding IsEnabled, Mode=TwoWay}"
+                          IsEnabled="{Binding Id, Converter={StaticResource TriggerIdToBool}}"/>
                 <TextBlock Grid.Column="1" Text="{Binding Id}"/>
                 <TextBlock Grid.Column="2" Text="{Binding Comparer}"/>
                 <TextBlock Grid.Column="3" Text="{Binding Value}"/>
