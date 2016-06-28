@@ -53,7 +53,6 @@ namespace IDUNv2.Pages
             TriggeerList.Visibility = Visibility.Visible;
         }
 
-
         private void TextBoxUnit_GotFocus(object sender, RoutedEventArgs e)
         {
             DAL.ShowOSK(sender as TextBox);

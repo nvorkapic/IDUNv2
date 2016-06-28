@@ -243,6 +243,12 @@ namespace IDUNv2.SensorLib
             return $"Sensor Id: {Id}\nRange: {RangeMin} to {RangeMax}\nDanger: {DangerLo} and {DangerHi}\nUnit: {Unit}";
         }
 
+        public string FaultString(SensorFault fault)
+        {
+            return this.ToString() +
+                $"\nFaulted State: {FaultState}\nDevice State: {DeviceState}\nSensor Value: {Value}\nFault ID: {fault.Id}\nFault Type: {fault.Type}";
+        }
+
         /// <summary>
         /// Update current sensor Value with the reading.
         /// </summary>
@@ -271,17 +277,14 @@ namespace IDUNv2.SensorLib
                 {
                     fault.Type = SensorFaultType.FromDangerLo;
                 }
-                else
+                if (Triggers != null)
                 {
-                    if (Triggers != null)
+                    foreach (var t in Triggers)
                     {
-                        foreach (var t in Triggers)
+                        if ((t.cmp > 0 && Value > t.val) || (t.cmp < 0 && Value < t.val))
                         {
-                            if ((t.cmp > 0 && Value > t.val) || (t.cmp < 0 && Value < t.val))
-                            {
-                                fault.Type = SensorFaultType.FromTrigger;
-                                fault.Id = t.id;
-                            }
+                            fault.Type = SensorFaultType.FromTrigger;
+                            fault.Id = t.id;
                         }
                     }
                 }

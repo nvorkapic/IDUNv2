@@ -34,6 +34,8 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public static class DAL
     {
+        private static bool useLiveCloud = false;
+
         private static volatile int dialogCount;
         private static readonly string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static readonly SQLiteConnection db = new SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
@@ -52,7 +54,7 @@ namespace IDUNv2.DataAccess
             db.CreateTable<SensorTrigger>();
         }
 
-        public static void Init(CoreDispatcher dispatcher)
+        public static async Task Init(CoreDispatcher dispatcher)
         {
             sensorWatcher = new SensorWatcher(dispatcher, 100);
             sensorWatcher.LoadSettings();
@@ -64,7 +66,19 @@ namespace IDUNv2.DataAccess
 
             CreateCloudClient();
 
+            if (cloud != null && useLiveCloud)
+            {
+                FaultReportAccess = new FaultReportAccess(cloud, db);
+            }
+            else
+            {
+                FaultReportAccess = new MockFaultReportAccess();
+            }
+
             InstallSensorFaultHandler();
+
+            await ConnectToCloud();
+            await FillCaches();
         }
 
         #region Fault Handlers
@@ -154,10 +168,16 @@ namespace IDUNv2.DataAccess
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
                 var report = await SendFaultReport(sensor, fault, timestamp);
-                //
-                
+
+                if (dialogCount == 0)
+                {
+                    await ShowDialog(sensor, fault, report).ContinueWith(task =>
+                    {
+                        Interlocked.Decrement(ref dialogCount);
+                    });
+                }
                 string shortDescription = "Sensor Triggered";
-                string longDescription = "Sensor has entered Triggered State!\n\nSensor ID: " + sensor.Id + "\nFaulted State: " + sensor.FaultState + "\nDevice State: " + sensor.DeviceState + "\nSensor Value: " + sensor.Value + "\nSensor Danger High Value: " + sensor.DangerHi + "\nSensor Danger Low Value: " + sensor.DangerLo + "\nSensor Maximum Value: " + sensor.RangeMax + "\nSensor Minimum Value: " + sensor.RangeMin + "\nFault ID: " + fault.Id + "\nFault Type: " + fault.Type;
+                string longDescription = "Sensor has entered Triggered State!\n\n" + sensor.FaultString(fault);
 
                 int WoN = report.WoNo;
 
@@ -175,7 +195,7 @@ namespace IDUNv2.DataAccess
                     StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
                     var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(TriggerReportFile, json);
-                    
+
                 }
                 catch { }
 
@@ -230,9 +250,6 @@ namespace IDUNv2.DataAccess
                 };
 
                 InsightsHelper.Init();
-
-                //FaultReportAccess = new FaultReportAccess(cloud, db);
-                FaultReportAccess = new MockFaultReportAccess();
             }
             catch
             {

@@ -13,8 +13,6 @@ namespace IDUNv2.Pages
 {
     public sealed partial class AboutPage : Page
     {
-
-
         #region Constructors
 
         public AboutPage()
@@ -62,7 +60,6 @@ namespace IDUNv2.Pages
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Report Loaded", details);
             }
-
         }
     }
 }

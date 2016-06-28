@@ -21,6 +21,7 @@ namespace IDUNv2.ViewModels
         private Uri _localWebPage;
         private NavMenuItem _selectedNavMenuItem;
         private bool _isPaneOpen;
+        private ObservableCollection<NavMenuItem> _navList;
 
         #endregion
 
@@ -62,6 +63,12 @@ namespace IDUNv2.ViewModels
             set { _isPaneOpen = value; Notify(); }
         }
 
+        public ObservableCollection<NavMenuItem> NavList
+        {
+            get { return _navList; }
+            private set { _navList = value; Notify(); }
+        }
+
         #endregion
 
         #region Properties
@@ -69,9 +76,8 @@ namespace IDUNv2.ViewModels
         public ObservableCollection<Notification> NotificationList { get; private set; }
         public ObservableCollection<NavLinkItem> NavLinks { get; private set; }
 
-        private ObservableCollection<NavMenuItem> _navList;
-        public ObservableCollection<NavMenuItem> NavList { get {return _navList; } private set { _navList = value; Notify(); } } 
-        
+        #endregion
+
         private ObservableCollection<NavMenuItem> NavFullList = new ObservableCollection<NavMenuItem>()
         {
             new NavMenuItem { Label = "Sensors", Symbol = Symbol.View, PageType = typeof(Pages.SensorOverviewPage) },
@@ -96,10 +102,8 @@ namespace IDUNv2.ViewModels
         }
         public void SetNavListSettings()
         {
-            NavList =NoDeviceSettingsNavList;
+            NavList = NoDeviceSettingsNavList;
         }
-
-        #endregion
 
         #region Constructors
 
