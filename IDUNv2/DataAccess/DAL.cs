@@ -176,27 +176,26 @@ namespace IDUNv2.DataAccess
                 ShellPage.Current.AddNotificatoin(NotificationType.Warning, shortDescription, longDescription);
 
                 DocumentString document = new DocumentString();
-                document.shortDescription = shortDescription;
-                document.longDescription = longDescription;
+                SensorToDocumentString(document, sensor);
 
 
                 try
                 {
-                    string json = JsonConvert.SerializeObject(document); //pass in sensor instead!
+                    string json = JsonConvert.SerializeObject(document);
                     StorageFolder localFolder = ApplicationData.Current.LocalFolder; 
                     StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
                     var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(TriggerReportFile, json);
-
+                   
                 }
                 catch { }
-
                 var docFileData = await createDocument(WoN, $"report_{sensor.Id}", document);
                 if (dialogCount == 0)
                 {
                     await ShowDialog(sensor, fault, report, docFileData).ContinueWith(task =>
                     {
                         Interlocked.Decrement(ref dialogCount);
+                        
                     });
                 }
             };
@@ -204,11 +203,32 @@ namespace IDUNv2.DataAccess
 
         public class DocumentString
         {
-            public string shortDescription { get; set; }
-            public string longDescription { get; set; }
+            public string Id { get; set; }
+            public string FaultState { get; set; }
+            public string DeviceState { get; set; }
+            public string Value { get; set; }
+            public string Unit { get; set; }
+            public string DangerHi { get; set; }
+            public string DangerLo { get; set; }
+            public string RangeMax { get; set; }
+            public string RangeMin { get; set; }
             public string Date { get { return DateTime.Now.ToString(); } }
             public string DeviceID { get { return DeviceSettings.ObjectID; } }
             public string SystemID { get { return DeviceSettings.SystemID; } }
+        }
+
+        public static void SensorToDocumentString(DocumentString document, Sensor sensor)
+        {
+            document.Id = sensor.Id.ToString();
+            document.FaultState = sensor.FaultState.ToString();
+            document.DeviceState = sensor.DeviceState.ToString();
+            document.Value = sensor.Value.ToString();
+            document.Unit = sensor.Unit;
+            document.Value = sensor.Value.ToString();
+            document.DangerHi = sensor.DangerHi.ToString();
+            document.DangerLo = sensor.DangerLo.ToString();
+            document.RangeMax = sensor.RangeMax.ToString();
+            document.RangeMin = sensor.RangeMin.ToString();
         }
 
         #endregion

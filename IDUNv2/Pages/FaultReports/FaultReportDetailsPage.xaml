@@ -67,28 +67,48 @@
         <ToolTip VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="AttachementTooltip" Visibility="Collapsed" ToolTipService.Placement="Top" DataContext="{Binding AttachementDataText}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                    <ColumnDefinition Width="250"></ColumnDefinition>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition Height="200"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Date:" Grid.Column="0" Grid.Row="0"/>
-                <TextBlock Text="{Binding Date}" Grid.Column="1" Grid.Row="0"/>
+                <TextBlock Text="ID:" Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Text="{Binding Id}" Grid.Column="1" Grid.Row="0"/>
                 <TextBlock Text="Device Id:" Grid.Column="0" Grid.Row="1"/>
                 <TextBlock Text="{Binding DeviceID}" Grid.Column="1" Grid.Row="1"/>
                 <TextBlock Text="System Id:" Grid.Column="0" Grid.Row="2"/>
                 <TextBlock Text="{Binding SystemID}" Grid.Column="1" Grid.Row="2"/>
-                <TextBlock Text="Short Description:" Grid.Column="0" Grid.Row="3"/>
-                <TextBlock Text="{Binding shortDescription}" Grid.Column="1" Grid.Row="3"/>
-                <TextBlock Text="Long Description:" Grid.Column="0" Grid.Row="4"/>
-                <TextBlock Text="{Binding longDescription}" Grid.Column="1" Grid.Row="4"/>
-                <Button Grid.ColumnSpan="2" Grid.Row="5" Click="Button_Click" >Close</Button>
+                <TextBlock Text="Fault State:" Grid.Column="0" Grid.Row="3"/>
+                <TextBlock Text="{Binding FaultState}" Grid.Column="1" Grid.Row="3"/>
+                <TextBlock Text="Device State:" Grid.Column="0" Grid.Row="4"/>
+                <TextBlock Text="{Binding DeviceState}" Grid.Column="1" Grid.Row="4"/>
+                <TextBlock Text="Value:" Grid.Column="0" Grid.Row="5"/>
+                <TextBlock Text="{Binding Value}" Grid.Column="1" Grid.Row="5"/>
+                <TextBlock Text="Unit:" Grid.Column="0" Grid.Row="6"/>
+                <TextBlock Text="{Binding Unit}" Grid.Column="1" Grid.Row="6"/>
+
+                <TextBlock Text="Danger High:" Grid.Column="0" Grid.Row="7"/>
+                <TextBlock Text="{Binding DangerHi}" Grid.Column="1" Grid.Row="7"/>
+                <TextBlock Text="Danger Low:" Grid.Column="0" Grid.Row="8"/>
+                <TextBlock Text="{Binding DangerLo}" Grid.Column="1" Grid.Row="8"/>
+                <TextBlock Text="Range Max:" Grid.Column="0" Grid.Row="9"/>
+                <TextBlock Text="{Binding RangeMax}" Grid.Column="1" Grid.Row="9"/>
+                <TextBlock Text="Range Min:" Grid.Column="0" Grid.Row="10"/>
+                <TextBlock Text="{Binding RangeMin}" Grid.Column="1" Grid.Row="10"/>
+                
+                <Button Grid.ColumnSpan="2" Grid.Row="11" Click="Button_Click" HorizontalAlignment="Center">Close</Button>
             </Grid>
         </ToolTip>
     </Grid>

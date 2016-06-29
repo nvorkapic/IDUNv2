@@ -56,7 +56,7 @@ namespace IDUNv2.Pages
             {
                 string text = r.ReadToEnd();
                 var document = JsonConvert.DeserializeObject<DAL.DocumentString>(text);
-                var details = document.shortDescription + "\n\n" + document.Date + "\n\n" + document.DeviceID + "\n\n" + document.SystemID + "\n\n" + document.longDescription;
+                var details = document.Id + "\n\n" + document.Date + "\n\n" + document.DeviceID + "\n\n" + document.SystemID + "\n\n" + document.Value + " " + document.Unit + "\n\n" + document.DeviceState;
 
                 ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Report Loaded", details);
             }
