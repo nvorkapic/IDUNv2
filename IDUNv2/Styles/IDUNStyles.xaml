@@ -32,12 +32,6 @@
         </StackPanel>
     </DataTemplate>
 
-    <!--ReportPage-->
-    <con:DirtyFlagConverter x:Key="DirtyFlag" />
-    <DataTemplate x:Key="FaultCodeData">
-        <TextBlock Text="{Binding Description}"/>
-    </DataTemplate>
-
     <Style x:Key="LabelStyle" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />

@@ -90,6 +90,9 @@ namespace IDUNv2.ViewModels
 
         private async void SaveTemplate(object param)
         {
+            if (SelectedTemplate == null)
+                return;
+
             if (SelectedTemplate.IsValidated)
             {
                 SelectedTemplate.Model = await faultReportAccess.SetFaultReportTemplate(SelectedTemplate.Model);
@@ -110,20 +113,30 @@ namespace IDUNv2.ViewModels
 
         private async void DeleteTemplate(object param)
         {
-            bool success = await faultReportAccess.DeleteFaultReportTemplate(SelectedTemplate.Model);
-            if (success)
+            if (SelectedTemplate == null)
+                return;
+
+            try
             {
-                ShellPage.Current.AddNotificatoin(NotificationType.Information,
-                    "Template Deleted", $"Successfully deleted template with id: {SelectedTemplate.Model.Id}");
-                if (Templates.Remove(SelectedTemplate))
+                bool success = await faultReportAccess.DeleteFaultReportTemplate(SelectedTemplate.Model);
+                if (success)
                 {
-                    SelectedTemplate = Templates.LastOrDefault();
+                    ShellPage.Current.AddNotificatoin(NotificationType.Information,
+                        "Template Deleted", $"Successfully deleted template with id: {SelectedTemplate.Model.Id}");
+                    if (Templates.Remove(SelectedTemplate))
+                    {
+                        SelectedTemplate = Templates.LastOrDefault();
+                    }
+                }
+                else
+                {
+                    ShellPage.Current.AddNotificatoin(NotificationType.Error,
+                        "Template Delete Error", $"Could not delete template with id: {SelectedTemplate.Model.Id} because it's in use.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                ShellPage.Current.AddNotificatoin(NotificationType.Error,
-                    "Template Delete Error", $"Could not delete template with id: {SelectedTemplate.Model.Id} because it's in use.");
+                ShellPage.Current.AddNotificatoin(NotificationType.Error, "Exception", ex.ToString());
             }
         }
 

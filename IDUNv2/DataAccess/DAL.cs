@@ -46,11 +46,27 @@ namespace IDUNv2.DataAccess
         public static ISensorAccess SensorAccess { get; private set; }
         public static ISensorTriggerAccess SensorTriggerAccess { get; private set; }
         public static IFaultReportAccess FaultReportAccess { get; private set; }
+        public static IMachineAccess MachineAccess { get; private set; }
 
         static DAL()
         {
             db.CreateTable<FaultReportTemplate>();
             db.CreateTable<SensorTrigger>();
+            db.CreateTable<Machine>();
+        }
+
+        /// <summary>
+        /// Statically known objects known to work.
+        /// </summary>
+        private static void SeedMachines()
+        {
+            if (db.Table<Machine>().Count() == 0)
+            {
+                db.Insert(new Machine { Id = 1, MchCode = "6600-1", MchCodeContract = "1", OrgCode = "100" });
+                db.Insert(new Machine { Id = 2, MchCode = "800C", MchCodeContract = "3", OrgCode = "100" });
+                db.Insert(new Machine { Id = 3, MchCode = "VPLHS50-SNY933556", MchCodeContract = "501", OrgCode = "100" });
+                db.Insert(new Machine { Id = 4, MchCode = "10326823-333", MchCodeContract = "70", OrgCode = "100" });
+            }
         }
 
         public static async Task Init(CoreDispatcher dispatcher)
@@ -62,6 +78,8 @@ namespace IDUNv2.DataAccess
 
             SensorAccess = new SensorAccess(sensorWatcher);
             SensorTriggerAccess = new SensorTriggerAccess(db);
+            MachineAccess = new MachineAccess(db);
+            SeedMachines();
 
             CreateCloudClient();
 
@@ -128,17 +146,11 @@ namespace IDUNv2.DataAccess
         {
             if (fault.Type == SensorFaultType.FromTrigger)
             {
-                var trigger = await SensorTriggerAccess.FindSensorTrigger(fault.Id);
-                if (trigger == null)
-                    return null;
-
-                var template = await FaultReportAccess.FindFaultReportTemplate(trigger.TemplateId);
-                if (template == null)
-                    return null;
-
                 try
                 {
-                    var machine = Machine.Machines[DeviceSettings.ObjectID];
+                    var trigger = await SensorTriggerAccess.FindSensorTrigger(fault.Id);
+                    var template = await FaultReportAccess.FindFaultReportTemplate(trigger.TemplateId);
+                    var machine = await MachineAccess.FindMachine(DeviceSettings.ObjectID);
                     var report = new FaultReport
                     {
                         MchCode = machine.MchCode,
@@ -158,7 +170,6 @@ namespace IDUNv2.DataAccess
                     return null;
                 }
             }
-
             return null;
         }
 
@@ -167,6 +178,10 @@ namespace IDUNv2.DataAccess
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
                 var report = await SendFaultReport(sensor, fault, timestamp);
+                if (report == null)
+                {
+                    return;
+                }
 
                 string shortDescription = "Sensor Triggered";
                 string longDescription = "Sensor has entered Triggered State!\n\n" + sensor.FaultString(fault);
@@ -294,9 +309,9 @@ namespace IDUNv2.DataAccess
             file.TITLE = title + DateTime.Now.ToString("yyyyMMdd");
             file.LOCAL_PATH = @"\\TriggerReports\TriggerReport";
 
-            
+
             file.FILE_DATA = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(document)));
-           
+
             file.FILE_EXT_ORIGINAL = "TXT";
             file.ORIGINAL_FILE_NAME = "TriggerReport.txt";
             file.LU_NAME = "WorkOrder";

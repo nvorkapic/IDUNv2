@@ -12,8 +12,9 @@ namespace IDUNv2.Pages
     {
         #region Fields
 
-        private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel();
-
+        private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel(DAL.MachineAccess);
+        private CmdBarItem[] generalCmdBar;
+        private CmdBarItem[] machinesCmdBar;
 
         #endregion
 
@@ -52,6 +53,21 @@ namespace IDUNv2.Pages
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 
+        private void CreateMachine(object param)
+        {
+            viewModel.CreateMachine();
+        }
+
+        private async void SaveMachine(object param)
+        {
+            await viewModel.SaveMachine();
+        }
+
+        private async void DeleteMachine(object param)
+        {
+            await viewModel.DeleteMachine();
+        }
+
         #endregion
 
         #region Constructors
@@ -60,6 +76,17 @@ namespace IDUNv2.Pages
         {
             this.InitializeComponent();
             this.DataContext = viewModel;
+
+            generalCmdBar = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Save, "Save", SaveDeviceSettings)
+            };
+            machinesCmdBar = new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Add, "Create", CreateMachine),
+                new CmdBarItem(Symbol.Save, "Save", SaveMachine),
+                new CmdBarItem(Symbol.Delete, "Delete", DeleteMachine)
+            };
         }
 
         #endregion
@@ -110,6 +137,18 @@ namespace IDUNv2.Pages
             }
         }
 
+        private void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
+        {
+            if ((string)args.Item.Header == "General")
+            {
+                DAL.SetCmdBarItems(generalCmdBar);
+            }
+            else
+            {
+                DAL.SetCmdBarItems(machinesCmdBar);
+            }
+        }
+
         #endregion
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -125,13 +164,7 @@ namespace IDUNv2.Pages
             }
 
             viewModel.ConnectionStatus = !status;
-
-            var cmdBarItems = new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Save, "Save", SaveDeviceSettings)
-            };
-
-            DAL.SetCmdBarItems(cmdBarItems);
+            await viewModel.InitAsync();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -181,7 +181,7 @@ namespace IDUNv2.ViewModels
 
         private async void SaveTrigger(object param)
         {
-            if (SelectedTemplate != null)
+            if (SelectedTrigger != null && SelectedTemplate != null)
             {
                 SelectedTrigger.TemplateId = SelectedTemplate.Id;
                 SelectedTrigger.Model = await triggerAccess.SetSensorTrigger(SelectedTrigger.Model);

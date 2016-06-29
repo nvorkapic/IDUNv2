@@ -1,9 +1,12 @@
 ﻿using IDUNv2.Common;
 using IDUNv2.DataAccess;
 using IDUNv2.Models;
+using IDUNv2.Pages;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +14,18 @@ namespace IDUNv2.ViewModels
 {
     public class DeviceSettingsViewModel : NotifyBase
     {
+        #region Fields
+
+        private IMachineAccess machineAccess;
+
+        #endregion
+
         #region Notify Fields
 
         private string _authorisationMessage;
         private bool _connectionStatus;
+        private ObservableCollection<MachineViewModel> _machines;
+        private MachineViewModel _selectedMachine;
 
         #endregion
 
@@ -62,6 +73,18 @@ namespace IDUNv2.ViewModels
             set { _connectionStatus = value; Notify(); Notify("ConnectionMessage"); }
         }
 
+        public MachineViewModel SelectedMachine
+        {
+            get { return _selectedMachine; }
+            set { _selectedMachine = value; Notify(); }
+        }
+
+        public ObservableCollection<MachineViewModel> Machines
+        {
+            get { return _machines; }
+            set { _machines = value; Notify(); }
+        }
+
         #endregion
 
         #region Properties
@@ -82,17 +105,93 @@ namespace IDUNv2.ViewModels
             get { return DeviceSettings.HasSettings(); }
         }
 
-        public List<Machine> Machines { get; }
-
         #endregion
 
         #region Constructors
 
-        public DeviceSettingsViewModel()
+        public DeviceSettingsViewModel(IMachineAccess machineAccess)
         {
-            Machines = Machine.Machines.Values.ToList();
+            this.machineAccess = machineAccess;
         }
 
         #endregion
+
+        public async Task InitAsync()
+        {
+            var machines = await machineAccess.GetMachines();
+            Machines = new ObservableCollection<MachineViewModel>(machines.Select(m => new MachineViewModel(m)));
+            Notify("ObjectID");
+            SelectedMachine = Machines.FirstOrDefault();
+        }
+
+        public void CreateMachine()
+        {
+            var mch = new MachineViewModel(new Machine { MchCode = "#New Machine" });
+            Machines.Add(mch);
+            SelectedMachine = Machines.LastOrDefault();
+            SelectedMachine.Dirty = true;
+        }
+
+        public async Task SaveMachine()
+        {
+            if (SelectedMachine == null)
+                return;
+            try
+            {
+                if (SelectedMachine.IsValidated)
+                {
+                    SelectedMachine.Model = await machineAccess.SetMachine(SelectedMachine.Model);
+                    SelectedMachine.Dirty = false;
+                    ShellPage.Current.AddNotificatoin(
+                        NotificationType.Information,
+                        "Machine Saved",
+                        $"Machine ({SelectedMachine.MchCode}) was successfully saved");
+                }
+                else
+                {
+                    ShellPage.Current.AddNotificatoin(
+                        NotificationType.Error,
+                        "Validation Error",
+                        "MchCode, MchCodeContract and OrgCode are all required fields");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Error,
+                    "Exception",
+                    ex.ToString());
+            }
+        }
+
+        public async Task DeleteMachine()
+        {
+            if (Machines == null || SelectedMachine == null)
+                return;
+
+            try
+            {
+                bool result = await machineAccess.DeleteMachine(SelectedMachine.Model);
+                Machines.Remove(SelectedMachine);
+                SelectedMachine = Machines.LastOrDefault();
+                if (result && SelectedMachine != null)
+                {
+                    if (SelectedMachine != null)
+                    {
+                        ShellPage.Current.AddNotificatoin(
+                            NotificationType.Information,
+                            "Machine Deleted",
+                            $"Successfully deleted machine ({SelectedMachine.MchCode})");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShellPage.Current.AddNotificatoin(
+                    NotificationType.Error,
+                    "Exception",
+                    ex.ToString());
+            }
+        }
     }
 }

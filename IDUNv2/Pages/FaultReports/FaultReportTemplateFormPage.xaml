@@ -9,6 +9,11 @@
     xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Page.Resources>
+        <!--ReportPage-->
+        <conv:DirtyFlagConverter x:Key="DirtyFlag" />
+        <DataTemplate x:Key="FaultCodeData">
+            <TextBlock Text="{Binding Description}"/>
+        </DataTemplate>
         <DataTemplate x:Key="TemplateListData">
             <Grid>
                 <Grid.ColumnDefinitions>

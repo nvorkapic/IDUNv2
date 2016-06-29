@@ -9,58 +9,112 @@
     xmlns:osk="using:OnScreenKeyboard"
     mc:Ignorable="d">
     <Page.Resources>
-        <conv:RedOrGreenConverter x:Key="RedorGreen"></conv:RedOrGreenConverter>
+        <conv:RedOrGreenConverter x:Key="RedorGreen"/>
+        <conv:DirtyFlagConverter x:Key="DirtyFlag"/>
+        <DataTemplate x:Key="MachineData">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Text}"/>
+                <TextBlock
+                    Margin="5,0,0,0"
+                    Text="{Binding Dirty, Converter={StaticResource DirtyFlag}}"
+                    VerticalAlignment="Center"
+                    Foreground="Red"/>
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
     <Grid Background="{ThemeResource StandardBackground}">
-        <StackPanel HorizontalAlignment="Left"
-                    Orientation="Horizontal"
-                    Margin="10">
-            <StackPanel>
-                <ComboBox Width="350"
-                          Header="Object"
-                          ItemsSource="{Binding Machines}"
-                          SelectedValue="{Binding ObjectID, Mode=TwoWay}"
-                          SelectedValuePath="MchCode"
-                          />
-                <TextBox Width="350"
-                         Header="CloudUrl"
-                         Text="{Binding URL, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"
-                         />
-                <TextBox Width="350"
-                         Header="SystemID"
-                         Text="{Binding SystemID, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"
-                         />
-            </StackPanel>
-            <StackPanel Margin="10,0,0,0">
-                <TextBox Width="350"
-                         Header="Username"
-                         Text="{Binding Username, Mode=TwoWay}"
-                         GotFocus="TextBox_GotFocus"
-                         LostFocus="TBLostFocus"
-                         />
-                <PasswordBox Width="350"
-                             Header="Password"
-                             Password="{Binding Password, Mode=TwoWay}"
-                             GotFocus="PasswordBox_GotFocus"
-                             LostFocus="TBLostFocus"
-                             />
-                <Grid Margin="0,30,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition MaxWidth="40"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Text="Cloud Status"></TextBlock>
-                    <Ellipse Width="35" Height="35" Fill="#FF515151" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"/>
-                    <Ellipse Width="25" Height="25" Fill="{Binding ConnectionStatus, Converter={StaticResource RedorGreen}}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"/>
-                    <TextBlock Text="{Binding ConnectionMessage}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="5,0,0,0"/>
-                </Grid>
-            </StackPanel>
-        </StackPanel>
-        <TextBlock TextWrapping="WrapWholeWords" Text="{Binding AuthorisationMessage}" Margin="10,220,10,10" />
+        <Pivot PivotItemLoaded="Pivot_PivotItemLoaded">
+            <PivotItem Header="General">
+                <StackPanel>
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal"
+                        Margin="10">
+                        <StackPanel>
+                            <ComboBox
+                                Width="350"
+                                Header="Machine"
+                                ItemsSource="{Binding Machines}"
+                                SelectedValue="{Binding ObjectID, Mode=TwoWay}"
+                                SelectedValuePath="MchCode"
+                                />
+                            <TextBox
+                                Width="350"
+                                Header="CloudUrl"
+                                Text="{Binding URL, Mode=TwoWay}"
+                                GotFocus="TextBox_GotFocus"
+                                LostFocus="TBLostFocus"
+                                />
+                            <TextBox
+                                Width="350"
+                                Header="SystemID"
+                                Text="{Binding SystemID, Mode=TwoWay}"
+                                GotFocus="TextBox_GotFocus"
+                                LostFocus="TBLostFocus"
+                                />
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,0">
+                            <TextBox
+                                Width="350"
+                                Header="Username"
+                                Text="{Binding Username, Mode=TwoWay}"
+                                GotFocus="TextBox_GotFocus"
+                                LostFocus="TBLostFocus"
+                                />
+                            <PasswordBox
+                                Width="350"
+                                Header="Password"
+                                Password="{Binding Password, Mode=TwoWay}"
+                                GotFocus="PasswordBox_GotFocus"
+                                LostFocus="TBLostFocus"
+                                />
+                            <Grid Margin="0,30,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition MaxWidth="40"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Text="Cloud Status"></TextBlock>
+                                <Ellipse Width="35" Height="35" Fill="#FF515151" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"/>
+                                <Ellipse Width="25" Height="25" Fill="{Binding ConnectionStatus, Converter={StaticResource RedorGreen}}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"/>
+                                <TextBlock Text="{Binding ConnectionMessage}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="5,0,0,0"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock TextWrapping="WrapWholeWords" Text="{Binding AuthorisationMessage}"  />
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="Machines">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <ListBox
+                        Width="200"
+                        ItemsSource="{Binding Machines}"
+                        SelectedItem="{Binding SelectedMachine, Mode=TwoWay}"
+                        ItemTemplate="{StaticResource MachineData}"
+                        />
+                    <StackPanel Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox
+                                Header="Object Id"
+                                Text="{Binding SelectedMachine.MchCode, Mode=TwoWay}"
+                                Width="200"
+                                />
+                            <TextBox
+                                Header="Site"
+                                Text="{Binding SelectedMachine.MchCodeContract, Mode=TwoWay}"
+                                Width="200"
+                                Margin="10,0,0,0"
+                                />
+                        </StackPanel>
+                        <TextBox
+                            Header="Maint Org"
+                            Text="{Binding SelectedMachine.OrgCode, Mode=TwoWay}"
+                            Width="200"
+                            HorizontalAlignment="Left"
+                            />
+                    </StackPanel>
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>
