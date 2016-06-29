@@ -163,7 +163,22 @@ namespace IDUNv2.DataAccess
                         OrgCode = machine.OrgCode
                     };
 
-                    return await FaultReportAccess.SetFaultReport(report);
+                    report = await FaultReportAccess.SetFaultReport(report);
+
+                    DocumentString document = new DocumentString();
+                    SensorToDocumentString(document, sensor, trigger);
+                    
+                    var docFileData = await createDocument(report.WoNo, $"report_{sensor.Id}", document);
+                    if (dialogCount == 0)
+                    {
+                        await ShowDialog(sensor, fault, report, docFileData).ContinueWith(task =>
+                        {
+                            Interlocked.Decrement(ref dialogCount);
+
+                        });
+                    }
+
+                    return report;
                 }
                 catch (Exception)
                 {
@@ -177,42 +192,23 @@ namespace IDUNv2.DataAccess
         {
             SensorAccess.Faulted += async (sensor, fault, timestamp) =>
             {
+                ShellPage.SetSpinner(LoadingState.Loading);
                 var report = await SendFaultReport(sensor, fault, timestamp);
+                ShellPage.SetSpinner(LoadingState.Finished);
                 if (report == null)
                 {
                     return;
                 }
+                
 
                 string shortDescription = "Sensor Triggered";
                 string longDescription = "Sensor has entered Triggered State!\n\n" + sensor.FaultString(fault);
 
-                int WoN = report.WoNo;
-
+             
                 ShellPage.Current.AddNotificatoin(NotificationType.Warning, shortDescription, longDescription);
 
-                DocumentString document = new DocumentString();
-                SensorToDocumentString(document, sensor);
+                
 
-
-                try
-                {
-                    string json = JsonConvert.SerializeObject(document);
-                    StorageFolder localFolder = ApplicationData.Current.LocalFolder; 
-                    StorageFolder TriggerReportsFolder = await localFolder.CreateFolderAsync("TriggerReports", CreationCollisionOption.OpenIfExists);
-                    var TriggerReportFile = await TriggerReportsFolder.CreateFileAsync("TriggerReport", CreationCollisionOption.ReplaceExisting);
-                    await FileIO.WriteTextAsync(TriggerReportFile, json);
-                   
-                }
-                catch { }
-                var docFileData = await createDocument(WoN, $"report_{sensor.Id}", document);
-                if (dialogCount == 0)
-                {
-                    await ShowDialog(sensor, fault, report, docFileData).ContinueWith(task =>
-                    {
-                        Interlocked.Decrement(ref dialogCount);
-                        
-                    });
-                }
             };
         }
 
@@ -230,10 +226,14 @@ namespace IDUNv2.DataAccess
             public string Date { get { return DateTime.Now.ToString(); } }
             public string DeviceID { get { return DeviceSettings.ObjectID; } }
             public string SystemID { get { return DeviceSettings.SystemID; } }
+            public string TriggerComparer { get; set; }
+            public string TriggerValue { get; set; }
         }
 
-        public static void SensorToDocumentString(DocumentString document, Sensor sensor)
+        public static void SensorToDocumentString(DocumentString document, Sensor sensor, SensorTrigger trigger)
         {
+            document.TriggerValue = trigger.Value.ToString();
+            document.TriggerComparer= trigger.Comparer.ToString();
             document.Id = sensor.Id.ToString();
             document.FaultState = sensor.FaultState.ToString();
             document.DeviceState = sensor.DeviceState.ToString();
