@@ -46,20 +46,20 @@ namespace IDUNv2.Pages
             DAL.SetCmdBarItems(null);
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFolder TriggerReports = await localFolder.GetFolderAsync("TriggerReports");
-            var file = await TriggerReports.GetFileAsync("TriggerReport");
-            var data = await file.OpenReadAsync();
-            using (var r = new StreamReader(data.AsStream()))
-            {
-                string text = r.ReadToEnd();
-                var document = JsonConvert.DeserializeObject<DAL.DocumentString>(text);
-                var details = document.Id + "\n\n" + document.Date + "\n\n" + document.DeviceID + "\n\n" + document.SystemID + "\n\n" + document.Value + " " + document.Unit + "\n\n" + document.DeviceState;
+        //private async void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+        //    StorageFolder TriggerReports = await localFolder.GetFolderAsync("TriggerReports");
+        //    var file = await TriggerReports.GetFileAsync("TriggerReport");
+        //    var data = await file.OpenReadAsync();
+        //    using (var r = new StreamReader(data.AsStream()))
+        //    {
+        //        string text = r.ReadToEnd();
+        //        var document = JsonConvert.DeserializeObject<DAL.DocumentString>(text);
+        //        var details = document.Id + "\n\n" + document.Date + "\n\n" + document.DeviceID + "\n\n" + document.SystemID + "\n\n" + document.Value + " " + document.Unit + "\n\n" + document.DeviceState;
 
-                ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Report Loaded", details);
-            }
-        }
+        //        ShellPage.Current.AddNotificatoin(Models.NotificationType.Information, "Report Loaded", details);
+        //    }
+        //}
     }
 }

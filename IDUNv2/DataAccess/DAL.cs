@@ -103,6 +103,8 @@ namespace IDUNv2.DataAccess
         private static async Task ShowDialog(Sensor sensor, SensorFault fault, FaultReport report, DocumentFileData docFileData)
         {
             var dialog = new ContentDialog { Title = "Faulted" };
+            dialog.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center;
+            dialog.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
             dialog.Loaded += async (sender, e) =>
             {
                 await Task.Delay(4000);
