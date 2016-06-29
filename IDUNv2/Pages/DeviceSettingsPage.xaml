@@ -28,25 +28,24 @@
                 <StackPanel>
                     <StackPanel
                         HorizontalAlignment="Left"
-                        Orientation="Horizontal"
-                        Margin="10">
+                        Orientation="Horizontal">
                         <StackPanel>
                             <ComboBox
-                                Width="350"
+                                Width="300"
                                 Header="Machine"
                                 ItemsSource="{Binding Machines}"
                                 SelectedValue="{Binding ObjectID, Mode=TwoWay}"
                                 SelectedValuePath="MchCode"
                                 />
                             <TextBox
-                                Width="350"
+                                Width="300"
                                 Header="CloudUrl"
                                 Text="{Binding URL, Mode=TwoWay}"
                                 GotFocus="TextBox_GotFocus"
                                 LostFocus="TBLostFocus"
                                 />
                             <TextBox
-                                Width="350"
+                                Width="300"
                                 Header="SystemID"
                                 Text="{Binding SystemID, Mode=TwoWay}"
                                 GotFocus="TextBox_GotFocus"
@@ -55,14 +54,14 @@
                         </StackPanel>
                         <StackPanel Margin="10,0,0,0">
                             <TextBox
-                                Width="350"
+                                Width="300"
                                 Header="Username"
                                 Text="{Binding Username, Mode=TwoWay}"
                                 GotFocus="TextBox_GotFocus"
                                 LostFocus="TBLostFocus"
                                 />
                             <PasswordBox
-                                Width="350"
+                                Width="300"
                                 Header="Password"
                                 Password="{Binding Password, Mode=TwoWay}"
                                 GotFocus="PasswordBox_GotFocus"
