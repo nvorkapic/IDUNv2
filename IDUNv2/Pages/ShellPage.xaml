@@ -224,7 +224,7 @@
         
         <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" Width="800" Height="480" x:Name="WebPageContentFrame" Visibility="Collapsed" Background="Black">
             <Grid>
-                <WebView Source="{Binding localWebPage}" Height="450"/>
+                <WebView Source="{Binding localWebPage}" Height="450" ScrollViewer.IsScrollInertiaEnabled="False"/>
                 <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="DocumentationNavigation" Visibility="Collapsed" >
                     <Button Click="NavDocButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5"/>
                     <Button Click="NavDocButton_Click" Width="120" Tag="Introduction" Content="Introduction" Margin="0,5,0,5"/>

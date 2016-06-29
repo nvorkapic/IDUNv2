@@ -60,7 +60,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Attachements" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="Attachments" VerticalAlignment="Center" FontWeight="Bold"/>
                 <ListView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Attachements}" SelectionChanged="ListView_SelectionChanged" x:Name="ListViewAttachements">
                     <ListView.ItemTemplate>
                         <DataTemplate>
