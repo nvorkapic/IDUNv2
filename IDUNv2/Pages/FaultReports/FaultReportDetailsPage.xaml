@@ -66,6 +66,11 @@
     </Grid>
         <ToolTip VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="AttachementTooltip" Visibility="Collapsed" ToolTipService.Placement="Top" DataContext="{Binding AttachementDataText}">
             <Grid>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="18"/>
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"></ColumnDefinition>
                     <ColumnDefinition Width="150"></ColumnDefinition>
@@ -84,7 +89,7 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Text="ID:" Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Text="ID:" Grid.Column="0" Grid.Row="0" FontSize="18"/>
                 <TextBlock Text="{Binding Id}" Grid.Column="1" Grid.Row="0"/>
                 <TextBlock Text="Device Id:" Grid.Column="0" Grid.Row="1"/>
                 <TextBlock Text="{Binding DeviceID}" Grid.Column="1" Grid.Row="1"/>
@@ -98,7 +103,6 @@
                 <TextBlock Text="{Binding Value}" Grid.Column="1" Grid.Row="5"/>
                 <TextBlock Text="Unit:" Grid.Column="0" Grid.Row="6"/>
                 <TextBlock Text="{Binding Unit}" Grid.Column="1" Grid.Row="6"/>
-
                 <TextBlock Text="Danger High:" Grid.Column="0" Grid.Row="7"/>
                 <TextBlock Text="{Binding DangerHi}" Grid.Column="1" Grid.Row="7"/>
                 <TextBlock Text="Danger Low:" Grid.Column="0" Grid.Row="8"/>
@@ -107,7 +111,6 @@
                 <TextBlock Text="{Binding RangeMax}" Grid.Column="1" Grid.Row="9"/>
                 <TextBlock Text="Range Min:" Grid.Column="0" Grid.Row="10"/>
                 <TextBlock Text="{Binding RangeMin}" Grid.Column="1" Grid.Row="10"/>
-                
                 <Button Grid.ColumnSpan="2" Grid.Row="11" Click="Button_Click" HorizontalAlignment="Center">Close</Button>
             </Grid>
         </ToolTip>

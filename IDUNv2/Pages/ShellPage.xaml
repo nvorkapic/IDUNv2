@@ -236,7 +236,7 @@
                 <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="TutorialNavigation" Visibility="Collapsed" >
                     <Button Click="NavTutButton_Click" Width="120" Tag="Home" Content="Home" Margin="0,5,0,5"/>
                     <Button Click="NavTutButton_Click" Width="120" Tag="MainPage" Content="Main Page" Margin="0,5,0,5"/>
-                    <Button Click="NavTutButton_Click" Width="120" Tag="BottomBar" Content="Bottom Bar" Margin="0,5,0,5"/>
+                    <Button Click="NavTutButton_Click" Width="120" Tag="BottomBar" Content="Command Bar" Margin="0,5,0,5"/>
                     <Button Click="NavTutButton_Click" Width="120" Tag="SensorOverview" Content="Sensor" Margin="0,5,0,5"/>
                     <Button Click="NavTutButton_Click" Width="120" Tag="SensorSetting" Content="Settings" Margin="0,5,0,5"/>
                     <Button Click="NavTutButton_Click" Width="120" Tag="Templates" Content="Templates" Margin="0,5,0,5"/>
