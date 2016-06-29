@@ -97,12 +97,16 @@
                                 Header="Object Id"
                                 Text="{Binding SelectedMachine.MchCode, Mode=TwoWay}"
                                 Width="200"
+                                GotFocus="TextBox_GotFocus"
+                                LostFocus="TBLostFocus"
                                 />
                             <TextBox
                                 Header="Site"
                                 Text="{Binding SelectedMachine.MchCodeContract, Mode=TwoWay}"
                                 Width="200"
                                 Margin="10,0,0,0"
+                                GotFocus="TextBox_GotFocus"
+                                LostFocus="TBLostFocus"
                                 />
                         </StackPanel>
                         <TextBox
@@ -110,6 +114,8 @@
                             Text="{Binding SelectedMachine.OrgCode, Mode=TwoWay}"
                             Width="200"
                             HorizontalAlignment="Left"
+                            GotFocus="TextBox_GotFocus"
+                                LostFocus="TBLostFocus"
                             />
                     </StackPanel>
                 </StackPanel>
