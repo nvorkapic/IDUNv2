@@ -49,12 +49,7 @@ namespace IDUNv2.Pages
                     device = await GetDeviceAsync().ConfigureAwait(false);
                 }).Wait(5000);
             }
-            catch (Exception)
-            {
-
-            }
-            var data = new byte[1 + 192];
-            device?.Write(data);
+            catch { } // ignore
         }
 
         public void LoadBuffer(byte[] buff)
