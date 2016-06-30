@@ -4,6 +4,7 @@ using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
@@ -71,7 +72,7 @@ namespace IDUNv2.Controls
                 "Value",
                 typeof (double),
                 typeof (Gauge),
-                new PropertyMetadata(0.0, OnValueChanged));
+                new PropertyMetadata(0.0));
 
         public static readonly DependencyProperty UnitProperty =
             DependencyProperty.Register(
@@ -165,12 +166,68 @@ namespace IDUNv2.Controls
                 new PropertyMetadata(-100.0));
         #endregion Dependency Property Registrations
 
+        private long valueCallbackToken;
+
         #region Constructors
         public Gauge()
         {
             this.DefaultStyleKey = typeof(Gauge);
+            this.Loaded += (s, e) => valueCallbackToken = RegisterPropertyChangedCallback(ValueProperty, OnValueChanged);
+            this.Unloaded += (s, e) => UnregisterPropertyChangedCallback(ValueProperty, valueCallbackToken);
             InitLabels();
         }
+
+        private void OnValueChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (Double.IsNaN(Value))
+                return;
+
+            var middleOfScale = 77 - ScaleWidth / 2;
+            var needle = GetTemplateChild(NeedlePartName) as Path;
+            var valueText = GetTemplateChild(ValueTextPartName) as TextBlock;
+            ValueAngle = ValueToAngle(Value);
+
+            // Needle
+            if (needle != null && !double.IsNaN(ValueAngle))
+            {
+                needle.RenderTransform = new RotateTransform() { Angle = ValueAngle };
+            }
+
+            // Trail
+            var trail = GetTemplateChild(TrailPartName) as Path;
+
+            if (trail != null)
+            {
+                if (ValueAngle > -146)
+                {
+                    trail.Visibility = Visibility.Visible;
+                    var pg = new PathGeometry();
+                    var pf = new PathFigure();
+                    pf.IsClosed = false;
+                    pf.StartPoint = ScalePoint(-150, middleOfScale);
+                    var seg = new ArcSegment();
+                    seg.SweepDirection = SweepDirection.Clockwise;
+                    // We start from -150, so +30 becomes a large arc.
+                    seg.IsLargeArc = ValueAngle > 30;
+                    seg.Size = new Size(middleOfScale, middleOfScale);
+                    seg.Point = ScalePoint(ValueAngle, middleOfScale);
+                    pf.Segments.Add(seg);
+                    pg.Figures.Add(pf);
+                    trail.Data = pg;
+                }
+                else
+                {
+                    trail.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            // Value Text
+            if (valueText != null)
+            {
+                valueText.Text = Value.ToString(ValueStringFormat);
+            }
+        }
+
         #endregion Constructors
 
         #region Properties
@@ -357,59 +414,6 @@ namespace IDUNv2.Controls
 
             OnValueChanged(this, null);
             base.OnApplyTemplate();
-        }
-
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var c = (Gauge)d;
-
-            if (Double.IsNaN(c.Value))
-                return;
-
-            var middleOfScale = 77 - c.ScaleWidth / 2;
-            var needle = c.GetTemplateChild(NeedlePartName) as Path;
-            var valueText = c.GetTemplateChild(ValueTextPartName) as TextBlock;
-            c.ValueAngle = c.ValueToAngle(c.Value);
-
-            // Needle
-            if (needle != null && !double.IsNaN(c.ValueAngle))
-            {
-                needle.RenderTransform = new RotateTransform() { Angle = c.ValueAngle };
-            }
-
-            // Trail
-            var trail = c.GetTemplateChild(TrailPartName) as Path;
-
-            if (trail != null)
-            {
-                if (c.ValueAngle > -146)
-                {
-                    trail.Visibility = Visibility.Visible;
-                    var pg = new PathGeometry();
-                    var pf = new PathFigure();
-                    pf.IsClosed = false;
-                    pf.StartPoint = ScalePoint(-150, middleOfScale);
-                    var seg = new ArcSegment();
-                    seg.SweepDirection = SweepDirection.Clockwise;
-                    // We start from -150, so +30 becomes a large arc.
-                    seg.IsLargeArc = c.ValueAngle > 30;
-                    seg.Size = new Size(middleOfScale, middleOfScale);
-                    seg.Point = ScalePoint(c.ValueAngle, middleOfScale);
-                    pf.Segments.Add(seg);
-                    pg.Figures.Add(pf);
-                    trail.Data = pg;
-                }
-                else
-                {
-                    trail.Visibility = Visibility.Collapsed;
-                }
-            }
-
-            // Value Text
-            if (valueText != null)
-            {
-                valueText.Text = c.Value.ToString(c.ValueStringFormat);
-            }
         }
 
         private static Point ScalePoint(double angle, double middleOfScale)
