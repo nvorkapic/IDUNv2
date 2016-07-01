@@ -58,12 +58,13 @@ namespace IDUNv2.Pages
                 Frame.Navigate(typeof(FaultReportDetailsPage), report, new DrillInNavigationTransitionInfo());
             }
         }
-
         #endregion
 
+        #region Navigation
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
         }
+        #endregion
     }
 }

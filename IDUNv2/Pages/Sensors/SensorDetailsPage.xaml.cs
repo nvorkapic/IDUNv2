@@ -33,6 +33,33 @@ namespace IDUNv2.Pages
 
         #endregion
 
+        #region Event Handlers
+
+        private void CompositionTarget_Rendering(object sender, object e)
+        {
+            SG.Render();
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            float v = viewModel.Sensor.Value;
+            SG.AddDataPoint(v);
+        }
+
+        private void ResetBias_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.Bias = 0;
+        }
+
+        private void TriggerSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            var trigger = (Sensor.Trigger)(sender as ListView).SelectedItem;
+            SG.SetTrigger(trigger.val, trigger.cmp);
+        }
+
+        #endregion
+
+        #region Navigation
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             timer.Tick += Timer_Tick;
@@ -76,31 +103,6 @@ namespace IDUNv2.Pages
             timer.Tick -= Timer_Tick;
             timer.Stop();
         }
-
-        #region Event Handlers
-
-        private void CompositionTarget_Rendering(object sender, object e)
-        {
-            SG.Render();
-        }
-
-        private void Timer_Tick(object sender, object e)
-        {
-            float v = viewModel.Sensor.Value;
-            SG.AddDataPoint(v);
-        }
-
-        private void ResetBias_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.Bias = 0;
-        }
-
-        private void TriggerSelectionChange(object sender, SelectionChangedEventArgs e)
-        {
-            var trigger = (Sensor.Trigger)(sender as ListView).SelectedItem;
-            SG.SetTrigger(trigger.val, trigger.cmp);
-        }
-
         #endregion
     }
 }

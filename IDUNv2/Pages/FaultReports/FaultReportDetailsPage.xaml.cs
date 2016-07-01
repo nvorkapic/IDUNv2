@@ -11,26 +11,22 @@ namespace IDUNv2.Pages
 {
     public sealed partial class FaultReportDetailsPage : Page
     {
+        #region Properties
+
         FaultReportDetailsViewModel viewModel = new FaultReportDetailsViewModel(DAL.FaultReportAccess);
 
+        #endregion
+
+        #region Constructors
 
         public FaultReportDetailsPage()
         {
             this.InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {          
-            base.OnNavigatedTo(e);
+        #endregion
 
-            viewModel.Model = e.Parameter as FaultReport;
-
-            this.DataContext = viewModel;
-
-            ShellPage.SetSpinner(LoadingState.Loading);
-            await viewModel.InitAsync();
-            ShellPage.SetSpinner(LoadingState.Finished);         
-        }
+        #region Event Handlers
 
         private async void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -39,10 +35,10 @@ namespace IDUNv2.Pages
                 var attachementData = await DAL.cloud.GetAttachmentData(((ListView)sender).SelectedItem as Attachment);
                 var filedataText = Encoding.UTF8.GetString(Convert.FromBase64String(attachementData.FileData));
                 viewModel.AttachementDataText = Newtonsoft.Json.JsonConvert.DeserializeObject<DocumentString>(filedataText);
-          
+
                 AttachementTooltip.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
-            
+
         }
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -51,6 +47,23 @@ namespace IDUNv2.Pages
             ListViewAttachements.SelectedIndex = -1;
         }
 
+        #endregion
 
+        #region Navigation
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            viewModel.Model = e.Parameter as FaultReport;
+
+            this.DataContext = viewModel;
+
+            ShellPage.SetSpinner(LoadingState.Loading);
+            await viewModel.InitAsync();
+            ShellPage.SetSpinner(LoadingState.Finished);
+        }
+
+        #endregion
     }
 }

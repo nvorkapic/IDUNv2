@@ -45,8 +45,10 @@ namespace IDUNv2.Pages
             DAL.ShowOSK(null);
         }
 
+
         #endregion
 
+        #region Navigation
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(viewModel.CmdBarItems);
@@ -72,5 +74,6 @@ namespace IDUNv2.Pages
                     "Changed templates data and/or new templates were present and not saved. All changes and newly generated templates were discarded!");
             }
         }
+        #endregion
     }
 }

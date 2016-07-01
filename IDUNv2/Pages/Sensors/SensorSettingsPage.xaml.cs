@@ -27,18 +27,6 @@ namespace IDUNv2.Pages
 
         #endregion
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            viewModel.Sensor = e.Parameter as Sensor;
-            await viewModel.InitAsync();
-            DAL.PushNavLink(new NavLinkItem("Settings", GetType(), e.Parameter));
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            DAL.SetCmdBarItems(null);
-        }
-
         #region Event Handlers
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -91,5 +79,22 @@ namespace IDUNv2.Pages
         }
 
         #endregion
+
+        #region Navigation
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            viewModel.Sensor = e.Parameter as Sensor;
+            await viewModel.InitAsync();
+            DAL.PushNavLink(new NavLinkItem("Settings", GetType(), e.Parameter));
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            DAL.SetCmdBarItems(null);
+        }
+
+        #endregion
+
     }
 }

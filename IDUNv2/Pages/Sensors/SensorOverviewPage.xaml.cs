@@ -20,14 +20,6 @@ namespace IDUNv2.Pages
 
         #endregion
 
-        private Action<object> ShowDetailsFor(SensorId id)
-        {
-            return o =>
-            {
-                Frame.Navigate(typeof(Pages.SensorDetailsPage), sensorAccess.GetSensor(id));
-            };
-        }
-
         #region CmdBar Actions
 
         private void ResetBias(object param)
@@ -56,17 +48,6 @@ namespace IDUNv2.Pages
 
         #endregion
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            DAL.SetCmdBarItems(new CmdBarItem[]
-                {
-                    new CmdBarItem(Symbol.Play, "Activate All", o =>
-                    {
-                        viewModel.ActivateAll();
-                    })
-                });
-        }
-
         #region Event Handlers
 
         private void ClearBias_Click(object sender, RoutedEventArgs e)
@@ -88,5 +69,28 @@ namespace IDUNv2.Pages
         }
 
         #endregion
+
+        #region Navigation
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DAL.SetCmdBarItems(new CmdBarItem[]
+                {
+                    new CmdBarItem(Symbol.Play, "Activate All", o =>
+                    {
+                        viewModel.ActivateAll();
+                    })
+                });
+        }
+
+        #endregion
+
+        private Action<object> ShowDetailsFor(SensorId id)
+        {
+            return o =>
+            {
+                Frame.Navigate(typeof(Pages.SensorDetailsPage), sensorAccess.GetSensor(id));
+            };
+        }
     }
 }

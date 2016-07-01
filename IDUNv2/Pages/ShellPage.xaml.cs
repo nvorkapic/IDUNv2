@@ -14,9 +14,6 @@ namespace IDUNv2.Pages
 {
     public sealed partial class ShellPage : Page
     {
-        /// <summary>
-        /// Singleton reference to access controls on this page from other pages
-        /// </summary>
         public static ShellPage Current;
 
         #region FIelds
@@ -177,6 +174,11 @@ namespace IDUNv2.Pages
             }
         }
 
+        public static void Reload()
+        {
+            Current.Frame.Navigate(typeof(ShellPage));
+        }
+
         #endregion
 
         #region Notifications
@@ -325,10 +327,5 @@ namespace IDUNv2.Pages
         }
 
         #endregion
-
-        public static void Reload()
-        {
-            Current.Frame.Navigate(typeof(ShellPage));
-        }
     }
 }

@@ -19,12 +19,18 @@ namespace IDUNv2.Pages
 {
     public sealed partial class ImuTestPage : Page
     {
+        #region Properties
+
         IMUViewModel viewModel = new IMUViewModel();
 
         private DispatcherTimer timer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(100)
         };
+
+        #endregion
+
+        #region Constructors
 
         public ImuTestPage()
         {
@@ -33,6 +39,10 @@ namespace IDUNv2.Pages
             timer.Start();
             this.DataContext = viewModel;
         }
+
+        #endregion
+
+        #region Even Handlers
 
         private void Timer_Tick(object sender, object e)
         {
@@ -43,6 +53,10 @@ namespace IDUNv2.Pages
             viewModel.GetGyroscope(r);
         }
 
+        #endregion
+
+        #region Navigation
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DAL.SetCmdBarItems(null);
@@ -51,5 +65,8 @@ namespace IDUNv2.Pages
         {
             timer.Stop();
         }
+
+        #endregion
+
     }
 }

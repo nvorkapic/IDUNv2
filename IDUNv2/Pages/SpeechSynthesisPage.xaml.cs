@@ -56,35 +56,6 @@ namespace IDUNv2.Pages
 
         #endregion
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            DAL.SetCmdBarItems(new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Microphone, "Read Text", ReadText),
-                new CmdBarItem(Symbol.Delete, "Clear Text", ClearText),
-                new CmdBarItem(Symbol.Pin, "LED Control",NavigateToLED),
-            });
-        }
-
-        private void InitializeListboxVoiceChooser()
-        {
-            var voices = SpeechSynthesizer.AllVoices;
-            VoiceInformation currentVoice = synthesizer.Voice;
-            foreach (VoiceInformation voice in voices.OrderBy(p => p.Language))
-            {
-                ComboBoxItem item = new ComboBoxItem();
-                item.Name = voice.DisplayName;
-                item.Tag = voice;
-                item.Content = voice.DisplayName + " (Language: " + voice.Language + ")";
-                listBox.Items.Add(item);
-                if (currentVoice.Id == voice.Id)
-                {
-                    item.IsSelected = true;
-                    listBox.SelectedItem = item;
-                }
-            }
-        }
-
         #region Event Handlers
 
         private void onSelectChange(object sender, SelectionChangedEventArgs e)
@@ -105,5 +76,38 @@ namespace IDUNv2.Pages
         }
 
         #endregion
+
+        #region Navigation
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DAL.SetCmdBarItems(new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Microphone, "Read Text", ReadText),
+                new CmdBarItem(Symbol.Delete, "Clear Text", ClearText),
+                new CmdBarItem(Symbol.Pin, "LED Control",NavigateToLED),
+            });
+        }
+
+        #endregion
+
+        private void InitializeListboxVoiceChooser()
+        {
+            var voices = SpeechSynthesizer.AllVoices;
+            VoiceInformation currentVoice = synthesizer.Voice;
+            foreach (VoiceInformation voice in voices.OrderBy(p => p.Language))
+            {
+                ComboBoxItem item = new ComboBoxItem();
+                item.Name = voice.DisplayName;
+                item.Tag = voice;
+                item.Content = voice.DisplayName + " (Language: " + voice.Language + ")";
+                listBox.Items.Add(item);
+                if (currentVoice.Id == voice.Id)
+                {
+                    item.IsSelected = true;
+                    listBox.SelectedItem = item;
+                }
+            }
+        }
     }
 }

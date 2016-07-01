@@ -216,6 +216,9 @@ namespace IDUNv2.Pages
 
     public sealed partial class LEDControlPage : Page
     {
+
+        #region Properties
+
         private class SavedLEDImages
         {
             public string Name { get; set; }
@@ -229,9 +232,7 @@ namespace IDUNv2.Pages
             public byte[] Buffer { get; set; }
         }
 
-        const int LedSize = 40;
-        const int LedPad = 2;
-        const int LedSizeNoPad = LedSize - LedPad;
+        #endregion 
 
         #region Fields
 
@@ -241,6 +242,10 @@ namespace IDUNv2.Pages
         private Bitmap ledBitmap;
         private int px, py;
         public string SavedLEDImageName = "";
+
+        const int LedSize = 40;
+        const int LedPad = 2;
+        const int LedSizeNoPad = LedSize - LedPad;
 
         #endregion
 
@@ -291,32 +296,6 @@ namespace IDUNv2.Pages
         }
 
         #endregion
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            ledMatrix = new LedMatrix();
-            ledMatrix.Init();
-
-            ledImage.PointerMoved += LedImage_PointerMoved;
-            ledImage.PointerPressed += LedImage_PointerPressed;
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
-
-            DAL.SetCmdBarItems(new CmdBarItem[]
-            {
-                new CmdBarItem(Symbol.Save, "Save", SaveLED),
-                new CmdBarItem(Symbol.Clear, "Clear", ClearLED),
-                new CmdBarItem(Symbol.OpenFile, "Load", LoadLED),
-                new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
-            });
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            ledImage.PointerMoved -= LedImage_PointerMoved;
-            ledImage.PointerPressed -= LedImage_PointerPressed;
-            CompositionTarget.Rendering -= CompositionTarget_Rendering;
-            ledMatrix.Dispose();
-        }
 
         #region LED Manipulation
 
@@ -398,8 +377,6 @@ namespace IDUNv2.Pages
             ledBitmap.Flush();
         }
 
-        #endregion
-
         private void UpdateColorPreview()
         {
             if (colorPreview != null)
@@ -410,6 +387,8 @@ namespace IDUNv2.Pages
                 colorPreview.Fill = new SolidColorBrush(new Windows.UI.Color { R = r, G = g, B = b, A = 255 });
             }
         }
+
+        #endregion
 
         #region Event Handlers
 
@@ -617,6 +596,36 @@ namespace IDUNv2.Pages
         {
             b5 = (byte)e.NewValue;
             UpdateColorPreview();
+        }
+
+        #endregion
+
+        #region Navigation
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ledMatrix = new LedMatrix();
+            ledMatrix.Init();
+
+            ledImage.PointerMoved += LedImage_PointerMoved;
+            ledImage.PointerPressed += LedImage_PointerPressed;
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
+
+            DAL.SetCmdBarItems(new CmdBarItem[]
+            {
+                new CmdBarItem(Symbol.Save, "Save", SaveLED),
+                new CmdBarItem(Symbol.Clear, "Clear", ClearLED),
+                new CmdBarItem(Symbol.OpenFile, "Load", LoadLED),
+                new CmdBarItem(Symbol.Microphone, "Speech",NavigateToSpeech),
+            });
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            ledImage.PointerMoved -= LedImage_PointerMoved;
+            ledImage.PointerPressed -= LedImage_PointerPressed;
+            CompositionTarget.Rendering -= CompositionTarget_Rendering;
+            ledMatrix.Dispose();
         }
 
         #endregion

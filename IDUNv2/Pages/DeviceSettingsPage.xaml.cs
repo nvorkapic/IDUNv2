@@ -151,6 +151,7 @@ namespace IDUNv2.Pages
 
         #endregion
 
+        #region Navigation
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             bool status;
@@ -171,5 +172,6 @@ namespace IDUNv2.Pages
         {
             DAL.SetCmdBarItems(null);
         }
+        #endregion
     }
 }
