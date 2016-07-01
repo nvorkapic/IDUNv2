@@ -9,9 +9,9 @@
     <Page.Resources>
         <Style TargetType="ProgressBar">
             <Style.Setters>
-                <Setter Property="Background" Value="{ThemeResource MainMenuBrush}"></Setter>
-                <Setter Property="Foreground" Value="White"></Setter>
-                <Setter Property="BorderBrush" Value="White"></Setter>
+                <!--<Setter Property="Background" Value=""></Setter>-->
+                <Setter Property="Foreground" Value="{ThemeResource ButtonBrush}"></Setter>
+                <!--<Setter Property="BorderBrush" Value="White"></Setter>-->
                 <Setter Property="BorderThickness" Value="1"></Setter>
                 <Setter Property="Height" Value="20"></Setter>
                 <Setter Property="Width" Value="150"></Setter>
