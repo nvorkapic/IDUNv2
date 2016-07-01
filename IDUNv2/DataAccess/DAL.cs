@@ -33,6 +33,8 @@ namespace IDUNv2.DataAccess
     /// </summary>
     public static class DAL
     {
+        #region Properties
+
         private static bool useLiveCloud = true;
 
         private static volatile int dialogCount;
@@ -48,12 +50,18 @@ namespace IDUNv2.DataAccess
         public static IFaultReportAccess FaultReportAccess { get; private set; }
         public static IMachineAccess MachineAccess { get; private set; }
 
+        #endregion
+
+        #region Constructors
+
         static DAL()
         {
             db.CreateTable<FaultReportTemplate>();
             db.CreateTable<SensorTrigger>();
             db.CreateTable<Machine>();
         }
+
+        #endregion
 
         /// <summary>
         /// Statically known objects known to work.
@@ -201,15 +209,11 @@ namespace IDUNv2.DataAccess
                 {
                     return;
                 }
-                
-
+               
                 string shortDescription = "Sensor Triggered";
                 string longDescription = "Sensor has entered Triggered State!\n\n" + sensor.FaultString(fault);
 
-             
                 ShellPage.Current.AddNotificatoin(NotificationType.Warning, shortDescription, longDescription);
-
-                
 
             };
         }
