@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Networking.Connectivity;
 
 namespace IDUNv2.ViewModels
 {
@@ -26,7 +27,7 @@ namespace IDUNv2.ViewModels
         private bool _connectionStatus;
         private ObservableCollection<MachineViewModel> _machines;
         private MachineViewModel _selectedMachine;
-
+        private bool _internetConnectionStatus;
         #endregion
 
         #region Notify Properties
@@ -73,6 +74,11 @@ namespace IDUNv2.ViewModels
             set { _connectionStatus = value; Notify(); Notify("ConnectionMessage"); }
         }
 
+        public bool InternetConnectionStatus
+        {
+            get { return _internetConnectionStatus; }
+            set { _internetConnectionStatus = value; Notify(); Notify("InternetConnectionMessage"); }
+        }
         public MachineViewModel SelectedMachine
         {
             get { return _selectedMachine; }
@@ -100,11 +106,28 @@ namespace IDUNv2.ViewModels
             }
         }
 
+        public string InternetConnectionMessage
+        {
+            get
+            {
+                if (!InternetConnectionStatus)
+                    return "No Internet Connection";
+                else
+                    return "Internet Connection Present";
+            }
+        }
+
         public bool IsValidated
         {
             get { return DeviceSettings.HasSettings(); }
         }
 
+        public void IsInternet()
+        {
+            ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
+            bool internet = connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
+            InternetConnectionStatus = internet;
+        }
         #endregion
 
         #region Constructors
@@ -123,6 +146,7 @@ namespace IDUNv2.ViewModels
             Notify("ObjectID");
             SelectedMachine = Machines.FirstOrDefault();
         }
+
 
         public void CreateMachine()
         {

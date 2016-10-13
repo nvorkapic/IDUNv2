@@ -2,6 +2,7 @@
 using IDUNv2.Models;
 using IDUNv2.ViewModels;
 using System;
+using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -15,6 +16,7 @@ namespace IDUNv2.Pages
         private DeviceSettingsViewModel viewModel = new DeviceSettingsViewModel(DAL.MachineAccess);
         private CmdBarItem[] generalCmdBar;
         private CmdBarItem[] machinesCmdBar;
+
 
         #endregion
 
@@ -50,6 +52,7 @@ namespace IDUNv2.Pages
                     ShellPage.Current.EnableFullNavList();
             }
             timer.Start();
+            viewModel.IsInternet();
             ShellPage.SetSpinner(LoadingState.Finished);
         }
 
@@ -148,12 +151,14 @@ namespace IDUNv2.Pages
                 DAL.SetCmdBarItems(machinesCmdBar);
             }
         }
-
         #endregion
 
         #region Navigation
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            viewModel.IsInternet();
+            //viewModel.InternetConnectionStatus = false;
+
             bool status;
             try
             {
@@ -173,5 +178,6 @@ namespace IDUNv2.Pages
             DAL.SetCmdBarItems(null);
         }
         #endregion
+
     }
 }

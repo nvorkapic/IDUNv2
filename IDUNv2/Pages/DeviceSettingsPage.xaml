@@ -11,6 +11,8 @@
     <Page.Resources>
         <conv:RedOrGreenConverter x:Key="RedorGreen"/>
         <conv:DirtyFlagConverter x:Key="DirtyFlag"/>
+        <conv:InternetConverter x:Key="Internet"/>
+        <conv:InternetRedGreenConverter x:Key="InternetRedGreen"/>
         <DataTemplate x:Key="MachineData">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Text}"/>
@@ -81,6 +83,10 @@
                         </StackPanel>
                     </StackPanel>
                     <TextBlock TextWrapping="WrapWholeWords" Text="{Binding AuthorisationMessage}"  />
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding InternetConnectionStatus, Converter={StaticResource Internet}}" FontSize="20" Margin="5" Foreground="{Binding InternetConnectionStatus, Converter={StaticResource InternetRedGreen}}"/>
+                        <TextBlock TextWrapping="WrapWholeWords" Text="{Binding InternetConnectionMessage}" Margin="5"/>
+                    </StackPanel>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Machines">

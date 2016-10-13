@@ -118,6 +118,8 @@
       <DependentUpon>SensorGauge.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DirtyFlagConverter.cs" />
+    <Compile Include="Converters\InternetConverter.cs" />
+    <Compile Include="Converters\InternetRedGreenConverter.cs" />
     <Compile Include="Converters\RedOrGreenConverter.cs" />
     <Compile Include="Converters\SensorDeviceStateToVisibility.cs" />
     <Compile Include="Converters\SensorFaultStateToColor.cs" />
