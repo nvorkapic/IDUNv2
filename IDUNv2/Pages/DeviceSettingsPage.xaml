@@ -13,6 +13,8 @@
         <conv:DirtyFlagConverter x:Key="DirtyFlag"/>
         <conv:InternetConverter x:Key="Internet"/>
         <conv:InternetRedGreenConverter x:Key="InternetRedGreen"/>
+        <conv:BoolToVisibilityConverter x:Key="WiFiConv"/>
+        <conv:SignalBarsConverter x:Key="SignalBarsConv" />
         <DataTemplate x:Key="MachineData">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Text}"/>
@@ -21,6 +23,22 @@
                     Text="{Binding Dirty, Converter={StaticResource DirtyFlag}}"
                     VerticalAlignment="Center"
                     Foreground="Red"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="WiFiTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Ssid}" Margin="5" Width="'0"/>
+                <TextBlock Text="{Binding SignalBars, Converter={StaticResource SignalBarsConv}}" FontFamily="Segoe MDL2 Assets" Margin="5" FontSize="20" Width="50"/>
+                <StackPanel Orientation="Horizontal" Margin="5" Width="200">
+                    <TextBlock Text="Direct Connect: "/>
+                    <TextBlock Text="{Binding IsWiFiDirect}"/>
+                </StackPanel>
+                <TextBlock Text="Encryption: " Margin="5"/>
+                <TextBlock Text="{Binding SecuritySettings.NetworkEncryptionType}" Margin="5"/>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Type: " Margin="5"/>
+                    <TextBlock Text="{Binding SecuritySettings.NetworkAuthenticationType}" />
+                </StackPanel>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -124,6 +142,18 @@
                                 LostFocus="TBLostFocus"
                             />
                     </StackPanel>
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="WiFi Connection">
+                <StackPanel Loaded="WiFi_StackPanel_Loaded">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <TextBlock Text="{Binding WiFiAdapterStatusMessage}" />
+                            <TextBlock Text="{Binding WiFiAdapterID}" />
+                        </StackPanel>
+                        <Button Visibility="{Binding WiFiAdapterStatus, Converter={StaticResource WiFiConv} }" Content="Scan for WiFi Networks" Margin="5" Click="ScanForWiFi"></Button>
+                    </StackPanel>
+                    <ListBox ItemsSource="{Binding WiFiScanReport}" DisplayMemberPath="Ssid"  Height="300"/>
                 </StackPanel>
             </PivotItem>
         </Pivot>

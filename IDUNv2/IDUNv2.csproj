@@ -117,6 +117,7 @@
     <Compile Include="Controls\SensorGauge.xaml.cs">
       <DependentUpon>SensorGauge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DirtyFlagConverter.cs" />
     <Compile Include="Converters\InternetConverter.cs" />
     <Compile Include="Converters\InternetRedGreenConverter.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Converters\SensorDeviceStateToColorConverter.cs" />
     <Compile Include="Converters\SensorToGaugeIndicatorColor.cs" />
     <Compile Include="Converters\SensorTriggerIdToBool.cs" />
+    <Compile Include="Converters\SignalBarsConverter.cs" />
     <Compile Include="DataAccess\DAL.cs" />
     <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\NotifyBase.cs" />

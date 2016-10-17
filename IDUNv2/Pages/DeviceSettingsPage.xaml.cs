@@ -2,6 +2,8 @@
 using IDUNv2.Models;
 using IDUNv2.ViewModels;
 using System;
+using System.Threading.Tasks;
+using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,6 +19,7 @@ namespace IDUNv2.Pages
         private CmdBarItem[] generalCmdBar;
         private CmdBarItem[] machinesCmdBar;
 
+        public static ShellPage Current;
 
         #endregion
 
@@ -146,9 +149,13 @@ namespace IDUNv2.Pages
             {
                 DAL.SetCmdBarItems(generalCmdBar);
             }
-            else
+            else if ((string)args.Item.Header == "Machines")
             {
                 DAL.SetCmdBarItems(machinesCmdBar);
+            }
+            else
+            {
+                DAL.SetCmdBarItems(null);
             }
         }
         #endregion
@@ -179,5 +186,15 @@ namespace IDUNv2.Pages
         }
         #endregion
 
+        private async void WiFi_StackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            DAL.SetCmdBarItems(null);
+            await viewModel.WiFiAdapterCheck();
+        }
+
+        private void ScanForWiFi(object sender, RoutedEventArgs e)
+        {
+            viewModel.ScanNetwork();          
+        }
     }
 }

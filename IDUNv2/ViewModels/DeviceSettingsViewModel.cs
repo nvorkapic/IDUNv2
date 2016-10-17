@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 
 namespace IDUNv2.ViewModels
@@ -28,6 +29,8 @@ namespace IDUNv2.ViewModels
         private ObservableCollection<MachineViewModel> _machines;
         private MachineViewModel _selectedMachine;
         private bool _internetConnectionStatus;
+        private bool _wifiAdapterStatus;
+        private string _WiFiAdapterID;
         #endregion
 
         #region Notify Properties
@@ -79,6 +82,19 @@ namespace IDUNv2.ViewModels
             get { return _internetConnectionStatus; }
             set { _internetConnectionStatus = value; Notify(); Notify("InternetConnectionMessage"); }
         }
+
+        public bool WiFiAdapterStatus
+        {
+            get { return _wifiAdapterStatus; }
+            set { _wifiAdapterStatus = value; Notify();Notify("WiFiAdapterStatusMessage"); }
+        }
+
+        public string WiFiAdapterID
+        {
+            get { return _WiFiAdapterID; }
+            set { _WiFiAdapterID = value;  Notify(); }
+        }
+
         public MachineViewModel SelectedMachine
         {
             get { return _selectedMachine; }
@@ -117,6 +133,20 @@ namespace IDUNv2.ViewModels
             }
         }
 
+        public string WiFiAdapterStatusMessage
+        {
+            get
+            {
+                if (!WiFiAdapterStatus)
+                    return "No WiFi Adapter Present";
+                else
+                    return "WiFi Adapter Present";
+            }
+        }
+
+        public WiFiAdapter WiFiAdapter { get; set; }
+        public ObservableCollection<WiFiAvailableNetwork> WiFiScanReport { get; set; } = new ObservableCollection<WiFiAvailableNetwork>();
+
         public bool IsValidated
         {
             get { return DeviceSettings.HasSettings(); }
@@ -128,6 +158,7 @@ namespace IDUNv2.ViewModels
             bool internet = connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
             InternetConnectionStatus = internet;
         }
+
         #endregion
 
         #region Constructors
@@ -216,6 +247,53 @@ namespace IDUNv2.ViewModels
                     "Exception",
                     ex.ToString());
             }
+        }
+
+        public async Task WiFiAdapterCheck()
+        {
+            var access = await WiFiAdapter.RequestAccessAsync();
+            if (access != WiFiAccessStatus.Allowed)
+            {
+                WiFiAdapterStatus = false;
+                WiFiAdapterID = string.Empty;
+                ShellPage.Current.AddNotificatoin(NotificationType.Error, "Access Denied", "WiFi Access Not Allowed");
+            }
+            else
+            {
+                WiFiAdapterStatus = true;
+                var result = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(WiFiAdapter.GetDeviceSelector());
+                if (result.Count >= 1)
+                {
+                    WiFiAdapter = await WiFiAdapter.FromIdAsync(result[0].Id);
+                    WiFiAdapterID = WiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString();
+                    ShellPage.Current.AddNotificatoin(NotificationType.Information, "WiFi Adapter Found", "WiFi Adapter ID: " + WiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString() + " was found on this device.");
+         
+                }
+                else
+                {
+                    WiFiAdapterStatus = false;
+                    WiFiAdapterID = string.Empty;
+                    ShellPage.Current.AddNotificatoin(NotificationType.Warning, "WiFi", "No WiFi Adapters detected on this machine.");
+                }
+            }
+        }
+
+        public async void ScanNetwork()
+        {
+            ShellPage.SetSpinner(LoadingState.Loading);
+
+            WiFiScanReport.Clear();
+
+            if (WiFiAdapter != null)
+            {
+                await WiFiAdapter.ScanAsync();
+
+                foreach (var availableNetwork in WiFiAdapter.NetworkReport.AvailableNetworks)
+                {
+                    WiFiScanReport.Add(availableNetwork);
+                }
+            }
+            ShellPage.SetSpinner(LoadingState.Finished);
         }
     }
 }
