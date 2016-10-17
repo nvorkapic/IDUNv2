@@ -29,7 +29,7 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Ssid}" Margin="5" Width="150"/>
                 <TextBlock Text="{Binding SignalBars, Converter={StaticResource SignalBarsConv}}" FontFamily="Segoe MDL2 Assets" Margin="5" FontSize="20" Width="50"/>
-                <StackPanel Orientation="Horizontal" Margin="5" Width="200">
+                <StackPanel Orientation="Horizontal" Margin="5" Width="150">
                     <TextBlock Text="Direct Connect: "/>
                     <TextBlock Text="{Binding IsWiFiDirect}"/>
                 </StackPanel>
@@ -37,7 +37,7 @@
                 <TextBlock Text="{Binding SecuritySettings.NetworkEncryptionType}" Margin="5"/>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBlock Text="Type: " Margin="5"/>
-                    <TextBlock Text="{Binding SecuritySettings.NetworkAuthenticationType}" />
+                    <TextBlock Text="{Binding SecuritySettings.NetworkAuthenticationType}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -153,7 +153,7 @@
                         </StackPanel>
                         <Button Visibility="{Binding WiFiAdapterStatus, Converter={StaticResource WiFiConv} }" Content="Scan for WiFi Networks" Margin="5" Click="ScanForWiFi"></Button>
                     </StackPanel>
-                    <ListBox ItemsSource="{Binding WiFiScanReport}" ItemTemplate="{StaticResource WiFiTemplate}"  Height="300"/>
+                    <ListBox ItemsSource="{Binding WiFiScanReport}" ItemTemplate="{StaticResource WiFiTemplate}" DoubleTapped="ListBox_DoubleTapped" Height="300"/>
                 </StackPanel>
             </PivotItem>
         </Pivot>

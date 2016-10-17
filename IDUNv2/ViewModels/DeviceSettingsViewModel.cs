@@ -31,6 +31,8 @@ namespace IDUNv2.ViewModels
         private bool _internetConnectionStatus;
         private bool _wifiAdapterStatus;
         private string _WiFiAdapterID;
+
+        private WiFiAvailableNetwork _selectedNetwork;
         #endregion
 
         #region Notify Properties
@@ -93,6 +95,12 @@ namespace IDUNv2.ViewModels
         {
             get { return _WiFiAdapterID; }
             set { _WiFiAdapterID = value;  Notify(); }
+        }
+
+        public WiFiAvailableNetwork SelectedNetwork
+        {
+            get { return _selectedNetwork; }
+            set { _selectedNetwork = value; Notify(); }
         }
 
         public MachineViewModel SelectedMachine
@@ -294,6 +302,7 @@ namespace IDUNv2.ViewModels
                 }
             }
             ShellPage.SetSpinner(LoadingState.Finished);
+            
         }
     }
 }

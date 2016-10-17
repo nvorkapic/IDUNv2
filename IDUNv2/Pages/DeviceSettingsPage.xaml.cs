@@ -196,5 +196,10 @@ namespace IDUNv2.Pages
         {
             viewModel.ScanNetwork();          
         }
+
+        private void ListBox_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            viewModel.SelectedNetwork = (WiFiAvailableNetwork)sender;
+        }
     }
 }
