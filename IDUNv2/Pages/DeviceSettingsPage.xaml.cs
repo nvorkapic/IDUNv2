@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
+using Windows.Security.Credentials;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -197,9 +198,65 @@ namespace IDUNv2.Pages
             viewModel.ScanNetwork();          
         }
 
-        private void ListBox_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        private async void ListBox_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-            viewModel.SelectedNetwork = (WiFiAvailableNetwork)sender;
+            WiFiConnectionResult connectionResult;
+            var selectedNetworkItem = (ListBox)sender;
+            var selectedNetwork = (WiFiAvailableNetwork)selectedNetworkItem.SelectedItem;
+            viewModel.SelectedNetwork = selectedNetwork;
+
+            if (selectedNetwork.SecuritySettings.NetworkAuthenticationType != NetworkAuthenticationType.Open80211)
+            {
+                WiFiPasswordRequest.Visibility = Visibility.Visible;
+                
+            }
+            else
+            {
+                connectionResult = await viewModel.WiFiAdapter.ConnectAsync(selectedNetwork, WiFiReconnectionKind.Automatic);
+            }
+            
+        }
+
+        private void CancelWiFiPassword_Click(object sender, RoutedEventArgs e)
+        {
+            WiFiPasswordRequest.Visibility = Visibility.Collapsed;
+            WiFiScanList.SelectedIndex = -1;
+            DAL.ShowOSK(null);
+        }
+
+        private async void OKWiFiPassword_Click(object sender, RoutedEventArgs e)
+        {
+            WiFiConnectionResult connectionResult;
+
+            var credential = new PasswordCredential();
+            credential.Password = WiFiPasswordBox.Text;
+
+            ShellPage.SetSpinner(LoadingState.Loading);
+            connectionResult = await viewModel.WiFiAdapter.ConnectAsync(viewModel.SelectedNetwork, WiFiReconnectionKind.Automatic, credential);
+
+            if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Success)
+            {
+                ShellPage.Current.AddNotificatoin(NotificationType.Information, "WiFi Connected Successfully", "You have been successfully connected to " + viewModel.SelectedNetwork.Ssid.ToString() + " network.");
+                WiFiPasswordRequest.Visibility = Visibility.Collapsed;
+                WiFiScanList.SelectedIndex = -1;
+            }                
+            else
+            {
+                ShellPage.Current.AddNotificatoin(NotificationType.Error, "WiFi Connection Failed", viewModel.SelectedNetwork.Ssid.ToString() + " has failed to connect!\nConnection Status: " + connectionResult.ConnectionStatus );
+                WiFiPasswordBox.Text = string.Empty;
+            }
+            ShellPage.SetSpinner(LoadingState.Finished);
+
+        }
+
+        private void WiFiPasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            DAL.ShowOSK(null);
+        }
+
+        private void WiFiPasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DAL.ShowOSK(sender as TextBox);
         }
     }
 }

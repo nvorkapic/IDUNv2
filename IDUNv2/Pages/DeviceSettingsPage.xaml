@@ -153,9 +153,21 @@
                         </StackPanel>
                         <Button Visibility="{Binding WiFiAdapterStatus, Converter={StaticResource WiFiConv} }" Content="Scan for WiFi Networks" Margin="5" Click="ScanForWiFi"></Button>
                     </StackPanel>
-                    <ListBox ItemsSource="{Binding WiFiScanReport}" ItemTemplate="{StaticResource WiFiTemplate}" DoubleTapped="ListBox_DoubleTapped" Height="300"/>
+                    <ListBox ItemsSource="{Binding WiFiScanReport}" ItemTemplate="{StaticResource WiFiTemplate}" DoubleTapped="ListBox_DoubleTapped" Height="300" x:Name="WiFiScanList"/>
                 </StackPanel>
             </PivotItem>
         </Pivot>
+        <Grid  x:Name="WiFiPasswordRequest" Width="740" Background="black" Visibility="Collapsed">
+            <StackPanel Margin="10">
+                <TextBlock>You have selected WiFi with SSID:</TextBlock>
+                <TextBlock Text="{Binding SelectedNetwork.Ssid}" FontSize="25"> </TextBlock>
+                <TextBlock>Authorisation Required!</TextBlock>
+                <TextBox PlaceholderText="Enter WiFi Password here" x:Name="WiFiPasswordBox" LostFocus="WiFiPasswordBox_LostFocus" GotFocus="WiFiPasswordBox_GotFocus"></TextBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Margin="5" Height="35" Width="65" Click="OKWiFiPassword_Click">OK</Button>
+                    <Button Margin="5" Height="35" Width="65" Click="CancelWiFiPassword_Click">Cancel</Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
