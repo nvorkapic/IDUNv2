@@ -31,6 +31,8 @@ namespace IDUNv2.ViewModels
         private bool _internetConnectionStatus;
         private bool _wifiAdapterStatus;
         private string _WiFiAdapterID;
+        private bool _WiFiConnection;
+        private string _WLANName;
 
         private WiFiAvailableNetwork _selectedNetwork;
         #endregion
@@ -103,6 +105,18 @@ namespace IDUNv2.ViewModels
             set { _selectedNetwork = value; Notify(); }
         }
 
+        public bool WiFiConnection
+        {
+            get { return _WiFiConnection; }
+            set { _WiFiConnection = value; Notify(); }
+        }
+
+        public string WLANName
+        {
+            get { return _WLANName; }
+            set { _WLANName = value; Notify(); }
+        }
+
         public MachineViewModel SelectedMachine
         {
             get { return _selectedMachine; }
@@ -135,11 +149,12 @@ namespace IDUNv2.ViewModels
             get
             {
                 if (!InternetConnectionStatus)
-                    return "No Internet Connection";
+                    return "No Network Connection";
                 else
-                    return "Internet Connection Present";
+                    return "Network Connection Present";
             }
         }
+
 
         public string WiFiAdapterStatusMessage
         {
@@ -153,7 +168,10 @@ namespace IDUNv2.ViewModels
         }
 
         public WiFiAdapter WiFiAdapter { get; set; }
+
         public ObservableCollection<WiFiAvailableNetwork> WiFiScanReport { get; set; } = new ObservableCollection<WiFiAvailableNetwork>();
+
+        public bool WiFiAdapterReported = false;
 
         public bool IsValidated
         {
@@ -166,6 +184,8 @@ namespace IDUNv2.ViewModels
             bool internet = connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
             InternetConnectionStatus = internet;
         }
+
+        
 
         #endregion
 
@@ -185,7 +205,6 @@ namespace IDUNv2.ViewModels
             Notify("ObjectID");
             SelectedMachine = Machines.FirstOrDefault();
         }
-
 
         public void CreateMachine()
         {
@@ -264,7 +283,7 @@ namespace IDUNv2.ViewModels
             {
                 WiFiAdapterStatus = false;
                 WiFiAdapterID = string.Empty;
-                ShellPage.Current.AddNotificatoin(NotificationType.Error, "Access Denied", "WiFi Access Not Allowed");
+                ShellPage.Current.AddNotificatoin(NotificationType.Error, "WiFi", "WiFi Access Not Allowed");
             }
             else
             {
@@ -274,8 +293,11 @@ namespace IDUNv2.ViewModels
                 {
                     WiFiAdapter = await WiFiAdapter.FromIdAsync(result[0].Id);
                     WiFiAdapterID = WiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString();
-                    ShellPage.Current.AddNotificatoin(NotificationType.Information, "WiFi Adapter Found", "WiFi Adapter ID: " + WiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString() + " was found on this device.");
-         
+                    if (!WiFiAdapterReported)
+                    {
+                        ShellPage.Current.AddNotificatoin(NotificationType.Information, "WiFi", "WiFi Adapter ID: " + WiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString() + " was found on this device.");
+                        WiFiAdapterReported = true;
+                    }  
                 }
                 else
                 {
@@ -304,5 +326,19 @@ namespace IDUNv2.ViewModels
             ShellPage.SetSpinner(LoadingState.Finished);
             
         }
+
+        public async void SSIDCheck()
+        {
+            try
+            {
+                var NetProfile = await WiFiAdapter.NetworkAdapter.GetConnectedProfileAsync();
+                WLANName = NetProfile.WlanConnectionProfileDetails.GetConnectedSsid();
+            }
+            catch (Exception e)
+            {
+                WLANName = e.Message;
+            }
+        }
+
     }
 }

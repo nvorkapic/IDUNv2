@@ -27,23 +27,25 @@
         </DataTemplate>
         <DataTemplate x:Key="WiFiTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Ssid}" Margin="5" Width="150"/>
-                <TextBlock Text="{Binding SignalBars, Converter={StaticResource SignalBarsConv}}" FontFamily="Segoe MDL2 Assets" Margin="5" FontSize="20" Width="50"/>
-                <StackPanel Orientation="Horizontal" Margin="5" Width="150">
+                <TextBlock Text="{Binding Ssid}" Margin="5" Width="200" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding SignalBars, Converter={StaticResource SignalBarsConv}}" FontFamily="Segoe MDL2 Assets" Margin="5" FontSize="40" Width="50"/>
+                <StackPanel Margin="5">
                     <TextBlock Text="Direct Connect: "/>
                     <TextBlock Text="{Binding IsWiFiDirect}"/>
                 </StackPanel>
-                <TextBlock Text="Encryption: " Margin="5"/>
-                <TextBlock Text="{Binding SecuritySettings.NetworkEncryptionType}" Margin="5"/>
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Type: " Margin="5"/>
-                    <TextBlock Text="{Binding SecuritySettings.NetworkAuthenticationType}" Margin="5"/>
+                <StackPanel Margin="5">
+                <TextBlock Text="Encryption: "/>
+                <TextBlock Text="{Binding SecuritySettings.NetworkEncryptionType}"/>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <TextBlock Text="Type: " />
+                    <TextBlock Text="{Binding SecuritySettings.NetworkAuthenticationType}" />
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{ThemeResource StandardBackground}">
-        <Pivot PivotItemLoaded="Pivot_PivotItemLoaded">
+        <Pivot PivotItemLoaded="Pivot_PivotItemLoaded" x:Name="DeviceSettingsPivot">
             <PivotItem Header="General">
                 <StackPanel>
                     <StackPanel
@@ -105,6 +107,11 @@
                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding InternetConnectionStatus, Converter={StaticResource Internet}}" FontSize="20" Margin="5" Foreground="{Binding InternetConnectionStatus, Converter={StaticResource InternetRedGreen}}"/>
                         <TextBlock TextWrapping="WrapWholeWords" Text="{Binding InternetConnectionMessage}" Margin="5"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding InternetConnectionStatus, Converter={StaticResource WiFiConv}}">
+                        <TextBlock Text="Connected to " Margin="0,0,5,0"></TextBlock>
+                        <Image Source="/Assets/wifiicon.png" Height="20" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding WLANName}"></TextBlock>
+                    </StackPanel>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Machines">
@@ -162,7 +169,7 @@
                 <TextBlock>You have selected WiFi with SSID:</TextBlock>
                 <TextBlock Text="{Binding SelectedNetwork.Ssid}" FontSize="25"> </TextBlock>
                 <TextBlock>Authorisation Required!</TextBlock>
-                <TextBox PlaceholderText="Enter WiFi Password here" x:Name="WiFiPasswordBox" LostFocus="WiFiPasswordBox_LostFocus" GotFocus="WiFiPasswordBox_GotFocus"></TextBox>
+                <TextBox PlaceholderText="Enter WiFi Password here" x:Name="WiFiPasswordBox" LostFocus="TBLostFocus" GotFocus="TextBox_GotFocus"></TextBox>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Margin="5" Height="35" Width="65" Click="OKWiFiPassword_Click">OK</Button>
                     <Button Margin="5" Height="35" Width="65" Click="CancelWiFiPassword_Click">Cancel</Button>

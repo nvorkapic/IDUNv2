@@ -149,43 +149,13 @@ namespace IDUNv2.Pages
             if ((string)args.Item.Header == "General")
             {
                 DAL.SetCmdBarItems(generalCmdBar);
-            }
+                viewModel.SSIDCheck();
+            }                
             else if ((string)args.Item.Header == "Machines")
-            {
                 DAL.SetCmdBarItems(machinesCmdBar);
-            }
             else
-            {
                 DAL.SetCmdBarItems(null);
-            }
         }
-        #endregion
-
-        #region Navigation
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            viewModel.IsInternet();
-            //viewModel.InternetConnectionStatus = false;
-
-            bool status;
-            try
-            {
-                status = await DAL.ConnectToCloud();
-            }
-            catch
-            {
-                status = false;
-            }
-
-            viewModel.ConnectionStatus = !status;
-            await viewModel.InitAsync();
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            DAL.SetCmdBarItems(null);
-        }
-        #endregion
 
         private async void WiFi_StackPanel_Loaded(object sender, RoutedEventArgs e)
         {
@@ -195,7 +165,7 @@ namespace IDUNv2.Pages
 
         private void ScanForWiFi(object sender, RoutedEventArgs e)
         {
-            viewModel.ScanNetwork();          
+            viewModel.ScanNetwork();
         }
 
         private async void ListBox_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
@@ -204,17 +174,13 @@ namespace IDUNv2.Pages
             var selectedNetworkItem = (ListBox)sender;
             var selectedNetwork = (WiFiAvailableNetwork)selectedNetworkItem.SelectedItem;
             viewModel.SelectedNetwork = selectedNetwork;
-
             if (selectedNetwork.SecuritySettings.NetworkAuthenticationType != NetworkAuthenticationType.Open80211)
-            {
                 WiFiPasswordRequest.Visibility = Visibility.Visible;
-                
-            }
             else
             {
                 connectionResult = await viewModel.WiFiAdapter.ConnectAsync(selectedNetwork, WiFiReconnectionKind.Automatic);
+                viewModel.IsInternet();
             }
-            
         }
 
         private void CancelWiFiPassword_Click(object sender, RoutedEventArgs e)
@@ -227,36 +193,55 @@ namespace IDUNv2.Pages
         private async void OKWiFiPassword_Click(object sender, RoutedEventArgs e)
         {
             WiFiConnectionResult connectionResult;
-
             var credential = new PasswordCredential();
             credential.Password = WiFiPasswordBox.Text;
-
             ShellPage.SetSpinner(LoadingState.Loading);
             connectionResult = await viewModel.WiFiAdapter.ConnectAsync(viewModel.SelectedNetwork, WiFiReconnectionKind.Automatic, credential);
-
             if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Success)
             {
                 ShellPage.Current.AddNotificatoin(NotificationType.Information, "WiFi Connected Successfully", "You have been successfully connected to " + viewModel.SelectedNetwork.Ssid.ToString() + " network.");
                 WiFiPasswordRequest.Visibility = Visibility.Collapsed;
                 WiFiScanList.SelectedIndex = -1;
-            }                
+                DeviceSettingsPivot.SelectedIndex = 0;
+            }
             else
             {
-                ShellPage.Current.AddNotificatoin(NotificationType.Error, "WiFi Connection Failed", viewModel.SelectedNetwork.Ssid.ToString() + " has failed to connect!\nConnection Status: " + connectionResult.ConnectionStatus );
+                ShellPage.Current.AddNotificatoin(NotificationType.Error, "WiFi Connection Failed", viewModel.SelectedNetwork.Ssid.ToString() + " has failed to connect!\nConnection Status: " + connectionResult.ConnectionStatus);
                 WiFiPasswordBox.Text = string.Empty;
             }
+            viewModel.IsInternet();
             ShellPage.SetSpinner(LoadingState.Finished);
-
         }
+        #endregion
 
-        private void WiFiPasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        #region Navigation
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            DAL.ShowOSK(null);
+            //viewModel.InternetConnectionStatus = false;
+            bool status;
+            try
+            {
+                status = await DAL.ConnectToCloud();
+            }
+            catch
+            {
+                status = false;
+            }
+
+            viewModel.ConnectionStatus = !status;
+            await viewModel.InitAsync();
+
+            viewModel.IsInternet();
+            await viewModel.WiFiAdapterCheck();
+            viewModel.SSIDCheck();
         }
 
-        private void WiFiPasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            DAL.ShowOSK(sender as TextBox);
+            DAL.SetCmdBarItems(null);
         }
+
+        #endregion
+
     }
 }
