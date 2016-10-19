@@ -43,6 +43,7 @@ namespace IDUNv2.Pages
                     "You have been connected to IFS Clouds Service!");
 
                 ShellPage.Current.EnableFullNavList();
+                //await DAL.FillCaches();
             }
             else
             {
@@ -144,12 +145,12 @@ namespace IDUNv2.Pages
             }
         }
 
-        private void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
+        private async void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
         {
             if ((string)args.Item.Header == "General")
             {
                 DAL.SetCmdBarItems(generalCmdBar);
-                viewModel.SSIDCheck();
+                await viewModel.SSIDCheck();
             }                
             else if ((string)args.Item.Header == "Machines")
                 DAL.SetCmdBarItems(machinesCmdBar);
@@ -163,9 +164,9 @@ namespace IDUNv2.Pages
             await viewModel.WiFiAdapterCheck();
         }
 
-        private void ScanForWiFi(object sender, RoutedEventArgs e)
+        private async void ScanForWiFi(object sender, RoutedEventArgs e)
         {
-            viewModel.ScanNetwork();
+            await viewModel.ScanNetwork();
         }
 
         private async void ListBox_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
@@ -233,7 +234,7 @@ namespace IDUNv2.Pages
 
             viewModel.IsInternet();
             await viewModel.WiFiAdapterCheck();
-            viewModel.SSIDCheck();
+            await viewModel.SSIDCheck();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

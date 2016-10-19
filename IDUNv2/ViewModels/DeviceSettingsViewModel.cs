@@ -183,9 +183,7 @@ namespace IDUNv2.ViewModels
             ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
             bool internet = connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
             InternetConnectionStatus = internet;
-        }
-
-        
+        } 
 
         #endregion
 
@@ -328,11 +326,10 @@ namespace IDUNv2.ViewModels
         }
 
         public async Task SSIDCheck()
-        {
-            var NetProfile = await WiFiAdapter.NetworkAdapter.GetConnectedProfileAsync();
-
+        {            
             try
             {
+                var NetProfile = await WiFiAdapter.NetworkAdapter.GetConnectedProfileAsync();
                 WLANName = NetProfile.WlanConnectionProfileDetails.GetConnectedSsid();
             }
             catch
@@ -340,6 +337,5 @@ namespace IDUNv2.ViewModels
                 WLANName = "Cable Connection";
             }
         }
-
     }
 }
