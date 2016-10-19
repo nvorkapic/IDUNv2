@@ -46,7 +46,7 @@
     </Page.Resources>
     <Grid Background="{ThemeResource StandardBackground}">
         <Pivot PivotItemLoaded="Pivot_PivotItemLoaded" x:Name="DeviceSettingsPivot">
-            <PivotItem Header="General">
+            <PivotItem Header="General" >
                 <StackPanel>
                     <StackPanel
                         HorizontalAlignment="Left"

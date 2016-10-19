@@ -308,7 +308,7 @@ namespace IDUNv2.ViewModels
             }
         }
 
-        public async void ScanNetwork()
+        public async Task ScanNetwork()
         {
             ShellPage.SetSpinner(LoadingState.Loading);
 
@@ -327,16 +327,17 @@ namespace IDUNv2.ViewModels
             
         }
 
-        public async void SSIDCheck()
+        public async Task SSIDCheck()
         {
+            var NetProfile = await WiFiAdapter.NetworkAdapter.GetConnectedProfileAsync();
+
             try
             {
-                var NetProfile = await WiFiAdapter.NetworkAdapter.GetConnectedProfileAsync();
                 WLANName = NetProfile.WlanConnectionProfileDetails.GetConnectedSsid();
             }
-            catch (Exception e)
+            catch
             {
-                WLANName = e.Message;
+                WLANName = "Cable Connection";
             }
         }
 
